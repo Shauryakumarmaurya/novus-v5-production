@@ -69,6 +69,7 @@ def react_loop(
     max_iterations: int = 8,
     max_tool_result_chars: int = 3000,
     llm: LLMClient = None,
+    on_step: Optional[Callable[[ReasoningStep], None]] = None,
 ) -> ReActResult:
     """
     Multi-turn ReAct loop.
@@ -84,6 +85,11 @@ def react_loop(
         max_iterations:   Safety cap on reasoning steps
         max_tool_result_chars: Truncate tool outputs to prevent context blowup
         llm:              LLMClient instance (uses default if None)
+        on_step:          Optional callback fired after each reasoning step.
+                          Used by the Copilot chat endpoint to stream progress
+                          to SSE clients in real time. Any exception inside the
+                          callback is swallowed so progress reporting cannot
+                          break the loop itself.
     """
     if llm is None:
         llm = get_llm_client()
@@ -93,6 +99,16 @@ def react_loop(
     tool_names_used: set[str] = set()
     total_in = 0
     total_out = 0
+
+    def _notify(s: ReasoningStep) -> None:
+        """Fire the on_step callback if provided. Swallow exceptions so a
+        flaky progress observer cannot break the reasoning loop."""
+        if on_step is None:
+            return
+        try:
+            on_step(s)
+        except Exception as exc:
+            print(f"  [ReAct] on_step callback raised (ignored): {exc}")
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -121,7 +137,7 @@ def react_loop(
                     "Do NOT request any more tools. Just output the JSON."
                 ),
             })
-            resp = llm.call(messages=messages, tools=None, max_tokens=4096)
+            resp = llm.call(messages=messages, tools=None, max_tokens=None)
             total_in += resp.input_tokens
             total_out += resp.output_tokens
             print(f"  [ReAct] FORCED FINAL (no tools) | content_len={len(resp.content)}")
@@ -132,6 +148,7 @@ def react_loop(
                 latency_ms=resp.latency_ms,
             )
             chain.append(step)
+            _notify(step)
             final_output = _extract_json(resp.content)
             if final_output:
                 print(f"  [ReAct] ✅ Forced final produced valid JSON!")
@@ -205,10 +222,12 @@ def react_loop(
                 })
 
             chain.append(step)
+            _notify(step)
             continue
 
         # ── No tool calls → model produced final answer ──
         chain.append(step)
+        _notify(step)
 
         # Parse the final JSON
         final_output = _extract_json(resp.content)
@@ -317,5 +336,7 @@ def _extract_json(text: str) -> Optional[dict]:
             text = m.group(0)
     try:
         return json.loads(text.strip())
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
+        print(f"  [ReAct] ❌ JSON Parse Error: {e}")
+        print(f"  [ReAct] ❌ Raw text snippet: {text.strip()[:500]} ... {text.strip()[-500:]}")
         return None

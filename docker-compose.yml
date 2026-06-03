@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  web:
+    build: .
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+      - FLASK_ENV=production
+    # Map port 80 on the host to 5001 on the container
+    ports:
+      - "80:5001"
+    volumes:
+      - chroma_data:/app/chroma_db
+      - ./data:/app/data
+    command: gunicorn --bind 0.0.0.0:5001 --workers 2 --timeout 300 "app:app"
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - chroma_data:/app/chroma_db
+      - ./data:/app/data
+    command: rq worker financial_analysis --url redis://redis:6379/0
+    depends_on:
+      - redis
+      
+volumes:
+  redis_data:
+  chroma_data:

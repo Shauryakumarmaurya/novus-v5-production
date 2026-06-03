@@ -66,6 +66,18 @@ _reg(PromptModule(
 ))
 
 _reg(PromptModule(
+    name="core_temporal_fidelity",
+    priority=10,
+    content=(
+        "TIMELINE AND CAUSALITY RULES (CRITICAL):\n"
+        "- NEVER attribute a financial performance spike or drop in Quarter X to a corporate event (e.g. auditor change, lawsuit) in Quarter Y unless causality is EXPLICITLY stated in the text.\n"
+        "- Financial time series data and qualitative RAG events are often temporally distant. Always VERIFY chronological alignment.\n"
+        "- If you draw a causal link between two events, you MUST output a structured JSON block containing \"cause_date\" and \"effect_date\" so the Critic Agent can verify it.\n"
+        "  Format: { ..., \"causal_events\": [{\"event\": \"...\", \"cause_date\": \"April 2024\", \"effect_date\": \"Dec 2025\"}] }"
+    )
+))
+
+_reg(PromptModule(
     name="core_indian_accounting",
     priority=8,
     content=(
@@ -257,6 +269,49 @@ _reg(PromptModule(
         "  2. What % of promoter holding is pledged?\n"
         "  3. Has the pledge increased or decreased vs prior period?\n"
         "  4. What is the pledge for — corporate guarantee or personal borrowing?"
+    ),
+))
+
+
+# ── PM SYNTHESIS DISCIPLINE (only for pm_synthesis agent) ─────────────────
+
+_reg(PromptModule(
+    name="pm_synthesis_discipline",
+    priority=10,
+    agent_filter=["pm_synthesis"],
+    content=(
+        "PM SYNTHESIS — MANDATORY OUTPUT DISCIPLINE:\n\n"
+        "A. VALUATION RIGOUR:\n"
+        "   If you set pricing_verdict to 'FAIR' or 'CHEAP', you MUST populate the\n"
+        "   'valuation' object with:\n"
+        "   - reverse_dcf.wacc_pct, reverse_dcf.terminal_growth_pct, reverse_dcf.implied_fcf_growth_pct\n"
+        "   - At least 2 entries in peer_comps[] with ev_ebitda and pe_ttm\n"
+        "   - historical_multiple with current vs avg_5yr\n"
+        "   If any valuation inputs are missing from the data provided, set\n"
+        "   pricing_verdict to 'INSUFFICIENT DATA' and explain what is missing.\n\n"
+        "B. ZERO AGENT BLEED-THROUGH:\n"
+        "   Your output will be read by a portfolio manager. NEVER use phrases like:\n"
+        "   - 'The forensic quant flags...', 'Our narrative decoder confirms...'\n"
+        "   - 'The moat analysis shows...', 'Capital allocation review suggests...'\n"
+        "   - 'According to our investigation...'\n"
+        "   Write as if YOU personally performed all the analysis. State findings\n"
+        "   with authority: 'ROIC declined to 9.2%', not 'the quant agent calculated\n"
+        "   ROIC at 9.2%'.\n\n"
+        "C. FINANCIAL VOCABULARY ONLY:\n"
+        "   BANNED phrases and their replacements:\n"
+        "   - 'direct contradiction' → 'divergence' or 'negative operating leverage'\n"
+        "   - 'Revenue went up but profit went down' → 'Gross margin compressed by Xbps\n"
+        "     driven by [input cost inflation / negative operating leverage / rising\n"
+        "     finance costs]'\n"
+        "   - 'growth is slowing' → 'Revenue CAGR decelerated from X% to Y%'\n"
+        "   - 'cash is strong' → 'OCF/EBITDA conversion at X%, FCF yield of Y%'\n"
+        "   Every metric claim must include the specific number.\n\n"
+        "D. SEGMENTAL INTEGRITY:\n"
+        "   NEVER attribute a sub-segment metric (e.g., US Injectables revenue) to\n"
+        "   the total geographic segment (e.g., total US revenue = 41%). If you only\n"
+        "   have the geographic total, say 'US geography contributes 41%' — do NOT\n"
+        "   attach a product sub-segment label to that number unless the source data\n"
+        "   explicitly provides the sub-segment split."
     ),
 ))
 

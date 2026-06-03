@@ -1,0 +1,58 @@
+{
+    "signal_payload": {
+        "signals": [
+            {
+                "id": "sig_demo1",
+                "category": "regulatory",
+                "direction": "negative",
+                "materiality_score": 65,
+                "confidence": "high",
+                "time_horizon": "quarters",
+                "highest_source_tier": 1,
+                "summary": "USFDA Form 483 with 7 observations at Eugia Unit II signals potential regulatory compliance issues that may delay approvals or impact operations."
+            }
+        ],
+        "impacts": [
+            {
+                "signal_id": "sig_demo1",
+                "affected_thesis_drivers": ["Regulatory risks at key facilities threatening approvals"],
+                "direction": "negative",
+                "qualitative_magnitude": "Moderate",
+                "horizon": "1-2 Quarters",
+                "what_to_watch": "Eugia Unit II's official FDA classification (OAI, VAI, or NAI)",
+                "confirms_or_contradicts_thesis": "confirms",
+                "triggers_kill_criterion_id": null,
+                "confidence": "high"
+            }
+        ],
+        "unavailable_sources": []
+    },
+    "triage_result": "<p>Initial triage indicates strong revenue stability with minor margin pressures due to raw material costs. Core US generics business is tracking well.</p>",
+    "forensic_scorecard": {
+        "health_score": 88,
+        "evasion_score": 12,
+        "evasion_log": "<p>Management addressed all major questions directly. No significant dodging on US FDA warning letters or pricing pressure.</p>",
+        "critical_alerts": [
+            "No aggressive revenue recognition detected.",
+            "Minor capitalization of R&D expenses noted, within industry norms."
+        ],
+        "rating": "Outperform"
+    },
+    "rag_stats": {
+        "total_chunks": 1432,
+        "docTypes": "annual_report, investor_presentation, earnings_transcript"
+    },
+    "agent_trails": {
+        "forensic_quant": {
+            "findings": "\nAnalysis complete.\n[METRIC: Cash Quality|92%]\n[METRIC: Working Capital Cycle|74 days]\n[METRIC: ROIC Trend|Improving]\n[METRIC: Implied Growth|8.5%]\n[METRIC: EBITDA/OCF Match|96%]\n[METRIC: FCF_Trend|[1200, 1450, 1600, 1550, 2100]]\n[METRIC: Debt_Cash_Position|[{\"debt\":4000,\"cash\":2500},{\"debt\":3800,\"cash\":3100},{\"debt\":3500,\"cash\":4200}]]\n[METRIC: Rev_Ebitda_Pat|[{\"rev\":19000,\"ebitda\":4000,\"pat\":2500},{\"rev\":21000,\"ebitda\":4500,\"pat\":2800},{\"rev\":23500,\"ebitda\":5200,\"pat\":3400}]]\n[METRIC: DuPont_Components|{\"net_margin\":14.5,\"asset_turnover\":0.85,\"equity_multiplier\":1.4}]\n"
+        },
+        "confidence_radar": [
+            90,
+            85,
+            95,
+            80,
+            88,
+            92
+        ]
+    }
+}

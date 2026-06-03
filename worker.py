@@ -3,6 +3,10 @@ logger = get_logger(__name__)
 import os
 # Fix for macOS fork() issue with CoreFoundation/Objective-C
 os.environ['OBJC_DISABLE_INITIALIZE_FORK_SAFETY'] = 'YES'
+# Prevent huggingface tokenizers from forking
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+# Prevent curl/urllib proxy resolution from crashing CoreFoundation on fork
+os.environ['no_proxy'] = '*'
 
 from pathlib import Path
 from dotenv import load_dotenv

@@ -2,7 +2,7 @@ import json
 from core.agent_base_v3 import AgentV3
 
 class PMSynthesisV3(AgentV3):
-    MAX_ITERATIONS = 6   
+    MAX_ITERATIONS = 1   
     VERIFY = False        
 
     @property
@@ -12,17 +12,30 @@ class PMSynthesisV3(AgentV3):
     @property
     def agent_role(self) -> str:
         return (
-            "You are an elite portfolio manager at a top-tier institutional fund. "
-            "You synthesise findings from multiple specialist agents into a single "
-            "investment thesis. You ONLY use data provided — never invent, interpolate, "
-            "or assume. "
-            "Your thesis must be actionable: BUY, WATCH, or PASS with measurable kill criteria."
+            "You are an elite Portfolio Manager at a top-tier institutional fund focused on generating ALPHA. "
+            "Your job is NOT to just summarize what the junior analysts (specialist agents) have found. "
+            "Your job is to be an 'unmatched synthesizer' — you must cross-reference their findings to identify "
+            "market-moving information, hidden correlations, and micro-trends that human analysts physically cannot process in time. "
+            "Look for contradictions between agents (e.g., strong narrative but weak forensic cash flow). "
+            "Identify the 'Variant Perception' — what is the market currently pricing in, and why is the market wrong based on our data? "
+            "Your thesis must be a high-conviction, revenue-generating insight: BUY, WATCH, or PASS with measurable kill criteria.\n\n"
+            "MANDATORY DATA GAP PROTOCOL:\n"
+            "If ANY upstream agent reported data_gaps in their findings, you MUST:\n"
+            "1. State: '[METRIC] could not be calculated due to missing [FIELD].'\n"
+            "2. DO NOT infer, estimate, or narrativize around the missing value.\n"
+            "3. DO NOT say 'data suggests' or 'likely' for any metric you haven't seen.\n"
+            "4. If a ratio like Other Income/PBT has status DATA_NOT_AVAILABLE, acknowledge it as "
+            "'unverifiable' — do NOT substitute an estimate.\n"
+            "Violation of this protocol produces a misleading research note that could "
+            "cause real capital losses."
         )
 
     @property
     def output_example(self) -> str:
         return """{
-  "executive_summary": "Comprehensive 1-paragraph summary of the investment case.",
+  "executive_summary": "High-conviction 1-paragraph summary of the investment case and the core variant perception.",
+  "alpha_synthesis": "Deep cross-referencing of agent findings. E.g., 'While Moat Architect sees strong pricing power, Forensic Quant flags deteriorating cash conversion, and Narrative Decoder caught management dodging margin questions — indicating the moat is actually breaking.'",
+  "variant_perception": "What the market is NOT pricing in — your edge. Why is the consensus wrong?",
   "fundamental_analysis": "Deep paragraph on business model, moat, and competitive position.",
   "forensic_audit": "Deep paragraph on accounting quality, earnings quality, and red flags.",
   "capital_allocation": "Deep paragraph on management's capital stewardship, M&A, and returns policy.",
@@ -31,7 +44,6 @@ class PMSynthesisV3(AgentV3):
   "bear_case": [
     {"risk": "Description with evidence", "probability": "LOW|MEDIUM|HIGH", "impact": "Description"}
   ],
-  "variant_perception": "What the market is NOT pricing in — your edge. Or 'None identified'.",
   "scoreboard": {
     "forensic_quality": "A|B|C|D",
     "management_score": "A|B|C|D",
@@ -52,7 +64,10 @@ class PMSynthesisV3(AgentV3):
 
     def build_initial_context(self, ticker, sector, signals, doc_chars) -> str:
         agent_outputs = signals.get("_agent_outputs", {})
-        parts = [f"Synthesise findings for {ticker} ({sector})."]
+        parts = [
+            f"Synthesise findings for {ticker} ({sector}).",
+            "CRITICAL: Do not just summarize. Cross-reference the agent findings. Look for contradictions, hidden correlations, and identify the Variant Perception (Alpha)."
+        ]
         for agent_name, output in agent_outputs.items():
             parts.append(f"\n## {agent_name.upper()} FINDINGS:")
             if isinstance(output, dict):

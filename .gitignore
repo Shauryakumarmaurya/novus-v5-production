@@ -27,8 +27,16 @@ Thumbs.db
 # Large data directories
 chroma_db/
 company_docs/
+.vision_cache/
 
 # Local testing scripts
 get_financial_data_output_testing.py
 *_output_testing.py
 .vercel
+
+# Ignore large datasets
+novus_master_compilation.md
+scrapper/downloaded_docs/
+data/*.db*
+easr_data.csv
+

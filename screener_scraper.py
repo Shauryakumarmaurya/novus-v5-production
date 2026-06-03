@@ -16,7 +16,7 @@ def clean_dataframe(df: pd.DataFrame) -> list:
     df.columns = [str(c).replace('\n', ' ').strip() for c in df.columns]
     
     # Rename the first nameless column usually containing line items to 'Line Item'
-    if df.columns[0].strip() == "":
+    if df.columns[0].strip() == "" or "Unnamed" in df.columns[0]:
         columns = list(df.columns)
         columns[0] = "Line Item"
         df.columns = columns
@@ -111,7 +111,46 @@ def fetch_screener_tables(ticker: str) -> Dict[str, Any]:
             
             if df_list:
                 df = df_list[0]
-                results[title] = clean_dataframe(df)
+                records = clean_dataframe(df)
+
+                company_match = __import__('re').search(r'data-company-id="(\d+)"', response.text)
+                if company_match:
+                    company_id = company_match.group(1)
+                    expand_calls = __import__('re').findall(r"Company\.showSchedule\('([^']+)',\s*'([^']+)'", html_table)
+                    
+                    if expand_calls:
+                        session = requests.Session()
+                        new_records = []
+                        for row in records:
+                            raw_line_item = str(row.get("Line Item", ""))
+                            line_item = raw_line_item.replace("+", "").replace("\xa0", " ").strip()
+                            row["Line Item"] = line_item
+                            new_records.append(row)
+
+                            for parent, sec in expand_calls:
+                                if line_item == parent.strip():
+                                    api_url = f"https://www.screener.in/api/company/{company_id}/schedules/?parent={parent.replace(' ', '%20')}&section={sec}&consolidated="
+                                    try:
+                                        res = session.get(api_url, timeout=5)
+                                        if res.status_code == 200:
+                                            sub_dict = res.json()
+                                            for sub_key, sub_vals in sub_dict.items():
+                                                sub_row = {"Line Item": f"  {sub_key}"}
+                                                for k, v in sub_vals.items():
+                                                    if k != "isExpandable":
+                                                        sub_row[k] = v
+                                                for col in df.columns:
+                                                    if col not in sub_row:
+                                                        sub_row[col] = ""
+                                                new_records.append(sub_row)
+                                    except Exception as ajax_e:
+                                        logger.warning(f"Failed to fetch schedule for {line_item}: {ajax_e}")
+                                    break
+                        results[title] = new_records
+                    else:
+                        results[title] = records
+                else:
+                    results[title] = records
         except Exception as e:
             logger.warning(f"Could not parse table {title} for {ticker}: {e}")
             

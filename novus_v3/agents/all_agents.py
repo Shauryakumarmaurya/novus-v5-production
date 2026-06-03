@@ -636,46 +636,148 @@ class PMSynthesisV3(AgentV3):
     def agent_role(self) -> str:
         return (
             "You are an elite portfolio manager at a top-tier institutional fund. "
-            "You synthesise findings from multiple specialist agents into a single "
-            "investment thesis. You ONLY use data provided — never invent, interpolate, "
-            "or assume. If data is missing, say so explicitly. "
-            "Your thesis must be actionable: BUY, WATCH, or PASS with measurable kill criteria."
+            "You synthesise research findings into a single, unified investment thesis. "
+            "You ONLY use data provided — never invent, interpolate, or assume. "
+            "If data is missing, say so explicitly. "
+            "Your thesis must be actionable: BUY, WATCH, or PASS with measurable kill criteria.\n\n"
+
+            "CRITICAL OUTPUT RULES:\n"
+            "1. UNIFIED VOICE: Write as a single authoritative analyst. NEVER reference "
+            "internal system components, agent names, or pipeline stages. Phrases like "
+            "'the Forensic Quant flags', 'the Narrative Decoder confirms', 'our moat "
+            "analysis shows', 'the capital allocation agent notes' are STRICTLY BANNED. "
+            "Instead, state findings directly: 'ROIC has declined to 9.2%', "
+            "'Management evaded margin guidance on the Q3 earnings call'.\n"
+            "2. STRICT FINANCIAL VOCABULARY: You are writing for institutional PMs, not "
+            "retail investors. Map every observation to precise financial terminology:\n"
+            "   - 'Revenue up but profit down' → 'Gross margin compression of 340bps, "
+            "driven by [specific input cost / negative operating leverage / rising finance costs]'\n"
+            "   - 'Direct contradiction' → BANNED. Use: 'margin compression', 'negative "
+            "operating leverage', 'working capital deterioration', 'one-time impairment'.\n"
+            "   - 'Growth is slowing' → 'Revenue CAGR decelerated from X% (FY21-23) to Y% (FY23-25)'\n"
+            "   - 'Cash is good' → 'OCF/EBITDA conversion at 92%, FCF yield of 4.3%'\n"
+            "3. SEGMENTAL INTEGRITY: When citing geographic or product segment data, "
+            "NEVER conflate a sub-segment with the total segment. Example: if US "
+            "geographic revenue is 41% of total, and US Injectables is a sub-category "
+            "within that, you MUST NOT write 'US Injectables contribute 41%'. Always "
+            "specify: 'US geography contributes 41% of revenue, of which Injectables "
+            "represent [X]% of the US segment'. If the sub-segment breakdown is not "
+            "available, state 'sub-segment split not disclosed' — do NOT assume or "
+            "impute values.\n"
+            "4. VALUATION MATH IS MANDATORY: You cannot issue a FAIR or CHEAP pricing "
+            "verdict without showing the math. You MUST include:\n"
+            "   a) Reverse DCF assumptions: terminal growth rate, WACC, and the "
+            "implied FCF growth rate that justifies current market cap\n"
+            "   b) Peer comparison: at minimum cite EV/EBITDA and P/E multiples for "
+            "2-3 peers (e.g., Sun Pharma, Dr. Reddy's for pharma) and whether the "
+            "target trades at a premium or discount\n"
+            "   c) Historical multiple: state the company's own 3-year or 5-year "
+            "average EV/EBITDA and how current valuation compares\n"
+            "   If any of these data points are unavailable, explicitly state "
+            "'Valuation data unavailable — verdict is directional only'.\n"
         )
 
     @property
     def output_example(self) -> str:
         return """{
-  "executive_summary": "Comprehensive 1-paragraph summary of the investment case.",
+  "executive_summary": "Comprehensive 1-paragraph summary of the investment case using strict financial terminology.",
   "fundamental_analysis": "Deep paragraph on business model, moat, and competitive position.",
   "forensic_audit": "Deep paragraph on accounting quality, earnings quality, and red flags.",
   "capital_allocation": "Deep paragraph on management's capital stewardship, M&A, and returns policy.",
   "management_quality": "Deep paragraph on governance, promoter integrity, and KMP stability.",
-  "bull_case": ["Pillar 1 with evidence", "Pillar 2 with evidence", "Pillar 3"],
+  "bull_case": ["Pillar 1 with specific evidence and metrics", "Pillar 2", "Pillar 3"],
   "bear_case": [
-    {"risk": "Description with evidence", "probability": "LOW|MEDIUM|HIGH", "impact": "Description"}
+    {"risk": "Description with evidence", "probability": "LOW|MEDIUM|HIGH", "impact": "Quantified impact"}
   ],
   "variant_perception": "What the market is NOT pricing in — your edge. Or 'None identified'.",
+  "valuation": {
+    "current_price": "1,240.50",
+    "fair_value_range": "1,350 - 1,450",
+    "implied_upside": "+12.8%",
+    "operative_multiple": "18x EV/EBITDA",
+    "reverse_dcf": {
+      "wacc_pct": 11.5,
+      "terminal_growth_pct": 5.0,
+      "implied_fcf_growth_pct": 18.2,
+      "base_fcf_cr": 1200,
+      "commentary": "Market is pricing in 18.2% FCF CAGR for 10 years — aggressive given 12% historical CAGR."
+    },
+    "scenario_analysis": [
+      {"scenario": "Bull", "target": "1,600", "probability": "25%", "core_assumption": "US generic pricing stabilises, EBITDA margin expansion to 22%"},
+      {"scenario": "Base", "target": "1,400", "probability": "50%", "core_assumption": "Slight margin compression, stable US revenue"},
+      {"scenario": "Bear", "target": "1,050", "probability": "25%", "core_assumption": "USFDA OAI escalates to Warning Letter, -15% US revenue hit"}
+    ],
+    "peer_comps": [
+      {"ticker": "Sun Pharma", "ev_ebitda": 22.5, "pe_ttm": 35.0, "roic": "14%"},
+      {"ticker": "Dr. Reddys", "ev_ebitda": 16.8, "pe_ttm": 21.0, "roic": "18%"}
+    ],
+    "historical_multiple": {
+      "metric": "EV/EBITDA",
+      "current": 19.2,
+      "avg_5yr": 17.5,
+      "premium_discount_pct": 9.7
+    }
+  },
+  "forward_estimates": [
+    {"fiscal_year": "FY27", "revenue_cr": "28,500", "ebitda_cr": "5,700", "eps": "42.5", "assumptions": "US injectables pricing -2%, domestic volume +8%"},
+    {"fiscal_year": "FY28", "revenue_cr": "31,000", "ebitda_cr": "6,350", "eps": "48.2", "assumptions": "Biosimilar launch kicks in"}
+  ],
+  "catalyst_calendar": [
+    {"event": "FDA re-inspection Unit II", "timeframe": "Q3 FY25", "type": "Negative/Binary"},
+    {"event": "Eugia spin-off / stake sale", "timeframe": "H2 FY25", "type": "Positive"}
+  ],
   "scoreboard": {
     "forensic_quality": "A|B|C|D",
     "management_score": "A|B|C|D",
     "moat_durability": "STRONG|INTACT|WEAKENING|BROKEN",
     "pricing_verdict": "CHEAP|FAIR|EXPENSIVE",
-    "reverse_dcf_implied_growth": null
+    "reverse_dcf_implied_growth": 18.2
   },
   "recommendation": "BUY|WATCH|PASS",
   "kill_criteria": [
-    "ROIC drops below 12% for 2 consecutive quarters",
-    "Promoter pledge exceeds 10% of holding"
+    {"id": "kc_1", "criterion": "ROIC drops below 12% for 2 consecutive quarters"},
+    {"id": "kc_2", "criterion": "Promoter pledge exceeds 10% of holding"}
   ],
-  "data_gaps": ["Missing data point 1", "Missing data point 2"]
+  "upside_triggers": [
+    "USFDA clears Unit II within 6 months",
+    "Margin expansion beyond 21% sustained for 2 quarters"
+  ],
+  "evidence_citations": [
+    {"quote": "We expect to maintain margins at 21-22% despite US pricing pressure", "source": "Q2 FY24 Earnings Call, Oct 15"}
+  ],
+  "data_gaps": [
+    "Segmental revenue split for US Injectables vs Oral Solids not explicitly disclosed",
+    "Missing CapEx guidance for FY26"
+  ]
 }"""
 
     def build_initial_context(self, ticker, sector, signals, doc_chars) -> str:
-        """PM gets ALL agent findings as its starting context."""
+        """PM gets ALL agent findings as its starting context.
+        
+        Agent names are deliberately anonymised in the headers to prevent
+        the LLM from referencing them in its output.
+        """
         agent_outputs = signals.get("_agent_outputs", {})
-        parts = [f"Synthesise findings for {ticker} ({sector})."]
+
+        # Map internal agent names to neutral research-area labels
+        _NEUTRAL_LABELS = {
+            "forensic_investigator": "ACCOUNTING & RED FLAG ANALYSIS",
+            "narrative_decoder":     "MANAGEMENT COMMUNICATION ANALYSIS",
+            "moat_architect":        "COMPETITIVE POSITION & MOAT ASSESSMENT",
+            "capital_allocator":     "CAPITAL ALLOCATION REVIEW",
+            "management_quality":    "GOVERNANCE & MANAGEMENT QUALITY",
+            "forensic_quant":        "QUANTITATIVE FINANCIAL METRICS",
+        }
+
+        parts = [f"Synthesise the following research for {ticker} ({sector})."]
+        parts.append(
+            "\nIMPORTANT: The sections below are labelled by research area. "
+            "In your output, NEVER reference these section labels or imply "
+            "that separate teams produced them. Write as a single analyst."
+        )
         for agent_name, output in agent_outputs.items():
-            parts.append(f"\n## {agent_name.upper()} FINDINGS:")
+            label = _NEUTRAL_LABELS.get(agent_name, agent_name.upper().replace('_', ' '))
+            parts.append(f"\n## {label}:")
             if isinstance(output, dict):
                 parts.append(json.dumps(output, indent=2, ensure_ascii=False))
             else:

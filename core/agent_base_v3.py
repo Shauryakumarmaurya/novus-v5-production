@@ -65,44 +65,174 @@ class AuditTrail:
         }
 
     def to_analyst_note(self) -> str:
-        """Render as a readable investigation report."""
-        lines = [f"## {self.agent_name.replace('_',' ').title()}: {self.ticker}"]
-        lines.append(f"**Confidence:** {self.confidence:.0%} | "
-                      f"**Tools used:** {self.tools_called} | "
-                      f"**Time:** {self.execution_time_s}s")
+        """Render as a readable report.
+        
+        For pm_synthesis: a clean client-facing report with no internal
+        architecture leakage — no agent names, no conviction badge, no
+        debug metadata.
+        
+        For other agents: a concise internal-facing summary (used only
+        in the live dashboard cards, never in the PDF).
+        """
+        from utils.formatters import format_dict_as_markdown, _is_empty_or_none
+
+        if self.agent_name == "pm_synthesis":
+            return self._render_pm_report()
+
+        # ── Internal agent note (non-PM agents) ──
+        from utils.formatters import _clean_human_key
+        clean_name = _clean_human_key(self.agent_name)
+        lines = [f"## {clean_name}: {self.ticker}"]
         lines.append("")
 
-        if self.steps:
-            lines.append("### Investigation path")
-            for s in self.steps:
-                action = s.get("action", "Reasoning")
-                thought = s.get("thought", "")
-                if not thought:
-                    # Provide tool input parameters as context if thought trace is empty
-                    inps = s.get("input", {})
-                    thought = str(inps)[:150]
-                lines.append(f"- **{action}**: {thought}")
-            lines.append("")
-
         if self.findings:
-            lines.append("### Findings")
-            from utils.formatters import format_dict_as_markdown
             lines.extend(format_dict_as_markdown(self.findings, indent=0))
             lines.append("")
 
         if self.data_gaps:
-            lines.append("### Data gaps")
+            lines.append("### Data Gaps")
             for g in self.data_gaps:
                 lines.append(f"- {g}")
             lines.append("")
 
-        if self.verification:
-            rel = self.verification.get("overall_reliability", "N/A")
-            lines.append(f"### Verification: {rel}")
-            for err in self.verification.get("critical_errors", []):
-                lines.append(f"- ⚠️ {err}")
+        return "\n".join(lines)
+
+    def _render_pm_report(self) -> str:
+        """Render the PM Synthesis findings as a clean, structured
+        research report suitable for client-facing PDF export.
+        
+        Key design decisions:
+        - No agent name header (the report title is set by the PDF template)
+        - No conviction/confidence badge (a bare % destroys trust)
+        - Scoreboard items each on their own line with explicit formatting
+        - Every null/empty/None field silently suppressed
+        - Section titles mapped to professional research-report headings
+        """
+        from utils.formatters import format_dict_as_markdown, _is_empty_or_none, _clean_human_key
+
+        findings = self.findings or {}
+        lines = []
+
+        # ── Section ordering and professional titles ──
+        # Maps the PM Synthesis JSON keys to proper report section headings.
+        # Order matters — this defines the structure of the report.
+        _SECTION_ORDER = [
+            ("executive_summary",     "Executive Summary"),
+            ("fundamental_analysis",  "Fundamental Analysis"),
+            ("forensic_audit",        "Forensic & Accounting Quality"),
+            ("capital_allocation",    "Capital Allocation"),
+            ("management_quality",    "Management & Governance"),
+            ("valuation",             "Valuation & Scenario Analysis"),
+            ("forward_estimates",     "Forward Estimates"),
+            ("catalyst_calendar",     "Catalyst Calendar"),
+            ("bull_case",             "Bull Case"),
+            ("bear_case",             "Bear Case"),
+            ("variant_perception",    "Variant Perception"),
+            ("scoreboard",            "Scoreboard"),
+            ("recommendation",        "Recommendation"),
+            ("kill_criteria",         "Kill Criteria"),
+            ("upside_triggers",       "Upside Triggers"),
+            ("evidence_citations",    "Evidence & Citations"),
+            ("data_gaps",             "Data Gaps & Limitations"),
+        ]
+
+        for key, title in _SECTION_ORDER:
+            val = findings.get(key)
+            if _is_empty_or_none(val):
+                continue
+
+            if key == "scoreboard":
+                lines.append(f"## {title}")
+                lines.append("")
+                self._render_scoreboard(val, lines)
+                lines.append("")
+            elif key == "recommendation":
+                lines.append(f"## {title}: {val}")
+                lines.append("")
+            elif key == "evidence_citations" and isinstance(val, list):
+                lines.append(f"## {title}")
+                lines.append("")
+                for item in val:
+                    if _is_empty_or_none(item): continue
+                    if isinstance(item, dict) and "quote" in item and "source" in item:
+                        lines.append(f"- *\"{item['quote']}\"* — **{item['source']}**")
+                    else:
+                        lines.extend(format_dict_as_markdown([item], indent=0))
+                lines.append("")
+            elif isinstance(val, str):
+                lines.append(f"## {title}")
+                lines.append("")
+                lines.append(val)
+                lines.append("")
+            elif isinstance(val, list):
+                lines.append(f"## {title}")
+                lines.append("")
+                for item in val:
+                    if _is_empty_or_none(item):
+                        continue
+                    if isinstance(item, dict):
+                        if key == "kill_criteria" and "criterion" in item:
+                            kc_id = item.get("id", "")
+                            kc_id_str = f"[{kc_id}] " if kc_id else ""
+                            lines.append(f"- {kc_id_str}{item['criterion']}")
+                        else:
+                            parts = []
+                            for dk, dv in item.items():
+                                if not _is_empty_or_none(dv):
+                                    parts.append(f"**{_clean_human_key(dk)}:** {dv}")
+                            if parts:
+                                lines.append(f"- {' | '.join(parts)}")
+                    else:
+                        lines.append(f"- {item}")
+                lines.append("")
+            elif isinstance(val, dict):
+                lines.append(f"## {title}")
+                lines.append("")
+                lines.extend(format_dict_as_markdown(val, indent=0))
+                lines.append("")
+
+        # ── Render any keys NOT in the section order (future-proofing) ──
+        rendered_keys = {k for k, _ in _SECTION_ORDER}
+        for key, val in findings.items():
+            if key in rendered_keys or _is_empty_or_none(val):
+                continue
+            title = _clean_human_key(key)
+            lines.append(f"## {title}")
+            lines.append("")
+            if isinstance(val, (dict, list)):
+                lines.extend(format_dict_as_markdown(val, indent=0))
+            else:
+                lines.append(str(val))
+            lines.append("")
 
         return "\n".join(lines)
+
+    @staticmethod
+    def _render_scoreboard(scoreboard: dict, lines: list):
+        """Render the scoreboard as a clean, line-separated list.
+        
+        Fixes the collision bug where 'Management Score: B-' was
+        running into 'Moat Durability: WEAKENING' because the formatter
+        didn't force line breaks between adjacent items.
+        """
+        from utils.formatters import _is_empty_or_none, _clean_human_key
+
+        if not isinstance(scoreboard, dict):
+            return
+
+        for k, v in scoreboard.items():
+            if _is_empty_or_none(v):
+                continue
+            label = _clean_human_key(k)
+            # Format the value — uppercase for grades/verdicts
+            display_val = str(v)
+            if isinstance(v, (int, float)):
+                # Numeric values like implied growth
+                if abs(v) < 1:
+                    display_val = f"{v:.1%}"
+                else:
+                    display_val = f"{v}"
+            lines.append(f"- **{label}:** {display_val}")
 
 
 class AgentV3(ABC):
@@ -126,7 +256,7 @@ class AgentV3(ABC):
         return AuditTrail(...)                                 # full trail
     """
 
-    MAX_ITERATIONS = 12
+    MAX_ITERATIONS = 8
     VERIFY = True
 
     @property
@@ -186,6 +316,8 @@ class AgentV3(ABC):
         extraction_signals: dict,
         llm: LLMClient = None,
         dynamic_mandate: str = "",
+        fiscal_period: str = "",
+        on_step=None,
     ) -> AuditTrail:
         """Full v3 execution: compose → investigate → verify → audit trail."""
         start = time.time()
@@ -230,6 +362,7 @@ class AgentV3(ABC):
             tools=tools,
             max_iterations=self.MAX_ITERATIONS,
             llm=llm,
+            on_step=on_step,
         )
 
         # ── 5. Verification ──
@@ -268,6 +401,28 @@ class AgentV3(ABC):
             llm_calls=react_result.total_llm_calls,
             execution_time_s=elapsed,
         )
+
+        # ── Memory: persist high-confidence investigation patterns ──
+        # We only store the tool-sequence footprint (not content) so the memory
+        # layer can later suggest proven strategies back to the agent.
+        try:
+            if confidence >= 0.7 and react_result.reasoning_chain:
+                tool_sequence = [
+                    s.action for s in react_result.reasoning_chain
+                    if s.action
+                ]
+                if tool_sequence:
+                    from core.memory import get_memory
+                    get_memory().store_investigation_pattern(
+                        agent_name=self.agent_name,
+                        ticker=ticker,
+                        tool_sequence=tool_sequence,
+                        confidence=confidence,
+                        fiscal_period=fiscal_period or None,
+                    )
+        except Exception as e:
+            print(f"[AgentV3] Memory store_investigation_pattern failed: {e}")
+
         return trail
 
     def _compute_confidence(self, react: ReActResult, verif: Optional[dict]) -> float:

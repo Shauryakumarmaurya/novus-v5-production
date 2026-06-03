@@ -52,6 +52,9 @@ class NarrativeDecoderV3(AgentV3):
 }"""
 
     def build_agent_tools(self, doc: str, tables: dict, ticker: str = "") -> list[Tool]:
+        # Infer sector from tables metadata if available
+        sector = tables.get("_sector", "General") if isinstance(tables, dict) else "General"
+        
         return [
             Tool(
                 name="search_management_guidance",
@@ -74,8 +77,9 @@ class NarrativeDecoderV3(AgentV3):
                 name="detect_hedging_language",
                 description=(
                     "Scan for hedging/evasive language patterns in the transcript. "
-                    "Returns instances of: 'challenging environment', 'one-time', "
-                    "'strategic investment', 'going forward', 'as I said', topic pivots."
+                    "Sector-aware: detects FMCG patterns (premiumization journey, grammage rationalization), "
+                    "Banking patterns (proactive provisioning, restructured book), etc. "
+                    "Returns instances with surrounding context."
                 ),
                 parameters={
                     "type": "object",
@@ -84,6 +88,31 @@ class NarrativeDecoderV3(AgentV3):
                     },
                     "required": ["section"],
                 },
-                handler=_safe_handler(lambda section: _detect_hedging(doc, section)),
+                handler=_safe_handler(lambda section: _detect_hedging(doc, section, sector)),
+            ),
+            Tool(
+                name="analyze_transcript_nlp",
+                description=(
+                    "Run deep NLP analysis on earnings call transcript. "
+                    "Returns structured output: tone_shifts (management language shifts between calls), "
+                    "analyst_dodges (questions management evaded), key_phrases (significant statements), "
+                    "and a management_confidence_score (0-100). "
+                    "This is an expensive tool — call ONCE, not per-topic."
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "scope": {"type": "string", "description": "'latest' for most recent transcript, or specific filename"},
+                    },
+                    "required": ["scope"],
+                },
+                handler=_safe_handler(lambda scope: _analyze_transcript(ticker, scope, sector, doc)),
             ),
         ]
+
+
+def _analyze_transcript(ticker, scope, sector, doc):
+    """Bridge to transcript_nlp.analyze() with error handling."""
+    from .transcript_nlp import analyze
+    return analyze(ticker=ticker, scope=scope, sector=sector, document_text=doc)
+

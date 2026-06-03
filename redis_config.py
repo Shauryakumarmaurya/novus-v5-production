@@ -15,9 +15,10 @@ def _build_redis():
         port=int(os.getenv('REDIS_PORT', 6379)),
         password=os.getenv('REDIS_PASSWORD') or None,
         db=int(os.getenv('REDIS_DB', 0)),
-        socket_timeout=5,
-        socket_connect_timeout=5,
-        health_check_interval=30,
+        socket_timeout=600,          # 10 min — prevents RQ worker idle disconnects
+        socket_connect_timeout=30,   # 30s for initial connect
+        health_check_interval=60,    # ping every 60s to keep connection alive
+        retry_on_timeout=True,       # auto-retry on transient timeouts
         decode_responses=False
     )
 

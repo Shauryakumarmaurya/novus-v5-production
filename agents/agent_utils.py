@@ -119,13 +119,39 @@ def _search_guidance(doc, topic, ticker=""):
             results.append({"passage": doc[start:end].strip(), "type": "guidance_regex"})
     return results[:5] or [{"passage": f"No guidance found for '{topic}'", "type": "none"}]
 
-def _detect_hedging(doc, section):
+def _detect_hedging(doc, section, sector="General"):
+    # Universal hedging phrases
     hedging_phrases = [
         "challenging environment", "one-time", "one time", "strategic investment",
         "going forward", "as I said", "let me clarify", "I think we need to",
         "it's too early to", "we'll have to wait", "difficult to predict",
         "cautiously optimistic", "calibrated approach", "headwinds",
+        "sustainable profitable growth", "long-term value creation",
+        "we remain confident", "broadly in line",
     ]
+    
+    # Sector-aware evasion phrases
+    sector_lower = sector.lower()
+    if any(k in sector_lower for k in ["fmcg", "consumer", "food", "personal care"]):
+        hedging_phrases.extend([
+            "controlling controllables", "premiumization journey",
+            "right-sizing portfolio", "calibrated pricing",
+            "investing behind brands", "grammage rationalization",
+            "building distribution muscle",
+        ])
+    elif any(k in sector_lower for k in ["bank", "financial", "nbfc"]):
+        hedging_phrases.extend([
+            "granular monitoring", "proactive provisioning",
+            "dispensation period", "restructured book",
+            "elevated slippages", "one-off recovery",
+        ])
+    elif any(k in sector_lower for k in ["software", "it ", "technology"]):
+        hedging_phrases.extend([
+            "deal pipeline robust", "seasonal furloughs",
+            "ramp-up delays", "vendor consolidation opportunity",
+            "discretionary spending pause",
+        ])
+    
     text = doc
     if section == "qa_only":
         qa_idx = doc.lower().find("question and answer")
@@ -138,10 +164,10 @@ def _detect_hedging(doc, section):
         count = text.lower().count(phrase)
         if count > 0:
             idx = text.lower().find(phrase)
-            context = text[max(0, idx-50):idx+len(phrase)+100].strip()
+            context = text[max(0, idx-100):idx+len(phrase)+200].strip()
             found.append({"phrase": phrase, "count": count, "context": context})
     found.sort(key=lambda x: -x["count"])
-    return found[:10] or [{"phrase": "No hedging language detected", "count": 0}]
+    return found[:15] or [{"phrase": "No hedging language detected", "count": 0}]
 
 def _search_competitive(doc, topic, ticker=""):
     if ticker:

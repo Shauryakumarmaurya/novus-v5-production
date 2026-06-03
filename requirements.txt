@@ -26,3 +26,4 @@ sse-starlette>=3.0.0
 uvicorn>=0.30.0
 structlog>=24.0.0
 flask_limiter
+voyageai

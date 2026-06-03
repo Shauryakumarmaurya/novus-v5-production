@@ -80,7 +80,7 @@ def call_gemini(prompt, text_to_analyze, send_financials=False, financial_data=N
                 print(f"[debug] Failed to log Gemini input: {_e0}")
 
         model = genai.GenerativeModel(
-            model_name='gemini-1.5-flash',
+            model_name='gemini-2.0-flash',
             system_instruction=prompt
         )
         response = model.generate_content(
@@ -104,7 +104,24 @@ def call_gemini(prompt, text_to_analyze, send_financials=False, financial_data=N
         return response.text
     except Exception as e:
         print(f"An error occurred with the Gemini API: {e}")
-        return f"Error: Could not generate content from AI. Details: {e}"
+        # ── Fallback to DeepSeek V3 when Gemini is unavailable ──
+        print("[Gemini→DeepSeek Fallback] Retrying with DeepSeek V3...")
+        try:
+            fallback_resp = client.chat.completions.create(
+                model=DEEPSEEK_V3,
+                messages=[
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": f"Here are the {description} to analyze:\n\n---\n\n{content_to_send}"}
+                ],
+                temperature=0.2,
+                max_tokens=8192
+            )
+            fallback_text = fallback_resp.choices[0].message.content
+            print("[Gemini→DeepSeek Fallback] ✅ DeepSeek fallback succeeded")
+            return fallback_text
+        except Exception as fallback_err:
+            print(f"[Gemini→DeepSeek Fallback] ❌ DeepSeek also failed: {fallback_err}")
+            return f"Error: Could not generate content from AI. Details: {e}"
 
 
 def call_deepseek(prompt, text_to_analyze, send_financials=False, financial_data=None, extra_context=None):

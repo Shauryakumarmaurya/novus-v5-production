@@ -46,6 +46,8 @@ class MoatArchitectV3(AgentV3):
 }"""
 
     def build_agent_tools(self, doc: str, tables: dict, ticker: str = "") -> list[Tool]:
+        sector = tables.get("_sector", "General") if isinstance(tables, dict) else "General"
+        
         return [
             Tool(
                 name="search_competitive_data",
@@ -63,4 +65,47 @@ class MoatArchitectV3(AgentV3):
                 },
                 handler=_safe_handler(lambda topic: _search_competitive(doc, topic, ticker)),
             ),
+            Tool(
+                name="get_segment_breakdown_moat",
+                description=(
+                    "Extract business segment revenue, margins, and growth. "
+                    "Critical for assessing which segments are driving growth "
+                    "and where pricing power exists or is eroding."
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "period": {"type": "string", "description": "'latest' or specific period like 'Mar 2025'"},
+                    },
+                    "required": ["period"],
+                },
+                handler=_safe_handler(lambda period: _get_segments_for_moat(ticker, period, sector)),
+            ),
+            Tool(
+                name="get_volume_vs_price_growth_moat",
+                description=(
+                    "Extract volume growth vs price/mix growth decomposition. "
+                    "This is THE key tool for pricing power analysis: if growth "
+                    "is entirely price-driven with flat volumes, the moat is weakening."
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "period": {"type": "string", "description": "'latest' or specific period"},
+                    },
+                    "required": ["period"],
+                },
+                handler=_safe_handler(lambda period: _get_volume_for_moat(ticker, period, sector)),
+            ),
         ]
+
+
+def _get_segments_for_moat(ticker, period, sector):
+    from .segment_extractor import get_segments
+    return get_segments(ticker, period, sector)
+
+
+def _get_volume_for_moat(ticker, period, sector):
+    from .segment_extractor import get_volume_price_split
+    return get_volume_price_split(ticker, period, sector)
+
