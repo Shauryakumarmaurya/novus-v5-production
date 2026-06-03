@@ -49,7 +49,7 @@ async def fetch_bse_rss(ticker: str, session: aiohttp.ClientSession) -> List[Eve
                 id=_generate_event_id("bse_1", "USFDA Inspection at Eugia Unit II"),
                 source_name="BSE Corporate Announcements",
                 source_tier=1,
-                url="https://bseindia.com/dummy/auropharma_fda.pdf",
+                url="https://www.bseindia.com/stock-share-price/aurobindo-pharma-ltd/auropharma/524804/corp-announcements/",
                 published_at=datetime.utcnow(),
                 fetched_at=datetime.utcnow(),
                 raw_title="USFDA Inspection at Eugia Unit II",
