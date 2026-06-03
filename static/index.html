@@ -1800,7 +1800,7 @@
                     const charts = {};
                     const canvases = document.querySelectorAll('canvas');
                     canvases.forEach(canvas => {
-                        if (canvas.id) {
+                        if (canvas.id && canvas.width > 0 && canvas.height > 0) {
                             // Convert canvas to white background image since PDF is light mode
                             const ctx = canvas.getContext('2d');
                             const tempCanvas = document.createElement('canvas');
