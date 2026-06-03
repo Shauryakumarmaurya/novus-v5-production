@@ -376,7 +376,7 @@
                             <button class="tab-btn active" data-tab="synthesis">Executive Summary</button>
                             <button class="tab-btn" data-tab="forensic">Risk & Forensic Audit</button>
                             <button class="tab-btn" data-tab="financial">Quant Canvas</button>
-                            <button class="tab-btn" data-tab="signals">Live Signals</button>
+                            <button class="tab-btn" data-tab="signals">Live Signals <span id="tab-badge-signals" class="hidden ml-1.5 px-1.5 py-0.5 text-[9px] bg-accent-brand text-white rounded-full font-bold"></span></button>
                         </div>
 
                         <!-- Panel Bodies -->
@@ -602,25 +602,55 @@
                             <!-- Tab: Live Signals -->
                             <div class="tab-content p-6" id="tab-signals">
                                 <!-- Signal Intelligence Panel -->
-                                <div id="signal-intel-panel" class="ws-card p-5 hidden">
-                                    <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex justify-between items-center">
-                                        <div class="flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-accent-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                                            On-Demand Signal Intelligence
-                                        </div>
-                                        <span id="signal-freshness" class="text-[9px] font-mono font-bold px-2 py-0.5 bg-accent-brand/20 text-accent-brand border border-accent-brand/50 rounded-sm tracking-widest"></span>
-                                    </h3>
-                                    <div id="signal-unavailable" class="hidden mb-4 p-3 bg-semantic-amber/10 border border-semantic-amber/30 rounded-md text-xs font-mono text-semantic-amber"></div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div id="signal-intel-panel" class="hidden">
+                                    <!-- Header / Query Bar -->
+                                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-base-border pb-4">
                                         <div>
-                                            <h4 class="text-[11px] font-mono text-txt-dim uppercase tracking-widest mb-3">Live Signals</h4>
-                                            <div id="signal-list" class="space-y-3"></div>
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-accent-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                                Live Signal Intelligence
+                                            </h3>
+                                            <div id="signal-freshness" class="text-[10px] font-mono text-txt-muted mt-1"></div>
                                         </div>
-                                        <div>
-                                            <h4 class="text-[11px] font-mono text-txt-dim uppercase tracking-widest mb-3">Thesis Impact Mapping</h4>
-                                            <div id="impact-list" class="space-y-3"></div>
+                                        <!-- Query proxy bar -->
+                                        <div class="relative w-full md:w-64">
+                                            <input type="text" id="signal-query-input" placeholder="Query these signals..." aria-label="Query Live Signals" class="w-full bg-base-bg border border-base-border rounded px-3 py-1.5 text-xs text-txt-primary focus:outline-none focus:border-accent-brand focus:ring-1 focus:ring-accent-brand/50 placeholder:text-txt-muted/50" onkeydown="if(event.key === 'Enter') { document.getElementById('chat-input').value = this.value; document.getElementById('chat-send').click(); this.value = ''; }">
+                                            <svg class="w-3.5 h-3.5 text-txt-muted absolute right-2.5 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                                         </div>
                                     </div>
+
+                                    <div id="signal-unavailable" class="hidden mb-4 p-3 bg-semantic-amber/10 border border-semantic-amber/30 rounded-md text-xs font-mono text-semantic-amber"></div>
+
+                                    <!-- Macro / Sector Context Band -->
+                                    <div id="signal-macro-band" class="hidden mb-6 p-4 rounded bg-base-elevated border border-base-border">
+                                        <h4 class="text-[10px] font-mono font-semibold text-txt-dim uppercase tracking-widest mb-3 flex items-center gap-2"><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg> Macro & Sector Context</h4>
+                                        <div id="signal-macro-list" class="space-y-3"></div>
+                                    </div>
+
+                                    <!-- Signals Feed -->
+                                    <div id="signal-list" class="space-y-4"></div>
+
+                                    <!-- Toggle for lower-materiality -->
+                                    <div class="mt-6 text-center">
+                                        <button id="signal-toggle-btn" class="hidden text-xs font-mono text-txt-muted hover:text-txt-primary transition-colors focus:outline-none focus:underline" onclick="window.toggleLowerSignals()">Show lower-materiality signals (<span id="signal-hidden-count">0</span>)</button>
+                                    </div>
+                                    
+                                    <div class="mt-8 text-center border-t border-base-border/50 pt-4">
+                                        <p class="text-[10px] font-mono text-txt-muted/60 uppercase tracking-widest">Not Investment Advice — AI Generated Signals</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Loading State -->
+                                <div id="signal-loading-state" class="hidden text-center py-24">
+                                    <div class="w-12 h-12 rounded-full border-2 border-base-border border-t-accent-brand animate-spin mx-auto mb-4"></div>
+                                    <h3 class="text-sm font-sans font-semibold text-txt-primary mb-1">Signal Pipeline Running</h3>
+                                    <p class="text-xs font-sans text-txt-secondary">Scanning sources and scoring materiality concurrently...</p>
+                                </div>
+                                
+                                <!-- Empty State -->
+                                <div id="signal-empty-state" class="hidden text-center py-24 border border-dashed border-base-border rounded-lg bg-base-card/50">
+                                    <svg class="w-8 h-8 text-txt-muted mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                                    <p class="text-sm font-sans text-txt-secondary" id="signal-empty-text">No material signals detected as of <time>.</p>
                                 </div>
                             </div>
                         </div>
@@ -1498,68 +1528,262 @@
                 }
             }
 
+            window.injectCopilotQuery = function(cleanQuery, structuredContextText) {
+                chatHistory.push({ role: 'user', content: "[Context Injected]\n" + structuredContextText });
+                chatHistory.push({ role: 'assistant', content: "Context acknowledged." });
+                chatInput.value = cleanQuery;
+                chatSend.disabled = false;
+                chatSend.click();
+            };
+
+            window.toggleLowerSignals = function() {
+                const hidden = document.querySelectorAll('.signal-subthreshold');
+                const btn = document.getElementById('signal-toggle-btn');
+                const isShowing = btn.textContent.startsWith('Hide');
+                hidden.forEach(el => {
+                    if (isShowing) {
+                        el.classList.add('hidden');
+                    } else {
+                        el.classList.remove('hidden');
+                    }
+                });
+                if (isShowing) {
+                    btn.innerHTML = `Show lower-materiality signals (<span id="signal-hidden-count">${hidden.length}</span>)`;
+                } else {
+                    btn.textContent = 'Hide lower-materiality signals';
+                }
+            };
+
             function renderSignalIntelligence(payload) {
                 const panel = document.getElementById('signal-intel-panel');
-                if (!panel) return;
+                const loading = document.getElementById('signal-loading-state');
+                const empty = document.getElementById('signal-empty-state');
+                if (!panel || !loading || !empty) return;
                 
-                const { signals, impacts, unavailable_sources } = payload;
-                if (!signals?.length && !impacts?.length) {
-                    panel.classList.remove('hidden');
-                    document.getElementById('signal-list').innerHTML = '<div class="text-xs font-mono text-txt-muted p-4 border border-base-border/50 rounded bg-base-elevated text-center">No material signals detected in the last 24 hours.</div>';
-                    document.getElementById('impact-list').innerHTML = '<div class="text-xs font-mono text-txt-muted p-4 border border-base-border/50 rounded bg-base-elevated text-center">N/A</div>';
+                loading.classList.add('hidden');
+                
+                const { signals, impacts, events, unavailable_sources } = payload;
+                const threshold = 60;
+                
+                // Show Empty State if completely empty
+                if (!signals || signals.length === 0) {
+                    panel.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    const date = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
+                    document.getElementById('signal-empty-text').textContent = `No signals scored as of ${date} UTC.`;
                     return;
                 }
                 
+                // Update badge
+                const materialCount = signals.filter(s => s.materiality_score >= threshold).length;
+                const badge = document.getElementById('tab-badge-signals');
+                if (badge) {
+                    if (materialCount > 0) {
+                        badge.textContent = materialCount;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                }
+                
+                if (materialCount === 0) {
+                    panel.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    const date = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
+                    document.getElementById('signal-empty-text').textContent = `No material signals (>= 60) detected as of ${date} UTC.`;
+                    return;
+                }
+                
+                empty.classList.add('hidden');
                 panel.classList.remove('hidden');
                 
+                // Freshness & Unavailable
                 const freshness = document.getElementById('signal-freshness');
-                if (freshness) {
-                    const date = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
-                    freshness.textContent = `SYNC: ${date} UTC`;
+                if (freshness && signals.length > 0) {
+                    const latestDate = new Date(Math.max(...signals.map(s => new Date(s.as_of).getTime())));
+                    freshness.textContent = `SYNC: ${latestDate.toLocaleString('en-US', { timeZone: 'UTC', hour12: false })} UTC`;
                 }
                 
                 const unavailEl = document.getElementById('signal-unavailable');
-                if (unavailable_sources?.length) {
+                if (unavailable_sources && unavailable_sources.length > 0) {
                     unavailEl.textContent = `> WARN: Sources unavailable at fetch: ${unavailable_sources.join(', ')}`;
                     unavailEl.classList.remove('hidden');
                 } else {
                     unavailEl.classList.add('hidden');
                 }
                 
-                const sigList = document.getElementById('signal-list');
-                sigList.innerHTML = signals.map(s => {
-                    const color = s.direction === 'positive' ? 'text-semantic-green bg-semantic-green/10 border-semantic-green/30' 
-                                : s.direction === 'negative' ? 'text-semantic-red bg-semantic-red/10 border-semantic-red/30' 
-                                : 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
-                    return `
-                    <div class="p-3 border rounded-md ${color}">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="text-xs font-bold uppercase tracking-wider">${s.category}</span>
-                            <span class="text-[10px] font-mono opacity-80">SCORE: ${s.materiality_score}</span>
-                        </div>
-                        <p class="text-sm font-sans text-txt-primary opacity-90">${s.summary}</p>
-                    </div>`;
-                }).join('');
+                // Sort signals by materiality
+                const sortedSignals = [...signals].sort((a, b) => b.materiality_score - a.materiality_score);
                 
-                const impList = document.getElementById('impact-list');
-                impList.innerHTML = impacts.map(i => {
-                    const color = i.direction === 'positive' ? 'text-semantic-green bg-semantic-green/10 border-semantic-green/30' 
-                                : i.direction === 'negative' ? 'text-semantic-red bg-semantic-red/10 border-semantic-red/30' 
-                                : 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
-                    const killBadge = i.triggers_kill_criterion_id 
-                        ? `<span class="mt-2 inline-block text-[9px] font-bold px-2 py-0.5 bg-semantic-red text-white rounded-sm uppercase tracking-widest animate-pulse">KILL CRITERION: ${i.triggers_kill_criterion_id}</span>` 
-                        : '';
+                // Separate macro vs specific
+                const macroSignals = sortedSignals.filter(s => s.category === 'macro_sector');
+                const specificSignals = sortedSignals.filter(s => s.category !== 'macro_sector');
+                
+                const renderSignalCard = (s) => {
+                    const isSubthreshold = s.materiality_score < threshold;
+                    const displayClass = isSubthreshold ? 'hidden signal-subthreshold' : '';
+                    
+                    // Match primary event
+                    const eventIds = s.event_ids || [];
+                    const primaryEventId = eventIds[0];
+                    const event = events ? events.find(e => e.id === primaryEventId) : null;
+                    const headline = event ? event.raw_title : (s.summary || "Signal Detected");
+                    const sourceName = event ? event.source_name : "Unknown Source";
+                    const url = event ? event.url : "#";
+                    const publishedAt = event ? new Date(event.published_at).toLocaleString() : "";
+                    const rawSummary = event ? event.raw_summary : "";
+                    
+                    const summaryText = s.summary || rawSummary;
+                    
+                    // Match impact
+                    const impact = impacts ? impacts.find(i => i.signal_id === s.id) : null;
+                    
+                    // Color and icon encoding
+                    let colorClass = 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
+                    let iconHtml = `<svg class="w-3 h-3" aria-label="Neutral" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" /></svg>`;
+                    if (s.direction === 'positive') {
+                        colorClass = 'text-semantic-green bg-semantic-green/10 border-semantic-green/30';
+                        iconHtml = `<svg class="w-3 h-3" aria-label="Positive" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>`;
+                    } else if (s.direction === 'negative') {
+                        colorClass = 'text-semantic-red bg-semantic-red/10 border-semantic-red/30';
+                        iconHtml = `<svg class="w-3 h-3" aria-label="Negative" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>`;
+                    }
+                    
+                    const unconfirmedLabel = s.highest_source_tier === 2 ? `<span class="ml-2 text-[9px] px-1 py-0.5 bg-semantic-amber/20 text-semantic-amber rounded uppercase tracking-widest border border-semantic-amber/30">Reported, Not Confirmed</span>` : '';
+                    const novelLabel = s.is_novel ? `<span class="ml-2 text-[9px] px-1 py-0.5 bg-accent-brand/20 text-accent-brand rounded uppercase tracking-widest border border-accent-brand/30">NOVEL</span>` : '';
+                    
+                    // Related events
+                    let relatedHtml = '';
+                    if (eventIds.length > 1 && events) {
+                        const related = eventIds.slice(1).map(eid => events.find(e => e.id === eid)).filter(e => e);
+                        if (related.length > 0) {
+                            relatedHtml = `
+                                <details class="mt-3 text-[11px] font-mono group">
+                                    <summary class="cursor-pointer text-txt-muted hover:text-txt-primary flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-accent-brand rounded w-max">
+                                        <svg class="w-3 h-3 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        Related Coverage (${related.length})
+                                    </summary>
+                                    <div class="mt-2 pl-4 border-l border-base-border space-y-1">
+                                        ${related.map(r => `<div class="truncate"><a href="${r.url}" target="_blank" class="text-accent-brand hover:underline focus:outline-none focus:ring-1 focus:ring-accent-brand rounded">${r.source_name}</a> - ${r.raw_title}</div>`).join('')}
+                                    </div>
+                                </details>
+                            `;
+                        }
+                    }
+                    
+                    // Impact Block
+                    let impactHtml = '';
+                    let killBannerHtml = '';
+                    if (impact) {
+                        let killText = '';
+                        if (impact.triggers_kill_criterion_id) {
+                            // Resolve KC text
+                            let kcText = impact.triggers_kill_criterion_id;
+                            if (window._currentReportData && window._currentReportData.final_thesis && window._currentReportData.final_thesis.kill_criteria) {
+                                const kcObj = window._currentReportData.final_thesis.kill_criteria.find(k => k.id === impact.triggers_kill_criterion_id);
+                                if (kcObj) kcText = kcObj.criterion;
+                            }
+                            killText = `<div class="mt-2 p-2 bg-semantic-red/10 border border-semantic-red/30 rounded text-[11px] font-sans text-semantic-red flex items-start gap-2">
+                                <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                <div><strong>KILL CRITERION TRIGGERED:</strong> ${kcText}</div>
+                            </div>`;
+                            killBannerHtml = killText;
+                            
+                            // Propagate to cross tabs
+                            injectCrossTabKillBanner(s, kcText);
+                        }
+                        
+                        impactHtml = `
+                            <div class="mt-3 p-3 bg-base-bg border border-base-border rounded-md text-[11px] font-sans">
+                                <div class="flex justify-between items-center mb-1">
+                                    <strong class="uppercase text-[10px] tracking-widest text-txt-dim">Thesis Impact Mapping</strong>
+                                    <span class="opacity-80">${impact.horizon}</span>
+                                </div>
+                                <div class="mb-1 text-txt-secondary"><strong>Affects:</strong> ${impact.affected_thesis_drivers.join(', ')}</div>
+                                <div class="text-txt-secondary"><strong>Watch:</strong> ${impact.what_to_watch}</div>
+                                ${killBannerHtml}
+                            </div>
+                        `;
+                    }
+                    
+                    // Copilot context packaging
+                    const structuredContext = JSON.stringify({ Signal: s, Impact: impact, Event: event }, null, 2);
+                    const cleanQuery = `Re: "${headline}" — why is this material and how does it impact the thesis?`;
+                    
                     return `
-                    <div class="p-3 border rounded-md ${color}">
-                        <div class="flex justify-between items-start mb-1">
-                            <span class="text-xs font-bold uppercase tracking-wider">${i.qualitative_magnitude} IMPACT</span>
-                            <span class="text-[10px] font-mono opacity-80">${i.horizon}</span>
+                    <div class="p-4 border rounded-md mb-4 bg-base-elevated border-base-border ${displayClass}">
+                        <div class="flex justify-between items-start gap-2 mb-2">
+                            <h4 class="text-sm font-sans font-semibold text-txt-primary leading-tight"><a href="${url}" target="_blank" class="hover:text-accent-brand focus:outline-none focus:ring-1 focus:ring-accent-brand rounded">${headline}</a></h4>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <span class="text-[10px] font-mono opacity-80 border rounded px-1.5 py-0.5 ${colorClass} flex items-center gap-1">${iconHtml} SCORE: ${s.materiality_score}</span>
+                            </div>
                         </div>
-                        <p class="text-[11px] font-sans font-medium text-txt-primary opacity-90 mb-1">Affects: ${i.affected_thesis_drivers.join(', ')}</p>
-                        <p class="text-[11px] font-sans text-txt-primary opacity-70">Watch: ${i.what_to_watch}</p>
-                        ${killBadge}
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3 text-[10px] font-mono text-txt-dim">
+                            <span class="uppercase tracking-widest">${s.category}</span> &bull; 
+                            <a href="${url}" target="_blank" class="hover:underline focus:outline-none focus:ring-1 focus:ring-accent-brand rounded text-txt-secondary">${sourceName}</a> &bull; 
+                            <span>${publishedAt}</span>
+                            ${unconfirmedLabel}
+                            ${novelLabel}
+                        </div>
+                        <p class="text-[13px] font-sans text-txt-secondary leading-relaxed">${summaryText}</p>
+                        
+                        ${impactHtml}
+                        ${relatedHtml}
+                        
+                        <div class="mt-3 flex justify-end">
+                            <button class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent-brand/10 hover:bg-accent-brand/20 text-accent-brand border border-accent-brand/30 rounded text-[11px] font-mono uppercase tracking-widest transition-colors focus:outline-none focus:ring-2 focus:ring-accent-brand" onclick='window.injectCopilotQuery(${JSON.stringify(cleanQuery).replace(/'/g, "&#39;")}, ${JSON.stringify(structuredContext).replace(/'/g, "&#39;")})'>
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                                Discuss
+                            </button>
+                        </div>
                     </div>`;
-                }).join('');
+                };
+                
+                const sigList = document.getElementById('signal-list');
+                sigList.innerHTML = specificSignals.map(renderSignalCard).join('');
+                
+                const macroBand = document.getElementById('signal-macro-band');
+                if (macroSignals.length > 0) {
+                    macroBand.classList.remove('hidden');
+                    document.getElementById('signal-macro-list').innerHTML = macroSignals.map(renderSignalCard).join('');
+                } else {
+                    macroBand.classList.add('hidden');
+                }
+                
+                // Toggle subthreshold
+                const subCount = signals.filter(s => s.materiality_score < threshold).length;
+                const toggleBtn = document.getElementById('signal-toggle-btn');
+                if (subCount > 0) {
+                    toggleBtn.classList.remove('hidden');
+                    document.getElementById('signal-hidden-count').textContent = subCount;
+                } else {
+                    toggleBtn.classList.add('hidden');
+                }
+            }
+            
+            function injectCrossTabKillBanner(signal, kcText) {
+                const bannerHtml = `
+                    <div class="mb-6 p-4 bg-semantic-red/10 border-l-4 border-semantic-red rounded-r-md shadow-sm flex items-start gap-3 cursor-pointer hover:bg-semantic-red/20 transition-colors" onclick="document.querySelector('[data-tab=\\'signals\\']').click()">
+                        <svg class="w-5 h-5 text-semantic-red shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <div>
+                            <h4 class="text-xs font-bold font-sans text-semantic-red uppercase tracking-widest mb-1">Live Kill Criterion Triggered</h4>
+                            <p class="text-sm font-sans text-txt-primary"><strong>${kcText}</strong></p>
+                            <p class="text-[11px] font-sans text-txt-secondary mt-1">Via Signal ID: ${signal.id}. Click to view full signal intelligence.</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Insert into Exec Summary
+                const reportContent = document.getElementById('report-content');
+                if (reportContent && !reportContent.innerHTML.includes('Live Kill Criterion Triggered')) {
+                    reportContent.insertAdjacentHTML('afterbegin', bannerHtml);
+                }
+                
+                // Insert into Forensic Tab
+                const forensicContent = document.getElementById('forensic-tab-content');
+                if (forensicContent && !forensicContent.innerHTML.includes('Live Kill Criterion Triggered')) {
+                    forensicContent.insertAdjacentHTML('afterbegin', bannerHtml);
+                }
             }
 
             // ── PDF Export (Backend WeasyPrint) ──

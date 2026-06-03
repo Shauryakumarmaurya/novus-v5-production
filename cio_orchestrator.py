@@ -481,19 +481,20 @@ async def run_pipeline(
 
     # ── PHASE C & D: SYNC SIGNAL PIPELINE AND MAP IMPACTS ──
     try:
-        signals, unavailable_sources = await signal_task
+        signals, unavailable_sources, events = await signal_task
         if signals:
             impacts = await run_impact_mapping(signals, thesis_trail.findings, ticker)
         else:
             impacts = []
         state.signal_payload = SignalPayload(
             signals=signals, 
-            impacts=impacts, 
+            impacts=impacts,
+            events=events,
             unavailable_sources=unavailable_sources
         )
     except Exception as e:
         print(f"> [CIO] ⚠️ Signal Pipeline failed: {e}")
-        state.signal_payload = SignalPayload(signals=[], impacts=[], unavailable_sources=["Internal Pipeline Error"])
+        state.signal_payload = SignalPayload(signals=[], impacts=[], events=[], unavailable_sources=["Internal Pipeline Error"])
 
     if progress_callback:
         progress_callback("complete", [], list(state.agent_trails.keys()))

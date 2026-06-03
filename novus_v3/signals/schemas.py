@@ -40,4 +40,5 @@ class Impact(BaseModel):
 class SignalPayload(BaseModel):
     signals: List[Signal]
     impacts: List[Impact]
+    events: List[Event]
     unavailable_sources: List[str]

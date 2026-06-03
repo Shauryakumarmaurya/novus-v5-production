@@ -85,29 +85,28 @@ Output JSON matching this exact array of objects (one per event):
         
         signals = []
         for s in scored_data:
-            if s.get("materiality_score", 0) >= MATERIALITY_THRESHOLD:
-                # Find the matching event to pull its tier
-                matching_event = next((e for e in events if e.id == s["event_id"]), None)
-                if not matching_event: continue
+            # Find the matching event to pull its tier
+            matching_event = next((e for e in events if e.id == s["event_id"]), None)
+            if not matching_event: continue
+            
+            confidence = s.get("confidence", "medium")
+            # Cap confidence for Tier 2
+            if matching_event.source_tier == 2 and confidence == "high":
+                confidence = "medium"
                 
-                confidence = s.get("confidence", "medium")
-                # Cap confidence for Tier 2
-                if matching_event.source_tier == 2 and confidence == "high":
-                    confidence = "medium"
-                    
-                signals.append(Signal(
-                    id=f"sig_{matching_event.id}",
-                    event_ids=[matching_event.id],
-                    category=s["category"],
-                    direction=s["direction"],
-                    materiality_score=s["materiality_score"],
-                    confidence=confidence,
-                    time_horizon=s.get("time_horizon", "immediate"),
-                    highest_source_tier=matching_event.source_tier,
-                    as_of=datetime.utcnow(),
-                    is_novel=s.get("is_novel", True),
-                    summary=s.get("summary", "")
-                ))
+            signals.append(Signal(
+                id=f"sig_{matching_event.id}",
+                event_ids=[matching_event.id],
+                category=s["category"],
+                direction=s["direction"],
+                materiality_score=s.get("materiality_score", 0),
+                confidence=confidence,
+                time_horizon=s.get("time_horizon", "immediate"),
+                highest_source_tier=matching_event.source_tier,
+                as_of=datetime.utcnow(),
+                is_novel=s.get("is_novel", True),
+                summary=s.get("summary", "")
+            ))
         return signals
     except Exception as e:
         logger.warning(f"Materiality scoring failed: {e}")
@@ -186,7 +185,7 @@ Output JSON matching this exact array of objects:
         logger.warning(f"Thesis impact mapping failed: {e}")
         return []
 
-async def run_signal_pipeline(ticker: str, financial_context: str) -> Tuple[List[Signal], List[str]]:
+async def run_signal_pipeline(ticker: str, financial_context: str) -> Tuple[List[Signal], List[str], List[Event]]:
     """Phase A & B: Fetch, pre-filter, and score signals."""
     logger.info(f"Starting Signal Pipeline Phase A/B for {ticker}")
     raw_events, unavailable_sources = await fetch_all_events(ticker)
@@ -195,7 +194,7 @@ async def run_signal_pipeline(ticker: str, financial_context: str) -> Tuple[List
     
     signals = await _score_materiality_and_novelty(filtered_events, ticker, financial_context)
     
-    return signals, unavailable_sources
+    return signals, unavailable_sources, filtered_events
 
 async def run_impact_mapping(signals: List[Signal], pm_thesis: dict, ticker: str) -> List[Impact]:
     """Phase D: Map scored signals against final thesis."""
