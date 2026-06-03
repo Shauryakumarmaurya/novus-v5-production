@@ -1800,17 +1800,20 @@
                     const charts = {};
                     const canvases = document.querySelectorAll('canvas');
                     canvases.forEach(canvas => {
-                        if (canvas.id && canvas.width > 0 && canvas.height > 0) {
-                            // Convert canvas to white background image since PDF is light mode
-                            const ctx = canvas.getContext('2d');
-                            const tempCanvas = document.createElement('canvas');
-                            tempCanvas.width = canvas.width;
-                            tempCanvas.height = canvas.height;
-                            const tempCtx = tempCanvas.getContext('2d');
-                            tempCtx.fillStyle = '#FFFFFF';
-                            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-                            tempCtx.drawImage(canvas, 0, 0);
-                            charts[canvas.id] = tempCanvas.toDataURL('image/png');
+                        if (canvas.id && canvas.width > 0 && canvas.height > 0 && canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+                            try {
+                                // Convert canvas to white background image since PDF is light mode
+                                const tempCanvas = document.createElement('canvas');
+                                tempCanvas.width = canvas.width;
+                                tempCanvas.height = canvas.height;
+                                const tempCtx = tempCanvas.getContext('2d');
+                                tempCtx.fillStyle = '#FFFFFF';
+                                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                                tempCtx.drawImage(canvas, 0, 0);
+                                charts[canvas.id] = tempCanvas.toDataURL('image/png');
+                            } catch(e) {
+                                console.warn('Could not export canvas', canvas.id, e);
+                            }
                         }
                     });
 
