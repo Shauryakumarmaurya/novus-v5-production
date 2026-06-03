@@ -12,19 +12,19 @@
             theme: {
                 extend: {
                     colors: {
-                        base: { bg: '#0F172A', card: '#1E293B', elevated: '#334155', border: '#475569', borderLight: '#64748B' },
-                        accent: { brand: '#3B82F6', brandLight: '#60A5FA', brandDim: 'rgba(59,130,246,0.15)' },
-                        semantic: { red: '#ef4444', amber: '#f59e0b', green: '#10b981', redDim: 'rgba(239,68,68,0.12)', amberDim: 'rgba(245,158,11,0.12)', greenDim: 'rgba(16,185,129,0.12)' },
-                        txt: { primary: '#F8FAFC', secondary: '#CBD5E1', muted: '#94A3B8', dim: '#64748B' }
+                        base: { bg: '#000000', card: 'rgba(5, 5, 5, 0.6)', elevated: '#0A0A0A', border: '#1A1A1A', borderLight: '#262626' },
+                        accent: { brand: '#00E5FF', brandLight: '#66FFFF', brandDim: 'rgba(0, 229, 255, 0.15)' },
+                        semantic: { red: '#FF0055', amber: '#FFB300', green: '#00FF41', redDim: 'rgba(255, 0, 85, 0.12)', amberDim: 'rgba(255, 179, 0, 0.12)', greenDim: 'rgba(0, 255, 65, 0.12)' },
+                        txt: { primary: '#FFFFFF', secondary: '#A3A3A3', muted: '#737373', dim: '#404040' }
                     },
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { sans: ['JetBrains Mono', 'monospace'], serif: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                 }
             }
         }
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js" crossorigin="anonymous"></script>
+    <script src="/static/lib/chart.umd.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,24 +32,34 @@
 
     <style>
         *, *::before, *::after { box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: #0F172A; min-height: 100vh; color: #F8FAFC; }
+        
+        /* Base / Terminal overrides */
+        body { font-family: 'JetBrains Mono', monospace; background-color: #000000; color: #FFFFFF; }
+        
+        /* Tooltip CSS */
+        .tooltip { position: relative; display: inline-flex; align-items: center; cursor: help; }
+        .tooltip .tooltip-text { visibility: hidden; width: 220px; background-color: #0A0A0A; color: #A3A3A3; text-align: left; border-radius: 4px; padding: 8px; position: absolute; z-index: 50; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; border: 1px solid #262626; font-size: 10px; font-family: 'Inter', sans-serif; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); pointer-events: none; white-space: normal; }
+        .tooltip .tooltip-text::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #262626 transparent transparent transparent; }
+        .tooltip:hover .tooltip-text, .tooltip:focus .tooltip-text { visibility: visible; opacity: 1; }
+
+        body { background-image: linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px); background-size: 20px 20px; min-height: 100vh; color: #FFFFFF; }
 
         /* Card surfaces - Sharp edges */
-        .ws-card { background: #1E293B; border: 1px solid #475569; border-radius: 6px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
-        .ws-card-flush { background: #1E293B; border: 1px solid #475569; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .ws-card { background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(12px); border: 1px solid #1A1A1A; border-radius: 2px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        .ws-card-flush { background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(12px); border: 1px solid #1A1A1A; border-radius: 2px; overflow: hidden; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
 
         /* Tabs */
-        .tab-btn { padding: 12px 20px; font-size: 0.8rem; font-weight: 600; text-transform: none; color: #94A3B8; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; white-space: nowrap; }
+        .tab-btn { padding: 8px 16px; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #64748B; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
         .tab-btn:hover { color: #CBD5E1; }
         .tab-btn.active { color: #3B82F6; border-bottom-color: #3B82F6; }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeUp 0.3s ease-out; }
 
         /* Insight cards */
-        .insight-card { background: #334155; border: 1px solid #475569; border-radius: 6px; padding: 16px; transition: all 0.25s; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
-        .insight-card:hover { border-color: #64748B; }
-        .insight-card .ic-label { font-size: 0.7rem; color: #94A3B8; margin-bottom: 6px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; }
-        .insight-card .ic-value { font-size: 1.5rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: #F8FAFC; }
+        .insight-card { background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(8px); border: 1px dashed #1A1A1A; border-radius: 2px; padding: 12px; transition: all 0.25s; }
+        .insight-card:hover { border-color: #00E5FF; box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.1); }
+        .insight-card .ic-label { font-size: 0.65rem; color: #737373; margin-bottom: 4px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.05em;}
+        .insight-card .ic-value { font-size: 1.25rem; font-weight: 600; color: #FFFFFF; text-shadow: 0 0 8px rgba(255,255,255,0.2); }
         .insight-card .ic-sub { font-size: 0.75rem; font-weight: 500; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
 
         /* Risk indicator */
@@ -63,6 +73,8 @@
         .report-prose h1 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 600; color: #F8FAFC; margin: 1.5rem 0 0.75rem; padding-bottom: 0.25rem; border-bottom: 1px solid #475569; }
         .report-prose h2 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: #F8FAFC; margin: 1.25rem 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid #475569; }
         .report-prose h3 { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: #E2E8F0; margin: 1rem 0 0.25rem; }
+        .report-prose h4 { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; color: #7DD3FC; margin: 1.75rem 0 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 0.4rem; display: flex; align-items: center; }
+        .report-prose h4::before { content: '✦'; color: #38BDF8; margin-right: 8px; font-size: 0.9em; opacity: 0.8; }
         .report-prose p { margin-bottom: 0.75rem; }
         .report-prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
         .report-prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 0.75rem; }
@@ -82,10 +94,8 @@
         .data-table th { background: #334155; color: #F8FAFC; font-weight: 600; padding: 8px 12px; text-align: left; border-bottom: 2px solid #64748B; font-family: 'Inter', sans-serif; font-size: 0.75rem; }
         .data-table td { padding: 6px 12px; border-bottom: 1px solid #475569; color: #94A3B8; }
         .data-table td.num { text-align: right; font-variant-numeric: tabular-nums; color: #E2E8F0; }
-        .data-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
         .data-table tr:hover td { background: rgba(59,130,246,0.08); color: #F8FAFC; }
         .data-table td.line-item { color: #F8FAFC; font-weight: 500; font-family: 'Inter', sans-serif; position: sticky; left: 0; background: #1E293B; border-right: 1px solid #475569; z-index: 5; box-shadow: 2px 0 5px rgba(0,0,0,0.05); }
-        .data-table tr:nth-child(even) td.line-item { background: #243147; }
 
         /* Citation badge */
         .calc-badge { background: #334155; color: #94A3B8; padding: 2px 6px; border-radius: 4px; font-weight: 500; font-size: 0.7rem; border: 1px solid #475569; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; }
@@ -94,6 +104,25 @@
         /* Animations */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        @keyframes cascadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Agent card progressive disclosure */
+        .agent-card { display: grid; grid-template-rows: auto 0fr; transition: grid-template-rows 0.4s ease-out; overflow: hidden; }
+        .agent-card.expanded { grid-template-rows: auto 1fr; }
+        .agent-card-body { overflow: hidden; }
+
+        /* Skeleton thinking state */
+        .skeleton-line { height: 10px; border-radius: 2px; background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%); background-size: 200% 100%; animation: shimmer 1.8s ease-in-out infinite; }
+        .skeleton-line:nth-child(2) { width: 75%; animation-delay: 0.15s; }
+        .skeleton-line:nth-child(3) { width: 60%; animation-delay: 0.3s; }
+
+        /* Thinking status badge pulse */
+        .status-running { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* Staggered cascade for completed list items */
+        .cascade-item { opacity: 0; animation: cascadeIn 0.3s ease-out forwards; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -102,14 +131,14 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(0,229,153,0.5); }
 
         /* Chat Copilot - High Density */
-        .copilot-panel { display: flex; flex-direction: column; height: calc(100vh - 80px); position: sticky; top: 72px; overflow: hidden; border-radius: 8px; border: 1px solid #475569; }
-        .copilot-messages { flex: 1; overflow-y: auto; padding: 16px; scroll-behavior: smooth; font-family: 'Inter', sans-serif; font-size: 0.85rem; }
-        .chat-msg { margin-bottom: 16px; display: flex; flex-direction: column; }
+        .copilot-panel { display: flex; flex-direction: column; height: calc(100vh - 64px); position: sticky; top: 60px; overflow: hidden; border-radius: 4px; border: 1px solid #1E293B; background: #070A11; }
+        .copilot-messages { flex: 1; overflow-y: auto; padding: 12px; scroll-behavior: auto; font-family: 'Inter', sans-serif; font-size: 0.8rem; }
+        .chat-msg { margin-bottom: 12px; display: flex; flex-direction: column; }
         .chat-msg.user { align-items: flex-end; }
         .chat-msg.assistant { align-items: flex-start; }
-        .chat-bubble { max-width: 90%; padding: 10px 14px; line-height: 1.5; color: #CBD5E1; border-radius: 8px; }
-        .chat-msg.user .chat-bubble { background: #3B82F6; color: #FFFFFF; border-radius: 8px 8px 0px 8px; }
-        .chat-msg.assistant .chat-bubble { background: #334155; border: 1px solid #475569; border-radius: 8px 8px 8px 0px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .chat-bubble { max-width: 95%; padding: 8px 12px; line-height: 1.4; color: #F8FAFC; border-radius: 4px; }
+        .chat-msg.user .chat-bubble { background: #1E293B; color: #94A3B8; border: 1px solid #334155; border-radius: 4px; }
+        .chat-msg.assistant .chat-bubble { background: transparent; border-left: 2px solid #3B82F6; border-radius: 0; padding-left: 10px; color: #E2E8F0; }
         .chat-bubble h1, .chat-bubble h2, .chat-bubble h3 { font-size: 0.9rem; font-weight: 600; margin: 8px 0 4px; color: #F8FAFC; }
         .chat-bubble ul { padding-left: 16px; margin: 6px 0; }
         .chat-bubble li { margin-bottom: 3px; }
@@ -139,17 +168,133 @@
         /* Stepper styles */
         .progress-step { display: flex; align-items: flex-start; gap: 12px; position: relative; padding-bottom: 16px; }
         .progress-step:last-child { padding-bottom: 0; }
-        .progress-step:not(:last-child)::after { content: ''; position: absolute; left: 11px; top: 24px; bottom: 0; width: 2px; background: #334155; }
-        .progress-step.completed:not(:last-child)::after { background: #3B82F6; }
-        .step-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; z-index: 2; transition: all 0.3s; }
-        .step-icon.idle { background: #1E293B; border: 2px solid #475569; color: #64748B; }
-        .step-icon.active { background: #3B82F6; border: 2px solid #60A5FA; color: #FFF; box-shadow: 0 0 10px rgba(59,130,246,0.3); }
+        .progress-step:not(:last-child)::after { content: ''; position: absolute; left: 11px; top: 24px; bottom: 0; width: 2px; background: #1A1A1A; }
+        .progress-step.completed:not(:last-child)::after { background: #00E5FF; }
+        .step-icon { width: 24px; height: 24px; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; z-index: 2; transition: all 0.3s; }
+        .step-icon.idle { background: #0A0A0A; border: 1px solid #262626; color: #404040; }
+        .step-icon.active { background: rgba(0, 229, 255, 0.1); border: 1px solid #00E5FF; color: #00E5FF; box-shadow: 0 0 10px rgba(0,229,255,0.4); }
         .step-icon.active svg { animation: spin 1.5s linear infinite; }
-        .step-icon.completed { background: #10B981; border: 2px solid #34D399; color: #FFF; }
+        .step-icon.completed { background: rgba(0, 255, 65, 0.1); border: 1px solid #00FF41; color: #00FF41; }
         .step-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 24px; }
-        .step-title { font-size: 0.8rem; font-weight: 500; color: #94A3B8; transition: color 0.3s; }
-        .step-title.active { color: #3B82F6; font-weight: 600; }
-        .step-title.completed { color: #F8FAFC; }
+        .step-title { font-size: 0.8rem; font-weight: 500; color: #737373; transition: color 0.3s; }
+        .step-title.active { color: #00E5FF; font-weight: 600; text-shadow: 0 0 5px rgba(0,229,255,0.3); }
+        .step-title.completed { color: #FFFFFF; }
+
+        /* ── Section Detail Modal ── */
+        .section-modal-backdrop {
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(10, 18, 38, 0.75);
+            backdrop-filter: blur(6px);
+            display: flex; align-items: flex-end; justify-content: center;
+            opacity: 0; transition: opacity 0.25s ease;
+            pointer-events: none;
+        }
+        .section-modal-backdrop.open {
+            opacity: 1; pointer-events: all;
+        }
+        .section-modal {
+            width: 100%; max-width: 860px;
+            background: #1E293B;
+            border: 1px solid #475569;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -8px 48px rgba(0,0,0,0.5);
+            max-height: 82vh;
+            display: flex; flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .section-modal-backdrop.open .section-modal {
+            transform: translateY(0);
+        }
+        .section-modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #334155;
+            flex-shrink: 0;
+        }
+        .section-modal-title {
+            font-size: 0.95rem; font-weight: 700; color: #F8FAFC;
+            font-family: 'Inter', sans-serif;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-modal-close {
+            width: 28px; height: 28px; border-radius: 6px;
+            background: #334155; border: 1px solid #475569;
+            color: #94A3B8; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s; font-size: 14px;
+        }
+        .section-modal-close:hover { background: #475569; color: #F8FAFC; }
+        .section-modal-body {
+            padding: 20px 24px; overflow-y: auto; flex: 1;
+        }
+        /* Clickable headings */
+        .clickable-section-heading {
+            cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
+            transition: color 0.2s;
+        }
+        .clickable-section-heading:hover { color: #60A5FA !important; }
+        .clickable-section-heading::after {
+            content: '⤢';
+            font-size: 0.8em;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        .clickable-section-heading:hover::after { opacity: 1; }
+        
+        /* Modal specific formal list styling (Premium Data Panel Look) */
+        .section-modal-body .report-prose ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 2rem 0;
+            background: linear-gradient(to bottom, #0F172A, #0B1120);
+            border: 1px solid #1E293B;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        .section-modal-body .report-prose ul li {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+            margin: 0;
+            font-size: 0.9rem;
+            color: #E2E8F0;
+            line-height: 1.6;
+            transition: background 0.2s ease;
+        }
+        .section-modal-body .report-prose ul li:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .section-modal-body .report-prose ul li:last-child {
+            border-bottom: none;
+        }
+        .section-modal-body .report-prose ul li > strong {
+            color: #38BDF8; /* Accent color for keys */
+            font-weight: 700;
+            margin-right: 4px;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        /* Nested lists blend seamlessly into the grid but with inset depth */
+        .section-modal-body .report-prose ul ul {
+            margin: 14px -20px -14px -20px;
+            border: none;
+            border-top: 1px solid rgba(30, 41, 59, 0.8);
+            border-radius: 0;
+            background: rgba(0, 0, 0, 0.25);
+            box-shadow: inset 0 4px 6px -4px rgba(0,0,0,0.2);
+        }
+        .section-modal-body .report-prose ul ul li {
+            padding: 12px 20px 12px 28px;
+            font-size: 0.85rem;
+            background: transparent;
+        }
+        .section-modal-body .report-prose ul ul li:hover {
+            background: rgba(56, 189, 248, 0.04);
+        }
     </style>
 </head>
 
@@ -166,7 +311,7 @@
                         </div>
                     </div>
                     <div class="flex items-center">
-                        <button id="export-pdf-btn" class="hidden items-center px-4 py-2 text-xs font-sans font-semibold rounded-md border border-base-border text-txt-secondary hover:bg-base-elevated hover:text-txt-primary transition-colors">
+                        <button id="export-pdf-btn" aria-label="Export report to PDF" class="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-base-border text-txt-secondary hover:text-white hover:border-txt-muted transition-colors text-[10px] font-mono tracking-widest uppercase">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                             Export PDF
                         </button>
@@ -185,7 +330,9 @@
                         <form id="report-form" class="space-y-4">
                             <div>
                                 <label for="ticker" class="block text-xs font-sans font-medium text-txt-secondary mb-1.5">Target Company</label>
-                                <input type="text" name="ticker" id="ticker" class="w-full rounded-md border border-base-border bg-base-bg text-txt-primary font-mono px-3 py-2.5 text-sm focus:border-accent-brand outline-none transition-colors placeholder-txt-muted shadow-sm" placeholder="e.g. RELIANCE" required>
+                                <select id="ticker" name="ticker" class="w-full bg-base-bg border border-base-border text-txt-primary text-sm rounded-md focus:ring-accent-brand focus:border-accent-brand p-2 font-mono" required>
+                                    <option value="" disabled selected>Select ticker...</option>
+                                </select>
                             </div>
                             <div>
                                 <label class="block text-xs font-sans font-medium text-txt-secondary mb-1.5">Supporting Documents</label>
@@ -193,21 +340,21 @@
                                     <div class="text-center">
                                         <svg class="mx-auto h-8 w-8 text-txt-muted mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                                         <p class="text-xs font-sans text-txt-secondary">Drop PDFs or click to upload</p>
-                                        <input id="files" name="files" type="file" class="sr-only" multiple accept=".pdf" required>
+                                        <input id="files" name="files" type="file" class="sr-only" multiple accept=".pdf" required aria-label="Upload PDF files">
                                     </div>
                                 </div>
                                 <div id="file-list" class="mt-2 text-xs font-sans text-txt-muted"></div>
                             </div>
-                            <button type="submit" id="generate-btn" class="w-full flex justify-center items-center py-2.5 px-4 rounded-md bg-accent-brand text-white hover:opacity-90 transition-colors font-semibold shadow-sm disabled:opacity-50">
-                                <span id="btn-text" class="text-sm font-sans tracking-wide">Generate Analysis</span>
-                                <div id="btn-loader" class="hidden ml-2"><div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div></div>
+                            <button type="submit" id="generate-btn" class="w-full flex justify-center items-center py-2.5 px-4 rounded-sm border border-accent-brand bg-accent-brandDim text-accent-brand hover:bg-accent-brand hover:text-black transition-all font-mono font-bold tracking-widest shadow-[0_0_15px_rgba(0,229,255,0.15)] uppercase disabled:opacity-50">
+                                <span id="btn-text" class="text-sm">Generate Analysis</span>
+                                <div id="btn-loader" class="hidden ml-2"><div class="w-4 h-4 border-2 border-accent-brand border-t-transparent rounded-full animate-spin"></div></div>
                             </button>
                         </form>
 
                         <div class="flex items-center gap-2"><div class="flex-grow border-t border-base-border"></div><span class="text-[10px] font-sans text-txt-muted uppercase">or</span><div class="flex-grow border-t border-base-border"></div></div>
 
-                        <button id="rag-analyze-btn" class="w-full flex justify-center items-center py-2 px-4 border border-base-border rounded-md bg-transparent hover:bg-base-elevated transition-colors disabled:opacity-50 text-txt-secondary hover:text-txt-primary">
-                            <span id="rag-btn-text" class="text-xs font-sans font-medium tracking-wide">Query Stored Index</span>
+                        <button id="rag-analyze-btn" class="w-full flex justify-center items-center py-2 px-4 border border-base-borderLight rounded-sm bg-transparent hover:border-accent-brand hover:text-accent-brand transition-all disabled:opacity-50 text-txt-secondary font-mono tracking-widest uppercase shadow-sm">
+                            <span id="rag-btn-text" class="text-[10px] font-bold">Query Stored Index</span>
                             <div id="rag-btn-loader" class="hidden ml-2"><div class="w-4 h-4 border-2 border-txt-muted border-t-txt-primary rounded-full animate-spin"></div></div>
                         </button>
 
@@ -229,7 +376,7 @@
                             <button class="tab-btn active" data-tab="synthesis">Executive Summary</button>
                             <button class="tab-btn" data-tab="forensic">Risk & Forensic Audit</button>
                             <button class="tab-btn" data-tab="financial">Quant Canvas</button>
-                            <button class="tab-btn" data-tab="sources">Source Library</button>
+                            <button class="tab-btn" data-tab="signals">Live Signals</button>
                         </div>
 
                         <!-- Panel Bodies -->
@@ -243,7 +390,11 @@
                                         <svg class="w-8 h-8 text-txt-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                     </div>
                                     <h2 class="text-lg font-sans font-semibold text-txt-primary mb-2">Awaiting Target Parameters</h2>
-                                    <p class="text-sm font-sans text-txt-secondary max-w-sm mx-auto">Enter a target ticker and upload supporting PDF documents to initialize the Multi-Agent System.</p>
+                                    <p class="text-sm font-sans text-txt-secondary max-w-sm mx-auto mb-6">Enter a target ticker and upload supporting PDF documents to initialize the Multi-Agent System.</p>
+                                    <button type="button" id="demo-mode-btn" class="inline-flex items-center gap-2 py-2 px-4 rounded-sm border border-accent-brandLight bg-transparent hover:bg-accent-brand/10 text-accent-brandLight transition-all font-mono text-xs uppercase tracking-widest cursor-pointer shadow-sm mx-auto">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                        View Sample Report
+                                    </button>
                                 </div>
 
                                 <!-- Live Engine Feed (Formerly Terminal) -->
@@ -258,9 +409,25 @@
                                     <div id="live-agent-feed" class="space-y-4"></div>
                                 </div>
 
-                                <!-- Insight Dashboard (Final Report) -->
                                 <div id="insight-dashboard" class="hidden">
-                                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="insight-cards"></div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="insight-cards"></div>
+                                    <!-- P0: Financial Snapshot Charts -->
+                                    <div id="exec-charts-row" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+                                        <div class="ws-card p-5">
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                                                Revenue &amp; PAT Trend
+                                            </h3>
+                                            <div style="height:260px;"><canvas id="chart-revenue-pat"></canvas></div>
+                                        </div>
+                                        <div class="ws-card p-5">
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                                Agent Confidence Radar
+                                            </h3>
+                                            <div style="height:260px;"><canvas id="chart-agent-radar"></canvas></div>
+                                        </div>
+                                    </div>
                                     <div class="ws-card p-6 shadow-sm">
                                         <div id="report-content" class="report-prose px-1"></div>
                                     </div>
@@ -279,14 +446,14 @@
                                 <!-- Top Health Gauge -->
                                 <div id="forensic-header" class="mb-6 flex items-center justify-between ws-card p-5">
                                     <div>
-                                        <h3 class="text-sm font-sans text-txt-secondary font-medium">Platform Forensic Health</h3>
+                                        <h3 class="text-sm font-sans text-txt-secondary font-medium tooltip">Platform Forensic Health<span class="tooltip-text">Aggregate health score based on accounting anomalies and cash flow quality. Higher = healthier.</span></h3>
                                         <div class="flex items-center gap-3 mt-1">
                                             <span id="health-gauge" class="text-2xl font-sans font-bold text-txt-primary">Awaiting Scan</span>
                                             <span id="health-badge" class="risk-badge risk-low hidden">--</span>
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="text-xs text-txt-muted uppercase font-sans tracking-wide mb-1">Eradicating Narrative Bias</div>
+                                        <div class="text-xs text-txt-muted uppercase font-sans tracking-wide mb-1">Forensic NLP Scan</div>
                                         <div id="quant-triage-status" class="text-sm font-semibold font-sans text-txt-secondary">Pending Output</div>
                                     </div>
                                 </div>
@@ -303,13 +470,13 @@
                                     </div>
                                     <!-- Management Transparency Scorecard -->
                                     <div class="ws-card p-5">
-                                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                        <h3 id="evasion-heading" class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2 clickable-section-heading" style="cursor:pointer" title="Click for full detail">
                                             <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                            Management Evasion Likelihood
+                                            <div class="tooltip">Management Evasion Likelihood<span class="tooltip-text">Overall assessment of management's willingness to answer tough questions directly.</span></div>
                                         </h3>
                                         <div class="mb-5">
                                             <div class="flex justify-between text-xs font-sans mb-1">
-                                                <span class="text-txt-secondary font-medium">NLP Evasion Score</span>
+                                                <span class="text-txt-secondary font-medium tooltip">NLP Evasion Score<span class="tooltip-text">Measures the frequency of evasive language or non-answers from management in earnings calls. Higher score = more evasion (worse).</span></span>
                                                 <span id="evasion-score-text" class="text-txt-primary font-bold">--/100</span>
                                             </div>
                                             <div class="w-full bg-base-elevated rounded-full h-2 overflow-hidden">
@@ -319,6 +486,23 @@
                                         <div id="mgmt-dodging-log" class="space-y-3 report-prose text-sm max-h-[175px] overflow-y-auto pr-2">
                                             <p class="text-sm text-txt-muted italic">Scanning narratives for obfuscation...</p>
                                         </div>
+                                    </div>
+                                </div>
+                                <!-- P1: Forensic Charts Row -->
+                                <div id="forensic-charts-row" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                    <div class="ws-card p-5">
+                                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-semantic-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                            Cash Quality (OCF / EBITDA)
+                                        </h3>
+                                        <div style="height:200px;display:flex;align-items:center;justify-content:center;"><canvas id="chart-cash-quality"></canvas></div>
+                                    </div>
+                                    <div class="ws-card p-5">
+                                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-semantic-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                                            Working Capital Cycle
+                                        </h3>
+                                        <div style="height:200px;"><canvas id="chart-working-capital"></canvas></div>
                                     </div>
                                 </div>
                                 <div id="forensic-tab-content" class="mt-6 space-y-4">
@@ -334,15 +518,15 @@
                                         <div class="text-sm font-sans text-txt-secondary mt-1">Institutional Quant Canvas</div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="text-xs text-txt-muted uppercase font-sans tracking-wide mb-1 font-semibold">Novus Rating</div>
+                                        <div class="text-xs text-txt-muted uppercase font-sans tracking-wide mb-1 font-semibold tooltip">Novus Rating<span class="tooltip-text">Proprietary overall forensic and fundamental rating.</span></div>
                                         <div id="quant-rating" class="text-3xl font-bold font-sans text-accent-brand">--</div>
                                     </div>
                                 </div>
 
                                 <!-- 4-card metric grid -->
-                                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                                     <div class="insight-card">
-                                        <div class="ic-label">ROIC Trend</div>
+                                        <div class="ic-label tooltip">ROIC Trend<span class="tooltip-text">Return on Invested Capital trend over time. Evaluates capital allocation efficiency.</span></div>
                                         <div id="quant-roic" class="ic-value">--</div>
                                         <div id="quant-roic-sub" class="ic-sub text-txt-muted">vs 5Yr Avg</div>
                                     </div>
@@ -352,18 +536,54 @@
                                         <div id="quant-ccc-sub" class="ic-sub text-txt-muted">--</div>
                                     </div>
                                     <div class="insight-card">
-                                        <div class="ic-label">EBITDA/OCF Match</div>
+                                        <div class="ic-label tooltip">EBITDA/OCF Match<span class="tooltip-text">Compares Operating Cash Flow to EBITDA. Low match suggests aggressive accounting or poor cash conversion.</span></div>
                                         <div id="quant-ocf" class="ic-value">--</div>
                                         <div id="quant-ocf-sub" class="ic-sub text-txt-muted">--</div>
                                     </div>
                                     <div class="insight-card">
-                                        <div class="ic-label">Implied Growth</div>
+                                        <div class="ic-label tooltip">Implied Growth<span class="tooltip-text">The market's implied growth rate embedded in the current valuation.</span></div>
                                         <div id="quant-dcf" class="ic-value">--</div>
                                         <div id="quant-dcf-sub" class="ic-sub text-txt-muted">Rev. DCF</div>
                                     </div>
                                 </div>
 
-                                <!-- DuPont Breakdown -->
+                                <!-- P0/P1: Quant Charts -->
+                                <div id="quant-charts-row" class="hidden space-y-4 mb-6">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                        <div class="ws-card p-5">
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                                                DuPont ROE Decomposition
+                                            </h3>
+                                            <div style="height:240px;"><canvas id="chart-dupont"></canvas></div>
+                                        </div>
+                                        <div class="ws-card p-5">
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                                Revenue / EBITDA / PAT
+                                            </h3>
+                                            <div style="height:240px;"><canvas id="chart-rev-ebitda-pat"></canvas></div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                        <div class="ws-card p-5">
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-semantic-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                Free Cash Flow Trend
+                                            </h3>
+                                            <div style="height:240px;"><canvas id="chart-fcf-trend"></canvas></div>
+                                        </div>
+                                        <div class="ws-card p-5">
+                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
+                                                <svg class="w-4 h-4 text-semantic-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+                                                Debt vs Cash Position
+                                            </h3>
+                                            <div style="height:240px;"><canvas id="chart-debt-cash"></canvas></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- DuPont Breakdown Text -->
                                 <div class="ws-card p-5 mb-6">
                                     <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
                                         <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
@@ -379,14 +599,26 @@
                                 </div>
                             </div>
 
-                            <!-- Tab: Source Docs -->
-                            <div class="tab-content p-6" id="tab-sources">
-                                <div class="ws-card p-5 min-h-[300px]">
-                                    <div id="sources-content">
-                                        <div class="text-center py-16">
-                                            <svg class="mx-auto h-12 w-12 text-txt-muted mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                            <p class="text-sm font-sans text-txt-muted font-medium">No documents have been indexed yet.</p>
-                                            <p class="text-xs font-sans text-txt-dim mt-2">Upload PDFs through the command center.</p>
+                            <!-- Tab: Live Signals -->
+                            <div class="tab-content p-6" id="tab-signals">
+                                <!-- Signal Intelligence Panel -->
+                                <div id="signal-intel-panel" class="ws-card p-5 hidden">
+                                    <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex justify-between items-center">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-accent-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                            On-Demand Signal Intelligence
+                                        </div>
+                                        <span id="signal-freshness" class="text-[9px] font-mono font-bold px-2 py-0.5 bg-accent-brand/20 text-accent-brand border border-accent-brand/50 rounded-sm tracking-widest"></span>
+                                    </h3>
+                                    <div id="signal-unavailable" class="hidden mb-4 p-3 bg-semantic-amber/10 border border-semantic-amber/30 rounded-md text-xs font-mono text-semantic-amber"></div>
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                        <div>
+                                            <h4 class="text-[11px] font-mono text-txt-dim uppercase tracking-widest mb-3">Live Signals</h4>
+                                            <div id="signal-list" class="space-y-3"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-[11px] font-mono text-txt-dim uppercase tracking-widest mb-3">Thesis Impact Mapping</h4>
+                                            <div id="impact-list" class="space-y-3"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -403,7 +635,7 @@
                                 <svg class="w-4 h-4 text-accent-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
                                 Novus Copilot
                             </h3>
-                            <button id="chat-clear" class="text-txt-muted hover:text-accent-brand text-xs font-sans font-medium transition-colors">Clear</button>
+                            <button id="chat-clear" aria-label="Clear chat history" class="text-txt-muted hover:text-accent-brand text-xs font-sans font-medium transition-colors">Clear</button>
                         </div>
                         <div class="copilot-messages" id="chat-messages">
                             <!-- Rigid Chatbot Tone Initialized by JS -->
@@ -417,7 +649,7 @@
                             <div class="copilot-input">
                                 <svg class="w-4 h-4 text-txt-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                                 <input type="text" id="chat-input" placeholder="Ask Novus a question..." autocomplete="off">
-                                <button id="chat-send" class="copilot-send" disabled>
+                                <button id="chat-send" class="copilot-send" disabled aria-label="Send message">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                 </button>
                             </div>
@@ -441,6 +673,36 @@
     <!-- ═══ MAIN SCRIPT ═══ -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const TICKER_DATA = {
+                "📊 Pharma Portfolio": [
+                    { value: "ALEMBICLTD", name: "Alembic Limited" },
+                    { value: "AUROPHARMA", name: "Aurobindo Pharma" },
+                    { value: "CIPLA", name: "Cipla" },
+                    { value: "DIVISLAB", name: "Divi's Laboratories" },
+                    { value: "DRREDDY", name: "Dr. Reddy's Laboratories" },
+                    { value: "GRANULES", name: "Granules India" },
+                    { value: "LAURUSLABS", name: "Laurus Labs" },
+                    { value: "LUPIN", name: "Lupin" },
+                    { value: "SUNPHARMA", name: "Sun Pharmaceuticals" },
+                    { value: "ZYDUSLIFE", name: "Zydus Lifesciences" }
+                ],
+                "🛒 FMCG": [
+                    { value: "HINDUNILVR", name: "Hindustan Unilever" }
+                ]
+            };
+
+            const tickerSelect = document.getElementById('ticker');
+            Object.keys(TICKER_DATA).forEach(groupLabel => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = groupLabel;
+                TICKER_DATA[groupLabel].forEach(ticker => {
+                    const option = document.createElement('option');
+                    option.value = ticker.value;
+                    option.textContent = ticker.name;
+                    optgroup.appendChild(option);
+                });
+                tickerSelect.appendChild(optgroup);
+            });
             const form = document.getElementById('report-form');
             const tickerInput = document.getElementById('ticker');
             const fileInput = document.getElementById('files');
@@ -488,7 +750,7 @@
                 }
             };
 
-            const markdownConverter = new showdown.Converter({ extensions: [terminalStylesExt, semanticExt] });
+            const markdownConverter = new showdown.Converter({ extensions: [terminalStylesExt, semanticExt], tables: true });
             window.terminalStylesExt = terminalStylesExt;
             window.semanticExt = semanticExt;
 
@@ -531,16 +793,32 @@
                                 html += `<th>${dk}</th>`;
                             }
                             html += '</tr></thead><tbody>';
+                            let isEvenParent = false;
                             for (const row of rows) {
-                                html += '<tr>';
+                                const lineItemRaw = row["Line Item"] || row["Unnamed: 0"] || "";
+                                const strCv = String(lineItemRaw);
+                                const isSubItem = strCv.startsWith("  ");
+                                
+                                if (!isSubItem) {
+                                    isEvenParent = !isEvenParent; // flip only on main items
+                                }
+
+                                const rowClass = isEvenParent ? 'bg-stripe bg-opacity-[0.05]' : '';
+                                html += `<tr class="${rowClass} ${isSubItem ? 'text-txt-muted text-[11px]' : 'text-txt-primary'} hover:bg-accent-brand/10 transition-colors">`;
+                                
                                 let isFirst = true;
                                 for (const [key, val] of Object.entries(row)) {
                                     const cv = val === null || val === "NaN" || Number.isNaN(val) ? "" : val;
                                     const isLineItem = key === "Line Item" || key === "Unnamed: 0" || isFirst;
+                                    
                                     if (isLineItem) {
-                                        html += `<td class="line-item">${cv}</td>`;
+                                        const tdStyle = isSubItem 
+                                            ? `font-weight: 400; padding-left: 2rem; color: #94A3B8; background: ${isEvenParent ? '#243147' : '#1E293B'}; white-space: nowrap;`
+                                            : `font-weight: 700; color: #F8FAFC; background: ${isEvenParent ? '#243147' : '#1E293B'}; white-space: nowrap;`;
+                                        html += `<td class="line-item" style="${tdStyle}">${cv}</td>`;
                                     } else {
-                                        html += `<td class="num">${cv}</td>`;
+                                        const numStyle = isSubItem ? `color: #94A3B8; font-size: 0.65rem;` : `color: #e2e8f0; font-size: 0.75rem;`;
+                                        html += `<td class="num" style="${numStyle}">${cv}</td>`;
                                     }
                                     isFirst = false;
                                 }
@@ -552,6 +830,17 @@
                     }
                     html += '</div>';
                     container.innerHTML = html;
+                    // ── Render screener-based charts ──
+                    window._screenerData = data;
+                    console.log('[NovusCharts] Screener data received. Tables:', Object.keys(data.tables || {}));
+                    console.log('[NovusCharts] Chart.js loaded?', typeof Chart !== 'undefined');
+                    console.log('[NovusCharts] NovusCharts engine?', window.NovusCharts);
+                    if (window.NovusCharts) {
+                        window.NovusCharts.renderFromScreener(data);
+                        console.log('[NovusCharts] renderFromScreener() called');
+                    } else {
+                        console.error('[NovusCharts] ENGINE NOT LOADED — charts will not render');
+                    }
                 } catch (err) {
                     console.error('Screener error:', err);
                     container.innerHTML = '<p class="text-[10px] font-mono text-semantic-red py-4 uppercase">>_ DATALINK_ERROR</p>';
@@ -560,15 +849,24 @@
 
             // ── Stage mapping ──
             const stageLabels = {
+                queued: 'Job Queued in Redis',
+                ingest_rag: 'Vector Store Synchronization',
                 extract_pdfs: 'Data Extraction & OCR Pipeline',
                 fetch_financials: 'Financial Statement Ingestion',
                 planning: 'Strategic Analysis Formulation',
+                lead_analyst_planning: 'Strategic Analysis Formulation',
+                investigation: 'Multi-Agent Investigation',
+                reflection: 'Agent Reflection Phase',
+                conflict_check: 'Cross-Agent Conflict Check',
+                verification: 'Critic Verification',
                 forensic_quant: 'Financial Forensics Quant',
                 forensic_investigator: 'Deep Forensic Audit',
                 narrative_decoder: 'Narrative & Bias Detection',
                 moat_architect: 'Economic Moat Architecture',
                 capital_allocator: 'Capital Allocation Review',
                 synthesis: 'Final Synthesis Generation',
+                assemble: 'Assembling Final Report',
+                complete: 'Finalizing Display',
             };
             const allAgents = ['extract_pdfs', 'planning', 'forensic_quant', 'forensic_investigator', 'narrative_decoder', 'moat_architect', 'capital_allocator', 'synthesis'];
 
@@ -711,6 +1009,7 @@
                 reportPlaceholder.classList.add('hidden');
                 liveTerminal.classList.remove('hidden');
                 liveAgentFeed.innerHTML = '';
+                populatedCards.clear();
                 insightDashboard.classList.add('hidden');
                 reportContent.innerHTML = '';
                 agentPipeline.classList.remove('hidden');
@@ -720,6 +1019,24 @@
                 errorMessage.classList.add('hidden');
                 exportPdfBtn.classList.add('hidden');
                 
+                // Destroy existing charts
+                if (window.NovusCharts) window.NovusCharts.destroyAll();
+                document.getElementById('quant-charts-row')?.classList.add('hidden');
+                document.getElementById('forensic-charts-row')?.classList.add('hidden');
+                
+                // Set loading placeholders for AI charts
+                ['chart-dupont', 'chart-cash-quality', 'chart-working-capital'].forEach(id => {
+                    const ctx = document.getElementById(id);
+                    if (ctx && ctx.parentElement) {
+                        ctx.parentElement.innerHTML = `<div class="h-full flex items-center justify-center text-txt-muted text-sm italic font-mono animate-pulse"><canvas id="${id}" class="hidden"></canvas>Analyzing data...</div>`;
+                    }
+                });
+
+                // Clear previous chart instances
+                if (window.NovusCharts && window.NovusCharts.destroyAll) {
+                    window.NovusCharts.destroyAll();
+                }
+
                 // Clear out quant and forensic data
                 document.getElementById('quant-ticker').textContent = tickerInput.value.trim().toUpperCase() || 'TICKER';
                 ['health-badge', 'triage-panel', 'forensic-panel'].forEach(id => {
@@ -787,12 +1104,111 @@
 
             // ── Live Streaming Feed ──
             const agentLabels = {
-                forensic_quant: { name: 'Forensic Quant', type: 'quant' },
-                forensic_investigator: { name: 'Forensic Investigator', type: 'forensic' },
-                narrative_decoder: { name: 'Narrative Decoder', type: 'nlp' },
-                moat_architect: { name: 'Moat Architect', type: 'nlp' },
-                capital_allocator: { name: 'Capital Allocator', type: 'quant' },
+                forensic_quant: { name: 'Forensic Quant', type: 'quant', thinkingMsg: 'Calculating ROE, DuPont decomposition, Beneish M-Score...' },
+                forensic_investigator: { name: 'Forensic Investigator', type: 'forensic', thinkingMsg: 'Scanning for accounting anomalies & red flags...' },
+                narrative_decoder: { name: 'Narrative Decoder', type: 'nlp', thinkingMsg: 'Parsing management commentary for evasion patterns...' },
+                moat_architect: { name: 'Moat Architect', type: 'nlp', thinkingMsg: 'Evaluating competitive moat durability & pricing power...' },
+                capital_allocator: { name: 'Capital Allocator', type: 'quant', thinkingMsg: 'Reviewing ROIC vs WACC, capital deployment efficiency...' },
             };
+
+            // Track which cards have already been populated to avoid re-rendering
+            const populatedCards = new Set();
+
+            function getBorderColor(type) {
+                return type === 'quant' ? 'border-l-accent-brand' : type === 'forensic' ? 'border-l-semantic-red' : 'border-l-semantic-green';
+            }
+
+            function renderThinkingCard(agentName) {
+                const cardId = `live-card-${agentName}`;
+                if (document.getElementById(cardId)) return; // Already exists
+                const info = agentLabels[agentName] || { name: agentName, type: 'other', thinkingMsg: 'Processing...' };
+                const borderColor = getBorderColor(info.type);
+
+                const card = document.createElement('div');
+                card.id = cardId;
+                card.className = `agent-card ws-card border-l-2 ${borderColor}`;
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(8px)';
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between px-3 py-1.5 bg-base-elevated border-b border-base-border" data-header>
+                        <span class="text-xs font-sans font-semibold text-txt-primary">${info.name} Engine</span>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded border border-accent-brand/30 bg-accent-brandDim text-accent-brandLight status-running" data-badge>RUNNING</span>
+                    </div>
+                    <div class="agent-card-body" data-body>
+                        <div class="px-4 py-3" data-skeleton>
+                            <p class="text-[11px] font-mono text-txt-muted mb-3 status-running">> ${info.thinkingMsg}</p>
+                            <div class="space-y-2">
+                                <div class="skeleton-line w-full"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                liveAgentFeed.appendChild(card);
+
+                // Trigger entrance animation
+                requestAnimationFrame(() => {
+                    card.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                });
+            }
+
+            function populateCard(agentName, output) {
+                if (populatedCards.has(agentName)) return;
+                populatedCards.add(agentName);
+
+                const cardId = `live-card-${agentName}`;
+                let card = document.getElementById(cardId);
+                const info = agentLabels[agentName] || { name: agentName, type: 'other', thinkingMsg: 'Processing...' };
+                const borderColor = getBorderColor(info.type);
+
+                // If no thinking card was rendered (agent completed between polls), create fresh
+                if (!card) {
+                    card = document.createElement('div');
+                    card.id = cardId;
+                    card.className = `agent-card expanded ws-card border-l-2 ${borderColor}`;
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(8px)';
+                    liveAgentFeed.appendChild(card);
+                    requestAnimationFrame(() => {
+                        card.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    });
+                }
+
+                // Update badge to COMPLETED
+                const badge = card.querySelector('[data-badge]');
+                if (badge) {
+                    badge.className = 'text-[10px] font-mono px-2 py-0.5 rounded border border-semantic-green/30 bg-semantic-greenDim text-semantic-green';
+                    badge.textContent = 'COMPLETED';
+                }
+
+                // Replace body with real content
+                const body = card.querySelector('[data-body]');
+                const renderedHtml = markdownConverter.makeHtml(output);
+                if (body) {
+                    body.innerHTML = `
+                        <div class="px-4 py-3 text-sm text-txt-secondary leading-relaxed max-h-[175px] overflow-y-auto report-prose">
+                            ${renderedHtml}
+                        </div>
+                    `;
+
+                    // Apply staggered cascade to list items
+                    const items = body.querySelectorAll('li, tr, p');
+                    items.forEach((item, i) => {
+                        item.classList.add('cascade-item');
+                        item.style.animationDelay = `${i * 60}ms`;
+                    });
+                }
+
+                // Expand via CSS grid transition
+                card.classList.add('expanded');
+            }
 
             function renderPartialReport(meta) {
                 if (meta.final_report) {
@@ -800,67 +1216,79 @@
                     reportLoader.classList.add('hidden');
                     insightDashboard.classList.remove('hidden');
                     reportContent.innerHTML = markdownConverter.makeHtml(meta.final_report);
-                    populateForensicTab(meta.agent_outputs);
+                    populateForensicTab(meta.agent_outputs, meta.evasion_data);
                     return;
                 }
 
-                if (meta.agent_outputs && Object.keys(meta.agent_outputs).length > 0) {
+                const activeAgents = meta.active_agents || [];
+                const completedAgents = meta.completed_agents || [];
+                const agentOutputs = meta.agent_outputs || {};
+
+                // Show the live terminal as soon as any agent is active, or we are past initialization
+                const initStages = ['queued', 'ingest_rag', 'extract_pdfs', 'fetch_financials'];
+                if (activeAgents.length > 0 || Object.keys(agentOutputs).length > 0 || (meta.stage && !initStages.includes(meta.stage))) {
                     reportLoader.classList.add('hidden');
                     liveTerminal.classList.remove('hidden');
-
-                    for (const [agentName, output] of Object.entries(meta.agent_outputs)) {
-                        const cardId = `live-card-${agentName}`;
-                        let card = document.getElementById(cardId);
-                        const info = agentLabels[agentName] || { name: agentName, type: 'other' };
-                        const borderColor = info.type === 'quant' ? 'border-l-accent-brand' : info.type === 'forensic' ? 'border-l-semantic-red' : 'border-l-semantic-green';
-
-                        if (!card) {
-                            card = document.createElement('div');
-                            card.id = cardId;
-                            card.className = `ws-card overflow-hidden animate-fadeUp border-l-2 ${borderColor}`;
-                            liveAgentFeed.appendChild(card);
-                        }
-
-                        card.innerHTML = `
-                            <div class="flex items-center justify-between px-3 py-1.5 bg-base-elevated border-b border-base-border">
-                                <span class="text-xs font-sans font-semibold text-txt-primary">${info.name} Engine</span>
-                                <span class="text-[10px] font-sans text-txt-muted px-2 py-0.5 bg-base-bg rounded border border-base-border">Completed</span>
-                            </div>
-                            <div class="px-5 py-4 text-sm text-txt-secondary leading-relaxed max-h-[175px] overflow-y-auto report-prose border-l-2 border-accent-brand">
-                                ${markdownConverter.makeHtml(output)}
-                            </div>
-                        `;
-                    }
-
-                    const completed = meta.completed_agents || [];
-                    const total = 5;
-                    const agentsDone = completed.filter(a => a !== 'planning').length;
-                    liveCounter.textContent = `${agentsDone} / ${total} Agents Active`;
                 }
+
+                // Step 1: Render thinking skeletons for active agents that don't have output yet
+                for (const agentName of activeAgents) {
+                    if (!agentOutputs[agentName] && !populatedCards.has(agentName)) {
+                        renderThinkingCard(agentName);
+                    }
+                }
+
+                // Step 2: Populate completed agents with real content
+                for (const [agentName, output] of Object.entries(agentOutputs)) {
+                    populateCard(agentName, output);
+                }
+
+                // Update counter
+                const total = 5;
+                const agentsDone = completedAgents.filter(a => a !== 'planning').length;
+                liveCounter.textContent = `${agentsDone} / ${total} Agents Completed`;
             }
 
-            function populateForensicTab(agentOutputs) {
+            function populateForensicTab(agentOutputs, evasionData) {
                 if (!agentOutputs) return;
                 const container = document.getElementById('forensic-tab-content');
                 if (container) container.innerHTML = '';
                 
-                // Extract Narrative Decoder details for Evasion Score
+                // ── Real NLP Evasion Score (computed by backend) ──
                 const narrativeStr = agentOutputs['narrative_decoder'] || '';
                 const evasionLog = document.getElementById('mgmt-dodging-log');
                 const evasionScoreText = document.getElementById('evasion-score-text');
                 const evasionProgress = document.getElementById('evasion-progress');
 
-                if (narrativeStr && evasionLog) {
-                    // Quick heuristic parse if we don't have json
+                if (evasionLog) {
+                    // Use real score from backend if available, else fallback
                     let score = 50;
-                    if (narrativeStr.toLowerCase().includes('high evasion') || narrativeStr.toLowerCase().includes('obfuscation')) score = 85;
-                    else if (narrativeStr.toLowerCase().includes('transparent') || narrativeStr.toLowerCase().includes('clear')) score = 20;
+                    let verdict = '';
+                    if (evasionData && typeof evasionData.score === 'number') {
+                        score = evasionData.score;
+                        verdict = evasionData.verdict || '';
+                    }
                     
                     evasionScoreText.textContent = `${score}/100`;
                     evasionProgress.style.width = `${score}%`;
                     evasionProgress.className = `h-2 rounded-full transition-all duration-1000 ${score > 70 ? 'bg-semantic-red' : score > 40 ? 'bg-semantic-amber' : 'bg-semantic-green'}`;
                     
-                    evasionLog.innerHTML = markdownConverter.makeHtml(narrativeStr);
+                    // Render narrative content + verdict banner
+                    let verdictHtml = '';
+                    if (verdict) {
+                        const verdictColor = score > 70 ? 'text-semantic-red border-semantic-red/30 bg-semantic-red/10' : score > 40 ? 'text-semantic-amber border-semantic-amber/30 bg-semantic-amber/10' : 'text-semantic-green border-semantic-green/30 bg-semantic-green/10';
+                        verdictHtml = `<div class="text-[11px] font-mono px-3 py-2 mb-3 border rounded ${verdictColor}">${verdict}</div>`;
+                    }
+                    if (evasionData && evasionData.breakdown) {
+                        const b = evasionData.breakdown;
+                        verdictHtml += `<div class="flex gap-3 mb-3 text-[10px] font-mono text-txt-muted">`;
+                        verdictHtml += `<span>Guidance Misses: <span class="text-txt-primary font-semibold">${b.guidance_misses}</span></span>`;
+                        verdictHtml += `<span>Tone Shifts: <span class="text-txt-primary font-semibold">${b.tone_shifts}</span></span>`;
+                        verdictHtml += `<span>Dodges: <span class="text-txt-primary font-semibold">${b.analyst_dodges}</span></span>`;
+                        verdictHtml += `<span>Flagged: <span class="text-txt-primary font-semibold">${b.flagged_phrases}</span></span>`;
+                        verdictHtml += `</div>`;
+                    }
+                    evasionLog.innerHTML = verdictHtml + markdownConverter.makeHtml(narrativeStr);
                 }
 
                 // Render remaining agents into the bottom area of forensic tab
@@ -869,12 +1297,17 @@
                     const info = agentLabels[name] || { name };
                     const div = document.createElement('div');
                     div.className = 'ws-card overflow-hidden animate-fadeUp p-5';
+                    const fullHtml = markdownConverter.makeHtml(output);
                     div.innerHTML = `
-                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4">${info.name}</h3>
+                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 clickable-section-heading" data-modal-title="${info.name}" data-modal-agent="${name}">${info.name}</h3>
                         <div class="text-sm text-txt-secondary leading-relaxed max-h-[300px] overflow-y-auto report-prose pr-2">
-                            ${markdownConverter.makeHtml(output)}
+                            ${fullHtml}
                         </div>
                     `;
+                    // Store full html for modal
+                    div.querySelector('h3').addEventListener('click', function() {
+                        openSectionModal(info.name, fullHtml);
+                    });
                     if (container) container.appendChild(div);
                 }
             }
@@ -920,7 +1353,10 @@
             function renderForensicPanel(scorecard) {
                 if (!scorecard) return;
                 
-                const eq = scorecard.earnings_quality?.quality_grade || '--';
+                // Map the actual outputs from ForensicQuantV3
+                const ocf_ebitda = scorecard.ocf_ebitda_ratio;
+                const eq = ocf_ebitda != null ? (ocf_ebitda >= 0.8 ? 'HIGH' : ocf_ebitda >= 0.5 ? 'MODERATE' : 'LOW') : '--';
+                
                 const ratingEl = document.getElementById('quant-rating');
                 if (ratingEl && !ratingEl.dataset.rendered) {
                     ratingEl.textContent = eq === 'HIGH' ? 'A' : eq === 'MODERATE' ? 'B' : eq === 'LOW' ? 'C' : '--';
@@ -928,22 +1364,24 @@
                     ratingEl.dataset.rendered = 'true';
                 }
 
-                const p = scorecard.profitability || {};
                 const roicEl = document.getElementById('quant-roic');
-                if (roicEl && p.roe_latest) roicEl.textContent = (p.roe_latest * 100).toFixed(1) + '%';
+                if (roicEl && scorecard.roic_latest != null) {
+                    if (typeof scorecard.roic_latest === 'number') {
+                        roicEl.textContent = (scorecard.roic_latest * 100).toFixed(1) + '%';
+                    } else {
+                        roicEl.textContent = 'N/A';
+                    }
+                }
                 
-                // Other metrics mapping if available in backend
-                const lev = scorecard.leverage || {};
                 const cccEl = document.getElementById('quant-ccc');
-                if (cccEl && lev.net_debt_ebitda) {
-                    cccEl.textContent = lev.net_debt_ebitda + 'x';
-                    document.getElementById('quant-ccc-sub').textContent = 'Net Debt/EBITDA';
+                if (cccEl && scorecard.working_capital && scorecard.working_capital.ccc_days != null) {
+                    cccEl.textContent = scorecard.working_capital.ccc_days + 'd';
+                    document.getElementById('quant-ccc-sub').textContent = 'Net Cycle';
                 }
 
-                const dp = scorecard.dupont || {};
                 const dpText = document.getElementById('quant-dupont-text');
-                if (dpText && dp.roe_driver) {
-                    dpText.innerHTML = `<span class="italic font-sans">Primary ROE Driver: </span><span class="font-bold text-txt-primary ml-2">${dp.roe_driver}</span>`;
+                if (dpText && scorecard.dupont && scorecard.dupont.primary_driver) {
+                    dpText.innerHTML = `<span class="italic font-sans">Primary ROE Driver: </span><span class="font-bold text-txt-primary ml-2 uppercase">${scorecard.dupont.primary_driver}</span>`;
                 }
 
                 if (scorecard.flags?.length) {
@@ -1030,48 +1468,197 @@
             }
 
             function renderReport(data) {
+                window._currentReportData = data;
                 reportLoader.classList.add('hidden');
                 renderPartialReport(data);
                 if (!document.getElementById('report-disclaimer')) {
                     const disc = document.createElement('div');
                     disc.id = 'report-disclaimer';
                     disc.className = "mt-8 text-[10px] font-mono text-txt-dim border-t border-base-border pt-4 px-2 tracking-wide";
-                    disc.innerHTML = '<p>> SYSTEM_DISCLAIMER: Generative output via MAS logic. NOT INVESTMENT ADVICE. End_Transmission.</p>';
+                    disc.innerHTML = '<p>> SYSTEM_DISCLAIMER: Generative output via MAS logic. NOT INVESTMENT ADVICE.</p>';
                     reportContent.appendChild(disc);
                 }
                 // Render additional panels if structured data exists
                 if (data.triage_result) renderTriagePanel(data.triage_result);
                 if (data.forensic_scorecard) renderForensicPanel(data.forensic_scorecard);
                 if (data.rag_stats) renderSourceStore(data.rag_stats);
+                if (data.signal_payload) {
+                    renderSignalIntelligence(data.signal_payload);
+                } else {
+                    renderSignalIntelligence({signals: [], impacts: [], unavailable_sources: []});
+                }
+
+                // ── Render Charts ──
+                if (data.agent_trails && window.NovusCharts) {
+                    window.NovusCharts.renderFromAgentData(data.agent_trails);
+                }
+                // Re-render screener charts if data was already fetched
+                if (window._screenerData && window.NovusCharts) {
+                    window.NovusCharts.renderFromScreener(window._screenerData);
+                }
             }
 
-            // ── PDF Export ──
+            function renderSignalIntelligence(payload) {
+                const panel = document.getElementById('signal-intel-panel');
+                if (!panel) return;
+                
+                const { signals, impacts, unavailable_sources } = payload;
+                if (!signals?.length && !impacts?.length) {
+                    panel.classList.remove('hidden');
+                    document.getElementById('signal-list').innerHTML = '<div class="text-xs font-mono text-txt-muted p-4 border border-base-border/50 rounded bg-base-elevated text-center">No material signals detected in the last 24 hours.</div>';
+                    document.getElementById('impact-list').innerHTML = '<div class="text-xs font-mono text-txt-muted p-4 border border-base-border/50 rounded bg-base-elevated text-center">N/A</div>';
+                    return;
+                }
+                
+                panel.classList.remove('hidden');
+                
+                const freshness = document.getElementById('signal-freshness');
+                if (freshness) {
+                    const date = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
+                    freshness.textContent = `SYNC: ${date} UTC`;
+                }
+                
+                const unavailEl = document.getElementById('signal-unavailable');
+                if (unavailable_sources?.length) {
+                    unavailEl.textContent = `> WARN: Sources unavailable at fetch: ${unavailable_sources.join(', ')}`;
+                    unavailEl.classList.remove('hidden');
+                } else {
+                    unavailEl.classList.add('hidden');
+                }
+                
+                const sigList = document.getElementById('signal-list');
+                sigList.innerHTML = signals.map(s => {
+                    const color = s.direction === 'positive' ? 'text-semantic-green bg-semantic-green/10 border-semantic-green/30' 
+                                : s.direction === 'negative' ? 'text-semantic-red bg-semantic-red/10 border-semantic-red/30' 
+                                : 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
+                    return `
+                    <div class="p-3 border rounded-md ${color}">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-xs font-bold uppercase tracking-wider">${s.category}</span>
+                            <span class="text-[10px] font-mono opacity-80">SCORE: ${s.materiality_score}</span>
+                        </div>
+                        <p class="text-sm font-sans text-txt-primary opacity-90">${s.summary}</p>
+                    </div>`;
+                }).join('');
+                
+                const impList = document.getElementById('impact-list');
+                impList.innerHTML = impacts.map(i => {
+                    const color = i.direction === 'positive' ? 'text-semantic-green bg-semantic-green/10 border-semantic-green/30' 
+                                : i.direction === 'negative' ? 'text-semantic-red bg-semantic-red/10 border-semantic-red/30' 
+                                : 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
+                    const killBadge = i.triggers_kill_criterion_id 
+                        ? `<span class="mt-2 inline-block text-[9px] font-bold px-2 py-0.5 bg-semantic-red text-white rounded-sm uppercase tracking-widest animate-pulse">KILL CRITERION: ${i.triggers_kill_criterion_id}</span>` 
+                        : '';
+                    return `
+                    <div class="p-3 border rounded-md ${color}">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-xs font-bold uppercase tracking-wider">${i.qualitative_magnitude} IMPACT</span>
+                            <span class="text-[10px] font-mono opacity-80">${i.horizon}</span>
+                        </div>
+                        <p class="text-[11px] font-sans font-medium text-txt-primary opacity-90 mb-1">Affects: ${i.affected_thesis_drivers.join(', ')}</p>
+                        <p class="text-[11px] font-sans text-txt-primary opacity-70">Watch: ${i.what_to_watch}</p>
+                        ${killBadge}
+                    </div>`;
+                }).join('');
+            }
+
+            // ── PDF Export (Backend WeasyPrint) ──
             exportPdfBtn.addEventListener('click', async () => {
                 const element = document.getElementById('report-content');
-                if (!element) return;
+                if (!element || !element.innerHTML.trim()) { alert('No report content to export.'); return; }
                 const originalText = exportPdfBtn.innerHTML;
                 exportPdfBtn.innerHTML = '<div class="w-3 h-3 border border-accent-brand/30 border-t-accent-brand rounded-full animate-spin mr-1.5"></div>GENERATING...';
                 exportPdfBtn.disabled = true;
                 try {
+                    const ticker = (tickerInput.value || 'REPORT').toUpperCase();
+                    
+                    // Extract all charts as Base64 images
+                    const charts = {};
+                    const canvases = document.querySelectorAll('canvas');
+                    canvases.forEach(canvas => {
+                        if (canvas.id) {
+                            // Convert canvas to white background image since PDF is light mode
+                            const ctx = canvas.getContext('2d');
+                            const tempCanvas = document.createElement('canvas');
+                            tempCanvas.width = canvas.width;
+                            tempCanvas.height = canvas.height;
+                            const tempCtx = tempCanvas.getContext('2d');
+                            tempCtx.fillStyle = '#FFFFFF';
+                            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                            tempCtx.drawImage(canvas, 0, 0);
+                            charts[canvas.id] = tempCanvas.toDataURL('image/png');
+                        }
+                    });
+
+                    const payload = {
+                        ticker: ticker,
+                        content_html: element.innerHTML,
+                        raw_data: window._currentReportData || null,
+                        charts: charts
+                    };
+
                     const response = await fetch('/export_pdf', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ ticker: tickerInput.value || 'REPORT', content_html: element.innerHTML })
+                        body: JSON.stringify(payload)
                     });
-                    if (!response.ok) throw new Error(`Status: ${response.status}`);
+                    
+                    if (!response.ok) {
+                        const errorMsg = await response.text();
+                        throw new Error(errorMsg);
+                    }
+                    
                     const blob = await response.blob();
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
-                    a.style.display = 'none'; a.href = url;
-                    a.download = `${(tickerInput.value || 'REPORT').toUpperCase()}_Novus_Terminal.pdf`;
-                    document.body.appendChild(a); a.click();
+                    a.href = url;
+                    a.download = `${ticker}_Novus_Analysis.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
                     window.URL.revokeObjectURL(url);
+                    
                 } catch (error) {
                     console.error('PDF Export Error:', error);
                     alert("Failed to export: " + error.message);
                 } finally {
                     exportPdfBtn.innerHTML = originalText;
                     exportPdfBtn.disabled = false;
+                }
+            });
+
+            // ── Demo Mode ──
+            document.getElementById('demo-mode-btn')?.addEventListener('click', async () => {
+                document.getElementById('report-placeholder').classList.add('hidden');
+                document.getElementById('report-loader').classList.remove('hidden');
+                document.getElementById('loader-stage').textContent = "Loading Demo Data (CIPLA)...";
+                
+                document.getElementById('ticker').value = 'CIPLA';
+                
+                const header = document.querySelector('header .flex.items-center.gap-2');
+                if (header && !document.getElementById('demo-badge')) {
+                    header.insertAdjacentHTML('beforeend', '<span id="demo-badge" class="ml-4 px-2 py-0.5 text-[10px] font-mono font-bold bg-semantic-amber/20 text-semantic-amber border border-semantic-amber/50 rounded-sm tracking-widest">DEMO MODE</span>');
+                }
+                
+                try {
+                    const res = await fetch('/static/sample_report.json?v=' + new Date().getTime());
+                    const data = await res.json();
+                    
+                    document.getElementById('report-loader').classList.add('hidden');
+                    document.getElementById('insight-dashboard').classList.remove('hidden');
+                    
+                    renderReport(data);
+                    
+                    if(data.rag_stats) {
+                        renderSourceStore(data.rag_stats);
+                    }
+                    
+                    fetchAndRenderScreener('CIPLA');
+                    
+                } catch (e) {
+                    console.error("Demo Mode Error:", e);
+                    document.getElementById('error-message').classList.remove('hidden');
+                    document.getElementById('error-message').textContent = "Failed to load sample report.";
                 }
             });
 
@@ -1118,7 +1705,7 @@
         const chatMessages = document.getElementById('chat-messages');
         const chatClear = document.getElementById('chat-clear');
         const mainTickerInput = document.getElementById('ticker');
-        const md = new showdown.Converter(window.terminalStylesExt ? { extensions: [window.terminalStylesExt, window.semanticExt] } : {});
+        const md = new showdown.Converter(window.terminalStylesExt ? { extensions: [window.terminalStylesExt, window.semanticExt], tables: true } : { tables: true });
 
         let chatHistory = [];
         let isSending = false;
@@ -1168,9 +1755,88 @@
                 const resp = await fetch('/api/v1/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ticker, question, history: chatHistory.slice(0, -1) }) });
                 const ti = document.getElementById('typing-indicator'); if (ti) ti.remove();
                 if (!resp.ok) { const err = await resp.json().catch(() => ({})); throw new Error(err.error || `Status ${resp.status}`); }
-                const data = await resp.json();
-                appendMessage('assistant', data.answer, data.sources);
-                chatHistory.push({ role: 'assistant', content: data.answer });
+                
+                // Immediately create the DOM element for streamed content
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `chat-msg assistant`;
+                const bubble = document.createElement('div');
+                bubble.className = 'chat-bubble';
+                msgDiv.appendChild(bubble);
+                chatMessages.appendChild(msgDiv);
+
+                const reader = resp.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let fullAnswer = "";
+                let sourcesData = null;
+                let sseBuffer = "";
+                let lastRender = 0;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    sseBuffer += decoder.decode(value, { stream: true });
+                    
+                    let newlineIdx;
+                    while ((newlineIdx = sseBuffer.indexOf('\n\n')) >= 0) {
+                        const eventStr = sseBuffer.slice(0, newlineIdx).trim();
+                        sseBuffer = sseBuffer.slice(newlineIdx + 2);
+                        
+                        if (eventStr === 'data: [DONE]') continue;
+                        if (eventStr.startsWith('data: ')) {
+                            const dataStr = eventStr.slice(6);
+                            if (dataStr) {
+                                try {
+                                    const parsed = JSON.parse(dataStr);
+                                    if (parsed.type === 'meta') {
+                                        sourcesData = parsed.sources;
+                                    } else if (parsed.type === 'error') {
+                                        throw new Error(parsed.text);
+                                    } else if (parsed.type === 'clear') {
+                                        fullAnswer = '';
+                                        bubble.innerHTML = '';
+                                    } else if (parsed.type === 'content') {
+                                        fullAnswer += parsed.text;
+                                    }
+                                } catch (e) {
+                                    console.error("SSE JSON Parse Error:", e, dataStr);
+                                }
+                            }
+                        }
+                    }
+
+                    // Throttle markdown parsing (max 10 fps) to avoid blocking main thread parsing huge payloads
+                    const now = Date.now();
+                    if (now - lastRender > 100) {
+                        bubble.innerHTML = md.makeHtml(fullAnswer);
+                        lastRender = now;
+                        
+                        // Smart Scrolling: Only auto-scroll if the user is already at the bottom
+                        const isAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 50;
+                        if (isAtBottom) {
+                            chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'instant' });
+                        }
+                    }
+                }
+
+                // Final render
+                bubble.innerHTML = md.makeHtml(fullAnswer);
+                
+                // Append Sources if present
+                if (sourcesData && sourcesData.length > 0) {
+                    const srcDiv = document.createElement('div');
+                    srcDiv.className = 'chat-sources mt-3 border-t border-base-border pt-2';
+                    srcDiv.innerHTML = '> SOURCES: ' + sourcesData.map(s => `<span class="text-accent-brand text-xs mr-2 cursor-help" title="${s.section || ''}">${s.filename} <span class="text-txt-dim">(${s.doc_type})</span></span>`).join('');
+                    msgDiv.appendChild(srcDiv);
+                }
+                
+                chatHistory.push({ role: 'assistant', content: fullAnswer });
+
+                // Final scroll safety
+                const isAtBottomFinal = chatMessages.scrollHeight - chatMessages.scrollTop - chatMessages.clientHeight < 100;
+                if (isAtBottomFinal) {
+                    chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+                }
+
             } catch (err) {
                 const ti = document.getElementById('typing-indicator'); if (ti) ti.remove();
                 appendMessage('assistant', `> ERR: ${err.message}`);
@@ -1200,7 +1866,437 @@
         }
 
         function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+
+        // Wire up Evasion Likelihood heading click
+        document.getElementById('evasion-heading').addEventListener('click', function() {
+            const content = document.getElementById('mgmt-dodging-log').innerHTML;
+            openSectionModal('Management Evasion Likelihood', content);
+        });
     })();
+    </script>
+
+    <!-- ── Section Detail Modal ── -->
+    <div id="section-modal-backdrop" class="section-modal-backdrop" role="dialog" aria-modal="true">
+        <div class="section-modal" id="section-modal">
+            <div class="section-modal-header">
+                <div class="section-modal-title">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-accent-brand"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span id="section-modal-title-text">Detail View</span>
+                </div>
+                <button class="section-modal-close" id="section-modal-close-btn" aria-label="Close">
+                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="section-modal-body report-prose" id="section-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ═══ NOVUS CHARTS ENGINE ═══ -->
+    <script>
+    window.NovusCharts = (() => {
+        try {
+            // ── Theme ──
+            const T = {
+                bg: '#000000', grid: 'rgba(0,229,255,0.1)', tick: '#00E5FF', label: '#FFFFFF',
+                blue: '#00E5FF', blueLight: '#66FFFF', blueDim: 'rgba(0,229,255,0.15)',
+                green: '#00FF41', greenDim: 'rgba(0,255,65,0.12)',
+                amber: '#FFB300', amberDim: 'rgba(255,179,0,0.12)',
+                red: '#FF0055', redDim: 'rgba(255,0,85,0.12)',
+                cyan: '#00E5FF', purple: '#B026FF', pink: '#FF00A0',
+                font: "'JetBrains Mono', monospace",
+                mono: "'JetBrains Mono', monospace",
+            };
+
+            // Chart.js global defaults
+            Chart.defaults.color = T.tick;
+            Chart.defaults.font.family = T.font;
+            Chart.defaults.font.size = 11;
+            Chart.defaults.plugins.legend.labels.usePointStyle = true;
+            Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
+            Chart.defaults.plugins.legend.labels.padding = 16;
+            Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(5,5,5,0.9)';
+            Chart.defaults.plugins.tooltip.borderColor = '#00E5FF';
+            Chart.defaults.plugins.tooltip.borderWidth = 1;
+            Chart.defaults.plugins.tooltip.titleFont = { family: T.mono, weight: '600' };
+            Chart.defaults.plugins.tooltip.bodyFont = { family: T.mono };
+            Chart.defaults.plugins.tooltip.padding = 10;
+            Chart.defaults.plugins.tooltip.cornerRadius = 2;
+
+            const _instances = {};
+            function _destroy(id) { if (_instances[id]) { _instances[id].destroy(); delete _instances[id]; } }
+            function _create(id, config) { 
+                _destroy(id); 
+                const ctx = document.getElementById(id); 
+                if (!ctx) return null; 
+                ctx.classList.remove('hidden');
+                if (ctx.parentElement && ctx.parentElement.textContent.includes('Analyzing data...')) {
+                    Array.from(ctx.parentElement.childNodes).forEach(node => {
+                        if (node.nodeType === Node.TEXT_NODE) node.remove();
+                    });
+                    ctx.parentElement.classList.remove('animate-pulse', 'border', 'border-dashed', 'border-base-border');
+                }
+                _instances[id] = new Chart(ctx, config); 
+                return _instances[id]; 
+            }
+
+            function _gridOpts(showX = true) {
+                return {
+                    x: { grid: { color: T.grid, drawBorder: false }, ticks: { color: T.tick, font: { family: T.mono, size: 10 }, display: showX, maxRotation: 45 }, border: { display: false } },
+                    y: { grid: { color: T.grid, drawBorder: false }, ticks: { color: T.tick, font: { family: T.mono, size: 10 }, callback: v => v >= 1000 ? (v/1000).toFixed(0)+'K' : v }, border: { display: false } },
+                };
+            }
+
+            // ── Helper: extract row from screener tables ──
+            function _getRow(tables, tableName, lineItem) {
+                const tbl = tables[tableName];
+                if (!tbl) return null;
+                return tbl.find(r => {
+                    const li = r['Line Item'] || r['Unnamed: 0'] || '';
+                    return li.trim().toLowerCase().startsWith(lineItem.toLowerCase());
+                });
+            }
+            function _getYears(row) {
+                if (!row) return [];
+                return Object.keys(row).filter(k => k !== 'Line Item' && k !== 'Unnamed: 0');
+            }
+            function _getValues(row, years) {
+                return years.map(y => { const v = row[y]; return v === null || v === '' || v === 'NaN' ? null : parseFloat(String(v).replace(/,/g, '')); });
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 1: Revenue & PAT Trend (Executive Summary)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderRevenuePAT(screenerData) {
+                const tables = screenerData.tables || {};
+                const salesRow = _getRow(tables, 'Profit & Loss', 'Sales') || _getRow(tables, 'Quarterly Results', 'Sales');
+                const patRow = _getRow(tables, 'Profit & Loss', 'Net Profit') || _getRow(tables, 'Quarterly Results', 'Net Profit');
+                if (!salesRow) return;
+                const years = _getYears(salesRow).slice(-8); // last 8 years
+                const sales = _getValues(salesRow, years);
+                const pat = patRow ? _getValues(patRow, years) : [];
+
+                _create('chart-revenue-pat', {
+                    type: 'line',
+                    data: {
+                        labels: years.map(y => y.replace('Mar ', "FY").replace('Dec ', "Q3 ").replace('Sep ', "Q2 ")),
+                        datasets: [
+                            { label: 'Revenue', data: sales, borderColor: T.blue, backgroundColor: T.blueDim, fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: T.blue, borderWidth: 2 },
+                            { label: 'Net Profit', data: pat, borderColor: T.green, backgroundColor: T.greenDim, fill: true, tension: 0.3, pointRadius: 3, pointBackgroundColor: T.green, borderWidth: 2 },
+                        ],
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: _gridOpts(), plugins: { legend: { position: 'top', align: 'end' } } },
+                });
+                document.getElementById('exec-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 2: Agent Confidence Radar (Executive Summary)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderAgentRadar(agentTrails) {
+                if (!agentTrails || Object.keys(agentTrails).length === 0) return;
+                const nameMap = {
+                    forensic_quant: 'Forensic Quant', forensic_investigator: 'Forensic Audit',
+                    narrative_decoder: 'Narrative', moat_architect: 'Moat',
+                    capital_allocator: 'Capital', management_quality: 'Mgmt Quality',
+                };
+                const labels = []; const values = [];
+                for (const [name, trail] of Object.entries(agentTrails)) {
+                    if (name === 'pm_synthesis' || name === 'critic_agent') continue;
+                    labels.push(nameMap[name] || name);
+                    values.push(typeof trail.confidence === 'number' ? Math.round(trail.confidence * 100) : 50);
+                }
+                if (labels.length < 3) return;
+
+                _create('chart-agent-radar', {
+                    type: 'radar',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'Confidence %',
+                            data: values,
+                            borderColor: T.blue,
+                            backgroundColor: 'rgba(59,130,246,0.15)',
+                            pointBackgroundColor: T.blueLight,
+                            pointBorderColor: T.blue,
+                            pointRadius: 4,
+                            borderWidth: 2,
+                        }],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true, max: 100,
+                                grid: { color: T.grid }, angleLines: { color: T.grid },
+                                ticks: { display: false, stepSize: 25 },
+                                pointLabels: { color: T.label, font: { family: T.font, size: 11, weight: '500' } },
+                            },
+                        },
+                        plugins: { legend: { display: false } },
+                    },
+                });
+                document.getElementById('exec-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 3: Cash Quality Gauge (Forensic Tab)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderCashQuality(quantFindings) {
+                const ratio = quantFindings?.ocf_ebitda_ratio;
+                const ctxEl = document.getElementById('chart-cash-quality');
+                if (!ctxEl) return;
+                
+                if (ratio === undefined || ratio === null) {
+                    ctxEl.parentElement.innerHTML = '<div class="h-full flex items-center justify-center text-txt-muted text-sm italic border border-dashed border-base-border rounded-md">Cash Quality data unavailable</div>';
+                    document.getElementById('forensic-charts-row')?.classList.remove('hidden');
+                    return;
+                }
+                const pct = Math.min(Math.round(ratio * 100), 100);
+                const remaining = 100 - pct;
+                const color = pct >= 80 ? T.green : pct >= 50 ? T.amber : T.red;
+                const dimColor = pct >= 80 ? T.greenDim : pct >= 50 ? T.amberDim : T.redDim;
+                const label = pct >= 80 ? 'STRONG' : pct >= 50 ? 'MODERATE' : 'WEAK';
+
+                _create('chart-cash-quality', {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['OCF/EBITDA', 'Gap'],
+                        datasets: [{ data: [pct, remaining], backgroundColor: [color, 'rgba(30,41,59,0.3)'], borderWidth: 0, cutout: '75%' }],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false },
+                        },
+                    },
+                    plugins: [{
+                        id: 'centerText',
+                        afterDraw(chart) {
+                            const { ctx, chartArea: { width, height, top, left } } = chart;
+                            const cx = left + width / 2; const cy = top + height / 2;
+                            ctx.save();
+                            ctx.fillStyle = color; ctx.font = `bold 28px ${T.mono}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                            ctx.fillText(`${pct}%`, cx, cy - 8);
+                            ctx.fillStyle = T.tick; ctx.font = `600 11px ${T.font}`;
+                            ctx.fillText(label, cx, cy + 18);
+                            ctx.restore();
+                        },
+                    }],
+                });
+                document.getElementById('forensic-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 4: Working Capital Cycle (Forensic Tab)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderWorkingCapital(quantFindings) {
+                const wc = quantFindings?.working_capital;
+                const ctxEl = document.getElementById('chart-working-capital');
+                if (!ctxEl) return;
+                
+                if (!wc) {
+                    ctxEl.parentElement.innerHTML = '<div class="h-full flex items-center justify-center text-txt-muted text-sm italic border border-dashed border-base-border rounded-md">Working Capital data unavailable</div>';
+                    document.getElementById('forensic-charts-row')?.classList.remove('hidden');
+                    return;
+                }
+                const labels = []; const values = []; const colors = [];
+                if (wc.dio != null) { labels.push('DIO (Inventory)'); values.push(wc.dio); colors.push(T.blue); }
+                if (wc.dso != null) { labels.push('DSO (Receivables)'); values.push(wc.dso); colors.push(T.amber); }
+                if (wc.dpo != null) { labels.push('DPO (Payables)'); values.push(wc.dpo); colors.push(T.green); }
+                if (wc.ccc_days != null) { labels.push('CCC (Net Cycle)'); values.push(wc.ccc_days); colors.push(wc.ccc_days < 0 ? T.green : T.red); }
+                
+                if (!labels.length) {
+                    ctxEl.parentElement.innerHTML = '<div class="h-full flex items-center justify-center text-txt-muted text-sm italic border border-dashed border-base-border rounded-md">Working Capital metrics empty</div>';
+                    document.getElementById('forensic-charts-row')?.classList.remove('hidden');
+                    return;
+                }
+
+                _create('chart-working-capital', {
+                    type: 'bar',
+                    data: { labels, datasets: [{ data: values, backgroundColor: colors.map(c => c + '33'), borderColor: colors, borderWidth: 1.5, borderRadius: 3 }] },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                        scales: {
+                            x: { grid: { color: T.grid }, ticks: { color: T.tick, font: { family: T.mono, size: 10 }, callback: v => v + 'd' }, border: { display: false } },
+                            y: { grid: { display: false }, ticks: { color: T.label, font: { family: T.font, size: 11, weight: '500' } }, border: { display: false } },
+                        },
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw + ' days' } } },
+                    },
+                });
+                document.getElementById('forensic-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 5: DuPont ROE Decomposition (Quant Canvas)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderDuPont(quantFindings) {
+                const dp = quantFindings?.dupont;
+                const ctxEl = document.getElementById('chart-dupont');
+                if (!ctxEl) return;
+                
+                if (!dp) {
+                    const parent = ctxEl.parentElement;
+                    parent.innerHTML = '<div class="h-full flex items-center justify-center text-txt-muted text-sm italic border border-dashed border-base-border rounded-md">DuPont data unavailable</div>';
+                    document.getElementById('quant-charts-row')?.classList.remove('hidden');
+                    return;
+                }
+                
+                const labels = ['Net Margin', 'Asset Turnover', 'Equity Multiplier', 'ROE'];
+                const values = [dp.net_margin ? dp.net_margin * 100 : 0, dp.asset_turnover ? dp.asset_turnover * 100 : 0, dp.equity_multiplier ? dp.equity_multiplier * 100 : 0, dp.roe ? dp.roe * 100 : 0];
+                const barColors = [T.cyan + 'AA', T.purple + 'AA', T.amber + 'AA', T.blue];
+                const borderColors = [T.cyan, T.purple, T.amber, T.blue];
+
+                _create('chart-dupont', {
+                    type: 'bar',
+                    data: { labels, datasets: [{ data: values, backgroundColor: barColors, borderColor: borderColors, borderWidth: 1.5, borderRadius: 4 }] },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: T.label, font: { family: T.font, size: 11, weight: '500' } }, border: { display: false } },
+                            y: { grid: { color: T.grid }, ticks: { color: T.tick, font: { family: T.mono, size: 10 }, callback: v => v.toFixed(0) + '%' }, border: { display: false } },
+                        },
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw.toFixed(2) + '%' } } },
+                    },
+                });
+                document.getElementById('quant-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 6: Revenue / EBITDA / PAT Grouped Bars (Quant Canvas)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderRevEbitdaPat(screenerData) {
+                const tables = screenerData.tables || {};
+                const salesRow = _getRow(tables, 'Profit & Loss', 'Sales') || _getRow(tables, 'Quarterly Results', 'Sales');
+                const opProfitRow = _getRow(tables, 'Profit & Loss', 'Operating Profit') || _getRow(tables, 'Quarterly Results', 'Operating Profit');
+                const patRow = _getRow(tables, 'Profit & Loss', 'Net Profit') || _getRow(tables, 'Quarterly Results', 'Net Profit');
+                if (!salesRow) return;
+                const years = _getYears(salesRow).slice(-6);
+                const revenue = _getValues(salesRow, years);
+                const ebitda = opProfitRow ? _getValues(opProfitRow, years) : [];
+                const pat = patRow ? _getValues(patRow, years) : [];
+
+                _create('chart-rev-ebitda-pat', {
+                    type: 'bar',
+                    data: {
+                        labels: years.map(y => y.replace('Mar ', "FY").replace('Dec ', "Q3 ").replace('Sep ', "Q2 ")),
+                        datasets: [
+                            { label: 'Revenue', data: revenue, backgroundColor: T.blue + '55', borderColor: T.blue, borderWidth: 1.5, borderRadius: 3 },
+                            { label: 'EBITDA', data: ebitda, backgroundColor: T.cyan + '55', borderColor: T.cyan, borderWidth: 1.5, borderRadius: 3 },
+                            { label: 'PAT', data: pat, backgroundColor: T.green + '55', borderColor: T.green, borderWidth: 1.5, borderRadius: 3 },
+                        ],
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: _gridOpts(), plugins: { legend: { position: 'top', align: 'end' } } },
+                });
+                document.getElementById('quant-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 7: Free Cash Flow Trend (Quant Canvas)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderFCFTrend(screenerData) {
+                const tables = screenerData.tables || {};
+                const ocfRow = _getRow(tables, 'Cash Flows', 'Cash from Operating') || _getRow(tables, 'Quarterly Results', 'Cash from Operating');
+                const capexRow = _getRow(tables, 'Cash Flows', 'Fixed Assets Purchased') || _getRow(tables, 'Cash Flows', 'Capital Expenditure');
+                if (!ocfRow) return;
+                const years = _getYears(ocfRow).slice(-6);
+                const ocf = _getValues(ocfRow, years);
+                const capex = capexRow ? _getValues(capexRow, years).map(v => v ? Math.abs(v) : null) : [];
+                const fcf = ocf.map((o, i) => o != null && capex[i] != null ? o - capex[i] : null);
+
+                _create('chart-fcf-trend', {
+                    type: 'bar',
+                    data: {
+                        labels: years.map(y => y.replace('Mar ', "FY").replace('Dec ', "Q3 ").replace('Sep ', "Q2 ")),
+                        datasets: [
+                            { label: 'OCF', data: ocf, backgroundColor: T.blue + '55', borderColor: T.blue, borderWidth: 1.5, borderRadius: 3, order: 2 },
+                            { label: 'FCF', data: fcf, type: 'line', borderColor: T.green, backgroundColor: T.greenDim, pointBackgroundColor: T.green, pointRadius: 4, borderWidth: 2.5, tension: 0.3, fill: false, order: 1 },
+                        ],
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: _gridOpts(), plugins: { legend: { position: 'top', align: 'end' } } },
+                });
+                document.getElementById('quant-charts-row')?.classList.remove('hidden');
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 8: Debt vs Cash Position (Quant Canvas)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderDebtCash(screenerData) {
+                const tables = screenerData.tables || {};
+                const borrowRow = _getRow(tables, 'Balance Sheet', 'Borrowings');
+                const cashRow = _getRow(tables, 'Balance Sheet', 'Cash Equivalents') || _getRow(tables, 'Balance Sheet', 'Cash');
+                if (!borrowRow && !cashRow) return;
+                const refRow = borrowRow || cashRow;
+                const years = _getYears(refRow).slice(-6);
+                const borrowings = borrowRow ? _getValues(borrowRow, years) : years.map(() => 0);
+                const cash = cashRow ? _getValues(cashRow, years) : years.map(() => 0);
+
+                _create('chart-debt-cash', {
+                    type: 'bar',
+                    data: {
+                        labels: years.map(y => y.replace('Mar ', "FY").replace('Dec ', "Q3 ").replace('Sep ', "Q2 ")),
+                        datasets: [
+                            { label: 'Borrowings', data: borrowings, backgroundColor: T.red + '55', borderColor: T.red, borderWidth: 1.5, borderRadius: 3 },
+                            { label: 'Cash & Equivalents', data: cash, backgroundColor: T.green + '55', borderColor: T.green, borderWidth: 1.5, borderRadius: 3 },
+                        ],
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: _gridOpts(), plugins: { legend: { position: 'top', align: 'end' } } },
+                });
+                document.getElementById('quant-charts-row')?.classList.remove('hidden');
+            }
+
+            // ── Public API ──
+            return {
+                renderFromScreener(screenerData) {
+                    if (!screenerData || !screenerData.tables) return;
+                    renderRevenuePAT(screenerData);
+                    renderRevEbitdaPat(screenerData);
+                    renderFCFTrend(screenerData);
+                    renderDebtCash(screenerData);
+                },
+                renderFromAgentData(agentTrails) {
+                    if (!agentTrails) return;
+                    // Quant findings
+                    const quantTrail = agentTrails.forensic_quant;
+                    const findings = quantTrail?.findings || quantTrail;
+                    if (findings) {
+                        renderCashQuality(findings);
+                        renderWorkingCapital(findings);
+                        renderDuPont(findings);
+                    }
+                    // Agent confidence radar
+                    renderAgentRadar(agentTrails);
+                },
+                destroyAll() {
+                    Object.keys(_instances).forEach(_destroy);
+                },
+            };
+        } catch (e) {
+            console.error("NovusCharts Engine Error:", e);
+            document.getElementById('screener-container').insertAdjacentHTML('beforebegin', `<div class="p-4 bg-semantic-red/10 border border-semantic-red text-semantic-red text-xs font-mono mb-4">Chart Engine Error: ${e.message}</div>`);
+            return null;
+        }
+    })();
+    </script>
+
+    <script>
+        function openSectionModal(title, htmlContent) {
+            document.getElementById('section-modal-title-text').textContent = title;
+            document.getElementById('section-modal-body').innerHTML = htmlContent;
+            document.getElementById('section-modal-backdrop').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSectionModal() {
+            document.getElementById('section-modal-backdrop').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('section-modal-close-btn').addEventListener('click', closeSectionModal);
+        document.getElementById('section-modal-backdrop').addEventListener('click', function(e) {
+            if (e.target === this) closeSectionModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeSectionModal();
+        });
     </script>
 </body>
 </html>

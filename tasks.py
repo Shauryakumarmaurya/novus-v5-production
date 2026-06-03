@@ -8,6 +8,7 @@ Restructured background task pipeline using the V3 MAS architecture.
 
 import json
 import time
+import hashlib
 import asyncio
 from rq import get_current_job
 
@@ -23,7 +24,7 @@ from cio_orchestrator import analyze, OrchestratorState
 
 from utils.formatters import format_dict_as_markdown
 
-def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None]:
+def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None, dict | None, dict]:
     """Single source of truth for UI payload construction from OrchestratorState (V3)."""
     a_outs = {}
     for name, trail in st.agent_trails.items():
@@ -33,7 +34,7 @@ def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None]:
         elif trail.data_gaps:
             a_outs[name] = f"**Data Gaps:**\n" + "\n".join(f"- {g}" for g in trail.data_gaps)
         else:
-            a_outs[name] = "[processing...]"
+            a_outs[name] = "> **ERROR:** Agent failed to produce valid findings. The LLM may have failed to format its response as JSON."
 
     kill_reasons = []
     warnings = []
@@ -60,7 +61,95 @@ def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None]:
     if fsa and fsa.findings:
         f_score = fsa.findings
 
-    return a_outs, t_res, f_score
+    # ── Compute Real NLP Evasion Score ──
+    evasion_data = _compute_evasion_score(st)
+
+    # ── Agent Trails Summary for Charts ──
+    agent_trails_summary = {}
+    for name, trail in st.agent_trails.items():
+        agent_trails_summary[name] = {
+            "confidence": trail.confidence,
+            "findings": trail.findings if trail.findings else None,
+            "execution_time_s": trail.execution_time_s,
+        }
+
+    return a_outs, t_res, f_score, evasion_data, agent_trails_summary
+
+
+def _compute_evasion_score(st: OrchestratorState) -> dict | None:
+    """
+    Compute a real 0-100 evasion score from the Narrative Decoder's structured findings.
+    
+    Scoring methodology:
+      - Guidance misses with LOW credibility:   +15 each (max 45)
+      - Tone shifts marked HIGH significance:   +10 each (max 30)
+      - Analyst dodges (any):                   +8 each  (max 24)
+      - Key phrases flagged:                    +3 each  (max 15)
+      - Base score starts at 10 (benefit of doubt)
+    
+    Returns: { "score": int, "breakdown": {...}, "verdict": str }
+    """
+    nd = st.agent_trails.get("narrative_decoder")
+    if not nd or not nd.findings or not isinstance(nd.findings, dict):
+        return None
+
+    findings = nd.findings
+    score = 10  # base: benefit of the doubt
+    breakdown = {
+        "guidance_misses": 0,
+        "tone_shifts": 0,
+        "analyst_dodges": 0,
+        "flagged_phrases": 0,
+    }
+
+    # 1. Guidance tracker — credibility misses
+    for item in findings.get("guidance_tracker", []):
+        cred = ""
+        if isinstance(item, dict):
+            cred = str(item.get("credibility", "")).upper()
+        if "LOW" in cred:
+            score += 15
+            breakdown["guidance_misses"] += 1
+        elif "MEDIUM" in cred:
+            score += 7
+            breakdown["guidance_misses"] += 1
+
+    # 2. Tone shifts — significance
+    for item in findings.get("tone_shifts", []):
+        sig = ""
+        if isinstance(item, dict):
+            sig = str(item.get("significance", "")).upper()
+        if "HIGH" in sig:
+            score += 10
+            breakdown["tone_shifts"] += 1
+        elif "MEDIUM" in sig:
+            score += 5
+            breakdown["tone_shifts"] += 1
+
+    # 3. Analyst dodges
+    for item in findings.get("analyst_dodges", []):
+        score += 8
+        breakdown["analyst_dodges"] += 1
+
+    # 4. Key phrases flagged
+    for item in findings.get("key_phrases_flagged", []):
+        score += 3
+        breakdown["flagged_phrases"] += 1
+
+    # Clamp to 0-100
+    score = max(0, min(100, score))
+
+    # Verdict
+    if score >= 75:
+        verdict = "HIGH EVASION — Management is likely deflecting on critical issues"
+    elif score >= 45:
+        verdict = "MODERATE EVASION — Some hedging detected, selective transparency"
+    elif score >= 25:
+        verdict = "LOW EVASION — Minor hedging, mostly transparent communication"
+    else:
+        verdict = "TRANSPARENT — Management communication appears forthcoming"
+
+    return {"score": score, "breakdown": breakdown, "verdict": verdict}
 
 
 PROGRESS_STAGES = [
@@ -134,7 +223,7 @@ def generate_financial_report_from_rag(ticker):
         for q in key_queries:
             results = rag_query(ticker, q, top_k=5)
             for r in results:
-                chunk_hash = hash(r['text'][:100])
+                chunk_hash = hashlib.md5(r['text'].encode()).hexdigest()
                 if chunk_hash not in seen_ids:
                     seen_ids.add(chunk_hash)
                     meta = r.get('metadata', {})
@@ -189,13 +278,15 @@ def generate_financial_report_from_rag(ticker):
         _update_progress('assemble')
         logger.info("[Pipeline] Assembling final Novus report...")
 
-        agent_outputs, triage_result, forensic_scorecard = build_ui_payloads(state)
+        agent_outputs, triage_result, forensic_scorecard, evasion_data, agent_trails_summary = build_ui_payloads(state)
 
         _update_progress('assemble', {
             "final_report": state.final_report,
             "agent_outputs": agent_outputs,
             "triage_result": triage_result,
             "forensic_scorecard": forensic_scorecard,
+            "evasion_data": evasion_data,
+            "agent_trails": agent_trails_summary,
             "active_agents": [],
             "completed_agents": ["planning", "forensic_quant", "forensic_investigator", "narrative_decoder", "moat_architect", "capital_allocator", "management_quality", "synthesis"]
         })
@@ -205,6 +296,9 @@ def generate_financial_report_from_rag(ticker):
             "agent_outputs": agent_outputs,
             "triage_result": triage_result,
             "forensic_scorecard": forensic_scorecard,
+            "evasion_data": evasion_data,
+            "agent_trails": agent_trails_summary,
+            "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
             "status": "completed"
         }
 
@@ -282,13 +376,15 @@ def generate_financial_report(ticker, files_data):
         _update_progress('assemble')
         logger.info("[Pipeline] Assembling final Novus report...")
 
-        agent_outputs, triage_result, forensic_scorecard = build_ui_payloads(state)
+        agent_outputs, triage_result, forensic_scorecard, evasion_data, agent_trails_summary = build_ui_payloads(state)
 
         _update_progress('assemble', {
             "final_report": state.final_report,
             "agent_outputs": agent_outputs,
             "triage_result": triage_result,
             "forensic_scorecard": forensic_scorecard,
+            "evasion_data": evasion_data,
+            "agent_trails": agent_trails_summary,
             "active_agents": [],
             "completed_agents": ["planning", "forensic_quant", "forensic_investigator", "narrative_decoder", "moat_architect", "capital_allocator", "management_quality", "synthesis"]
         })
@@ -298,7 +394,10 @@ def generate_financial_report(ticker, files_data):
             "agent_outputs": agent_outputs,
             "triage_result": triage_result,
             "forensic_scorecard": forensic_scorecard,
+            "evasion_data": evasion_data,
+            "agent_trails": agent_trails_summary,
             "rag_stats": rag_stats,
+            "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
             "status": "completed",
         }
 
