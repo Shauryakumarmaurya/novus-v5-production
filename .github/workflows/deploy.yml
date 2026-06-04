@@ -1,0 +1,31 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Azure VM via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.AZURE_VM_IP }}
+        username: ${{ secrets.AZURE_VM_USERNAME }}
+        key: ${{ secrets.AZURE_VM_SSH_KEY }}
+        script: |
+          # Go to the project directory (update this path if it's different on the VM)
+          cd ~/novus-v5-production || cd /var/www/novus-v5-production
+          
+          # Pull the latest changes from GitHub
+          git reset --hard
+          git pull origin main
+          
+          # Rebuild and restart the containers with 10 workers
+          docker compose up -d --build --scale worker=10
