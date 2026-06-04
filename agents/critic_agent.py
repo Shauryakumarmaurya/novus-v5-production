@@ -107,7 +107,7 @@ class CriticAgentV3(AgentV3):
     }, indent=2)
 
     # Allow more iterations — accuracy > speed
-    MAX_ITERATIONS = 8
+    MAX_ITERATIONS = 15
     VERIFY = False  # The critic IS the verifier; no need to self-verify
 
     def execute(

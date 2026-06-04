@@ -134,7 +134,9 @@ def react_loop(
                 "content": (
                     "🚨 FINAL TURN: You have used all investigation budget. "
                     "Output your complete findings as a JSON object NOW. "
-                    "Do NOT request any more tools. Just output the JSON."
+                    "Do NOT request any more tools. Just output the JSON. "
+                    "CRITICAL: Your entire response must be ONLY valid JSON matching your required schema. "
+                    "Do not include any conversational text before or after the JSON."
                 ),
             })
             resp = llm.call(messages=messages, tools=None, max_tokens=None)
