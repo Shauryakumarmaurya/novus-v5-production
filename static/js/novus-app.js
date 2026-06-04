@@ -13,6 +13,21 @@ import {
 // Expose these for inline HTML handlers
 window.switchTab = switchTab;
 
+// ── Initialize Ticker Dropdown ──
+if (tickerSelect) {
+    Object.keys(TICKER_DATA).forEach(groupLabel => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = groupLabel;
+        TICKER_DATA[groupLabel].forEach(ticker => {
+            const option = document.createElement('option');
+            option.value = ticker.value;
+            option.textContent = ticker.name;
+            optgroup.appendChild(option);
+        });
+        tickerSelect.appendChild(optgroup);
+    });
+}
+
 async function fetchAndRenderScreener(ticker) {
     const container = document.getElementById('screener-container');
     container.innerHTML = '<div class="flex items-center gap-2 text-[11px] font-mono text-accent-brandLight animate-pulse py-4"><span class="w-2 h-2 rounded-none bg-accent-brand"></span>>_ Fetching quantitative datasets...</div>';
