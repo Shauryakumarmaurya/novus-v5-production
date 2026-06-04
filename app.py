@@ -54,7 +54,7 @@ from rag_engine import ingest_documents
 from rag_engine import query as rag_query, get_collection_stats
 from screener_scraper import fetch_screener_tables
 try:
-    from weasyprint import HTML
+    pass
     WEASYPRINT_AVAILABLE = True
 except Exception as e:
     import logging
@@ -1068,7 +1068,25 @@ def export_pdf():
     try:
         # Prepend tearsheet and append signals to content_html
         full_html = tearsheet_html + content_html + signal_html
-        pdf_bytes = HTML(string=html_template.replace("{ticker}", ticker).replace("{report_date}", report_date).replace("{content_html}", full_html)).write_pdf()
+        final_html = html_template.replace("{ticker}", ticker).replace("{report_date}", report_date).replace("{content_html}", full_html)
+        
+        # Send to Gotenberg container (running locally on port 3000 via docker-compose)
+        files = {
+            'files': ('index.html', final_html)
+        }
+        data = {
+            'paperWidth': 8.27,
+            'paperHeight': 11.69,
+            'marginTop': 0.5,
+            'marginBottom': 0.5,
+            'marginLeft': 0.5,
+            'marginRight': 0.5,
+            'printBackground': True
+        }
+        import requests
+        response = requests.post("http://gotenberg:3000/forms/chromium/convert/html", files=files, data=data, timeout=30)
+        response.raise_for_status()
+        pdf_bytes = response.content
         
         return send_file(
             io.BytesIO(pdf_bytes),
@@ -1077,6 +1095,8 @@ def export_pdf():
             download_name=f'{ticker}_Novus_Analysis.pdf'
         )
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": f"PDF generation failed: {str(e)}"}), 500
 
 

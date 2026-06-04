@@ -49,6 +49,12 @@ services:
     depends_on:
       - web
       
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    restart: always
+    expose:
+      - "3000"
+
 volumes:
   redis_data:
   chroma_data:
