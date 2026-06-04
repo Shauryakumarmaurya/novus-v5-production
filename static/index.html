@@ -689,7 +689,10 @@
                     <div id="triage-panel" class="ws-card p-4 mt-4 hidden">
                         <h3 class="text-xs font-sans font-semibold text-txt-primary border-b border-base-border pb-2 mb-3">Triage Results</h3>
                         <div id="triage-content" class="text-sm font-sans text-txt-secondary"></div>
-</h3>
+                    </div>
+                    
+                    <div id="forensic-panel" class="ws-card p-4 mt-4 hidden">
+                        <h3 class="text-xs font-sans font-semibold text-txt-primary border-b border-base-border pb-2 mb-3">Executive Summary</h3>
                         <div id="forensic-content" class="text-sm font-sans"></div>
                     </div>
                 </div>
@@ -698,48 +701,9 @@
     </div>
 
     <!-- ═══ MAIN SCRIPT ═══ -->
-    <script type="module" src="/static/js/novus-app.js"></script>
-
-    <!-- ═══ CHAT COPILOT SCRIPT ═══ -->
+    <script src="/static/js/novus-core.js"></script>
     <script src="/static/js/novus-copilot.js"></script>
-
-    <!-- ── Section Detail Modal ── -->
-    <div id="section-modal-backdrop" class="section-modal-backdrop" role="dialog" aria-modal="true">
-        <div class="section-modal" id="section-modal">
-            <div class="section-modal-header">
-                <div class="section-modal-title">
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-accent-brand"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    <span id="section-modal-title-text">Detail View</span>
-                </div>
-                <button class="section-modal-close" id="section-modal-close-btn" aria-label="Close">
-                    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="section-modal-body report-prose" id="section-modal-body"></div>
-        </div>
-    </div>
-
-    <!-- ═══ NOVUS CHARTS ENGINE ═══ -->
     <script src="/static/js/novus-charts.js"></script>
-
-    <script>
-        function openSectionModal(title, htmlContent) {
-            document.getElementById('section-modal-title-text').textContent = title;
-            document.getElementById('section-modal-body').innerHTML = htmlContent;
-            document.getElementById('section-modal-backdrop').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeSectionModal() {
-            document.getElementById('section-modal-backdrop').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-        document.getElementById('section-modal-close-btn').addEventListener('click', closeSectionModal);
-        document.getElementById('section-modal-backdrop').addEventListener('click', function(e) {
-            if (e.target === this) closeSectionModal();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeSectionModal();
-        });
-    </script>
+    <script src="/static/js/novus-modal.js"></script>
 </body>
 </html>

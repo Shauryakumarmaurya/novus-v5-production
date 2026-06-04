@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+    <!-- ═══ MAIN SCRIPT ═══ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             const TICKER_DATA = {
                 "📊 Pharma Portfolio": [
                     { value: "ALEMBICLTD", name: "Alembic Limited" },
@@ -1218,3 +1220,4 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+    </script>

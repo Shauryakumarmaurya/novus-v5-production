@@ -27,6 +27,8 @@ services:
   worker:
     build: .
     restart: always
+    deploy:
+      replicas: 10
     environment:
       - REDIS_HOST=redis
     volumes:
