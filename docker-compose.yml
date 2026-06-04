@@ -15,9 +15,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - FLASK_ENV=production
-    # Map port 80 on the host to 5001 on the container
-    ports:
-      - "80:5001"
+    expose:
+      - "5001"
     volumes:
       - chroma_data:/app/chroma_db
       - ./data:/app/data
@@ -36,7 +35,22 @@ services:
     command: rq worker financial_analysis --url redis://redis:6379/0
     depends_on:
       - redis
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
       
 volumes:
   redis_data:
   chroma_data:
+  caddy_data:
+  caddy_config:

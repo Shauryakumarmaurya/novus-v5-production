@@ -1,0 +1,5 @@
+novus-analytics.centralindia.cloudapp.azure.com {
+    reverse_proxy web:5001 {
+        header_up X-Real-IP {remote_host}
+    }
+}
