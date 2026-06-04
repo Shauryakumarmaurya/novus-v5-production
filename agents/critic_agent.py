@@ -272,7 +272,7 @@ Output your findings as JSON matching the schema in your instructions."""
         )
 
         # ── Compute confidence ──
-        confidence = self._compute_confidence(react_result, document_text, financial_tables)
+        confidence, _ = self._compute_confidence(react_result, None, document_text, financial_tables)
 
         # ── Assemble audit trail ──
         elapsed = round(time.time() - start, 2)
