@@ -38,6 +38,15 @@
     // Make sendChatMessage globally accessible since it's called by inline onclick handlers in index.html
     window.sendChatMessage = sendMessage;
 
+    window.injectCopilotQuery = function(cleanQuery, structuredContextText) {
+        chatHistory.push({ role: 'user', content: "[Context Injected]\n" + structuredContextText });
+        chatHistory.push({ role: 'assistant', content: "Context acknowledged." });
+        chatInput.value = cleanQuery;
+        chatSend.disabled = false;
+        chatSend.click();
+    };
+
+
     async function sendMessage() {
         const ticker = mainTickerInput.value.trim().toUpperCase();
         const question = chatInput.value.trim();

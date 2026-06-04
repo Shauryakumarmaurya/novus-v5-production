@@ -342,6 +342,183 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalBackdrop.classList.contains('visible')) closeModal();
 });
 
+
+window.toggleLowerSignals = function() {
+                const hidden = document.querySelectorAll('.signal-subthreshold');
+                const btn = document.getElementById('signal-toggle-btn');
+                const isShowing = btn.textContent.startsWith('Hide');
+                hidden.forEach(el => {
+                    if (isShowing) {
+                        el.classList.add('hidden');
+                    } else {
+                        el.classList.remove('hidden');
+                    }
+                });
+                if (isShowing) {
+                    btn.innerHTML = `Show lower-materiality signals (<span id="signal-hidden-count">${hidden.length}</span>)`;
+                } else {
+                    btn.textContent = 'Hide lower-materiality signals';
+                }
+            };
+
+exportPdfBtn.addEventListener('click', async () => {
+                const element = document.getElementById('report-content');
+                if (!element || !element.innerHTML.trim()) { alert('No report content to export.'); return; }
+                const originalText = exportPdfBtn.innerHTML;
+                exportPdfBtn.innerHTML = '<div class="w-3 h-3 border border-accent-brand/30 border-t-accent-brand rounded-full animate-spin mr-1.5"></div>GENERATING...';
+                exportPdfBtn.disabled = true;
+                try {
+                    const ticker = (tickerInput.value || 'REPORT').toUpperCase();
+                    
+                    // Extract all charts as Base64 images
+                    const charts = {};
+                    const canvases = document.querySelectorAll('canvas');
+                    canvases.forEach(canvas => {
+                        if (canvas.id && canvas.width > 0 && canvas.height > 0 && canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+                            try {
+                                // Convert canvas to white background image since PDF is light mode
+                                const tempCanvas = document.createElement('canvas');
+                                tempCanvas.width = canvas.width;
+                                tempCanvas.height = canvas.height;
+                                const tempCtx = tempCanvas.getContext('2d');
+                                tempCtx.fillStyle = '#FFFFFF';
+                                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                                tempCtx.drawImage(canvas, 0, 0);
+                                charts[canvas.id] = tempCanvas.toDataURL('image/png');
+                            } catch(e) {
+                                console.warn('Could not export canvas', canvas.id, e);
+                            }
+                        }
+                    });
+
+                    const payload = {
+                        ticker: ticker,
+                        content_html: element.innerHTML,
+                        raw_data: window._currentReportData || null,
+                        charts: charts
+                    };
+
+                    const response = await fetch('/export_pdf', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) {
+                        const errorMsg = await response.text();
+                        throw new Error(errorMsg);
+                    }
+                    
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${ticker}_Novus_Analysis.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    
+                } catch (error) {
+                    console.error('PDF Export Error:', error);
+                    alert("Failed to export: " + error.message);
+                } finally {
+                    exportPdfBtn.innerHTML = originalText;
+                    exportPdfBtn.disabled = false;
+                }
+            }
+
+
+window.toggleLowerSignals = function() {
+                const hidden = document.querySelectorAll('.signal-subthreshold');
+                const btn = document.getElementById('signal-toggle-btn');
+                const isShowing = btn.textContent.startsWith('Hide');
+                hidden.forEach(el => {
+                    if (isShowing) {
+                        el.classList.add('hidden');
+                    } else {
+                        el.classList.remove('hidden');
+                    }
+                });
+                if (isShowing) {
+                    btn.innerHTML = `Show lower-materiality signals (<span id="signal-hidden-count">${hidden.length}</span>)`;
+                } else {
+                    btn.textContent = 'Hide lower-materiality signals';
+                }
+            };
+
+exportPdfBtn.addEventListener('click', async () => {
+                const element = document.getElementById('report-content');
+                if (!element || !element.innerHTML.trim()) { alert('No report content to export.'); return; }
+                const originalText = exportPdfBtn.innerHTML;
+                exportPdfBtn.innerHTML = '<div class="w-3 h-3 border border-accent-brand/30 border-t-accent-brand rounded-full animate-spin mr-1.5"></div>GENERATING...';
+                exportPdfBtn.disabled = true;
+                try {
+                    const ticker = (tickerInput.value || 'REPORT').toUpperCase();
+                    
+                    // Extract all charts as Base64 images
+                    const charts = {};
+                    const canvases = document.querySelectorAll('canvas');
+                    canvases.forEach(canvas => {
+                        if (canvas.id && canvas.width > 0 && canvas.height > 0 && canvas.clientWidth > 0 && canvas.clientHeight > 0) {
+                            try {
+                                // Convert canvas to white background image since PDF is light mode
+                                const tempCanvas = document.createElement('canvas');
+                                tempCanvas.width = canvas.width;
+                                tempCanvas.height = canvas.height;
+                                const tempCtx = tempCanvas.getContext('2d');
+                                tempCtx.fillStyle = '#FFFFFF';
+                                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                                tempCtx.drawImage(canvas, 0, 0);
+                                charts[canvas.id] = tempCanvas.toDataURL('image/png');
+                            } catch(e) {
+                                console.warn('Could not export canvas', canvas.id, e);
+                            }
+                        }
+                    });
+
+                    const payload = {
+                        ticker: ticker,
+                        content_html: element.innerHTML,
+                        raw_data: window._currentReportData || null,
+                        charts: charts
+                    };
+
+                    const response = await fetch('/export_pdf', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) {
+                        const errorMsg = await response.text();
+                        throw new Error(errorMsg);
+                    }
+                    
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${ticker}_Novus_Analysis.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    
+                } catch (error) {
+                    console.error('PDF Export Error:', error);
+                    alert("Failed to export: " + error.message);
+                } finally {
+                    exportPdfBtn.innerHTML = originalText;
+                    exportPdfBtn.disabled = false;
+                }
+            }
+
+const header = document.querySelector('header .flex.items-center.gap-2');
+                if (header && !document.getElementById('demo-badge')) {
+                    header.insertAdjacentHTML('beforeend', '<span id="demo-badge" class="ml-4 px-2 py-0.5 text-[10px] font-mono font-bold bg-semantic-amber/20 text-semantic-amber border border-semantic-amber/50 rounded-sm tracking-widest">DEMO MODE</span>');
+                }
+
 // ── RAG UI Bindings ──
 import { ragBtn, setRagLoadingState } from './novus-core.js';
 

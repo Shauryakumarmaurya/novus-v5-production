@@ -407,87 +407,234 @@ export function renderSourceStore(stats) {
     container.insertAdjacentHTML('beforeend', statsHtml);
 }
 
-export function injectCrossTabKillBanner(source, kcText) {
-    const target = document.getElementById('tab-synthesis');
-    if (target) {
-        const existing = document.getElementById('cross-tab-kill-banner');
-        const banner = existing || document.createElement('div');
-        if (!existing) {
-            banner.id = 'cross-tab-kill-banner';
-            banner.className = 'mb-6 bg-semantic-red/10 border border-semantic-red/30 p-4 animate-fadeUp';
-            banner.innerHTML = `<h3 class="text-sm font-bold text-semantic-red flex items-center gap-2 mb-2"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg> CRITICAL RISKS IDENTIFIED</h3><ul id="cross-tab-kill-list" class="space-y-2 text-sm text-txt-primary"></ul>`;
-            target.insertBefore(banner, target.firstChild);
-        }
-        const list = banner.querySelector('#cross-tab-kill-list');
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="font-mono text-[10px] text-txt-muted mr-2">[${source}]</span> ${kcText}`;
-        list.appendChild(li);
-    }
-}
-
 export function renderSignalIntelligence(payload) {
-    const signalsContent = document.getElementById('signals-content');
-    if (!signalsContent) return;
-    if (!payload || Object.keys(payload).length === 0) {
-        signalsContent.innerHTML = '<p class="text-sm text-txt-muted italic px-4 py-8 text-center">No signal intelligence available.</p>';
-        return;
-    }
-    
-    let html = '<div class="space-y-6">';
-    for (const [agentName, signalStr] of Object.entries(payload)) {
-        if (!signalStr) continue;
-        let signalData = null;
-        try { signalData = JSON.parse(signalStr); } catch (e) { continue; }
-        if (!signalData) continue;
-        
-        const info = agentLabels[agentName] || { name: agentName };
-        
-        html += `
-            <div class="ws-card p-5 border-l-2 border-l-semantic-blue">
-                <h3 class="text-sm font-sans font-semibold text-txt-primary mb-4 flex items-center gap-2">
-                    <svg class="w-4 h-4 text-semantic-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    ${info.name} Signals
-                </h3>
-        `;
-        
-        if (signalData.kill_criteria_met && signalData.kill_criteria_met.length > 0) {
-            html += `<div class="mb-5 space-y-2">`;
-            signalData.kill_criteria_met.forEach(kc => {
-                html += `
-                    <div class="bg-semantic-red/10 border border-semantic-red/30 p-3 flex gap-3">
-                        <span class="text-[10px] font-bold font-mono text-semantic-red mt-0.5">FATAL</span>
-                        <span class="text-sm text-txt-primary">${kc}</span>
+                const panel = document.getElementById('signal-intel-panel');
+                const loading = document.getElementById('signal-loading-state');
+                const empty = document.getElementById('signal-empty-state');
+                if (!panel || !loading || !empty) return;
+                
+                loading.classList.add('hidden');
+                
+                const { signals, impacts, events, unavailable_sources } = payload;
+                const threshold = 60;
+                
+                // Show Empty State if completely empty
+                if (!signals || signals.length === 0) {
+                    panel.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    const date = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
+                    document.getElementById('signal-empty-text').textContent = `No signals scored as of ${date} UTC.`;
+                    return;
+                }
+                
+                // Update badge
+                const materialCount = signals.filter(s => s.materiality_score >= threshold).length;
+                const badge = document.getElementById('tab-badge-signals');
+                if (badge) {
+                    if (materialCount > 0) {
+                        badge.textContent = materialCount;
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                }
+                
+                if (materialCount === 0) {
+                    panel.classList.add('hidden');
+                    empty.classList.remove('hidden');
+                    const date = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
+                    document.getElementById('signal-empty-text').textContent = `No material signals (>= 60) detected as of ${date} UTC.`;
+                    return;
+                }
+                
+                empty.classList.add('hidden');
+                panel.classList.remove('hidden');
+                
+                // Freshness & Unavailable
+                const freshness = document.getElementById('signal-freshness');
+                if (freshness && signals.length > 0) {
+                    const latestDate = new Date(Math.max(...signals.map(s => new Date(s.as_of).getTime())));
+                    freshness.textContent = `SYNC: ${latestDate.toLocaleString('en-US', { timeZone: 'UTC', hour12: false })} UTC`;
+                }
+                
+                const unavailEl = document.getElementById('signal-unavailable');
+                if (unavailable_sources && unavailable_sources.length > 0) {
+                    unavailEl.textContent = `> WARN: Sources unavailable at fetch: ${unavailable_sources.join(', ')}`;
+                    unavailEl.classList.remove('hidden');
+                } else {
+                    unavailEl.classList.add('hidden');
+                }
+                
+                // Sort signals by materiality
+                const sortedSignals = [...signals].sort((a, b) => b.materiality_score - a.materiality_score);
+                
+                // Separate macro vs specific
+                const macroSignals = sortedSignals.filter(s => s.category === 'macro_sector');
+                const specificSignals = sortedSignals.filter(s => s.category !== 'macro_sector');
+                
+                const renderSignalCard = (s) => {
+                    const isSubthreshold = s.materiality_score < threshold;
+                    const displayClass = isSubthreshold ? 'hidden signal-subthreshold' : '';
+                    
+                    // Match primary event
+                    const eventIds = s.event_ids || [];
+                    const primaryEventId = eventIds[0];
+                    const event = events ? events.find(e => e.id === primaryEventId) : null;
+                    const headline = event ? event.raw_title : (s.summary || "Signal Detected");
+                    const sourceName = event ? event.source_name : "Unknown Source";
+                    const url = event ? event.url : "#";
+                    const publishedAt = event ? new Date(event.published_at).toLocaleString() : "";
+                    const rawSummary = event ? event.raw_summary : "";
+                    
+                    const summaryText = s.summary || rawSummary;
+                    
+                    // Match impact
+                    const impact = impacts ? impacts.find(i => i.signal_id === s.id) : null;
+                    
+                    // Color and icon encoding
+                    let colorClass = 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
+                    let iconHtml = `<svg class="w-3 h-3" aria-label="Neutral" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" /></svg>`;
+                    if (s.direction === 'positive') {
+                        colorClass = 'text-semantic-green bg-semantic-green/10 border-semantic-green/30';
+                        iconHtml = `<svg class="w-3 h-3" aria-label="Positive" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>`;
+                    } else if (s.direction === 'negative') {
+                        colorClass = 'text-semantic-red bg-semantic-red/10 border-semantic-red/30';
+                        iconHtml = `<svg class="w-3 h-3" aria-label="Negative" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>`;
+                    }
+                    
+                    const unconfirmedLabel = s.highest_source_tier === 2 ? `<span class="ml-2 text-[9px] px-1 py-0.5 bg-semantic-amber/20 text-semantic-amber rounded uppercase tracking-widest border border-semantic-amber/30">Reported, Not Confirmed</span>` : '';
+                    const novelLabel = s.is_novel ? `<span class="ml-2 text-[9px] px-1 py-0.5 bg-accent-brand/20 text-accent-brand rounded uppercase tracking-widest border border-accent-brand/30">NOVEL</span>` : '';
+                    
+                    // Related events
+                    let relatedHtml = '';
+                    if (eventIds.length > 1 && events) {
+                        const related = eventIds.slice(1).map(eid => events.find(e => e.id === eid)).filter(e => e);
+                        if (related.length > 0) {
+                            relatedHtml = `
+                                <details class="mt-3 text-[11px] font-mono group">
+                                    <summary class="cursor-pointer text-txt-muted hover:text-txt-primary flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-accent-brand rounded w-max">
+                                        <svg class="w-3 h-3 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                        Related Coverage (${related.length})
+                                    </summary>
+                                    <div class="mt-2 pl-4 border-l border-base-border space-y-1">
+                                        ${related.map(r => `<div class="truncate"><a href="${r.url}" target="_blank" class="text-accent-brand hover:underline focus:outline-none focus:ring-1 focus:ring-accent-brand rounded">${r.source_name}</a> - ${r.raw_title}</div>`).join('')}
+                                    </div>
+                                </details>
+                            `;
+                        }
+                    }
+                    
+                    // Impact Block
+                    let impactHtml = '';
+                    let killBannerHtml = '';
+                    if (impact) {
+                        let killText = '';
+                        if (impact.triggers_kill_criterion_id) {
+                            // Resolve KC text
+                            let kcText = impact.triggers_kill_criterion_id;
+                            if (window._currentReportData && window._currentReportData.final_thesis && window._currentReportData.final_thesis.kill_criteria) {
+                                const kcObj = window._currentReportData.final_thesis.kill_criteria.find(k => k.id === impact.triggers_kill_criterion_id);
+                                if (kcObj) kcText = kcObj.criterion;
+                            }
+                            killText = `<div class="mt-2 p-2 bg-semantic-red/10 border border-semantic-red/30 rounded text-[11px] font-sans text-semantic-red flex items-start gap-2">
+                                <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                <div><strong>KILL CRITERION TRIGGERED:</strong> ${kcText}</div>
+                            </div>`;
+                            killBannerHtml = killText;
+                            
+                            // Propagate to cross tabs
+                            injectCrossTabKillBanner(s, kcText);
+                        }
+                        
+                        impactHtml = `
+                            <div class="mt-3 p-3 bg-base-bg border border-base-border rounded-md text-[11px] font-sans">
+                                <div class="flex justify-between items-center mb-1">
+                                    <strong class="uppercase text-[10px] tracking-widest text-txt-dim">Thesis Impact Mapping</strong>
+                                    <span class="opacity-80">${impact.horizon}</span>
+                                </div>
+                                <div class="mb-1 text-txt-secondary"><strong>Affects:</strong> ${impact.affected_thesis_drivers.join(', ')}</div>
+                                <div class="text-txt-secondary"><strong>Watch:</strong> ${impact.what_to_watch}</div>
+                                ${killBannerHtml}
+                            </div>
+                        `;
+                    }
+                    
+                    // Copilot context packaging
+                    const structuredContext = JSON.stringify({ Signal: s, Impact: impact, Event: event }, null, 2);
+                    const cleanQuery = `Re: "${headline}" — why is this material and how does it impact the thesis?`;
+                    
+                    return `
+                    <div class="p-4 border rounded-md mb-4 bg-base-elevated border-base-border ${displayClass}">
+                        <div class="flex justify-between items-start gap-2 mb-2">
+                            <h4 class="text-sm font-sans font-semibold text-txt-primary leading-tight"><a href="${url}" target="_blank" class="hover:text-accent-brand focus:outline-none focus:ring-1 focus:ring-accent-brand rounded">${headline}</a></h4>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <span class="text-[10px] font-mono opacity-80 border rounded px-1.5 py-0.5 ${colorClass} flex items-center gap-1">${iconHtml} SCORE: ${s.materiality_score}</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3 text-[10px] font-mono text-txt-dim">
+                            <span class="uppercase tracking-widest">${s.category}</span> &bull; 
+                            <a href="${url}" target="_blank" class="hover:underline focus:outline-none focus:ring-1 focus:ring-accent-brand rounded text-txt-secondary">${sourceName}</a> &bull; 
+                            <span>${publishedAt}</span>
+                            ${unconfirmedLabel}
+                            ${novelLabel}
+                        </div>
+                        <p class="text-[13px] font-sans text-txt-secondary leading-relaxed">${summaryText}</p>
+                        
+                        ${impactHtml}
+                        ${relatedHtml}
+                        
+                        <div class="mt-3 flex justify-end">
+                            <button class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent-brand/10 hover:bg-accent-brand/20 text-accent-brand border border-accent-brand/30 rounded text-[11px] font-mono uppercase tracking-widest transition-colors focus:outline-none focus:ring-2 focus:ring-accent-brand" onclick='window.injectCopilotQuery(${JSON.stringify(cleanQuery).replace(/'/g, "&#39;")}, ${JSON.stringify(structuredContext).replace(/'/g, "&#39;")})'>
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                                Discuss
+                            </button>
+                        </div>
+                    </div>`;
+                };
+                
+                const sigList = document.getElementById('signal-list');
+                sigList.innerHTML = specificSignals.map(renderSignalCard).join('');
+                
+                const macroBand = document.getElementById('signal-macro-band');
+                if (macroSignals.length > 0) {
+                    macroBand.classList.remove('hidden');
+                    document.getElementById('signal-macro-list').innerHTML = macroSignals.map(renderSignalCard).join('');
+                } else {
+                    macroBand.classList.add('hidden');
+                }
+                
+                // Toggle subthreshold
+                const subCount = signals.filter(s => s.materiality_score < threshold).length;
+                const toggleBtn = document.getElementById('signal-toggle-btn');
+                if (subCount > 0) {
+                    toggleBtn.classList.remove('hidden');
+                    document.getElementById('signal-hidden-count').textContent = subCount;
+                } else {
+                    toggleBtn.classList.add('hidden');
+                }
+            }
+
+export function injectCrossTabKillBanner(signal, kcText) {
+                const bannerHtml = `
+                    <div class="mb-6 p-4 bg-semantic-red/10 border-l-4 border-semantic-red rounded-r-md shadow-sm flex items-start gap-3 cursor-pointer hover:bg-semantic-red/20 transition-colors" onclick="document.querySelector('[data-tab=\'signals\']').click()">
+                        <svg class="w-5 h-5 text-semantic-red shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <div>
+                            <h4 class="text-xs font-bold font-sans text-semantic-red uppercase tracking-widest mb-1">Live Kill Criterion Triggered</h4>
+                            <p class="text-sm font-sans text-txt-primary"><strong>${kcText}</strong></p>
+                            <p class="text-[11px] font-sans text-txt-secondary mt-1">Via Signal ID: ${signal.id}. Click to view full signal intelligence.</p>
+                        </div>
                     </div>
                 `;
-                injectCrossTabKillBanner(info.name, kc);
-            });
-            html += `</div>`;
-        }
-        
-        if (signalData.core_findings && signalData.core_findings.length > 0) {
-            html += `<h4 class="text-[10px] uppercase font-mono text-txt-muted mb-2 tracking-widest">Key Findings</h4><ul class="space-y-2 mb-5">`;
-            signalData.core_findings.forEach(cf => {
-                html += `<li class="flex gap-2 text-sm text-txt-secondary"><span class="text-accent-brand mt-0.5">•</span> <span>${cf}</span></li>`;
-            });
-            html += `</ul>`;
-        }
-        
-        if (signalData.evidence_links && signalData.evidence_links.length > 0) {
-            html += `<h4 class="text-[10px] uppercase font-mono text-txt-muted mb-2 tracking-widest">Evidence</h4><div class="space-y-2">`;
-            signalData.evidence_links.forEach(ev => {
-                const snippet = markdownConverter.makeHtml(ev.snippet).replace(/<p>/g, '').replace(/<\/p>/g, '');
-                html += `
-                    <div class="bg-base-elevated border border-base-border p-3 text-xs text-txt-secondary">
-                        <div class="mb-1 font-mono text-[10px] text-accent-brand">${ev.source}</div>
-                        <div class="italic">"${snippet}"</div>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-        }
-        
-        html += `</div>`;
-    }
-    html += '</div>';
-    signalsContent.innerHTML = html;
-}
+                
+                // Insert into Exec Summary
+                const reportContent = document.getElementById('report-content');
+                if (reportContent && !reportContent.innerHTML.includes('Live Kill Criterion Triggered')) {
+                    reportContent.insertAdjacentHTML('afterbegin', bannerHtml);
+                }
+                
+                // Insert into Forensic Tab
+                const forensicContent = document.getElementById('forensic-tab-content');
+                if (forensicContent && !forensicContent.innerHTML.includes('Live Kill Criterion Triggered')) {
+                    forensicContent.insertAdjacentHTML('afterbegin', bannerHtml);
+                }
+            }
