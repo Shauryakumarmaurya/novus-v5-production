@@ -950,6 +950,7 @@ def export_pdf():
     
     # Build the Tearsheet HTML if raw_data is provided
     tearsheet_html = ""
+    signal_html = ""
     raw_data = data.get('raw_data')
     charts = data.get('charts', {})
     
@@ -1025,7 +1026,6 @@ def export_pdf():
         charts_html += '</div>'
         
         # Signal Intelligence Panel
-        signal_html = ""
         signal_payload = raw_data.get('signal_payload', {})
         if signal_payload and isinstance(signal_payload, dict):
             signals = signal_payload.get("signals", [])
