@@ -21,13 +21,14 @@ jobs:
         key: ${{ secrets.AZURE_VM_SSH_KEY }}
         script: |
           # Find the directory containing docker-compose.yml in the home folder
-          APP_DIR=$(find ~ -maxdepth 3 -name "docker-compose.yml" -type f 2>/dev/null | head -n 1)
+          APP_FILE=$(find ~ -maxdepth 3 -name "docker-compose.yml" -type f 2>/dev/null | head -n 1)
           
-          if [ -z "$APP_DIR" ]; then
+          if [ -z "$APP_FILE" ]; then
             echo "Error: Could not find the app directory containing docker-compose.yml"
             exit 1
           fi
           
+          APP_DIR=$(dirname "$APP_FILE")
           echo "Found app in: $APP_DIR"
           cd "$APP_DIR"
           
