@@ -196,6 +196,11 @@ def _cosine(a: list[float], b: list[float]) -> float:
     return dot / ((norm_a ** 0.5) * (norm_b ** 0.5))
 
 
+class DataRetrievalException(Exception):
+    """Raised when memory DB is unreachable due to timeout or I/O failure."""
+    pass
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Memory Layer
 # ═══════════════════════════════════════════════════════════════════════════
@@ -215,15 +220,24 @@ class MemoryLayer:
     # ── Connection helper (WAL mode, no Python-level lock) ────────────────
 
     def _connect(self) -> sqlite3.Connection:
-        conn = sqlite3.connect(self.db_path, timeout=10, isolation_level=None)
-        conn.row_factory = sqlite3.Row
-        # WAL + reasonable busy timeout lets multiple readers coexist with a writer
-        # without the single-process lock we used to carry.
-        conn.execute("PRAGMA journal_mode=WAL")
-        conn.execute("PRAGMA busy_timeout=5000")
-        conn.execute("PRAGMA synchronous=NORMAL")
-        conn.execute("PRAGMA foreign_keys=ON")
-        return conn
+        import time
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                conn = sqlite3.connect(self.db_path, timeout=10, isolation_level=None)
+                conn.row_factory = sqlite3.Row
+                # WAL + reasonable busy timeout lets multiple readers coexist with a writer
+                # without the single-process lock we used to carry.
+                conn.execute("PRAGMA journal_mode=WAL")
+                conn.execute("PRAGMA busy_timeout=5000")
+                conn.execute("PRAGMA synchronous=NORMAL")
+                conn.execute("PRAGMA foreign_keys=ON")
+                return conn
+            except sqlite3.OperationalError as e:
+                if attempt == max_retries - 1:
+                    raise DataRetrievalException(f"Failed to connect to SQLite memory DB: {e}")
+                time.sleep(2 ** attempt)
+        raise DataRetrievalException("Failed to connect to SQLite memory DB.")
 
     def _pool(self) -> ThreadPoolExecutor:
         if self._adjudicator_pool is None:
@@ -868,7 +882,7 @@ class MemoryLayer:
                 if not target_fiscal_period:
                     # Default to most recent period
                     row = conn.execute(
-                        "SELECT fiscal_period FROM agent_mistakes WHERE ticker = ? ORDER BY run_date DESC LIMIT 1",
+                        "SELECT fiscal_period FROM agent_mistakes WHERE ticker = ? ORDER BY run_date DESC, id DESC LIMIT 1",
                         (ticker,)
                     ).fetchone()
                     if row:
@@ -884,7 +898,7 @@ class MemoryLayer:
                        WHERE ticker = ? AND agent_name = ?
                          AND fiscal_period = ?
                          AND critic_confidence >= ?
-                       ORDER BY run_date DESC
+                       ORDER BY run_date DESC, id DESC
                        LIMIT ?""",
                     (ticker, agent_name, target_fiscal_period,
                      CRITIC_CONFIDENCE_FLOOR, max_mistakes_same_period),
@@ -906,7 +920,7 @@ class MemoryLayer:
                               gap_description AS sample_desc
                        FROM data_gaps
                        WHERE ticker = ? AND agent_name = ? AND fiscal_period = ?
-                       ORDER BY total_occurrences DESC
+                       ORDER BY total_occurrences DESC, id ASC
                        LIMIT ?""",
                     (ticker, agent_name, target_fiscal_period, max_gaps),
                 ).fetchall()
@@ -931,7 +945,7 @@ class MemoryLayer:
                        WHERE agent_name = ? AND run_date >= ?
                          AND critic_confidence >= ?
                        GROUP BY correction_type
-                       ORDER BY n DESC""",
+                       ORDER BY n DESC, correction_type ASC""",
                     (agent_name, cutoff, CRITIC_CONFIDENCE_FLOOR),
                 ).fetchall()
                 total = sum(r["n"] for r in pattern_rows)
@@ -1017,7 +1031,7 @@ class MemoryLayer:
                        FROM agent_mistakes
                        WHERE ticker = ? AND metric_category = ?
                          AND (verified_fact IS NULL OR verified_fact NOT LIKE 'UNVERIFIABLE%')
-                       ORDER BY fiscal_period ASC, run_date ASC
+                       ORDER BY fiscal_period ASC, run_date ASC, id ASC
                        LIMIT ?""",
                     (ticker, metric_category, max_periods),
                 ).fetchall()
@@ -1057,12 +1071,12 @@ class MemoryLayer:
                               (SELECT gap_description FROM data_gaps g2
                                  WHERE g2.ticker = data_gaps.ticker
                                    AND g2.metric_category = data_gaps.metric_category
-                                 ORDER BY g2.last_seen DESC LIMIT 1) AS sample_description
+                                 ORDER BY g2.last_seen DESC, g2.id DESC LIMIT 1) AS sample_description
                        FROM data_gaps
                        WHERE ticker = ?
                        GROUP BY metric_category
                        HAVING periods_count >= ?
-                       ORDER BY periods_count DESC, total_occurrences DESC""",
+                       ORDER BY periods_count DESC, total_occurrences DESC, metric_category ASC""",
                     (ticker, int(min_periods)),
                 ).fetchall()
         except Exception as e:
@@ -1090,7 +1104,7 @@ class MemoryLayer:
                        LEFT JOIN agent_mistakes ma ON ma.id = ni.mistake_a_id
                        LEFT JOIN agent_mistakes mb ON mb.id = ni.mistake_b_id
                        WHERE ni.ticker = ?
-                       ORDER BY ni.detected_at DESC""",
+                       ORDER BY ni.detected_at DESC, ni.id DESC""",
                     (ticker,),
                 ).fetchall()
         except Exception as e:
@@ -1132,7 +1146,7 @@ class MemoryLayer:
                     """SELECT tool_sequence, confidence, ticker, fiscal_period, run_date
                        FROM investigation_patterns
                        WHERE agent_name = ?
-                       ORDER BY confidence DESC, run_date DESC
+                       ORDER BY confidence DESC, run_date DESC, id DESC
                        LIMIT ?""",
                     (agent_name, int(limit)),
                 ).fetchall()

@@ -130,6 +130,8 @@ class OrchestratorState:
 
     agent_trails: dict[str, AuditTrail] = field(default_factory=dict)
     conflicts: list[dict] = field(default_factory=list)
+    
+    data_ingestion_completeness: float = 1.0
 
     final_thesis: Optional[AuditTrail] = None
     final_report: str = ""
@@ -166,6 +168,36 @@ EXECUTION_PHASES = [
     },
 ]
 
+
+def _load_memory_with_validation(agent_name: str, ticker: str, fiscal_period: str, state: OrchestratorState) -> str:
+    import time
+    mem = get_memory()
+    for attempt in range(3):
+        try:
+            result = mem.load_relevant_memories(
+                agent_name=agent_name,
+                ticker=ticker,
+                target_fiscal_period=fiscal_period,
+            )
+            # Validation: if empty, check if we actually have rows.
+            if not result:
+                with mem._connect() as conn:
+                    row = conn.execute("SELECT COUNT(*) as n FROM agent_mistakes WHERE ticker=? AND agent_name=?", (ticker, agent_name)).fetchone()
+                    if row and row["n"] > 0:
+                        # Should not be empty, retry
+                        time.sleep(1)
+                        continue
+            return result or ""
+        except Exception as e:
+            from core.memory import DataRetrievalException
+            if isinstance(e, DataRetrievalException) or attempt == 2:
+                print(f"> [CIO] ⚠️ Memory retrieval failed for {agent_name}: {e}")
+                state.data_ingestion_completeness = max(0.0, state.data_ingestion_completeness - 0.2)
+                return ""
+            time.sleep(1)
+    
+    state.data_ingestion_completeness = max(0.0, state.data_ingestion_completeness - 0.2)
+    return ""
 
 async def _generate_dynamic_frameworks(state: OrchestratorState, llm: LLMClient) -> dict:
     prompt = f"""You are the Director of Research for an Indian Equity Fund.
@@ -328,10 +360,11 @@ async def run_pipeline(
 
     critic_mandate = state.agent_frameworks.get("critic_agent", "Verify every hard metric against source data.")
     try:
-        critic_memory = get_memory().load_relevant_memories(
+        critic_memory = _load_memory_with_validation(
             agent_name="critic_agent",
             ticker=ticker,
-            target_fiscal_period=state.fiscal_period,
+            fiscal_period=state.fiscal_period,
+            state=state,
         )
         if critic_memory:
             critic_mandate += critic_memory
@@ -435,10 +468,11 @@ async def run_pipeline(
     pm_mandate = state.agent_frameworks.get("pm_synthesis", "")
 
     try:
-        pm_memory = get_memory().load_relevant_memories(
+        pm_memory = _load_memory_with_validation(
             agent_name="pm_synthesis",
             ticker=ticker,
-            target_fiscal_period=state.fiscal_period,
+            fiscal_period=state.fiscal_period,
+            state=state,
         )
         if pm_memory:
             pm_mandate += pm_memory
@@ -523,10 +557,11 @@ async def _run_agents_parallel(
 
         # ── Inject learned memory from past runs ──
         try:
-            memory_block = get_memory().load_relevant_memories(
+            memory_block = _load_memory_with_validation(
                 agent_name=name,
                 ticker=state.ticker,
-                target_fiscal_period=state.fiscal_period,
+                fiscal_period=state.fiscal_period,
+                state=state,
             )
             if memory_block:
                 custom_mandate = (custom_mandate or "") + memory_block

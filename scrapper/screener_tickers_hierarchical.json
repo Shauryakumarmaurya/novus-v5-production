@@ -1,0 +1,4926 @@
+{
+  "Oil, Gas & Consumable Fuels": {
+    "Refineries & Marketing": [
+      {
+        "stock_name": "Reliance Industries",
+        "ticker": "RELIANCE",
+        "screener_url": "https://www.screener.in/company/RELIANCE/consolidated/",
+        "market_cap": 1799885.14
+      },
+      {
+        "stock_name": "I O C L",
+        "ticker": "IOC",
+        "screener_url": "https://www.screener.in/company/IOC/consolidated/",
+        "market_cap": 199985.83
+      },
+      {
+        "stock_name": "B P C L",
+        "ticker": "BPCL",
+        "screener_url": "https://www.screener.in/company/BPCL/consolidated/",
+        "market_cap": 129027.1
+      },
+      {
+        "stock_name": "H P C L",
+        "ticker": "HINDPETRO",
+        "screener_url": "https://www.screener.in/company/HINDPETRO/consolidated/",
+        "market_cap": 76165.6
+      },
+      {
+        "stock_name": "M R P L",
+        "ticker": "MRPL",
+        "screener_url": "https://www.screener.in/company/MRPL/consolidated/",
+        "market_cap": 30887.8
+      },
+      {
+        "stock_name": "C P C L",
+        "ticker": "CHENNPETRO",
+        "screener_url": "https://www.screener.in/company/CHENNPETRO/consolidated/",
+        "market_cap": 14658.75
+      }
+    ],
+    "Oil Exploration & Production": [
+      {
+        "stock_name": "O N G C",
+        "ticker": "ONGC",
+        "screener_url": "https://www.screener.in/company/ONGC/consolidated/",
+        "market_cap": 363066.86
+      },
+      {
+        "stock_name": "Oil India",
+        "ticker": "OIL",
+        "screener_url": "https://www.screener.in/company/OIL/consolidated/",
+        "market_cap": 76580.9
+      }
+    ],
+    "Coal": [
+      {
+        "stock_name": "Coal India",
+        "ticker": "COALINDIA",
+        "screener_url": "https://www.screener.in/company/COALINDIA/consolidated/",
+        "market_cap": 279880.64
+      },
+      {
+        "stock_name": "Bharat Coking",
+        "ticker": "BHARATCOAL",
+        "screener_url": "https://www.screener.in/company/BHARATCOAL/",
+        "market_cap": 15219.08
+      }
+    ],
+    "Gas Transmission/Marketing": [
+      {
+        "stock_name": "GAIL (India)",
+        "ticker": "GAIL",
+        "screener_url": "https://www.screener.in/company/GAIL/consolidated/",
+        "market_cap": 100086.17
+      },
+      {
+        "stock_name": "Guj.St.Petronet",
+        "ticker": "GSPL",
+        "screener_url": "https://www.screener.in/company/GSPL/consolidated/",
+        "market_cap": 13543.42
+      },
+      {
+        "stock_name": "Energy InfrTrust",
+        "ticker": "542543",
+        "screener_url": "https://www.screener.in/company/542543/consolidated/",
+        "market_cap": 5312.0
+      }
+    ],
+    "LPG/CNG/PNG/LNG Supplier": [
+      {
+        "stock_name": "Adani Total Gas",
+        "ticker": "ATGL",
+        "screener_url": "https://www.screener.in/company/ATGL/consolidated/",
+        "market_cap": 60500.2
+      },
+      {
+        "stock_name": "Petronet LNG",
+        "ticker": "PETRONET",
+        "screener_url": "https://www.screener.in/company/PETRONET/consolidated/",
+        "market_cap": 40722.07
+      },
+      {
+        "stock_name": "Mahanagar Gas",
+        "ticker": "MGL",
+        "screener_url": "https://www.screener.in/company/MGL/",
+        "market_cap": 10265.18
+      }
+    ],
+    "Trading - Gas": [
+      {
+        "stock_name": "Aegis Logistics",
+        "ticker": "AEGISLOG",
+        "screener_url": "https://www.screener.in/company/AEGISLOG/consolidated/",
+        "market_cap": 21237.42
+      }
+    ],
+    "Oil Storage & Transportation": [
+      {
+        "stock_name": "Aegis Vopak Term",
+        "ticker": "AEGISVOPAK",
+        "screener_url": "https://www.screener.in/company/AEGISVOPAK/consolidated/",
+        "market_cap": 20689.75
+      }
+    ],
+    "Lubricants": [
+      {
+        "stock_name": "Castrol India",
+        "ticker": "CASTROLIND",
+        "screener_url": "https://www.screener.in/company/CASTROLIND/",
+        "market_cap": 17746.84
+      }
+    ]
+  },
+  "Financial Services": {
+    "Private Sector Bank": [
+      {
+        "stock_name": "HDFC Bank",
+        "ticker": "HDFCBANK",
+        "screener_url": "https://www.screener.in/company/HDFCBANK/consolidated/",
+        "market_cap": 1227928.99
+      },
+      {
+        "stock_name": "ICICI Bank",
+        "ticker": "ICICIBANK",
+        "screener_url": "https://www.screener.in/company/ICICIBANK/consolidated/",
+        "market_cap": 917559.76
+      },
+      {
+        "stock_name": "Axis Bank",
+        "ticker": "AXISBANK",
+        "screener_url": "https://www.screener.in/company/AXISBANK/consolidated/",
+        "market_cap": 409893.77
+      },
+      {
+        "stock_name": "Kotak Mah. Bank",
+        "ticker": "KOTAKBANK",
+        "screener_url": "https://www.screener.in/company/KOTAKBANK/consolidated/",
+        "market_cap": 370055.05
+      },
+      {
+        "stock_name": "IDBI Bank",
+        "ticker": "IDBI",
+        "screener_url": "https://www.screener.in/company/IDBI/consolidated/",
+        "market_cap": 77503.75
+      },
+      {
+        "stock_name": "Federal Bank",
+        "ticker": "FEDERALBNK",
+        "screener_url": "https://www.screener.in/company/FEDERALBNK/consolidated/",
+        "market_cap": 69837.67
+      },
+      {
+        "stock_name": "IndusInd Bank",
+        "ticker": "INDUSINDBK",
+        "screener_url": "https://www.screener.in/company/INDUSINDBK/consolidated/",
+        "market_cap": 63473.47
+      },
+      {
+        "stock_name": "Yes Bank",
+        "ticker": "YESBANK",
+        "screener_url": "https://www.screener.in/company/YESBANK/consolidated/",
+        "market_cap": 59401.88
+      },
+      {
+        "stock_name": "IDFC First Bank",
+        "ticker": "IDFCFIRSTB",
+        "screener_url": "https://www.screener.in/company/IDFCFIRSTB/consolidated/",
+        "market_cap": 56126.33
+      },
+      {
+        "stock_name": "Karur Vysya Bank",
+        "ticker": "KARURVYSYA",
+        "screener_url": "https://www.screener.in/company/KARURVYSYA/",
+        "market_cap": 26835.08
+      },
+      {
+        "stock_name": "Bandhan Bank",
+        "ticker": "BANDHANBNK",
+        "screener_url": "https://www.screener.in/company/BANDHANBNK/",
+        "market_cap": 26756.84
+      },
+      {
+        "stock_name": "City Union Bank",
+        "ticker": "CUB",
+        "screener_url": "https://www.screener.in/company/CUB/",
+        "market_cap": 18747.22
+      },
+      {
+        "stock_name": "T N Merc. Bank",
+        "ticker": "TMB",
+        "screener_url": "https://www.screener.in/company/TMB/",
+        "market_cap": 10162.95
+      },
+      {
+        "stock_name": "South Ind.Bank",
+        "ticker": "SOUTHBANK",
+        "screener_url": "https://www.screener.in/company/SOUTHBANK/",
+        "market_cap": 9993.86
+      },
+      {
+        "stock_name": "Karnataka Bank",
+        "ticker": "KTKBANK",
+        "screener_url": "https://www.screener.in/company/KTKBANK/",
+        "market_cap": 9221.97
+      },
+      {
+        "stock_name": "CSB Bank",
+        "ticker": "CSBBANK",
+        "screener_url": "https://www.screener.in/company/CSBBANK/",
+        "market_cap": 6863.08
+      },
+      {
+        "stock_name": "DCB Bank",
+        "ticker": "DCBBANK",
+        "screener_url": "https://www.screener.in/company/DCBBANK/",
+        "market_cap": 5879.71
+      }
+    ],
+    "Public Sector Bank": [
+      {
+        "stock_name": "SBI",
+        "ticker": "SBIN",
+        "screener_url": "https://www.screener.in/company/SBIN/consolidated/",
+        "market_cap": 961178.07
+      },
+      {
+        "stock_name": "Bank of Baroda",
+        "ticker": "BANKBARODA",
+        "screener_url": "https://www.screener.in/company/BANKBARODA/consolidated/",
+        "market_cap": 141809.16
+      },
+      {
+        "stock_name": "Union Bank (I)",
+        "ticker": "UNIONBANK",
+        "screener_url": "https://www.screener.in/company/UNIONBANK/consolidated/",
+        "market_cap": 140954.69
+      },
+      {
+        "stock_name": "Indian Bank",
+        "ticker": "INDIANB",
+        "screener_url": "https://www.screener.in/company/INDIANB/consolidated/",
+        "market_cap": 126843.91
+      },
+      {
+        "stock_name": "Punjab Natl.Bank",
+        "ticker": "PNB",
+        "screener_url": "https://www.screener.in/company/PNB/consolidated/",
+        "market_cap": 125939.83
+      },
+      {
+        "stock_name": "Canara Bank",
+        "ticker": "CANBK",
+        "screener_url": "https://www.screener.in/company/CANBK/consolidated/",
+        "market_cap": 125129.31
+      },
+      {
+        "stock_name": "Bank of India",
+        "ticker": "BANKINDIA",
+        "screener_url": "https://www.screener.in/company/BANKINDIA/consolidated/",
+        "market_cap": 65708.39
+      },
+      {
+        "stock_name": "I O B",
+        "ticker": "IOB",
+        "screener_url": "https://www.screener.in/company/IOB/",
+        "market_cap": 65473.85
+      },
+      {
+        "stock_name": "Bank of Maha",
+        "ticker": "MAHABANK",
+        "screener_url": "https://www.screener.in/company/MAHABANK/consolidated/",
+        "market_cap": 53817.79
+      },
+      {
+        "stock_name": "UCO Bank",
+        "ticker": "UCOBANK",
+        "screener_url": "https://www.screener.in/company/UCOBANK/",
+        "market_cap": 32176.89
+      },
+      {
+        "stock_name": "Pun. & Sind Bank",
+        "ticker": "PSB",
+        "screener_url": "https://www.screener.in/company/PSB/",
+        "market_cap": 17142.93
+      }
+    ],
+    "Non Banking Financial Company (NBFC)": [
+      {
+        "stock_name": "Bajaj Finance",
+        "ticker": "BAJFINANCE",
+        "screener_url": "https://www.screener.in/company/BAJFINANCE/consolidated/",
+        "market_cap": 562113.6
+      },
+      {
+        "stock_name": "Shriram Finance",
+        "ticker": "SHRIRAMFIN",
+        "screener_url": "https://www.screener.in/company/SHRIRAMFIN/consolidated/",
+        "market_cap": 187396.26
+      },
+      {
+        "stock_name": "Muthoot Finance",
+        "ticker": "MUTHOOTFIN",
+        "screener_url": "https://www.screener.in/company/MUTHOOTFIN/consolidated/",
+        "market_cap": 139611.97
+      },
+      {
+        "stock_name": "Tata Capital",
+        "ticker": "TATACAP",
+        "screener_url": "https://www.screener.in/company/TATACAP/consolidated/",
+        "market_cap": 138595.02
+      },
+      {
+        "stock_name": "Cholaman.Inv.&Fn",
+        "ticker": "CHOLAFIN",
+        "screener_url": "https://www.screener.in/company/CHOLAFIN/consolidated/",
+        "market_cap": 130655.24
+      },
+      {
+        "stock_name": "L&T Finance Ltd",
+        "ticker": "LTF",
+        "screener_url": "https://www.screener.in/company/LTF/consolidated/",
+        "market_cap": 68150.63
+      },
+      {
+        "stock_name": "SBI Cards",
+        "ticker": "SBICARD",
+        "screener_url": "https://www.screener.in/company/SBICARD/",
+        "market_cap": 63657.29
+      },
+      {
+        "stock_name": "Sundaram Finance",
+        "ticker": "SUNDARMFIN",
+        "screener_url": "https://www.screener.in/company/SUNDARMFIN/consolidated/",
+        "market_cap": 54400.88
+      },
+      {
+        "stock_name": "HDB FINANC SER",
+        "ticker": "HDBFS",
+        "screener_url": "https://www.screener.in/company/HDBFS/",
+        "market_cap": 51413.77
+      },
+      {
+        "stock_name": "M & M Fin. Serv.",
+        "ticker": "M&MFIN",
+        "screener_url": "https://www.screener.in/company/M&MFIN/consolidated/",
+        "market_cap": 41122.39
+      },
+      {
+        "stock_name": "Authum Invest",
+        "ticker": "AIIL",
+        "screener_url": "https://www.screener.in/company/AIIL/",
+        "market_cap": 36575.21
+      },
+      {
+        "stock_name": "Manappuram Fin.",
+        "ticker": "MANAPPURAM",
+        "screener_url": "https://www.screener.in/company/MANAPPURAM/consolidated/",
+        "market_cap": 22261.13
+      },
+      {
+        "stock_name": "IIFL Finance",
+        "ticker": "IIFL",
+        "screener_url": "https://www.screener.in/company/IIFL/consolidated/",
+        "market_cap": 18829.87
+      },
+      {
+        "stock_name": "Capri Global",
+        "ticker": "CGCL",
+        "screener_url": "https://www.screener.in/company/CGCL/consolidated/",
+        "market_cap": 17119.59
+      },
+      {
+        "stock_name": "Five-Star Bus.Fi",
+        "ticker": "FIVESTAR",
+        "screener_url": "https://www.screener.in/company/FIVESTAR/",
+        "market_cap": 12485.57
+      },
+      {
+        "stock_name": "SBFC Finance",
+        "ticker": "SBFC",
+        "screener_url": "https://www.screener.in/company/SBFC/",
+        "market_cap": 9740.84
+      },
+      {
+        "stock_name": "Bengal & Assam",
+        "ticker": "533095",
+        "screener_url": "https://www.screener.in/company/533095/consolidated/",
+        "market_cap": 6410.3
+      },
+      {
+        "stock_name": "MAS FINANC SER",
+        "ticker": "MASFIN",
+        "screener_url": "https://www.screener.in/company/MASFIN/consolidated/",
+        "market_cap": 5635.01
+      },
+      {
+        "stock_name": "Dhenu Buildcon",
+        "ticker": "501945",
+        "screener_url": "https://www.screener.in/company/501945/",
+        "market_cap": 5251.4
+      },
+      {
+        "stock_name": "Fedbank Financi.",
+        "ticker": "FEDFINA",
+        "screener_url": "https://www.screener.in/company/FEDFINA/",
+        "market_cap": 5214.29
+      }
+    ],
+    "Life Insurance": [
+      {
+        "stock_name": "Life Insurance",
+        "ticker": "LICI",
+        "screener_url": "https://www.screener.in/company/LICI/consolidated/",
+        "market_cap": 501951.8
+      },
+      {
+        "stock_name": "SBI Life Insuran",
+        "ticker": "SBILIFE",
+        "screener_url": "https://www.screener.in/company/SBILIFE/",
+        "market_cap": 190989.41
+      },
+      {
+        "stock_name": "HDFC Life Insur.",
+        "ticker": "HDFCLIFE",
+        "screener_url": "https://www.screener.in/company/HDFCLIFE/consolidated/",
+        "market_cap": 127463.77
+      },
+      {
+        "stock_name": "ICICI Pru Life",
+        "ticker": "ICICIPRULI",
+        "screener_url": "https://www.screener.in/company/ICICIPRULI/consolidated/",
+        "market_cap": 78548.04
+      },
+      {
+        "stock_name": "Max Financial",
+        "ticker": "MFSL",
+        "screener_url": "https://www.screener.in/company/MFSL/consolidated/",
+        "market_cap": 55423.1
+      }
+    ],
+    "Holding Company": [
+      {
+        "stock_name": "Bajaj Finserv",
+        "ticker": "BAJAJFINSV",
+        "screener_url": "https://www.screener.in/company/BAJAJFINSV/consolidated/",
+        "market_cap": 283008.51
+      },
+      {
+        "stock_name": "Bajaj Holdings",
+        "ticker": "BAJAJHLDNG",
+        "screener_url": "https://www.screener.in/company/BAJAJHLDNG/consolidated/",
+        "market_cap": 110352.74
+      },
+      {
+        "stock_name": "Choice Intl.",
+        "ticker": "CHOICEIN",
+        "screener_url": "https://www.screener.in/company/CHOICEIN/consolidated/",
+        "market_cap": 15295.98
+      },
+      {
+        "stock_name": "JM Financial",
+        "ticker": "JMFINANCIL",
+        "screener_url": "https://www.screener.in/company/JMFINANCIL/consolidated/",
+        "market_cap": 12482.79
+      },
+      {
+        "stock_name": "Edelweiss.Fin.",
+        "ticker": "EDELWEISS",
+        "screener_url": "https://www.screener.in/company/EDELWEISS/consolidated/",
+        "market_cap": 10862.38
+      },
+      {
+        "stock_name": "Kama Holdings",
+        "ticker": "532468",
+        "screener_url": "https://www.screener.in/company/532468/consolidated/",
+        "market_cap": 7829.62
+      }
+    ],
+    "Asset Management Company": [
+      {
+        "stock_name": "ICICI AMC",
+        "ticker": "ICICIAMC",
+        "screener_url": "https://www.screener.in/company/ICICIAMC/consolidated/",
+        "market_cap": 160608.69
+      },
+      {
+        "stock_name": "HDFC AMC",
+        "ticker": "HDFCAMC",
+        "screener_url": "https://www.screener.in/company/HDFCAMC/",
+        "market_cap": 107326.34
+      },
+      {
+        "stock_name": "Nippon Life Ind.",
+        "ticker": "NAM-INDIA",
+        "screener_url": "https://www.screener.in/company/NAM-INDIA/consolidated/",
+        "market_cap": 57950.33
+      },
+      {
+        "stock_name": "Aditya AMC",
+        "ticker": "ABSLAMC",
+        "screener_url": "https://www.screener.in/company/ABSLAMC/consolidated/",
+        "market_cap": 27982.27
+      },
+      {
+        "stock_name": "UTI AMC",
+        "ticker": "UTIAMC",
+        "screener_url": "https://www.screener.in/company/UTIAMC/",
+        "market_cap": 12103.47
+      },
+      {
+        "stock_name": "Canara Robeco",
+        "ticker": "CRAMC",
+        "screener_url": "https://www.screener.in/company/CRAMC/",
+        "market_cap": 5078.18
+      }
+    ],
+    "Investment Company": [
+      {
+        "stock_name": "Jio Financial",
+        "ticker": "JIOFIN",
+        "screener_url": "https://www.screener.in/company/JIOFIN/consolidated/",
+        "market_cap": 151713.85
+      },
+      {
+        "stock_name": "Aditya Birla Cap",
+        "ticker": "ABCAPITAL",
+        "screener_url": "https://www.screener.in/company/ABCAPITAL/consolidated/",
+        "market_cap": 87614.39
+      },
+      {
+        "stock_name": "Chola Financial",
+        "ticker": "CHOLAHLDNG",
+        "screener_url": "https://www.screener.in/company/CHOLAHLDNG/consolidated/",
+        "market_cap": 29665.04
+      },
+      {
+        "stock_name": "TVS Holdings",
+        "ticker": "TVSHLTD",
+        "screener_url": "https://www.screener.in/company/TVSHLTD/consolidated/",
+        "market_cap": 27818.04
+      },
+      {
+        "stock_name": "Mah. Scooters",
+        "ticker": "MAHSCOOTER",
+        "screener_url": "https://www.screener.in/company/MAHSCOOTER/",
+        "market_cap": 14990.23
+      },
+      {
+        "stock_name": "JSW Holdings",
+        "ticker": "JSWHL",
+        "screener_url": "https://www.screener.in/company/JSWHL/consolidated/",
+        "market_cap": 14357.0
+      },
+      {
+        "stock_name": "Tsf Investments",
+        "ticker": "TSFINV",
+        "screener_url": "https://www.screener.in/company/TSFINV/consolidated/",
+        "market_cap": 8201.18
+      },
+      {
+        "stock_name": "Religare Enterp.",
+        "ticker": "RELIGARE",
+        "screener_url": "https://www.screener.in/company/RELIGARE/consolidated/",
+        "market_cap": 7425.7
+      }
+    ],
+    "Financial Institution": [
+      {
+        "stock_name": "Power Fin.Corpn.",
+        "ticker": "PFC",
+        "screener_url": "https://www.screener.in/company/PFC/consolidated/",
+        "market_cap": 141430.17
+      },
+      {
+        "stock_name": "I R F C",
+        "ticker": "IRFC",
+        "screener_url": "https://www.screener.in/company/IRFC/",
+        "market_cap": 128607.69
+      },
+      {
+        "stock_name": "REC Ltd",
+        "ticker": "RECLTD",
+        "screener_url": "https://www.screener.in/company/RECLTD/consolidated/",
+        "market_cap": 91306.88
+      },
+      {
+        "stock_name": "H U D C O",
+        "ticker": "HUDCO",
+        "screener_url": "https://www.screener.in/company/HUDCO/consolidated/",
+        "market_cap": 36400.58
+      },
+      {
+        "stock_name": "Indian Renewable",
+        "ticker": "IREDA",
+        "screener_url": "https://www.screener.in/company/IREDA/",
+        "market_cap": 34592.89
+      },
+      {
+        "stock_name": "IFCI",
+        "ticker": "IFCI",
+        "screener_url": "https://www.screener.in/company/IFCI/consolidated/",
+        "market_cap": 15093.51
+      }
+    ],
+    "Exchange and Data Platform": [
+      {
+        "stock_name": "BSE",
+        "ticker": "BSE",
+        "screener_url": "https://www.screener.in/company/BSE/consolidated/",
+        "market_cap": 132673.61
+      },
+      {
+        "stock_name": "Multi Comm. Exc.",
+        "ticker": "MCX",
+        "screener_url": "https://www.screener.in/company/MCX/consolidated/",
+        "market_cap": 67741.9
+      },
+      {
+        "stock_name": "Indian Energy Ex",
+        "ticker": "IEX",
+        "screener_url": "https://www.screener.in/company/IEX/",
+        "market_cap": 11563.47
+      }
+    ],
+    "Stockbroking & Allied": [
+      {
+        "stock_name": "Billionbrains",
+        "ticker": "GROWW",
+        "screener_url": "https://www.screener.in/company/GROWW/consolidated/",
+        "market_cap": 117077.08
+      },
+      {
+        "stock_name": "Motil.Oswal.Fin.",
+        "ticker": "MOTILALOFS",
+        "screener_url": "https://www.screener.in/company/MOTILALOFS/consolidated/",
+        "market_cap": 45771.3
+      },
+      {
+        "stock_name": "360 ONE",
+        "ticker": "360ONE",
+        "screener_url": "https://www.screener.in/company/360ONE/consolidated/",
+        "market_cap": 40360.15
+      },
+      {
+        "stock_name": "Angel One",
+        "ticker": "ANGELONE",
+        "screener_url": "https://www.screener.in/company/ANGELONE/consolidated/",
+        "market_cap": 25684.32
+      },
+      {
+        "stock_name": "Nuvama Wealth",
+        "ticker": "NUVAMA",
+        "screener_url": "https://www.screener.in/company/NUVAMA/consolidated/",
+        "market_cap": 23575.34
+      },
+      {
+        "stock_name": "IIFL Capital",
+        "ticker": "IIFLCAPS",
+        "screener_url": "https://www.screener.in/company/IIFLCAPS/consolidated/",
+        "market_cap": 8569.89
+      }
+    ],
+    "General Insurance": [
+      {
+        "stock_name": "ICICI Lombard",
+        "ticker": "ICICIGI",
+        "screener_url": "https://www.screener.in/company/ICICIGI/",
+        "market_cap": 88135.17
+      },
+      {
+        "stock_name": "General Insuranc",
+        "ticker": "GICRE",
+        "screener_url": "https://www.screener.in/company/GICRE/consolidated/",
+        "market_cap": 68263.73
+      },
+      {
+        "stock_name": "Go Digit General",
+        "ticker": "GODIGIT",
+        "screener_url": "https://www.screener.in/company/GODIGIT/",
+        "market_cap": 29482.04
+      },
+      {
+        "stock_name": "Star Health Insu",
+        "ticker": "STARHEALTH",
+        "screener_url": "https://www.screener.in/company/STARHEALTH/",
+        "market_cap": 27357.58
+      },
+      {
+        "stock_name": "New India Assura",
+        "ticker": "NIACL",
+        "screener_url": "https://www.screener.in/company/NIACL/consolidated/",
+        "market_cap": 21381.43
+      },
+      {
+        "stock_name": "Niva Bupa Health",
+        "ticker": "NIVABUPA",
+        "screener_url": "https://www.screener.in/company/NIVABUPA/",
+        "market_cap": 13575.12
+      }
+    ],
+    "Other Bank": [
+      {
+        "stock_name": "AU Small Finance",
+        "ticker": "AUBANK",
+        "screener_url": "https://www.screener.in/company/AUBANK/",
+        "market_cap": 72087.92
+      },
+      {
+        "stock_name": "Ujjivan Small",
+        "ticker": "UJJIVANSFB",
+        "screener_url": "https://www.screener.in/company/UJJIVANSFB/",
+        "market_cap": 11432.86
+      },
+      {
+        "stock_name": "Equitas Sma. Fin",
+        "ticker": "EQUITASBNK",
+        "screener_url": "https://www.screener.in/company/EQUITASBNK/",
+        "market_cap": 6776.92
+      }
+    ],
+    "Financial Technology (Fintech)": [
+      {
+        "stock_name": "One 97",
+        "ticker": "PAYTM",
+        "screener_url": "https://www.screener.in/company/PAYTM/consolidated/",
+        "market_cap": 70267.5
+      },
+      {
+        "stock_name": "PB Fintech.",
+        "ticker": "POLICYBZR",
+        "screener_url": "https://www.screener.in/company/POLICYBZR/consolidated/",
+        "market_cap": 69096.27
+      },
+      {
+        "stock_name": "Pine Labs",
+        "ticker": "PINELABS",
+        "screener_url": "https://www.screener.in/company/PINELABS/consolidated/",
+        "market_cap": 19544.53
+      },
+      {
+        "stock_name": "AvenuesAI",
+        "ticker": "CCAVENUE",
+        "screener_url": "https://www.screener.in/company/CCAVENUE/consolidated/",
+        "market_cap": 5246.87
+      }
+    ],
+    "Housing Finance Company": [
+      {
+        "stock_name": "Bajaj Housing",
+        "ticker": "BAJAJHFL",
+        "screener_url": "https://www.screener.in/company/BAJAJHFL/",
+        "market_cap": 69916.51
+      },
+      {
+        "stock_name": "Piramal Finance.",
+        "ticker": "PIRAMALFIN",
+        "screener_url": "https://www.screener.in/company/PIRAMALFIN/consolidated/",
+        "market_cap": 38961.41
+      },
+      {
+        "stock_name": "LIC Housing Fin.",
+        "ticker": "LICHSGFIN",
+        "screener_url": "https://www.screener.in/company/LICHSGFIN/consolidated/",
+        "market_cap": 29277.09
+      },
+      {
+        "stock_name": "PNB Housing",
+        "ticker": "PNBHOUSING",
+        "screener_url": "https://www.screener.in/company/PNBHOUSING/",
+        "market_cap": 22477.69
+      },
+      {
+        "stock_name": "Aadhar Hsg. Fin.",
+        "ticker": "AADHARHFC",
+        "screener_url": "https://www.screener.in/company/AADHARHFC/consolidated/",
+        "market_cap": 20545.6
+      },
+      {
+        "stock_name": "Can Fin Homes",
+        "ticker": "CANFINHOME",
+        "screener_url": "https://www.screener.in/company/CANFINHOME/",
+        "market_cap": 11200.24
+      },
+      {
+        "stock_name": "Home First Finan",
+        "ticker": "HOMEFIRST",
+        "screener_url": "https://www.screener.in/company/HOMEFIRST/",
+        "market_cap": 11067.64
+      },
+      {
+        "stock_name": "Aptus Value Hou.",
+        "ticker": "APTUS",
+        "screener_url": "https://www.screener.in/company/APTUS/consolidated/",
+        "market_cap": 10896.88
+      },
+      {
+        "stock_name": "AAVAS Financiers",
+        "ticker": "AAVAS",
+        "screener_url": "https://www.screener.in/company/AAVAS/",
+        "market_cap": 9688.07
+      },
+      {
+        "stock_name": "INDIA SHELTE FIN",
+        "ticker": "INDIASHLTR",
+        "screener_url": "https://www.screener.in/company/INDIASHLTR/",
+        "market_cap": 8323.9
+      }
+    ],
+    "Financial Products Distributor": [
+      {
+        "stock_name": "Anand Rathi Wea.",
+        "ticker": "ANANDRATHI",
+        "screener_url": "https://www.screener.in/company/ANANDRATHI/",
+        "market_cap": 29509.12
+      },
+      {
+        "stock_name": "Prudent Corp.",
+        "ticker": "PRUDENT",
+        "screener_url": "https://www.screener.in/company/PRUDENT/consolidated/",
+        "market_cap": 9633.58
+      }
+    ],
+    "Other Financial Services": [
+      {
+        "stock_name": "CRISIL",
+        "ticker": "CRISIL",
+        "screener_url": "https://www.screener.in/company/CRISIL/consolidated/",
+        "market_cap": 28603.23
+      },
+      {
+        "stock_name": "RRPSemiconductor",
+        "ticker": "504346",
+        "screener_url": "https://www.screener.in/company/504346/",
+        "market_cap": 13264.87
+      }
+    ],
+    "Depositories, Clearing Houses and Other Intermediaries": [
+      {
+        "stock_name": "C D S L",
+        "ticker": "CDSL",
+        "screener_url": "https://www.screener.in/company/CDSL/consolidated/",
+        "market_cap": 26737.37
+      },
+      {
+        "stock_name": "N S D L",
+        "ticker": "544467",
+        "screener_url": "https://www.screener.in/company/544467/consolidated/",
+        "market_cap": 18265.0
+      },
+      {
+        "stock_name": "Cams Services",
+        "ticker": "CAMS",
+        "screener_url": "https://www.screener.in/company/CAMS/",
+        "market_cap": 17327.98
+      },
+      {
+        "stock_name": "KFin Technolog.",
+        "ticker": "KFINTECH",
+        "screener_url": "https://www.screener.in/company/KFINTECH/consolidated/",
+        "market_cap": 15387.6
+      }
+    ],
+    "Microfinance Institutions": [
+      {
+        "stock_name": "CreditAcc. Gram.",
+        "ticker": "CREDITACC",
+        "screener_url": "https://www.screener.in/company/CREDITACC/",
+        "market_cap": 19812.27
+      }
+    ],
+    "Ratings": [
+      {
+        "stock_name": "ICRA",
+        "ticker": "ICRA",
+        "screener_url": "https://www.screener.in/company/ICRA/consolidated/",
+        "market_cap": 5109.66
+      }
+    ]
+  },
+  "Telecommunication": {
+    "Telecom - Cellular & Fixed line services": [
+      {
+        "stock_name": "Bharti Airtel",
+        "ticker": "BHARTIARTL",
+        "screener_url": "https://www.screener.in/company/BHARTIARTL/consolidated/",
+        "market_cap": 1132982.16
+      },
+      {
+        "stock_name": "Vodafone Idea",
+        "ticker": "IDEA",
+        "screener_url": "https://www.screener.in/company/IDEA/consolidated/",
+        "market_cap": 98701.56
+      },
+      {
+        "stock_name": "Bharti Hexacom",
+        "ticker": "BHARTIHEXA",
+        "screener_url": "https://www.screener.in/company/BHARTIHEXA/",
+        "market_cap": 76462.77
+      },
+      {
+        "stock_name": "Tata Comm",
+        "ticker": "TATACOMM",
+        "screener_url": "https://www.screener.in/company/TATACOMM/consolidated/",
+        "market_cap": 41949.21
+      }
+    ],
+    "Telecom - Infrastructure": [
+      {
+        "stock_name": "Indus Towers",
+        "ticker": "INDUSTOWER",
+        "screener_url": "https://www.screener.in/company/INDUSTOWER/consolidated/",
+        "market_cap": 115578.51
+      },
+      {
+        "stock_name": "Altius Telecom",
+        "ticker": "543225",
+        "screener_url": "https://www.screener.in/company/543225/consolidated/",
+        "market_cap": 47859.42
+      },
+      {
+        "stock_name": "HFCL",
+        "ticker": "HFCL",
+        "screener_url": "https://www.screener.in/company/HFCL/consolidated/",
+        "market_cap": 12181.89
+      }
+    ],
+    "Telecom -  Equipment & Accessories": [
+      {
+        "stock_name": "Sterlite Tech.",
+        "ticker": "STLTECH",
+        "screener_url": "https://www.screener.in/company/STLTECH/consolidated/",
+        "market_cap": 10761.43
+      }
+    ],
+    "Other Telecom Services": [
+      {
+        "stock_name": "Railtel Corpn.",
+        "ticker": "RAILTEL",
+        "screener_url": "https://www.screener.in/company/RAILTEL/",
+        "market_cap": 9063.3
+      }
+    ]
+  },
+  "Information Technology": {
+    "Computers - Software & Consulting": [
+      {
+        "stock_name": "TCS",
+        "ticker": "TCS",
+        "screener_url": "https://www.screener.in/company/TCS/consolidated/",
+        "market_cap": 936503.3
+      },
+      {
+        "stock_name": "Infosys",
+        "ticker": "INFY",
+        "screener_url": "https://www.screener.in/company/INFY/consolidated/",
+        "market_cap": 540026.75
+      },
+      {
+        "stock_name": "HCL Technologies",
+        "ticker": "HCLTECH",
+        "screener_url": "https://www.screener.in/company/HCLTECH/consolidated/",
+        "market_cap": 398561.44
+      },
+      {
+        "stock_name": "Wipro",
+        "ticker": "WIPRO",
+        "screener_url": "https://www.screener.in/company/WIPRO/consolidated/",
+        "market_cap": 212906.1
+      },
+      {
+        "stock_name": "Tech Mahindra",
+        "ticker": "TECHM",
+        "screener_url": "https://www.screener.in/company/TECHM/consolidated/",
+        "market_cap": 143267.89
+      },
+      {
+        "stock_name": "LTIMindtree",
+        "ticker": "LTM",
+        "screener_url": "https://www.screener.in/company/LTM/consolidated/",
+        "market_cap": 135585.23
+      },
+      {
+        "stock_name": "Persistent Systems",
+        "ticker": "PERSISTENT",
+        "screener_url": "https://www.screener.in/company/PERSISTENT/consolidated/",
+        "market_cap": 86312.22
+      },
+      {
+        "stock_name": "Mphasis",
+        "ticker": "MPHASIS",
+        "screener_url": "https://www.screener.in/company/MPHASIS/consolidated/",
+        "market_cap": 45560.6
+      },
+      {
+        "stock_name": "Coforge",
+        "ticker": "COFORGE",
+        "screener_url": "https://www.screener.in/company/COFORGE/consolidated/",
+        "market_cap": 42485.08
+      },
+      {
+        "stock_name": "Hexaware Tech.",
+        "ticker": "HEXT",
+        "screener_url": "https://www.screener.in/company/HEXT/consolidated/",
+        "market_cap": 29019.57
+      },
+      {
+        "stock_name": "Tata Elxsi",
+        "ticker": "TATAELXSI",
+        "screener_url": "https://www.screener.in/company/TATAELXSI/",
+        "market_cap": 27780.21
+      },
+      {
+        "stock_name": "KPIT Technologi.",
+        "ticker": "KPITTECH",
+        "screener_url": "https://www.screener.in/company/KPITTECH/consolidated/",
+        "market_cap": 19635.51
+      },
+      {
+        "stock_name": "Fractal Analyt.",
+        "ticker": "FRACTAL",
+        "screener_url": "https://www.screener.in/company/FRACTAL/consolidated/",
+        "market_cap": 14132.09
+      },
+      {
+        "stock_name": "Zensar Tech.",
+        "ticker": "ZENSARTECH",
+        "screener_url": "https://www.screener.in/company/ZENSARTECH/consolidated/",
+        "market_cap": 12604.21
+      },
+      {
+        "stock_name": "Birlasoft Ltd",
+        "ticker": "BSOFT",
+        "screener_url": "https://www.screener.in/company/BSOFT/consolidated/",
+        "market_cap": 10429.74
+      },
+      {
+        "stock_name": "Intellect Design",
+        "ticker": "INTELLECT",
+        "screener_url": "https://www.screener.in/company/INTELLECT/consolidated/",
+        "market_cap": 9394.45
+      },
+      {
+        "stock_name": "Sonata Software",
+        "ticker": "SONATSOFTW",
+        "screener_url": "https://www.screener.in/company/SONATSOFTW/consolidated/",
+        "market_cap": 6862.52
+      },
+      {
+        "stock_name": "Rategain Travel",
+        "ticker": "RATEGAIN",
+        "screener_url": "https://www.screener.in/company/RATEGAIN/consolidated/",
+        "market_cap": 6535.83
+      },
+      {
+        "stock_name": "Newgen Software",
+        "ticker": "NEWGEN",
+        "screener_url": "https://www.screener.in/company/NEWGEN/consolidated/",
+        "market_cap": 6496.19
+      },
+      {
+        "stock_name": "Latent View",
+        "ticker": "LATENTVIEW",
+        "screener_url": "https://www.screener.in/company/LATENTVIEW/consolidated/",
+        "market_cap": 6170.5
+      },
+      {
+        "stock_name": "Happiest Minds",
+        "ticker": "HAPPSTMNDS",
+        "screener_url": "https://www.screener.in/company/HAPPSTMNDS/consolidated/",
+        "market_cap": 5773.54
+      }
+    ],
+    "Software Products": [
+      {
+        "stock_name": "Oracle Fin.Serv.",
+        "ticker": "OFSS",
+        "screener_url": "https://www.screener.in/company/OFSS/consolidated/",
+        "market_cap": 62828.55
+      },
+      {
+        "stock_name": "Tanla Platforms",
+        "ticker": "TANLA",
+        "screener_url": "https://www.screener.in/company/TANLA/consolidated/",
+        "market_cap": 6283.43
+      },
+      {
+        "stock_name": "C.E. Info System",
+        "ticker": "MAPMYINDIA",
+        "screener_url": "https://www.screener.in/company/MAPMYINDIA/consolidated/",
+        "market_cap": 5064.01
+      }
+    ],
+    "IT Enabled Services": [
+      {
+        "stock_name": "L&T Technology",
+        "ticker": "LTTS",
+        "screener_url": "https://www.screener.in/company/LTTS/consolidated/",
+        "market_cap": 35297.85
+      },
+      {
+        "stock_name": "Inventurus Knowl",
+        "ticker": "IKS",
+        "screener_url": "https://www.screener.in/company/IKS/consolidated/",
+        "market_cap": 25348.51
+      },
+      {
+        "stock_name": "Tata Technolog.",
+        "ticker": "TATATECH",
+        "screener_url": "https://www.screener.in/company/TATATECH/consolidated/",
+        "market_cap": 22680.08
+      },
+      {
+        "stock_name": "Sagility",
+        "ticker": "SAGILITY",
+        "screener_url": "https://www.screener.in/company/SAGILITY/consolidated/",
+        "market_cap": 19979.98
+      },
+      {
+        "stock_name": "Affle 3i",
+        "ticker": "AFFLE",
+        "screener_url": "https://www.screener.in/company/AFFLE/consolidated/",
+        "market_cap": 19637.93
+      },
+      {
+        "stock_name": "Cyient",
+        "ticker": "CYIENT",
+        "screener_url": "https://www.screener.in/company/CYIENT/consolidated/",
+        "market_cap": 9893.61
+      },
+      {
+        "stock_name": "Black Box",
+        "ticker": "BBOX",
+        "screener_url": "https://www.screener.in/company/BBOX/consolidated/",
+        "market_cap": 8598.28
+      },
+      {
+        "stock_name": "Amagi Media Labs",
+        "ticker": "AMAGI",
+        "screener_url": "https://www.screener.in/company/AMAGI/consolidated/",
+        "market_cap": 7368.7
+      }
+    ]
+  },
+  "Construction": {
+    "Civil Construction": [
+      {
+        "stock_name": "Larsen & Toubro",
+        "ticker": "LT",
+        "screener_url": "https://www.screener.in/company/LT/consolidated/",
+        "market_cap": 535779.88
+      },
+      {
+        "stock_name": "Rail Vikas",
+        "ticker": "RVNL",
+        "screener_url": "https://www.screener.in/company/RVNL/consolidated/",
+        "market_cap": 56852.52
+      },
+      {
+        "stock_name": "IRB Infra.Devl.",
+        "ticker": "IRB",
+        "screener_url": "https://www.screener.in/company/IRB/consolidated/",
+        "market_cap": 25218.9
+      },
+      {
+        "stock_name": "Kalpataru Proj.",
+        "ticker": "KPIL",
+        "screener_url": "https://www.screener.in/company/KPIL/consolidated/",
+        "market_cap": 19515.85
+      },
+      {
+        "stock_name": "KEC International",
+        "ticker": "KEC",
+        "screener_url": "https://www.screener.in/company/KEC/consolidated/",
+        "market_cap": 15382.2
+      },
+      {
+        "stock_name": "Ircon Intl.",
+        "ticker": "IRCON",
+        "screener_url": "https://www.screener.in/company/IRCON/consolidated/",
+        "market_cap": 12544.63
+      },
+      {
+        "stock_name": "Techno Elec.Engg",
+        "ticker": "TECHNOE",
+        "screener_url": "https://www.screener.in/company/TECHNOE/consolidated/",
+        "market_cap": 12494.63
+      },
+      {
+        "stock_name": "Engineers India",
+        "ticker": "ENGINERSIN",
+        "screener_url": "https://www.screener.in/company/ENGINERSIN/consolidated/",
+        "market_cap": 11727.05
+      },
+      {
+        "stock_name": "Afcons Infrastr.",
+        "ticker": "AFCONS",
+        "screener_url": "https://www.screener.in/company/AFCONS/",
+        "market_cap": 11487.62
+      },
+      {
+        "stock_name": "Cemindia Project",
+        "ticker": "CEMPRO",
+        "screener_url": "https://www.screener.in/company/CEMPRO/consolidated/",
+        "market_cap": 10381.98
+      },
+      {
+        "stock_name": "NCC",
+        "ticker": "NCC",
+        "screener_url": "https://www.screener.in/company/NCC/consolidated/",
+        "market_cap": 9284.57
+      },
+      {
+        "stock_name": "G R Infraproject",
+        "ticker": "GRINFRA",
+        "screener_url": "https://www.screener.in/company/GRINFRA/consolidated/",
+        "market_cap": 8113.65
+      },
+      {
+        "stock_name": "ISGEC Heavy",
+        "ticker": "ISGEC",
+        "screener_url": "https://www.screener.in/company/ISGEC/consolidated/",
+        "market_cap": 7007.38
+      },
+      {
+        "stock_name": "Dilip Buildcon",
+        "ticker": "DBL",
+        "screener_url": "https://www.screener.in/company/DBL/consolidated/",
+        "market_cap": 7004.71
+      },
+      {
+        "stock_name": "Power Mech Proj.",
+        "ticker": "POWERMECH",
+        "screener_url": "https://www.screener.in/company/POWERMECH/consolidated/",
+        "market_cap": 6570.66
+      },
+      {
+        "stock_name": "Shrem InvIT",
+        "ticker": "SHREMINVIT",
+        "screener_url": "https://www.screener.in/company/SHREMINVIT/consolidated/",
+        "market_cap": 6108.44
+      },
+      {
+        "stock_name": "Welspun Enterp",
+        "ticker": "WELENT",
+        "screener_url": "https://www.screener.in/company/WELENT/consolidated/",
+        "market_cap": 5982.63
+      },
+      {
+        "stock_name": "Ahluwalia Contr.",
+        "ticker": "AHLUCONT",
+        "screener_url": "https://www.screener.in/company/AHLUCONT/consolidated/",
+        "market_cap": 5110.15
+      },
+      {
+        "stock_name": "Ceigall India",
+        "ticker": "CEIGALL",
+        "screener_url": "https://www.screener.in/company/CEIGALL/consolidated/",
+        "market_cap": 5084.52
+      }
+    ]
+  },
+  "Fast Moving Consumer Goods": {
+    "Diversified FMCG": [
+      {
+        "stock_name": "Hind. Unilever",
+        "ticker": "HINDUNILVR",
+        "screener_url": "https://www.screener.in/company/HINDUNILVR/consolidated/",
+        "market_cap": 501203.13
+      },
+      {
+        "stock_name": "ITC",
+        "ticker": "ITC",
+        "screener_url": "https://www.screener.in/company/ITC/consolidated/",
+        "market_cap": 379768.45
+      },
+      {
+        "stock_name": "Hindustan Foods",
+        "ticker": "HNDFDS",
+        "screener_url": "https://www.screener.in/company/HNDFDS/consolidated/",
+        "market_cap": 6020.09
+      }
+    ],
+    "Packaged Foods": [
+      {
+        "stock_name": "Nestle India",
+        "ticker": "NESTLEIND",
+        "screener_url": "https://www.screener.in/company/NESTLEIND/",
+        "market_cap": 237029.63
+      },
+      {
+        "stock_name": "Britannia Inds.",
+        "ticker": "BRITANNIA",
+        "screener_url": "https://www.screener.in/company/BRITANNIA/consolidated/",
+        "market_cap": 131795.3
+      },
+      {
+        "stock_name": "Bikaji Foods",
+        "ticker": "BIKAJI",
+        "screener_url": "https://www.screener.in/company/BIKAJI/consolidated/",
+        "market_cap": 16030.83
+      },
+      {
+        "stock_name": "Zydus Wellness",
+        "ticker": "ZYDUSWELL",
+        "screener_url": "https://www.screener.in/company/ZYDUSWELL/consolidated/",
+        "market_cap": 15495.19
+      },
+      {
+        "stock_name": "Mrs Bectors",
+        "ticker": "BECTORFOOD",
+        "screener_url": "https://www.screener.in/company/BECTORFOOD/",
+        "market_cap": 5782.51
+      }
+    ],
+    "Other Beverages": [
+      {
+        "stock_name": "Varun Beverages",
+        "ticker": "VBL",
+        "screener_url": "https://www.screener.in/company/VBL/consolidated/",
+        "market_cap": 143045.72
+      }
+    ],
+    "Personal Care": [
+      {
+        "stock_name": "Godrej Consumer",
+        "ticker": "GODREJCP",
+        "screener_url": "https://www.screener.in/company/GODREJCP/consolidated/",
+        "market_cap": 108892.8
+      },
+      {
+        "stock_name": "Dabur India",
+        "ticker": "DABUR",
+        "screener_url": "https://www.screener.in/company/DABUR/consolidated/",
+        "market_cap": 76144.43
+      },
+      {
+        "stock_name": "Gillette India",
+        "ticker": "GILLETTE",
+        "screener_url": "https://www.screener.in/company/GILLETTE/",
+        "market_cap": 24814.2
+      },
+      {
+        "stock_name": "Cupid",
+        "ticker": "CUPID",
+        "screener_url": "https://www.screener.in/company/CUPID/",
+        "market_cap": 12434.03
+      },
+      {
+        "stock_name": "Bajaj Consumer",
+        "ticker": "BAJAJCON",
+        "screener_url": "https://www.screener.in/company/BAJAJCON/consolidated/",
+        "market_cap": 5143.23
+      }
+    ],
+    "Tea & Coffee": [
+      {
+        "stock_name": "Tata Consumer",
+        "ticker": "TATACONSUM",
+        "screener_url": "https://www.screener.in/company/TATACONSUM/consolidated/",
+        "market_cap": 106699.73
+      }
+    ],
+    "Edible Oil": [
+      {
+        "stock_name": "Marico",
+        "ticker": "MARICO",
+        "screener_url": "https://www.screener.in/company/MARICO/consolidated/",
+        "market_cap": 97017.16
+      },
+      {
+        "stock_name": "Patanjali Foods",
+        "ticker": "PATANJALI",
+        "screener_url": "https://www.screener.in/company/PATANJALI/",
+        "market_cap": 49834.02
+      },
+      {
+        "stock_name": "AWL Agri Busine.",
+        "ticker": "AWL",
+        "screener_url": "https://www.screener.in/company/AWL/consolidated/",
+        "market_cap": 23014.74
+      },
+      {
+        "stock_name": "Gokul Agro",
+        "ticker": "GOKULAGRO",
+        "screener_url": "https://www.screener.in/company/GOKULAGRO/consolidated/",
+        "market_cap": 5896.71
+      }
+    ],
+    "Breweries & Distilleries": [
+      {
+        "stock_name": "United Spirits",
+        "ticker": "UNITDSPR",
+        "screener_url": "https://www.screener.in/company/UNITDSPR/consolidated/",
+        "market_cap": 90900.67
+      },
+      {
+        "stock_name": "Radico Khaitan",
+        "ticker": "RADICO",
+        "screener_url": "https://www.screener.in/company/RADICO/",
+        "market_cap": 36389.32
+      },
+      {
+        "stock_name": "Allied Blenders",
+        "ticker": "ABDL",
+        "screener_url": "https://www.screener.in/company/ABDL/consolidated/",
+        "market_cap": 13054.16
+      },
+      {
+        "stock_name": "Tilaknagar Inds.",
+        "ticker": "TI",
+        "screener_url": "https://www.screener.in/company/TI/consolidated/",
+        "market_cap": 10431.98
+      }
+    ],
+    "Cigarettes & Tobacco Products": [
+      {
+        "stock_name": "Godfrey Phillips",
+        "ticker": "GODFRYPHLP",
+        "screener_url": "https://www.screener.in/company/GODFRYPHLP/consolidated/",
+        "market_cap": 31723.35
+      },
+      {
+        "stock_name": "Elitecon Inter.",
+        "ticker": "539533",
+        "screener_url": "https://www.screener.in/company/539533/consolidated/",
+        "market_cap": 6310.88
+      }
+    ],
+    "Dairy Products": [
+      {
+        "stock_name": "Hatsun Agro",
+        "ticker": "HATSUN",
+        "screener_url": "https://www.screener.in/company/HATSUN/",
+        "market_cap": 20247.83
+      },
+      {
+        "stock_name": "Dodla Dairy",
+        "ticker": "DODLA",
+        "screener_url": "https://www.screener.in/company/DODLA/consolidated/",
+        "market_cap": 6224.38
+      },
+      {
+        "stock_name": "Kwality Wall's",
+        "ticker": "KWIL",
+        "screener_url": "https://www.screener.in/company/KWIL/",
+        "market_cap": 5622.62
+      }
+    ],
+    "Animal Feed": [
+      {
+        "stock_name": "Avanti Feeds",
+        "ticker": "AVANTIFEED",
+        "screener_url": "https://www.screener.in/company/AVANTIFEED/consolidated/",
+        "market_cap": 17529.99
+      }
+    ],
+    "Stationary": [
+      {
+        "stock_name": "DOMS Industries",
+        "ticker": "DOMS",
+        "screener_url": "https://www.screener.in/company/DOMS/consolidated/",
+        "market_cap": 14541.2
+      }
+    ],
+    "Other Agricultural Products": [
+      {
+        "stock_name": "L T Foods",
+        "ticker": "LTFOODS",
+        "screener_url": "https://www.screener.in/company/LTFOODS/consolidated/",
+        "market_cap": 14075.85
+      },
+      {
+        "stock_name": "KRBL",
+        "ticker": "KRBL",
+        "screener_url": "https://www.screener.in/company/KRBL/consolidated/",
+        "market_cap": 7462.94
+      },
+      {
+        "stock_name": "Guj. Ambuja Exp",
+        "ticker": "GAEL",
+        "screener_url": "https://www.screener.in/company/GAEL/consolidated/",
+        "market_cap": 7000.46
+      }
+    ],
+    "Other Food Products": [
+      {
+        "stock_name": "Orkla India",
+        "ticker": "ORKLAINDIA",
+        "screener_url": "https://www.screener.in/company/ORKLAINDIA/consolidated/",
+        "market_cap": 8530.92
+      }
+    ],
+    "Sugar": [
+      {
+        "stock_name": "Triven.Engg.Ind.",
+        "ticker": "TRIVENI",
+        "screener_url": "https://www.screener.in/company/TRIVENI/consolidated/",
+        "market_cap": 8370.77
+      },
+      {
+        "stock_name": "Sh.Renuka Sugar",
+        "ticker": "RENUKA",
+        "screener_url": "https://www.screener.in/company/RENUKA/consolidated/",
+        "market_cap": 5859.73
+      }
+    ],
+    "Household Products": [
+      {
+        "stock_name": "Jyothy Labs",
+        "ticker": "JYOTHYLAB",
+        "screener_url": "https://www.screener.in/company/JYOTHYLAB/",
+        "market_cap": 8130.15
+      }
+    ]
+  },
+  "Automobile and Auto Components": {
+    "Passenger Cars & Utility Vehicles": [
+      {
+        "stock_name": "Maruti Suzuki",
+        "ticker": "MARUTI",
+        "screener_url": "https://www.screener.in/company/MARUTI/consolidated/",
+        "market_cap": 427224.38
+      },
+      {
+        "stock_name": "M & M",
+        "ticker": "M&M",
+        "screener_url": "https://www.screener.in/company/M&M/consolidated/",
+        "market_cap": 393727.12
+      },
+      {
+        "stock_name": "Hyundai Motor I",
+        "ticker": "HYUNDAI",
+        "screener_url": "https://www.screener.in/company/HYUNDAI/",
+        "market_cap": 143625.13
+      },
+      {
+        "stock_name": "Tata Motors PVeh",
+        "ticker": "TMPV",
+        "screener_url": "https://www.screener.in/company/TMPV/consolidated/",
+        "market_cap": 122605.36
+      },
+      {
+        "stock_name": "Force Motors",
+        "ticker": "FORCEMOT",
+        "screener_url": "https://www.screener.in/company/FORCEMOT/consolidated/",
+        "market_cap": 29200.54
+      },
+      {
+        "stock_name": "Olectra Greentec",
+        "ticker": "OLECTRA",
+        "screener_url": "https://www.screener.in/company/OLECTRA/consolidated/",
+        "market_cap": 9292.64
+      }
+    ],
+    "2/3 Wheelers": [
+      {
+        "stock_name": "Bajaj Auto",
+        "ticker": "BAJAJ-AUTO",
+        "screener_url": "https://www.screener.in/company/BAJAJ-AUTO/consolidated/",
+        "market_cap": 266047.81
+      },
+      {
+        "stock_name": "Eicher Motors",
+        "ticker": "EICHERMOT",
+        "screener_url": "https://www.screener.in/company/EICHERMOT/consolidated/",
+        "market_cap": 196008.36
+      },
+      {
+        "stock_name": "TVS Motor Co.",
+        "ticker": "TVSMOTOR",
+        "screener_url": "https://www.screener.in/company/TVSMOTOR/consolidated/",
+        "market_cap": 177239.7
+      },
+      {
+        "stock_name": "Hero Motocorp",
+        "ticker": "HEROMOTOCO",
+        "screener_url": "https://www.screener.in/company/HEROMOTOCO/consolidated/",
+        "market_cap": 105758.44
+      },
+      {
+        "stock_name": "Ather Energy",
+        "ticker": "ATHERENERG",
+        "screener_url": "https://www.screener.in/company/ATHERENERG/",
+        "market_cap": 31382.66
+      },
+      {
+        "stock_name": "Ola Electric",
+        "ticker": "OLAELEC",
+        "screener_url": "https://www.screener.in/company/OLAELEC/consolidated/",
+        "market_cap": 16009.55
+      }
+    ],
+    "Auto Components & Equipments": [
+      {
+        "stock_name": "Samvardh. Mothe.",
+        "ticker": "MOTHERSON",
+        "screener_url": "https://www.screener.in/company/MOTHERSON/consolidated/",
+        "market_cap": 123444.14
+      },
+      {
+        "stock_name": "Bosch",
+        "ticker": "BOSCHLTD",
+        "screener_url": "https://www.screener.in/company/BOSCHLTD/",
+        "market_cap": 108426.09
+      },
+      {
+        "stock_name": "Bharat Forge",
+        "ticker": "BHARATFORG",
+        "screener_url": "https://www.screener.in/company/BHARATFORG/consolidated/",
+        "market_cap": 83196.1
+      },
+      {
+        "stock_name": "Uno Minda",
+        "ticker": "UNOMINDA",
+        "screener_url": "https://www.screener.in/company/UNOMINDA/consolidated/",
+        "market_cap": 60853.04
+      },
+      {
+        "stock_name": "Schaeffler India",
+        "ticker": "SCHAEFFLER",
+        "screener_url": "https://www.screener.in/company/SCHAEFFLER/",
+        "market_cap": 60132.99
+      },
+      {
+        "stock_name": "Tube Investments",
+        "ticker": "TIINDIA",
+        "screener_url": "https://www.screener.in/company/TIINDIA/consolidated/",
+        "market_cap": 53023.47
+      },
+      {
+        "stock_name": "Endurance Tech.",
+        "ticker": "ENDURANCE",
+        "screener_url": "https://www.screener.in/company/ENDURANCE/consolidated/",
+        "market_cap": 33474.97
+      },
+      {
+        "stock_name": "Sona BLW Precis.",
+        "ticker": "SONACOMS",
+        "screener_url": "https://www.screener.in/company/SONACOMS/consolidated/",
+        "market_cap": 32516.56
+      },
+      {
+        "stock_name": "ZF Commercial",
+        "ticker": "ZFCVINDIA",
+        "screener_url": "https://www.screener.in/company/ZFCVINDIA/",
+        "market_cap": 26973.95
+      },
+      {
+        "stock_name": "Exide Inds.",
+        "ticker": "EXIDEIND",
+        "screener_url": "https://www.screener.in/company/EXIDEIND/consolidated/",
+        "market_cap": 26426.81
+      },
+      {
+        "stock_name": "Motherson Wiring",
+        "ticker": "MSUMI",
+        "screener_url": "https://www.screener.in/company/MSUMI/",
+        "market_cap": 25578.35
+      },
+      {
+        "stock_name": "Asahi India Glas",
+        "ticker": "ASAHIINDIA",
+        "screener_url": "https://www.screener.in/company/ASAHIINDIA/consolidated/",
+        "market_cap": 21884.19
+      },
+      {
+        "stock_name": "CIE Automotive",
+        "ticker": "CIEINDIA",
+        "screener_url": "https://www.screener.in/company/CIEINDIA/consolidated/",
+        "market_cap": 18182.59
+      },
+      {
+        "stock_name": "Belrise Industri",
+        "ticker": "BELRISE",
+        "screener_url": "https://www.screener.in/company/BELRISE/consolidated/",
+        "market_cap": 18020.15
+      },
+      {
+        "stock_name": "Craftsman Auto",
+        "ticker": "CRAFTSMAN",
+        "screener_url": "https://www.screener.in/company/CRAFTSMAN/consolidated/",
+        "market_cap": 17708.21
+      },
+      {
+        "stock_name": "JBM Auto",
+        "ticker": "JBMA",
+        "screener_url": "https://www.screener.in/company/JBMA/consolidated/",
+        "market_cap": 14301.79
+      },
+      {
+        "stock_name": "Shriram Pistons",
+        "ticker": "SHRIPISTON",
+        "screener_url": "https://www.screener.in/company/SHRIPISTON/consolidated/",
+        "market_cap": 14184.03
+      },
+      {
+        "stock_name": "Sansera Enginee.",
+        "ticker": "SANSERA",
+        "screener_url": "https://www.screener.in/company/SANSERA/consolidated/",
+        "market_cap": 14044.68
+      },
+      {
+        "stock_name": "Amara Raja Ener.",
+        "ticker": "ARE&M",
+        "screener_url": "https://www.screener.in/company/ARE&M/",
+        "market_cap": 13546.62
+      },
+      {
+        "stock_name": "Gabriel India",
+        "ticker": "GABRIEL",
+        "screener_url": "https://www.screener.in/company/GABRIEL/",
+        "market_cap": 13029.25
+      },
+      {
+        "stock_name": "Minda Corp",
+        "ticker": "MINDACORP",
+        "screener_url": "https://www.screener.in/company/MINDACORP/consolidated/",
+        "market_cap": 12301.71
+      },
+      {
+        "stock_name": "Lumax Auto Tech.",
+        "ticker": "LUMAXTECH",
+        "screener_url": "https://www.screener.in/company/LUMAXTECH/consolidated/",
+        "market_cap": 11740.47
+      },
+      {
+        "stock_name": "Ramkrishna Forg.",
+        "ticker": "RKFORGE",
+        "screener_url": "https://www.screener.in/company/RKFORGE/consolidated/",
+        "market_cap": 9647.64
+      },
+      {
+        "stock_name": "Banco Products",
+        "ticker": "BANCOINDIA",
+        "screener_url": "https://www.screener.in/company/BANCOINDIA/consolidated/",
+        "market_cap": 8098.08
+      },
+      {
+        "stock_name": "Varroc Engineer",
+        "ticker": "VARROC",
+        "screener_url": "https://www.screener.in/company/VARROC/consolidated/",
+        "market_cap": 7634.73
+      },
+      {
+        "stock_name": "Sedemac Mechatro",
+        "ticker": "SEDEMAC",
+        "screener_url": "https://www.screener.in/company/SEDEMAC/",
+        "market_cap": 7205.21
+      },
+      {
+        "stock_name": "Pricol Ltd",
+        "ticker": "PRICOLLTD",
+        "screener_url": "https://www.screener.in/company/PRICOLLTD/consolidated/",
+        "market_cap": 6970.42
+      },
+      {
+        "stock_name": "Suprajit Engg.",
+        "ticker": "SUPRAJIT",
+        "screener_url": "https://www.screener.in/company/SUPRAJIT/consolidated/",
+        "market_cap": 5927.21
+      },
+      {
+        "stock_name": "Fiem Industries",
+        "ticker": "FIEMIND",
+        "screener_url": "https://www.screener.in/company/FIEMIND/consolidated/",
+        "market_cap": 5681.1
+      },
+      {
+        "stock_name": "L G Balakrishnan",
+        "ticker": "LGBBROSLTD",
+        "screener_url": "https://www.screener.in/company/LGBBROSLTD/consolidated/",
+        "market_cap": 5628.43
+      },
+      {
+        "stock_name": "SJS Enterprises",
+        "ticker": "SJS",
+        "screener_url": "https://www.screener.in/company/SJS/consolidated/",
+        "market_cap": 5555.31
+      }
+    ],
+    "Tyres & Rubber Products": [
+      {
+        "stock_name": "MRF",
+        "ticker": "MRF",
+        "screener_url": "https://www.screener.in/company/MRF/consolidated/",
+        "market_cap": 56835.08
+      },
+      {
+        "stock_name": "Balkrishna Inds",
+        "ticker": "BALKRISIND",
+        "screener_url": "https://www.screener.in/company/BALKRISIND/consolidated/",
+        "market_cap": 42889.43
+      },
+      {
+        "stock_name": "Apollo Tyres",
+        "ticker": "APOLLOTYRE",
+        "screener_url": "https://www.screener.in/company/APOLLOTYRE/consolidated/",
+        "market_cap": 27992.34
+      },
+      {
+        "stock_name": "CEAT",
+        "ticker": "CEATLTD",
+        "screener_url": "https://www.screener.in/company/CEATLTD/consolidated/",
+        "market_cap": 14334.9
+      },
+      {
+        "stock_name": "JK Tyre & Indust",
+        "ticker": "JKTYRE",
+        "screener_url": "https://www.screener.in/company/JKTYRE/consolidated/",
+        "market_cap": 12142.75
+      }
+    ]
+  },
+  "Healthcare": {
+    "Pharmaceuticals": [
+      {
+        "stock_name": "Sun Pharma.Inds.",
+        "ticker": "SUNPHARMA",
+        "screener_url": "https://www.screener.in/company/SUNPHARMA/consolidated/",
+        "market_cap": 412230.23
+      },
+      {
+        "stock_name": "Divi's Lab.",
+        "ticker": "DIVISLAB",
+        "screener_url": "https://www.screener.in/company/DIVISLAB/consolidated/",
+        "market_cap": 158040.32
+      },
+      {
+        "stock_name": "Torrent Pharma.",
+        "ticker": "TORNTPHARM",
+        "screener_url": "https://www.screener.in/company/TORNTPHARM/consolidated/",
+        "market_cap": 138631.54
+      },
+      {
+        "stock_name": "Lupin",
+        "ticker": "LUPIN",
+        "screener_url": "https://www.screener.in/company/LUPIN/consolidated/",
+        "market_cap": 104952.34
+      },
+      {
+        "stock_name": "Dr Reddy's Labs",
+        "ticker": "DRREDDY",
+        "screener_url": "https://www.screener.in/company/DRREDDY/consolidated/",
+        "market_cap": 101147.83
+      },
+      {
+        "stock_name": "Cipla",
+        "ticker": "CIPLA",
+        "screener_url": "https://www.screener.in/company/CIPLA/consolidated/",
+        "market_cap": 98913.04
+      },
+      {
+        "stock_name": "Zydus Lifesci.",
+        "ticker": "ZYDUSLIFE",
+        "screener_url": "https://www.screener.in/company/ZYDUSLIFE/consolidated/",
+        "market_cap": 90787.46
+      },
+      {
+        "stock_name": "Mankind Pharma",
+        "ticker": "MANKIND",
+        "screener_url": "https://www.screener.in/company/MANKIND/consolidated/",
+        "market_cap": 84790.74
+      },
+      {
+        "stock_name": "Aurobindo Pharma",
+        "ticker": "AUROPHARMA",
+        "screener_url": "https://www.screener.in/company/AUROPHARMA/consolidated/",
+        "market_cap": 77885.63
+      },
+      {
+        "stock_name": "Alkem Lab",
+        "ticker": "ALKEM",
+        "screener_url": "https://www.screener.in/company/ALKEM/consolidated/",
+        "market_cap": 64203.21
+      },
+      {
+        "stock_name": "Glenmark Pharma.",
+        "ticker": "GLENMARK",
+        "screener_url": "https://www.screener.in/company/GLENMARK/consolidated/",
+        "market_cap": 61188.25
+      },
+      {
+        "stock_name": "Laurus Labs",
+        "ticker": "LAURUSLABS",
+        "screener_url": "https://www.screener.in/company/LAURUSLABS/consolidated/",
+        "market_cap": 58482.65
+      },
+      {
+        "stock_name": "Biocon",
+        "ticker": "BIOCON",
+        "screener_url": "https://www.screener.in/company/BIOCON/consolidated/",
+        "market_cap": 56002.76
+      },
+      {
+        "stock_name": "Abbott India",
+        "ticker": "ABBOTINDIA",
+        "screener_url": "https://www.screener.in/company/ABBOTINDIA/",
+        "market_cap": 54775.51
+      },
+      {
+        "stock_name": "Glaxosmi. Pharma",
+        "ticker": "GLAXO",
+        "screener_url": "https://www.screener.in/company/GLAXO/consolidated/",
+        "market_cap": 39967.1
+      },
+      {
+        "stock_name": "Ipca Labs.",
+        "ticker": "IPCALAB",
+        "screener_url": "https://www.screener.in/company/IPCALAB/consolidated/",
+        "market_cap": 36769.31
+      },
+      {
+        "stock_name": "Ajanta Pharma",
+        "ticker": "AJANTPHARM",
+        "screener_url": "https://www.screener.in/company/AJANTPHARM/consolidated/",
+        "market_cap": 34360.28
+      },
+      {
+        "stock_name": "J B Chemicals &",
+        "ticker": "JBCHEPHARM",
+        "screener_url": "https://www.screener.in/company/JBCHEPHARM/consolidated/",
+        "market_cap": 31586.12
+      },
+      {
+        "stock_name": "Emcure Pharma",
+        "ticker": "EMCURE",
+        "screener_url": "https://www.screener.in/company/EMCURE/consolidated/",
+        "market_cap": 30444.73
+      },
+      {
+        "stock_name": "Gland Pharma",
+        "ticker": "GLAND",
+        "screener_url": "https://www.screener.in/company/GLAND/consolidated/",
+        "market_cap": 28805.88
+      },
+      {
+        "stock_name": "Wockhardt",
+        "ticker": "WOCKPHARMA",
+        "screener_url": "https://www.screener.in/company/WOCKPHARMA/consolidated/",
+        "market_cap": 22282.96
+      },
+      {
+        "stock_name": "Pfizer",
+        "ticker": "PFIZER",
+        "screener_url": "https://www.screener.in/company/PFIZER/",
+        "market_cap": 21755.3
+      },
+      {
+        "stock_name": "Sai Life",
+        "ticker": "SAILIFE",
+        "screener_url": "https://www.screener.in/company/SAILIFE/consolidated/",
+        "market_cap": 20734.36
+      },
+      {
+        "stock_name": "Natco Pharma",
+        "ticker": "NATCOPHARM",
+        "screener_url": "https://www.screener.in/company/NATCOPHARM/consolidated/",
+        "market_cap": 20141.97
+      },
+      {
+        "stock_name": "Piramal Pharma",
+        "ticker": "PPLPHARMA",
+        "screener_url": "https://www.screener.in/company/PPLPHARMA/consolidated/",
+        "market_cap": 18984.44
+      },
+      {
+        "stock_name": "Acutaas Chemical",
+        "ticker": "ACUTAAS",
+        "screener_url": "https://www.screener.in/company/ACUTAAS/consolidated/",
+        "market_cap": 18969.07
+      },
+      {
+        "stock_name": "ERIS Lifescience",
+        "ticker": "ERIS",
+        "screener_url": "https://www.screener.in/company/ERIS/consolidated/",
+        "market_cap": 18900.04
+      },
+      {
+        "stock_name": "OneSource Speci.",
+        "ticker": "ONESOURCE",
+        "screener_url": "https://www.screener.in/company/ONESOURCE/consolidated/",
+        "market_cap": 15788.42
+      },
+      {
+        "stock_name": "Granules India",
+        "ticker": "GRANULES",
+        "screener_url": "https://www.screener.in/company/GRANULES/consolidated/",
+        "market_cap": 15396.51
+      },
+      {
+        "stock_name": "Alembic Pharma",
+        "ticker": "APLLTD",
+        "screener_url": "https://www.screener.in/company/APLLTD/consolidated/",
+        "market_cap": 14086.64
+      },
+      {
+        "stock_name": "Jubilant Pharmo",
+        "ticker": "JUBLPHARMA",
+        "screener_url": "https://www.screener.in/company/JUBLPHARMA/consolidated/",
+        "market_cap": 14002.47
+      },
+      {
+        "stock_name": "Alivus Life",
+        "ticker": "ALIVUS",
+        "screener_url": "https://www.screener.in/company/ALIVUS/",
+        "market_cap": 12808.14
+      },
+      {
+        "stock_name": "Caplin Point Lab",
+        "ticker": "CAPLIPOINT",
+        "screener_url": "https://www.screener.in/company/CAPLIPOINT/consolidated/",
+        "market_cap": 12633.52
+      },
+      {
+        "stock_name": "Cohance Life",
+        "ticker": "COHANCE",
+        "screener_url": "https://www.screener.in/company/COHANCE/consolidated/",
+        "market_cap": 12127.51
+      },
+      {
+        "stock_name": "Corona Remedies",
+        "ticker": "CORONA",
+        "screener_url": "https://www.screener.in/company/CORONA/",
+        "market_cap": 9586.82
+      },
+      {
+        "stock_name": "Strides Pharma",
+        "ticker": "STAR",
+        "screener_url": "https://www.screener.in/company/STAR/consolidated/",
+        "market_cap": 9157.07
+      },
+      {
+        "stock_name": "Viyash Scientific",
+        "ticker": "VIYASH",
+        "screener_url": "https://www.screener.in/company/VIYASH/consolidated/",
+        "market_cap": 8952.74
+      },
+      {
+        "stock_name": "Shilpa Medicare",
+        "ticker": "SHILPAMED",
+        "screener_url": "https://www.screener.in/company/SHILPAMED/consolidated/",
+        "market_cap": 8216.25
+      },
+      {
+        "stock_name": "Jeena Sikho",
+        "ticker": "JSLL",
+        "screener_url": "https://www.screener.in/company/JSLL/",
+        "market_cap": 8086.42
+      },
+      {
+        "stock_name": "Sanofi India",
+        "ticker": "SANOFI",
+        "screener_url": "https://www.screener.in/company/SANOFI/",
+        "market_cap": 7970.85
+      },
+      {
+        "stock_name": "Marksans Pharma",
+        "ticker": "MARKSANS",
+        "screener_url": "https://www.screener.in/company/MARKSANS/consolidated/",
+        "market_cap": 7927.19
+      },
+      {
+        "stock_name": "Akums Drugs",
+        "ticker": "AKUMS",
+        "screener_url": "https://www.screener.in/company/AKUMS/consolidated/",
+        "market_cap": 7703.99
+      },
+      {
+        "stock_name": "Sudeep Pharma",
+        "ticker": "SUDEEPPHRM",
+        "screener_url": "https://www.screener.in/company/SUDEEPPHRM/consolidated/",
+        "market_cap": 6929.95
+      },
+      {
+        "stock_name": "Blue Jet Health",
+        "ticker": "BLUEJET",
+        "screener_url": "https://www.screener.in/company/BLUEJET/",
+        "market_cap": 6417.34
+      },
+      {
+        "stock_name": "Aarti Pharma",
+        "ticker": "AARTIPHARM",
+        "screener_url": "https://www.screener.in/company/AARTIPHARM/consolidated/",
+        "market_cap": 6185.92
+      },
+      {
+        "stock_name": "FDC",
+        "ticker": "FDC",
+        "screener_url": "https://www.screener.in/company/FDC/consolidated/",
+        "market_cap": 5534.91
+      },
+      {
+        "stock_name": "Supriya Lifesci.",
+        "ticker": "SUPRIYA",
+        "screener_url": "https://www.screener.in/company/SUPRIYA/",
+        "market_cap": 5066.7
+      }
+    ],
+    "Hospital": [
+      {
+        "stock_name": "Apollo Hospitals",
+        "ticker": "APOLLOHOSP",
+        "screener_url": "https://www.screener.in/company/APOLLOHOSP/consolidated/",
+        "market_cap": 107587.02
+      },
+      {
+        "stock_name": "Max Healthcare",
+        "ticker": "MAXHEALTH",
+        "screener_url": "https://www.screener.in/company/MAXHEALTH/consolidated/",
+        "market_cap": 93004.19
+      },
+      {
+        "stock_name": "Fortis Health.",
+        "ticker": "FORTIS",
+        "screener_url": "https://www.screener.in/company/FORTIS/consolidated/",
+        "market_cap": 64198.13
+      },
+      {
+        "stock_name": "Narayana Hrudaya",
+        "ticker": "NH",
+        "screener_url": "https://www.screener.in/company/NH/consolidated/",
+        "market_cap": 35309.41
+      },
+      {
+        "stock_name": "Aster DM Health.",
+        "ticker": "ASTERDM",
+        "screener_url": "https://www.screener.in/company/ASTERDM/consolidated/",
+        "market_cap": 34618.27
+      },
+      {
+        "stock_name": "Global Health",
+        "ticker": "MEDANTA",
+        "screener_url": "https://www.screener.in/company/MEDANTA/consolidated/",
+        "market_cap": 28236.41
+      },
+      {
+        "stock_name": "Krishna Institu.",
+        "ticker": "KIMS",
+        "screener_url": "https://www.screener.in/company/KIMS/consolidated/",
+        "market_cap": 26487.2
+      },
+      {
+        "stock_name": "Dr Agarwal's Hea",
+        "ticker": "AGARWALEYE",
+        "screener_url": "https://www.screener.in/company/AGARWALEYE/consolidated/",
+        "market_cap": 13753.54
+      },
+      {
+        "stock_name": "Rainbow Child.",
+        "ticker": "RAINBOW",
+        "screener_url": "https://www.screener.in/company/RAINBOW/consolidated/",
+        "market_cap": 12736.01
+      },
+      {
+        "stock_name": "Park Medi World",
+        "ticker": "PARKHOSPS",
+        "screener_url": "https://www.screener.in/company/PARKHOSPS/consolidated/",
+        "market_cap": 8845.96
+      },
+      {
+        "stock_name": "Health.Global",
+        "ticker": "HCG",
+        "screener_url": "https://www.screener.in/company/HCG/consolidated/",
+        "market_cap": 8166.59
+      },
+      {
+        "stock_name": "Jupiter Life Lin",
+        "ticker": "JLHL",
+        "screener_url": "https://www.screener.in/company/JLHL/consolidated/",
+        "market_cap": 8122.33
+      },
+      {
+        "stock_name": "Yatharth Hospit.",
+        "ticker": "YATHARTH",
+        "screener_url": "https://www.screener.in/company/YATHARTH/consolidated/",
+        "market_cap": 6788.64
+      }
+    ],
+    "Healthcare Service Provider": [
+      {
+        "stock_name": "Dr Lal Pathlabs",
+        "ticker": "LALPATHLAB",
+        "screener_url": "https://www.screener.in/company/LALPATHLAB/consolidated/",
+        "market_cap": 23400.2
+      },
+      {
+        "stock_name": "Thyrocare Tech.",
+        "ticker": "THYROCARE",
+        "screener_url": "https://www.screener.in/company/THYROCARE/consolidated/",
+        "market_cap": 6250.4
+      },
+      {
+        "stock_name": "Nephrocare Health Services",
+        "ticker": "NEPHROPLUS",
+        "screener_url": "https://www.screener.in/company/NEPHROPLUS/consolidated/",
+        "market_cap": 5528.64
+      }
+    ],
+    "Healthcare Research, Analytics & Technology": [
+      {
+        "stock_name": "Syngene Intl.",
+        "ticker": "SYNGENE",
+        "screener_url": "https://www.screener.in/company/SYNGENE/consolidated/",
+        "market_cap": 15835.58
+      },
+      {
+        "stock_name": "Indegene",
+        "ticker": "INDGN",
+        "screener_url": "https://www.screener.in/company/INDGN/consolidated/",
+        "market_cap": 11813.57
+      }
+    ],
+    "Medical Equipment & Supplies": [
+      {
+        "stock_name": "Poly Medicure",
+        "ticker": "POLYMED",
+        "screener_url": "https://www.screener.in/company/POLYMED/consolidated/",
+        "market_cap": 14601.34
+      }
+    ]
+  },
+  "Consumer Durables": {
+    "Gems, Jewellery And Watches": [
+      {
+        "stock_name": "Titan Company",
+        "ticker": "TITAN",
+        "screener_url": "https://www.screener.in/company/TITAN/consolidated/",
+        "market_cap": 394176.85
+      },
+      {
+        "stock_name": "Kalyan Jewellers",
+        "ticker": "KALYANKJIL",
+        "screener_url": "https://www.screener.in/company/KALYANKJIL/consolidated/",
+        "market_cap": 46086.06
+      },
+      {
+        "stock_name": "Thangamayil Jew.",
+        "ticker": "THANGAMAYL",
+        "screener_url": "https://www.screener.in/company/THANGAMAYL/",
+        "market_cap": 12713.17
+      },
+      {
+        "stock_name": "P N Gadgil Jewe.",
+        "ticker": "PNGJL",
+        "screener_url": "https://www.screener.in/company/PNGJL/consolidated/",
+        "market_cap": 8406.5
+      },
+      {
+        "stock_name": "PC Jeweller",
+        "ticker": "PCJEWELLER",
+        "screener_url": "https://www.screener.in/company/PCJEWELLER/consolidated/",
+        "market_cap": 7707.27
+      },
+      {
+        "stock_name": "Bluestone Jewel",
+        "ticker": "BLUESTONE",
+        "screener_url": "https://www.screener.in/company/BLUESTONE/",
+        "market_cap": 7465.09
+      },
+      {
+        "stock_name": "Ethos",
+        "ticker": "ETHOSLTD",
+        "screener_url": "https://www.screener.in/company/ETHOSLTD/consolidated/",
+        "market_cap": 6469.75
+      },
+      {
+        "stock_name": "Sky Gold & Diam.",
+        "ticker": "SKYGOLD",
+        "screener_url": "https://www.screener.in/company/SKYGOLD/consolidated/",
+        "market_cap": 5870.56
+      },
+      {
+        "stock_name": "Senco Gold",
+        "ticker": "SENCO",
+        "screener_url": "https://www.screener.in/company/SENCO/",
+        "market_cap": 5313.7
+      }
+    ],
+    "Paints": [
+      {
+        "stock_name": "Asian Paints",
+        "ticker": "ASIANPAINT",
+        "screener_url": "https://www.screener.in/company/ASIANPAINT/consolidated/",
+        "market_cap": 217442.3
+      },
+      {
+        "stock_name": "Berger Paints",
+        "ticker": "BERGEPAINT",
+        "screener_url": "https://www.screener.in/company/BERGEPAINT/consolidated/",
+        "market_cap": 50657.17
+      },
+      {
+        "stock_name": "Akzo Nobel",
+        "ticker": "AKZOINDIA",
+        "screener_url": "https://www.screener.in/company/AKZOINDIA/",
+        "market_cap": 13575.57
+      }
+    ],
+    "Household Appliances": [
+      {
+        "stock_name": "LG Electronics",
+        "ticker": "LGEINDIA",
+        "screener_url": "https://www.screener.in/company/LGEINDIA/",
+        "market_cap": 97098.39
+      },
+      {
+        "stock_name": "Blue Star",
+        "ticker": "BLUESTARCO",
+        "screener_url": "https://www.screener.in/company/BLUESTARCO/consolidated/",
+        "market_cap": 34048.94
+      },
+      {
+        "stock_name": "Amber Enterp.",
+        "ticker": "AMBER",
+        "screener_url": "https://www.screener.in/company/AMBER/consolidated/",
+        "market_cap": 24252.08
+      },
+      {
+        "stock_name": "Crompton Gr. Con",
+        "ticker": "CROMPTON",
+        "screener_url": "https://www.screener.in/company/CROMPTON/consolidated/",
+        "market_cap": 15312.52
+      },
+      {
+        "stock_name": "V-Guard Industri",
+        "ticker": "VGUARD",
+        "screener_url": "https://www.screener.in/company/VGUARD/",
+        "market_cap": 14329.3
+      },
+      {
+        "stock_name": "Whirlpool India",
+        "ticker": "WHIRLPOOL",
+        "screener_url": "https://www.screener.in/company/WHIRLPOOL/consolidated/",
+        "market_cap": 10456.06
+      },
+      {
+        "stock_name": "Eureka Forbes",
+        "ticker": "EUREKAFORB",
+        "screener_url": "https://www.screener.in/company/EUREKAFORB/",
+        "market_cap": 9231.77
+      },
+      {
+        "stock_name": "TTK Prestige",
+        "ticker": "TTKPRESTIG",
+        "screener_url": "https://www.screener.in/company/TTKPRESTIG/consolidated/",
+        "market_cap": 6449.66
+      }
+    ],
+    "Consumer Electronics": [
+      {
+        "stock_name": "Havells India",
+        "ticker": "HAVELLS",
+        "screener_url": "https://www.screener.in/company/HAVELLS/consolidated/",
+        "market_cap": 78814.57
+      },
+      {
+        "stock_name": "Dixon Technolog.",
+        "ticker": "DIXON",
+        "screener_url": "https://www.screener.in/company/DIXON/consolidated/",
+        "market_cap": 64546.8
+      },
+      {
+        "stock_name": "PG Electroplast",
+        "ticker": "PGEL",
+        "screener_url": "https://www.screener.in/company/PGEL/consolidated/",
+        "market_cap": 13692.16
+      }
+    ],
+    "Footwear": [
+      {
+        "stock_name": "Metro Brands",
+        "ticker": "METROBRAND",
+        "screener_url": "https://www.screener.in/company/METROBRAND/consolidated/",
+        "market_cap": 27153.71
+      },
+      {
+        "stock_name": "Bata India",
+        "ticker": "BATAINDIA",
+        "screener_url": "https://www.screener.in/company/BATAINDIA/consolidated/",
+        "market_cap": 9016.84
+      },
+      {
+        "stock_name": "Campus Activewe.",
+        "ticker": "CAMPUS",
+        "screener_url": "https://www.screener.in/company/CAMPUS/",
+        "market_cap": 7258.8
+      },
+      {
+        "stock_name": "Relaxo Footwear",
+        "ticker": "RELAXO",
+        "screener_url": "https://www.screener.in/company/RELAXO/",
+        "market_cap": 7005.91
+      },
+      {
+        "stock_name": "Redtape",
+        "ticker": "REDTAPE",
+        "screener_url": "https://www.screener.in/company/REDTAPE/consolidated/",
+        "market_cap": 6746.86
+      }
+    ],
+    "Plywood Boards/ Laminates": [
+      {
+        "stock_name": "Century Plyboard",
+        "ticker": "CENTURYPLY",
+        "screener_url": "https://www.screener.in/company/CENTURYPLY/consolidated/",
+        "market_cap": 16362.95
+      },
+      {
+        "stock_name": "Greenlam Industr",
+        "ticker": "GREENLAM",
+        "screener_url": "https://www.screener.in/company/GREENLAM/consolidated/",
+        "market_cap": 5619.09
+      }
+    ],
+    "Houseware": [
+      {
+        "stock_name": "Cello World",
+        "ticker": "CELLO",
+        "screener_url": "https://www.screener.in/company/CELLO/consolidated/",
+        "market_cap": 9147.15
+      }
+    ],
+    "Plastic Products - Consumer": [
+      {
+        "stock_name": "Safari Inds.",
+        "ticker": "SAFARI",
+        "screener_url": "https://www.screener.in/company/SAFARI/consolidated/",
+        "market_cap": 7650.88
+      }
+    ],
+    "Sanitary Ware": [
+      {
+        "stock_name": "Cera Sanitary.",
+        "ticker": "CERA",
+        "screener_url": "https://www.screener.in/company/CERA/",
+        "market_cap": 6494.74
+      }
+    ]
+  },
+  "Power": {
+    "Power Generation": [
+      {
+        "stock_name": "NTPC",
+        "ticker": "NTPC",
+        "screener_url": "https://www.screener.in/company/NTPC/consolidated/",
+        "market_cap": 367066.15
+      },
+      {
+        "stock_name": "Adani Green",
+        "ticker": "ADANIGREEN",
+        "screener_url": "https://www.screener.in/company/ADANIGREEN/consolidated/",
+        "market_cap": 172039.07
+      },
+      {
+        "stock_name": "JSW Energy",
+        "ticker": "JSWENERGY",
+        "screener_url": "https://www.screener.in/company/JSWENERGY/consolidated/",
+        "market_cap": 85983.64
+      },
+      {
+        "stock_name": "NTPC Green Ene.",
+        "ticker": "NTPCGREEN",
+        "screener_url": "https://www.screener.in/company/NTPCGREEN/consolidated/",
+        "market_cap": 81228.15
+      },
+      {
+        "stock_name": "NHPC Ltd",
+        "ticker": "NHPC",
+        "screener_url": "https://www.screener.in/company/NHPC/consolidated/",
+        "market_cap": 77487.57
+      },
+      {
+        "stock_name": "Nava",
+        "ticker": "NAVA",
+        "screener_url": "https://www.screener.in/company/NAVA/consolidated/",
+        "market_cap": 16799.84
+      },
+      {
+        "stock_name": "ACME Solar Hold.",
+        "ticker": "ACMESOLAR",
+        "screener_url": "https://www.screener.in/company/ACMESOLAR/consolidated/",
+        "market_cap": 16527.92
+      },
+      {
+        "stock_name": "JP Power Ven.",
+        "ticker": "JPPOWER",
+        "screener_url": "https://www.screener.in/company/JPPOWER/consolidated/",
+        "market_cap": 11520.67
+      },
+      {
+        "stock_name": "Reliance Power",
+        "ticker": "RPOWER",
+        "screener_url": "https://www.screener.in/company/RPOWER/consolidated/",
+        "market_cap": 10174.05
+      },
+      {
+        "stock_name": "Clean Max Enviro",
+        "ticker": "CLEANMAX",
+        "screener_url": "https://www.screener.in/company/CLEANMAX/consolidated/",
+        "market_cap": 10053.57
+      },
+      {
+        "stock_name": "KPI Green Energy",
+        "ticker": "KPIGREEN",
+        "screener_url": "https://www.screener.in/company/KPIGREEN/consolidated/",
+        "market_cap": 7978.48
+      },
+      {
+        "stock_name": "GMR Urban",
+        "ticker": "GMRP&UI",
+        "screener_url": "https://www.screener.in/company/GMRP&UI/consolidated/",
+        "market_cap": 7956.07
+      },
+      {
+        "stock_name": "Inox Green",
+        "ticker": "INOXGREEN",
+        "screener_url": "https://www.screener.in/company/INOXGREEN/consolidated/",
+        "market_cap": 6091.11
+      }
+    ],
+    "Integrated Power Utilities": [
+      {
+        "stock_name": "Adani Power",
+        "ticker": "ADANIPOWER",
+        "screener_url": "https://www.screener.in/company/ADANIPOWER/consolidated/",
+        "market_cap": 332549.2
+      },
+      {
+        "stock_name": "Tata Power Co.",
+        "ticker": "TATAPOWER",
+        "screener_url": "https://www.screener.in/company/TATAPOWER/consolidated/",
+        "market_cap": 126136.03
+      },
+      {
+        "stock_name": "Torrent Power",
+        "ticker": "TORNTPOWER",
+        "screener_url": "https://www.screener.in/company/TORNTPOWER/consolidated/",
+        "market_cap": 72874.52
+      },
+      {
+        "stock_name": "CESC",
+        "ticker": "CESC",
+        "screener_url": "https://www.screener.in/company/CESC/consolidated/",
+        "market_cap": 20769.08
+      }
+    ],
+    "Power - Transmission": [
+      {
+        "stock_name": "Power Grid Corpn",
+        "ticker": "POWERGRID",
+        "screener_url": "https://www.screener.in/company/POWERGRID/consolidated/",
+        "market_cap": 277251.0
+      },
+      {
+        "stock_name": "Powergrid Infra.",
+        "ticker": "PGINVIT",
+        "screener_url": "https://www.screener.in/company/PGINVIT/consolidated/",
+        "market_cap": 8386.55
+      }
+    ],
+    "Power Distribution": [
+      {
+        "stock_name": "Adani Energy Sol",
+        "ticker": "ADANIENSOL",
+        "screener_url": "https://www.screener.in/company/ADANIENSOL/consolidated/",
+        "market_cap": 129588.37
+      }
+    ]
+  },
+  "Construction Materials": {
+    "Cement & Cement Products": [
+      {
+        "stock_name": "UltraTech Cem.",
+        "ticker": "ULTRACEMCO",
+        "screener_url": "https://www.screener.in/company/ULTRACEMCO/consolidated/",
+        "market_cap": 337450.5
+      },
+      {
+        "stock_name": "Grasim Inds",
+        "ticker": "GRASIM",
+        "screener_url": "https://www.screener.in/company/GRASIM/consolidated/",
+        "market_cap": 186514.08
+      },
+      {
+        "stock_name": "Ambuja Cements",
+        "ticker": "AMBUJACEM",
+        "screener_url": "https://www.screener.in/company/AMBUJACEM/consolidated/",
+        "market_cap": 107313.52
+      },
+      {
+        "stock_name": "Shree Cement",
+        "ticker": "SHREECEM",
+        "screener_url": "https://www.screener.in/company/SHREECEM/consolidated/",
+        "market_cap": 86661.59
+      },
+      {
+        "stock_name": "J K Cements",
+        "ticker": "JKCEMENT",
+        "screener_url": "https://www.screener.in/company/JKCEMENT/consolidated/",
+        "market_cap": 42808.89
+      },
+      {
+        "stock_name": "ACC",
+        "ticker": "ACC",
+        "screener_url": "https://www.screener.in/company/ACC/consolidated/",
+        "market_cap": 26153.86
+      },
+      {
+        "stock_name": "The Ramco Cement",
+        "ticker": "RAMCOCEM",
+        "screener_url": "https://www.screener.in/company/RAMCOCEM/consolidated/",
+        "market_cap": 23194.1
+      },
+      {
+        "stock_name": "JSW Cement",
+        "ticker": "JSWCEMENT",
+        "screener_url": "https://www.screener.in/company/JSWCEMENT/consolidated/",
+        "market_cap": 17197.47
+      },
+      {
+        "stock_name": "India Cements",
+        "ticker": "INDIACEM",
+        "screener_url": "https://www.screener.in/company/INDIACEM/consolidated/",
+        "market_cap": 11721.88
+      },
+      {
+        "stock_name": "Nuvoco Vistas",
+        "ticker": "NUVOCO",
+        "screener_url": "https://www.screener.in/company/NUVOCO/consolidated/",
+        "market_cap": 10939.8
+      },
+      {
+        "stock_name": "Star Cement",
+        "ticker": "STARCEMENT",
+        "screener_url": "https://www.screener.in/company/STARCEMENT/consolidated/",
+        "market_cap": 8561.85
+      },
+      {
+        "stock_name": "JK Lakshmi Cem.",
+        "ticker": "JKLAKSHMI",
+        "screener_url": "https://www.screener.in/company/JKLAKSHMI/consolidated/",
+        "market_cap": 7629.29
+      },
+      {
+        "stock_name": "Birla Corpn.",
+        "ticker": "BIRLACORPN",
+        "screener_url": "https://www.screener.in/company/BIRLACORPN/consolidated/",
+        "market_cap": 7170.02
+      },
+      {
+        "stock_name": "Prism Johnson",
+        "ticker": "PRSMJOHNSN",
+        "screener_url": "https://www.screener.in/company/PRSMJOHNSN/consolidated/",
+        "market_cap": 6251.58
+      }
+    ],
+    "Other Construction Materials": [
+      {
+        "stock_name": "Midwest Gold",
+        "ticker": "526570",
+        "screener_url": "https://www.screener.in/company/526570/consolidated/",
+        "market_cap": 5792.14
+      }
+    ]
+  },
+  "Services": {
+    "Port & Port services": [
+      {
+        "stock_name": "Adani Ports",
+        "ticker": "ADANIPORTS",
+        "screener_url": "https://www.screener.in/company/ADANIPORTS/consolidated/",
+        "market_cap": 333371.82
+      },
+      {
+        "stock_name": "JSW Infrast",
+        "ticker": "JSWINFRA",
+        "screener_url": "https://www.screener.in/company/JSWINFRA/consolidated/",
+        "market_cap": 53921.85
+      },
+      {
+        "stock_name": "Guj Pipavav Port",
+        "ticker": "GPPL",
+        "screener_url": "https://www.screener.in/company/GPPL/",
+        "market_cap": 7244.99
+      }
+    ],
+    "Airline": [
+      {
+        "stock_name": "Interglobe Aviat",
+        "ticker": "INDIGO",
+        "screener_url": "https://www.screener.in/company/INDIGO/",
+        "market_cap": 171967.01
+      }
+    ],
+    "Airport & Airport services": [
+      {
+        "stock_name": "GMR Airports",
+        "ticker": "GMRAIRPORT",
+        "screener_url": "https://www.screener.in/company/GMRAIRPORT/consolidated/",
+        "market_cap": 99866.11
+      }
+    ],
+    "Logistics Solution Provider": [
+      {
+        "stock_name": "Container Corpn.",
+        "ticker": "CONCOR",
+        "screener_url": "https://www.screener.in/company/CONCOR/consolidated/",
+        "market_cap": 36736.78
+      },
+      {
+        "stock_name": "Delhivery",
+        "ticker": "DELHIVERY",
+        "screener_url": "https://www.screener.in/company/DELHIVERY/consolidated/",
+        "market_cap": 35161.88
+      },
+      {
+        "stock_name": "Transport Corp.",
+        "ticker": "TCI",
+        "screener_url": "https://www.screener.in/company/TCI/consolidated/",
+        "market_cap": 7736.92
+      },
+      {
+        "stock_name": "Shadowfax Technologies",
+        "ticker": "SHADOWFAX",
+        "screener_url": "https://www.screener.in/company/SHADOWFAX/consolidated/",
+        "market_cap": 7221.24
+      }
+    ],
+    "Road AssetsToll, Annuity, Hybrid-Annuity": [
+      {
+        "stock_name": "National High",
+        "ticker": "NHIT",
+        "screener_url": "https://www.screener.in/company/NHIT/consolidated/",
+        "market_cap": 31764.35
+      },
+      {
+        "stock_name": "Cube Highways",
+        "ticker": "CUBEINVIT",
+        "screener_url": "https://www.screener.in/company/CUBEINVIT/consolidated/",
+        "market_cap": 19737.66
+      },
+      {
+        "stock_name": "Vertis Infra.",
+        "ticker": "VERTIS",
+        "screener_url": "https://www.screener.in/company/VERTIS/consolidated/",
+        "market_cap": 16005.83
+      },
+      {
+        "stock_name": "Maple Inf. Trust",
+        "ticker": "543925",
+        "screener_url": "https://www.screener.in/company/543925/consolidated/",
+        "market_cap": 10022.49
+      },
+      {
+        "stock_name": "RaajMarg Infra",
+        "ticker": "RIIT",
+        "screener_url": "https://www.screener.in/company/RIIT/",
+        "market_cap": 6579.58
+      },
+      {
+        "stock_name": "Indus Inf. Trust",
+        "ticker": "INDUSINVIT",
+        "screener_url": "https://www.screener.in/company/INDUSINVIT/consolidated/",
+        "market_cap": 5517.83
+      }
+    ],
+    "Shipping": [
+      {
+        "stock_name": "GE Shipping Co",
+        "ticker": "GESHIP",
+        "screener_url": "https://www.screener.in/company/GESHIP/consolidated/",
+        "market_cap": 19860.33
+      },
+      {
+        "stock_name": "S C I",
+        "ticker": "SCI",
+        "screener_url": "https://www.screener.in/company/SCI/consolidated/",
+        "market_cap": 11120.48
+      },
+      {
+        "stock_name": "Shreeji Ship. Gl",
+        "ticker": "SHREEJISPG",
+        "screener_url": "https://www.screener.in/company/SHREEJISPG/consolidated/",
+        "market_cap": 5674.41
+      }
+    ],
+    "Trading & Distributors": [
+      {
+        "stock_name": "Redington",
+        "ticker": "REDINGTON",
+        "screener_url": "https://www.screener.in/company/REDINGTON/consolidated/",
+        "market_cap": 17051.29
+      },
+      {
+        "stock_name": "MMTC",
+        "ticker": "MMTC",
+        "screener_url": "https://www.screener.in/company/MMTC/consolidated/",
+        "market_cap": 8812.5
+      }
+    ],
+    "Business Process Outsourcing (BPO)/ Knowledge Process Outsourcing (KPO)": [
+      {
+        "stock_name": "Firstsour.Solu.",
+        "ticker": "FSL",
+        "screener_url": "https://www.screener.in/company/FSL/consolidated/",
+        "market_cap": 15497.19
+      },
+      {
+        "stock_name": "eClerx Services",
+        "ticker": "ECLERX",
+        "screener_url": "https://www.screener.in/company/ECLERX/consolidated/",
+        "market_cap": 14067.68
+      }
+    ],
+    "Diversified Commercial Services": [
+      {
+        "stock_name": "NESCO",
+        "ticker": "NESCO",
+        "screener_url": "https://www.screener.in/company/NESCO/consolidated/",
+        "market_cap": 7926.09
+      },
+      {
+        "stock_name": "Wework India",
+        "ticker": "WEWORK",
+        "screener_url": "https://www.screener.in/company/WEWORK/",
+        "market_cap": 6570.23
+      },
+      {
+        "stock_name": "NDR INVIT Trust",
+        "ticker": "NDRINVIT",
+        "screener_url": "https://www.screener.in/company/NDRINVIT/consolidated/",
+        "market_cap": 5332.7
+      }
+    ]
+  },
+  "Capital Goods": {
+    "Aerospace & Defense": [
+      {
+        "stock_name": "Bharat Electron",
+        "ticker": "BEL",
+        "screener_url": "https://www.screener.in/company/BEL/consolidated/",
+        "market_cap": 321521.76
+      },
+      {
+        "stock_name": "Hind.Aeronautics",
+        "ticker": "HAL",
+        "screener_url": "https://www.screener.in/company/HAL/consolidated/",
+        "market_cap": 269865.66
+      },
+      {
+        "stock_name": "Bharat Dynamics",
+        "ticker": "BDL",
+        "screener_url": "https://www.screener.in/company/BDL/",
+        "market_cap": 48597.27
+      },
+      {
+        "stock_name": "Garden Reach Sh.",
+        "ticker": "GRSE",
+        "screener_url": "https://www.screener.in/company/GRSE/",
+        "market_cap": 28885.02
+      },
+      {
+        "stock_name": "Data Pattern",
+        "ticker": "DATAPATTNS",
+        "screener_url": "https://www.screener.in/company/DATAPATTNS/",
+        "market_cap": 18855.77
+      },
+      {
+        "stock_name": "Zen Technologies",
+        "ticker": "ZENTEC",
+        "screener_url": "https://www.screener.in/company/ZENTEC/consolidated/",
+        "market_cap": 13850.95
+      },
+      {
+        "stock_name": "MTAR Technologie",
+        "ticker": "MTARTECH",
+        "screener_url": "https://www.screener.in/company/MTARTECH/",
+        "market_cap": 12794.31
+      },
+      {
+        "stock_name": "Astra Microwave",
+        "ticker": "ASTRAMICRO",
+        "screener_url": "https://www.screener.in/company/ASTRAMICRO/consolidated/",
+        "market_cap": 9614.2
+      },
+      {
+        "stock_name": "Aequs",
+        "ticker": "AEQUS",
+        "screener_url": "https://www.screener.in/company/AEQUS/consolidated/",
+        "market_cap": 8373.95
+      },
+      {
+        "stock_name": "Apollo Micro Sys",
+        "ticker": "APOLLO",
+        "screener_url": "https://www.screener.in/company/APOLLO/consolidated/",
+        "market_cap": 8311.76
+      },
+      {
+        "stock_name": "AXISCADES Tech.",
+        "ticker": "AXISCADES",
+        "screener_url": "https://www.screener.in/company/AXISCADES/consolidated/",
+        "market_cap": 7290.82
+      },
+      {
+        "stock_name": "Mishra Dhatu Nig",
+        "ticker": "MIDHANI",
+        "screener_url": "https://www.screener.in/company/MIDHANI/",
+        "market_cap": 6013.62
+      },
+      {
+        "stock_name": "Paras Defence",
+        "ticker": "PARAS",
+        "screener_url": "https://www.screener.in/company/PARAS/consolidated/",
+        "market_cap": 5437.6
+      }
+    ],
+    "Commercial Vehicles": [
+      {
+        "stock_name": "Tata Motors",
+        "ticker": "TMCV",
+        "screener_url": "https://www.screener.in/company/TMCV/",
+        "market_cap": 156828.41
+      },
+      {
+        "stock_name": "Ashok Leyland",
+        "ticker": "ASHOKLEY",
+        "screener_url": "https://www.screener.in/company/ASHOKLEY/consolidated/",
+        "market_cap": 100183.28
+      },
+      {
+        "stock_name": "SML Mahindra",
+        "ticker": "SMLMAH",
+        "screener_url": "https://www.screener.in/company/SMLMAH/",
+        "market_cap": 5963.95
+      }
+    ],
+    "Heavy Electrical Equipment": [
+      {
+        "stock_name": "A B B",
+        "ticker": "ABB",
+        "screener_url": "https://www.screener.in/company/ABB/",
+        "market_cap": 140163.67
+      },
+      {
+        "stock_name": "Hitachi Energy",
+        "ticker": "POWERINDIA",
+        "screener_url": "https://www.screener.in/company/POWERINDIA/",
+        "market_cap": 121790.77
+      },
+      {
+        "stock_name": "Siemens",
+        "ticker": "SIEMENS",
+        "screener_url": "https://www.screener.in/company/SIEMENS/consolidated/",
+        "market_cap": 114706.5
+      },
+      {
+        "stock_name": "CG Power & Ind",
+        "ticker": "CGPOWER",
+        "screener_url": "https://www.screener.in/company/CGPOWER/consolidated/",
+        "market_cap": 113574.83
+      },
+      {
+        "stock_name": "GE Vernova T&D",
+        "ticker": "GVT&D",
+        "screener_url": "https://www.screener.in/company/GVT&D/",
+        "market_cap": 100108.53
+      },
+      {
+        "stock_name": "Siemens Ener.Ind",
+        "ticker": "ENRIN",
+        "screener_url": "https://www.screener.in/company/ENRIN/",
+        "market_cap": 98545.24
+      },
+      {
+        "stock_name": "B H E L",
+        "ticker": "BHEL",
+        "screener_url": "https://www.screener.in/company/BHEL/consolidated/",
+        "market_cap": 96486.48
+      },
+      {
+        "stock_name": "Suzlon Energy",
+        "ticker": "SUZLON",
+        "screener_url": "https://www.screener.in/company/SUZLON/consolidated/",
+        "market_cap": 60145.2
+      },
+      {
+        "stock_name": "Thermax",
+        "ticker": "THERMAX",
+        "screener_url": "https://www.screener.in/company/THERMAX/consolidated/",
+        "market_cap": 41999.82
+      },
+      {
+        "stock_name": "Inox Wind",
+        "ticker": "INOXWIND",
+        "screener_url": "https://www.screener.in/company/INOXWIND/consolidated/",
+        "market_cap": 14752.31
+      },
+      {
+        "stock_name": "Triveni Turbine",
+        "ticker": "TRITURBINE",
+        "screener_url": "https://www.screener.in/company/TRITURBINE/consolidated/",
+        "market_cap": 14464.16
+      },
+      {
+        "stock_name": "Azad Engineering",
+        "ticker": "AZAD",
+        "screener_url": "https://www.screener.in/company/AZAD/",
+        "market_cap": 10799.26
+      },
+      {
+        "stock_name": "Atlanta Electric",
+        "ticker": "ATLANTAELE",
+        "screener_url": "https://www.screener.in/company/ATLANTAELE/",
+        "market_cap": 9808.93
+      },
+      {
+        "stock_name": "Elecon Engg.Co",
+        "ticker": "ELECON",
+        "screener_url": "https://www.screener.in/company/ELECON/consolidated/",
+        "market_cap": 9560.63
+      },
+      {
+        "stock_name": "Volt.Transform.",
+        "ticker": "VOLTAMP",
+        "screener_url": "https://www.screener.in/company/VOLTAMP/",
+        "market_cap": 9186.59
+      },
+      {
+        "stock_name": "T R I L",
+        "ticker": "TARIL",
+        "screener_url": "https://www.screener.in/company/TARIL/consolidated/",
+        "market_cap": 8316.14
+      },
+      {
+        "stock_name": "Transrail Light",
+        "ticker": "TRANSRAILL",
+        "screener_url": "https://www.screener.in/company/TRANSRAILL/consolidated/",
+        "market_cap": 7010.86
+      },
+      {
+        "stock_name": "Powerica Ltd",
+        "ticker": "POWERICA",
+        "screener_url": "https://www.screener.in/company/POWERICA/consolidated/",
+        "market_cap": 5025.19
+      }
+    ],
+    "Compressors, Pumps & Diesel Engines": [
+      {
+        "stock_name": "Cummins India",
+        "ticker": "CUMMINSIND",
+        "screener_url": "https://www.screener.in/company/CUMMINSIND/consolidated/",
+        "market_cap": 135941.02
+      },
+      {
+        "stock_name": "Kirloskar Oil",
+        "ticker": "KIRLOSENG",
+        "screener_url": "https://www.screener.in/company/KIRLOSENG/consolidated/",
+        "market_cap": 21191.2
+      },
+      {
+        "stock_name": "Elgi Equipments",
+        "ticker": "ELGIEQUIP",
+        "screener_url": "https://www.screener.in/company/ELGIEQUIP/consolidated/",
+        "market_cap": 15845.48
+      },
+      {
+        "stock_name": "KSB",
+        "ticker": "KSB",
+        "screener_url": "https://www.screener.in/company/KSB/consolidated/",
+        "market_cap": 14971.7
+      },
+      {
+        "stock_name": "Kirl. Brothers",
+        "ticker": "KIRLOSBROS",
+        "screener_url": "https://www.screener.in/company/KIRLOSBROS/consolidated/",
+        "market_cap": 12179.05
+      },
+      {
+        "stock_name": "Kirl.Pneumatic",
+        "ticker": "KIRLPNU",
+        "screener_url": "https://www.screener.in/company/KIRLPNU/",
+        "market_cap": 7644.04
+      },
+      {
+        "stock_name": "Shakti Pumps",
+        "ticker": "SHAKTIPUMP",
+        "screener_url": "https://www.screener.in/company/SHAKTIPUMP/consolidated/",
+        "market_cap": 6351.29
+      }
+    ],
+    "Cables - Electricals": [
+      {
+        "stock_name": "Polycab India",
+        "ticker": "POLYCAB",
+        "screener_url": "https://www.screener.in/company/POLYCAB/consolidated/",
+        "market_cap": 114515.61
+      },
+      {
+        "stock_name": "KEI Industries",
+        "ticker": "KEI",
+        "screener_url": "https://www.screener.in/company/KEI/consolidated/",
+        "market_cap": 42248.79
+      },
+      {
+        "stock_name": "R R Kabel",
+        "ticker": "RRKABEL",
+        "screener_url": "https://www.screener.in/company/RRKABEL/consolidated/",
+        "market_cap": 15690.46
+      },
+      {
+        "stock_name": "Finolex Cables",
+        "ticker": "FINCABLES",
+        "screener_url": "https://www.screener.in/company/FINCABLES/consolidated/",
+        "market_cap": 12914.9
+      }
+    ],
+    "Ship Building & Allied Services": [
+      {
+        "stock_name": "Mazagon Dock",
+        "ticker": "MAZDOCK",
+        "screener_url": "https://www.screener.in/company/MAZDOCK/consolidated/",
+        "market_cap": 98214.49
+      },
+      {
+        "stock_name": "Cochin Shipyard",
+        "ticker": "COCHINSHIP",
+        "screener_url": "https://www.screener.in/company/COCHINSHIP/",
+        "market_cap": 37456.0
+      },
+      {
+        "stock_name": "Swan Defence",
+        "ticker": "SWANDEF",
+        "screener_url": "https://www.screener.in/company/SWANDEF/consolidated/",
+        "market_cap": 9471.0
+      }
+    ],
+    "Other Electrical Equipment": [
+      {
+        "stock_name": "Waaree Energies",
+        "ticker": "WAAREEENER",
+        "screener_url": "https://www.screener.in/company/WAAREEENER/consolidated/",
+        "market_cap": 92979.03
+      },
+      {
+        "stock_name": "Premier Energies",
+        "ticker": "PREMIERENE",
+        "screener_url": "https://www.screener.in/company/PREMIERENE/consolidated/",
+        "market_cap": 43304.08
+      },
+      {
+        "stock_name": "Waaree Renewab.",
+        "ticker": "WAAREERTL",
+        "screener_url": "https://www.screener.in/company/WAAREERTL/consolidated/",
+        "market_cap": 9294.09
+      },
+      {
+        "stock_name": "Genus Power",
+        "ticker": "GENUSPOWER",
+        "screener_url": "https://www.screener.in/company/GENUSPOWER/",
+        "market_cap": 7817.49
+      },
+      {
+        "stock_name": "Vikram Solar",
+        "ticker": "VIKRAMSOLR",
+        "screener_url": "https://www.screener.in/company/VIKRAMSOLR/consolidated/",
+        "market_cap": 7251.37
+      },
+      {
+        "stock_name": "Diamond Power",
+        "ticker": "DIACABS",
+        "screener_url": "https://www.screener.in/company/DIACABS/consolidated/",
+        "market_cap": 7014.97
+      },
+      {
+        "stock_name": "Avalon Tech",
+        "ticker": "AVALON",
+        "screener_url": "https://www.screener.in/company/AVALON/consolidated/",
+        "market_cap": 6992.32
+      },
+      {
+        "stock_name": "Fujiyama Power",
+        "ticker": "UTLSOLAR",
+        "screener_url": "https://www.screener.in/company/UTLSOLAR/",
+        "market_cap": 6771.68
+      },
+      {
+        "stock_name": "Saatvik Green",
+        "ticker": "SAATVIKGL",
+        "screener_url": "https://www.screener.in/company/SAATVIKGL/consolidated/",
+        "market_cap": 5331.36
+      },
+      {
+        "stock_name": "Shilchar Tech.",
+        "ticker": "SHILCTECH",
+        "screener_url": "https://www.screener.in/company/SHILCTECH/",
+        "market_cap": 5049.83
+      }
+    ],
+    "Iron & Steel Products": [
+      {
+        "stock_name": "APL Apollo Tubes",
+        "ticker": "APLAPOLLO",
+        "screener_url": "https://www.screener.in/company/APLAPOLLO/consolidated/",
+        "market_cap": 56628.52
+      },
+      {
+        "stock_name": "Welspun Corp",
+        "ticker": "WELCORP",
+        "screener_url": "https://www.screener.in/company/WELCORP/consolidated/",
+        "market_cap": 25040.19
+      },
+      {
+        "stock_name": "Godawari Power",
+        "ticker": "GPIL",
+        "screener_url": "https://www.screener.in/company/GPIL/consolidated/",
+        "market_cap": 19160.8
+      },
+      {
+        "stock_name": "Ratnamani Metals",
+        "ticker": "RATNAMANI",
+        "screener_url": "https://www.screener.in/company/RATNAMANI/consolidated/",
+        "market_cap": 16257.78
+      },
+      {
+        "stock_name": "Usha Martin",
+        "ticker": "USHAMART",
+        "screener_url": "https://www.screener.in/company/USHAMART/consolidated/",
+        "market_cap": 13183.65
+      },
+      {
+        "stock_name": "Jindal Saw",
+        "ticker": "JINDALSAW",
+        "screener_url": "https://www.screener.in/company/JINDALSAW/consolidated/",
+        "market_cap": 12934.01
+      },
+      {
+        "stock_name": "Jayaswal Neco",
+        "ticker": "JAYNECOIND",
+        "screener_url": "https://www.screener.in/company/JAYNECOIND/",
+        "market_cap": 7966.02
+      },
+      {
+        "stock_name": "Technocraf.Inds.",
+        "ticker": "TIIL",
+        "screener_url": "https://www.screener.in/company/TIIL/consolidated/",
+        "market_cap": 5349.14
+      }
+    ],
+    "Plastic Products - Industrial": [
+      {
+        "stock_name": "Supreme Inds.",
+        "ticker": "SUPREMEIND",
+        "screener_url": "https://www.screener.in/company/SUPREMEIND/consolidated/",
+        "market_cap": 47843.8
+      },
+      {
+        "stock_name": "Astral",
+        "ticker": "ASTRAL",
+        "screener_url": "https://www.screener.in/company/ASTRAL/consolidated/",
+        "market_cap": 41909.92
+      },
+      {
+        "stock_name": "Finolex Inds.",
+        "ticker": "FINPIPE",
+        "screener_url": "https://www.screener.in/company/FINPIPE/",
+        "market_cap": 10049.9
+      },
+      {
+        "stock_name": "Shaily Engineer.",
+        "ticker": "SHAILY",
+        "screener_url": "https://www.screener.in/company/SHAILY/",
+        "market_cap": 9168.96
+      },
+      {
+        "stock_name": "Time Technoplast",
+        "ticker": "TIMETECHNO",
+        "screener_url": "https://www.screener.in/company/TIMETECHNO/consolidated/",
+        "market_cap": 8813.34
+      },
+      {
+        "stock_name": "Garware Hi Tech",
+        "ticker": "GRWRHITECH",
+        "screener_url": "https://www.screener.in/company/GRWRHITECH/consolidated/",
+        "market_cap": 8464.76
+      },
+      {
+        "stock_name": "Kingfa Science",
+        "ticker": "KINGFA",
+        "screener_url": "https://www.screener.in/company/KINGFA/",
+        "market_cap": 5799.85
+      }
+    ],
+    "Castings & Forgings": [
+      {
+        "stock_name": "AIA Engineering",
+        "ticker": "AIAENG",
+        "screener_url": "https://www.screener.in/company/AIAENG/consolidated/",
+        "market_cap": 33911.93
+      },
+      {
+        "stock_name": "Happy Forgings",
+        "ticker": "HAPPYFORGE",
+        "screener_url": "https://www.screener.in/company/HAPPYFORGE/",
+        "market_cap": 11983.49
+      },
+      {
+        "stock_name": "Balu Forge",
+        "ticker": "BALUFORGE",
+        "screener_url": "https://www.screener.in/company/BALUFORGE/consolidated/",
+        "market_cap": 5695.75
+      }
+    ],
+    "Abrasives & Bearings": [
+      {
+        "stock_name": "Timken India",
+        "ticker": "TIMKEN",
+        "screener_url": "https://www.screener.in/company/TIMKEN/",
+        "market_cap": 26000.56
+      },
+      {
+        "stock_name": "Grindwell Norton",
+        "ticker": "GRINDWELL",
+        "screener_url": "https://www.screener.in/company/GRINDWELL/consolidated/",
+        "market_cap": 16538.8
+      },
+      {
+        "stock_name": "Carborundum Uni.",
+        "ticker": "CARBORUNIV",
+        "screener_url": "https://www.screener.in/company/CARBORUNIV/consolidated/",
+        "market_cap": 16290.93
+      },
+      {
+        "stock_name": "SKF India Indus.",
+        "ticker": "SKFINDUS",
+        "screener_url": "https://www.screener.in/company/SKFINDUS/",
+        "market_cap": 11148.22
+      },
+      {
+        "stock_name": "SKF India",
+        "ticker": "SKFINDIA",
+        "screener_url": "https://www.screener.in/company/SKFINDIA/",
+        "market_cap": 7863.82
+      }
+    ],
+    "Industrial Products": [
+      {
+        "stock_name": "Honeywell Auto",
+        "ticker": "HONAUT",
+        "screener_url": "https://www.screener.in/company/HONAUT/",
+        "market_cap": 24537.49
+      },
+      {
+        "stock_name": "Aditya Infotech",
+        "ticker": "CPPLUS",
+        "screener_url": "https://www.screener.in/company/CPPLUS/consolidated/",
+        "market_cap": 22428.76
+      },
+      {
+        "stock_name": "Jyoti CNC Auto.",
+        "ticker": "JYOTICNC",
+        "screener_url": "https://www.screener.in/company/JYOTICNC/consolidated/",
+        "market_cap": 18362.19
+      },
+      {
+        "stock_name": "Syrma SGS Tech.",
+        "ticker": "SYRMA",
+        "screener_url": "https://www.screener.in/company/SYRMA/consolidated/",
+        "market_cap": 16357.88
+      },
+      {
+        "stock_name": "LMW",
+        "ticker": "LMW",
+        "screener_url": "https://www.screener.in/company/LMW/consolidated/",
+        "market_cap": 14264.89
+      },
+      {
+        "stock_name": "Tega Inds.",
+        "ticker": "TEGA",
+        "screener_url": "https://www.screener.in/company/TEGA/consolidated/",
+        "market_cap": 12863.02
+      },
+      {
+        "stock_name": "Lloyds Engineeri",
+        "ticker": "LLOYDSENGG",
+        "screener_url": "https://www.screener.in/company/LLOYDSENGG/consolidated/",
+        "market_cap": 6850.95
+      },
+      {
+        "stock_name": "Dynamatic Tech.",
+        "ticker": "DYNAMATECH",
+        "screener_url": "https://www.screener.in/company/DYNAMATECH/consolidated/",
+        "market_cap": 6817.49
+      }
+    ],
+    "Other Industrial Products": [
+      {
+        "stock_name": "PTC Industries",
+        "ticker": "PTCIL",
+        "screener_url": "https://www.screener.in/company/PTCIL/consolidated/",
+        "market_cap": 23186.28
+      },
+      {
+        "stock_name": "HBL Engineering",
+        "ticker": "HBLENGINE",
+        "screener_url": "https://www.screener.in/company/HBLENGINE/consolidated/",
+        "market_cap": 20007.83
+      },
+      {
+        "stock_name": "Inox India",
+        "ticker": "INOXINDIA",
+        "screener_url": "https://www.screener.in/company/INOXINDIA/consolidated/",
+        "market_cap": 11106.29
+      },
+      {
+        "stock_name": "Esab India",
+        "ticker": "ESABINDIA",
+        "screener_url": "https://www.screener.in/company/ESABINDIA/",
+        "market_cap": 8336.69
+      },
+      {
+        "stock_name": "KRN Heat Exchan",
+        "ticker": "KRN",
+        "screener_url": "https://www.screener.in/company/KRN/consolidated/",
+        "market_cap": 5991.57
+      }
+    ],
+    "Construction Vehicles": [
+      {
+        "stock_name": "BEML Ltd",
+        "ticker": "BEML",
+        "screener_url": "https://www.screener.in/company/BEML/consolidated/",
+        "market_cap": 13345.79
+      },
+      {
+        "stock_name": "Action Const.Eq.",
+        "ticker": "ACE",
+        "screener_url": "https://www.screener.in/company/ACE/consolidated/",
+        "market_cap": 10307.81
+      }
+    ],
+    "Electrodes & Refractories": [
+      {
+        "stock_name": "Graphite India",
+        "ticker": "GRAPHITE",
+        "screener_url": "https://www.screener.in/company/GRAPHITE/consolidated/",
+        "market_cap": 12473.74
+      },
+      {
+        "stock_name": "HEG",
+        "ticker": "HEG",
+        "screener_url": "https://www.screener.in/company/HEG/consolidated/",
+        "market_cap": 10798.02
+      },
+      {
+        "stock_name": "RHI Magnesita",
+        "ticker": "RHIM",
+        "screener_url": "https://www.screener.in/company/RHIM/consolidated/",
+        "market_cap": 7848.15
+      }
+    ],
+    "Railway Wagons": [
+      {
+        "stock_name": "Jupiter Wagons",
+        "ticker": "JWL",
+        "screener_url": "https://www.screener.in/company/JWL/",
+        "market_cap": 11495.79
+      },
+      {
+        "stock_name": "Titagarh Rail",
+        "ticker": "TITAGARH",
+        "screener_url": "https://www.screener.in/company/TITAGARH/consolidated/",
+        "market_cap": 9539.62
+      }
+    ],
+    "Packaging": [
+      {
+        "stock_name": "EPL Ltd",
+        "ticker": "EPL",
+        "screener_url": "https://www.screener.in/company/EPL/consolidated/",
+        "market_cap": 7351.27
+      }
+    ],
+    "Glass - Industrial": [
+      {
+        "stock_name": "Borosil Renew.",
+        "ticker": "BORORENEW",
+        "screener_url": "https://www.screener.in/company/BORORENEW/consolidated/",
+        "market_cap": 6309.19
+      }
+    ],
+    "Aluminium, Copper & Zinc Products": [
+      {
+        "stock_name": "Prec. Wires (I)",
+        "ticker": "PRECWIRE",
+        "screener_url": "https://www.screener.in/company/PRECWIRE/",
+        "market_cap": 6014.52
+      }
+    ]
+  },
+  "Metals & Mining": {
+    "Iron & Steel": [
+      {
+        "stock_name": "JSW Steel",
+        "ticker": "JSWSTEEL",
+        "screener_url": "https://www.screener.in/company/JSWSTEEL/consolidated/",
+        "market_cap": 295888.51
+      },
+      {
+        "stock_name": "Tata Steel",
+        "ticker": "TATASTEEL",
+        "screener_url": "https://www.screener.in/company/TATASTEEL/consolidated/",
+        "market_cap": 256074.19
+      },
+      {
+        "stock_name": "Jindal Steel",
+        "ticker": "JINDALSTEL",
+        "screener_url": "https://www.screener.in/company/JINDALSTEL/consolidated/",
+        "market_cap": 122435.37
+      },
+      {
+        "stock_name": "S A I L",
+        "ticker": "SAIL",
+        "screener_url": "https://www.screener.in/company/SAIL/consolidated/",
+        "market_cap": 67496.77
+      },
+      {
+        "stock_name": "Jindal Stain.",
+        "ticker": "JSL",
+        "screener_url": "https://www.screener.in/company/JSL/consolidated/",
+        "market_cap": 62425.09
+      },
+      {
+        "stock_name": "Sarda Energy",
+        "ticker": "SARDAEN",
+        "screener_url": "https://www.screener.in/company/SARDAEN/consolidated/",
+        "market_cap": 19266.48
+      },
+      {
+        "stock_name": "NMDC Steel",
+        "ticker": "NSLNISP",
+        "screener_url": "https://www.screener.in/company/NSLNISP/",
+        "market_cap": 11968.74
+      }
+    ],
+    "Diversified Metals": [
+      {
+        "stock_name": "Vedanta",
+        "ticker": "VEDL",
+        "screener_url": "https://www.screener.in/company/VEDL/consolidated/",
+        "market_cap": 288295.5
+      },
+      {
+        "stock_name": "Jain Resource",
+        "ticker": "JAINREC",
+        "screener_url": "https://www.screener.in/company/JAINREC/",
+        "market_cap": 14578.24
+      }
+    ],
+    "Trading - Minerals": [
+      {
+        "stock_name": "Adani Enterp.",
+        "ticker": "ADANIENT",
+        "screener_url": "https://www.screener.in/company/ADANIENT/consolidated/",
+        "market_cap": 263591.21
+      }
+    ],
+    "Zinc": [
+      {
+        "stock_name": "Hindustan Zinc",
+        "ticker": "HINDZINC",
+        "screener_url": "https://www.screener.in/company/HINDZINC/",
+        "market_cap": 236068.48
+      }
+    ],
+    "Aluminium": [
+      {
+        "stock_name": "Hindalco Inds.",
+        "ticker": "HINDALCO",
+        "screener_url": "https://www.screener.in/company/HINDALCO/consolidated/",
+        "market_cap": 221474.61
+      },
+      {
+        "stock_name": "Natl. Aluminium",
+        "ticker": "NATIONALUM",
+        "screener_url": "https://www.screener.in/company/NATIONALUM/consolidated/",
+        "market_cap": 75752.44
+      }
+    ],
+    "Industrial Minerals": [
+      {
+        "stock_name": "Lloyds Metals",
+        "ticker": "LLOYDSME",
+        "screener_url": "https://www.screener.in/company/LLOYDSME/consolidated/",
+        "market_cap": 83590.34
+      },
+      {
+        "stock_name": "NMDC",
+        "ticker": "NMDC",
+        "screener_url": "https://www.screener.in/company/NMDC/consolidated/",
+        "market_cap": 74211.26
+      },
+      {
+        "stock_name": "G M D C",
+        "ticker": "GMDCLTD",
+        "screener_url": "https://www.screener.in/company/GMDCLTD/consolidated/",
+        "market_cap": 19224.74
+      },
+      {
+        "stock_name": "Gravita India",
+        "ticker": "GRAVITA",
+        "screener_url": "https://www.screener.in/company/GRAVITA/consolidated/",
+        "market_cap": 11143.34
+      }
+    ],
+    "Sponge Iron": [
+      {
+        "stock_name": "KIOCL",
+        "ticker": "KIOCL",
+        "screener_url": "https://www.screener.in/company/KIOCL/",
+        "market_cap": 21408.07
+      }
+    ],
+    "Trading - Metals": [
+      {
+        "stock_name": "Lloyds Enterpris",
+        "ticker": "LLOYDSENT",
+        "screener_url": "https://www.screener.in/company/LLOYDSENT/consolidated/",
+        "market_cap": 9129.04
+      },
+      {
+        "stock_name": "SG Mart",
+        "ticker": "SGMART",
+        "screener_url": "https://www.screener.in/company/SGMART/consolidated/",
+        "market_cap": 6688.02
+      }
+    ],
+    "Ferro & Silica Manganese": [
+      {
+        "stock_name": "Indian Metals",
+        "ticker": "IMFA",
+        "screener_url": "https://www.screener.in/company/IMFA/consolidated/",
+        "market_cap": 7381.28
+      }
+    ],
+    "Pig Iron": [
+      {
+        "stock_name": "Kirl. Ferrous",
+        "ticker": "KIRLFER",
+        "screener_url": "https://www.screener.in/company/KIRLFER/",
+        "market_cap": 6593.57
+      }
+    ]
+  },
+  "Consumer Services": {
+    "Diversified Retail": [
+      {
+        "stock_name": "Avenue Super.",
+        "ticker": "DMART",
+        "screener_url": "https://www.screener.in/company/DMART/consolidated/",
+        "market_cap": 287875.77
+      },
+      {
+        "stock_name": "Vishal Mega Mart",
+        "ticker": "VMM",
+        "screener_url": "https://www.screener.in/company/VMM/consolidated/",
+        "market_cap": 52368.37
+      }
+    ],
+    "E-Retail/ E-Commerce": [
+      {
+        "stock_name": "Eternal",
+        "ticker": "ETERNAL",
+        "screener_url": "https://www.screener.in/company/ETERNAL/consolidated/",
+        "market_cap": 229591.04
+      },
+      {
+        "stock_name": "Meesho",
+        "ticker": "MEESHO",
+        "screener_url": "https://www.screener.in/company/MEESHO/consolidated/",
+        "market_cap": 75556.05
+      },
+      {
+        "stock_name": "Swiggy",
+        "ticker": "SWIGGY",
+        "screener_url": "https://www.screener.in/company/SWIGGY/consolidated/",
+        "market_cap": 75120.57
+      },
+      {
+        "stock_name": "FSN E-Commerce",
+        "ticker": "NYKAA",
+        "screener_url": "https://www.screener.in/company/NYKAA/consolidated/",
+        "market_cap": 73012.37
+      },
+      {
+        "stock_name": "Brainbees Solut.",
+        "ticker": "FIRSTCRY",
+        "screener_url": "https://www.screener.in/company/FIRSTCRY/consolidated/",
+        "market_cap": 12653.13
+      },
+      {
+        "stock_name": "Cartrade Tech",
+        "ticker": "CARTRADE",
+        "screener_url": "https://www.screener.in/company/CARTRADE/consolidated/",
+        "market_cap": 8696.54
+      }
+    ],
+    "Speciality Retail": [
+      {
+        "stock_name": "Trent",
+        "ticker": "TRENT",
+        "screener_url": "https://www.screener.in/company/TRENT/consolidated/",
+        "market_cap": 136864.77
+      },
+      {
+        "stock_name": "Lenskart Solut.",
+        "ticker": "LENSKART",
+        "screener_url": "https://www.screener.in/company/LENSKART/consolidated/",
+        "market_cap": 89330.07
+      },
+      {
+        "stock_name": "A B Lifestyle",
+        "ticker": "ABLBL",
+        "screener_url": "https://www.screener.in/company/ABLBL/consolidated/",
+        "market_cap": 12166.08
+      },
+      {
+        "stock_name": "Vedant Fashions",
+        "ticker": "MANYAVAR",
+        "screener_url": "https://www.screener.in/company/MANYAVAR/",
+        "market_cap": 9409.13
+      },
+      {
+        "stock_name": "Aditya Bir. Fas.",
+        "ticker": "ABFRL",
+        "screener_url": "https://www.screener.in/company/ABFRL/consolidated/",
+        "market_cap": 7129.04
+      },
+      {
+        "stock_name": "V2 Retail",
+        "ticker": "V2RETAIL",
+        "screener_url": "https://www.screener.in/company/V2RETAIL/consolidated/",
+        "market_cap": 7087.75
+      },
+      {
+        "stock_name": "Arvind Fashions.",
+        "ticker": "ARVINDFASN",
+        "screener_url": "https://www.screener.in/company/ARVINDFASN/consolidated/",
+        "market_cap": 6136.65
+      },
+      {
+        "stock_name": "Aditya Vision",
+        "ticker": "AVL",
+        "screener_url": "https://www.screener.in/company/AVL/",
+        "market_cap": 6122.66
+      }
+    ],
+    "Hotels & Resorts": [
+      {
+        "stock_name": "Indian Hotels Co",
+        "ticker": "INDHOTEL",
+        "screener_url": "https://www.screener.in/company/INDHOTEL/consolidated/",
+        "market_cap": 89576.27
+      },
+      {
+        "stock_name": "ITC Hotels",
+        "ticker": "ITCHOTELS",
+        "screener_url": "https://www.screener.in/company/ITCHOTELS/consolidated/",
+        "market_cap": 31600.72
+      },
+      {
+        "stock_name": "Chalet Hotels",
+        "ticker": "CHALET",
+        "screener_url": "https://www.screener.in/company/CHALET/consolidated/",
+        "market_cap": 16536.03
+      },
+      {
+        "stock_name": "Leela Palaces Hotels",
+        "ticker": "THELEELA",
+        "screener_url": "https://www.screener.in/company/THELEELA/consolidated/",
+        "market_cap": 14243.02
+      }
+    ],
+    "Internet & Catalogue Retail": [
+      {
+        "stock_name": "Info Edg.(India)",
+        "ticker": "NAUKRI",
+        "screener_url": "https://www.screener.in/company/NAUKRI/consolidated/",
+        "market_cap": 64994.54
+      },
+      {
+        "stock_name": "Indiamart Inter.",
+        "ticker": "INDIAMART",
+        "screener_url": "https://www.screener.in/company/INDIAMART/consolidated/",
+        "market_cap": 12618.3
+      }
+    ],
+    "Tour, Travel Related Services": [
+      {
+        "stock_name": "I R C T C",
+        "ticker": "IRCTC",
+        "screener_url": "https://www.screener.in/company/IRCTC/",
+        "market_cap": 42524.0
+      },
+      {
+        "stock_name": "TBO Tek",
+        "ticker": "TBOTEK",
+        "screener_url": "https://www.screener.in/company/TBOTEK/consolidated/",
+        "market_cap": 12596.75
+      },
+      {
+        "stock_name": "BLS Internat.",
+        "ticker": "BLS",
+        "screener_url": "https://www.screener.in/company/BLS/consolidated/",
+        "market_cap": 11777.28
+      }
+    ],
+    "Restaurants": [
+      {
+        "stock_name": "Jubilant Food.",
+        "ticker": "JUBLFOOD",
+        "screener_url": "https://www.screener.in/company/JUBLFOOD/consolidated/",
+        "market_cap": 28234.71
+      },
+      {
+        "stock_name": "Travel Food",
+        "ticker": "TRAVELFOOD",
+        "screener_url": "https://www.screener.in/company/TRAVELFOOD/consolidated/",
+        "market_cap": 16827.32
+      },
+      {
+        "stock_name": "Devyani Intl.",
+        "ticker": "DEVYANI",
+        "screener_url": "https://www.screener.in/company/DEVYANI/consolidated/",
+        "market_cap": 12895.38
+      },
+      {
+        "stock_name": "Westlife Food",
+        "ticker": "WESTLIFE",
+        "screener_url": "https://www.screener.in/company/WESTLIFE/consolidated/",
+        "market_cap": 7119.28
+      },
+      {
+        "stock_name": "Sapphire Foods",
+        "ticker": "SAPPHIRE",
+        "screener_url": "https://www.screener.in/company/SAPPHIRE/consolidated/",
+        "market_cap": 5193.9
+      }
+    ],
+    "Pharmacy Retail": [
+      {
+        "stock_name": "Medplus Health",
+        "ticker": "MEDPLUS",
+        "screener_url": "https://www.screener.in/company/MEDPLUS/consolidated/",
+        "market_cap": 10272.49
+      }
+    ]
+  },
+  "Realty": {
+    "Residential, Commercial Projects": [
+      {
+        "stock_name": "DLF",
+        "ticker": "DLF",
+        "screener_url": "https://www.screener.in/company/DLF/consolidated/",
+        "market_cap": 139250.44
+      },
+      {
+        "stock_name": "Lodha Developers",
+        "ticker": "LODHA",
+        "screener_url": "https://www.screener.in/company/LODHA/consolidated/",
+        "market_cap": 78833.91
+      },
+      {
+        "stock_name": "Phoenix Mills",
+        "ticker": "PHOENIXLTD",
+        "screener_url": "https://www.screener.in/company/PHOENIXLTD/consolidated/",
+        "market_cap": 61194.81
+      },
+      {
+        "stock_name": "Oberoi Realty",
+        "ticker": "OBEROIRLTY",
+        "screener_url": "https://www.screener.in/company/OBEROIRLTY/consolidated/",
+        "market_cap": 60123.46
+      },
+      {
+        "stock_name": "Prestige Estates",
+        "ticker": "PRESTIGE",
+        "screener_url": "https://www.screener.in/company/PRESTIGE/consolidated/",
+        "market_cap": 56783.26
+      },
+      {
+        "stock_name": "Godrej Propert.",
+        "ticker": "GODREJPROP",
+        "screener_url": "https://www.screener.in/company/GODREJPROP/consolidated/",
+        "market_cap": 51059.27
+      },
+      {
+        "stock_name": "Anant Raj",
+        "ticker": "ANANTRAJ",
+        "screener_url": "https://www.screener.in/company/ANANTRAJ/consolidated/",
+        "market_cap": 17171.29
+      },
+      {
+        "stock_name": "Sobha",
+        "ticker": "SOBHA",
+        "screener_url": "https://www.screener.in/company/SOBHA/consolidated/",
+        "market_cap": 13918.45
+      },
+      {
+        "stock_name": "Embassy Develop",
+        "ticker": "EMBDL",
+        "screener_url": "https://www.screener.in/company/EMBDL/consolidated/",
+        "market_cap": 7370.0
+      },
+      {
+        "stock_name": "Mahindra Life.",
+        "ticker": "MAHLIFE",
+        "screener_url": "https://www.screener.in/company/MAHLIFE/consolidated/",
+        "market_cap": 7271.99
+      },
+      {
+        "stock_name": "Sri Lotus",
+        "ticker": "LOTUSDEV",
+        "screener_url": "https://www.screener.in/company/LOTUSDEV/consolidated/",
+        "market_cap": 6612.76
+      },
+      {
+        "stock_name": "Kalpat.",
+        "ticker": "KALPATARU",
+        "screener_url": "https://www.screener.in/company/KALPATARU/consolidated/",
+        "market_cap": 6134.34
+      },
+      {
+        "stock_name": "Max Estates",
+        "ticker": "MAXESTATES",
+        "screener_url": "https://www.screener.in/company/MAXESTATES/consolidated/",
+        "market_cap": 6035.38
+      }
+    ],
+    "Real Estate Investment Trusts (REITs)": [
+      {
+        "stock_name": "Knowledge Realty",
+        "ticker": "KRT",
+        "screener_url": "https://www.screener.in/company/KRT/",
+        "market_cap": 50592.13
+      },
+      {
+        "stock_name": "Embassy Off.REIT",
+        "ticker": "EMBASSY",
+        "screener_url": "https://www.screener.in/company/EMBASSY/consolidated/",
+        "market_cap": 41649.28
+      },
+      {
+        "stock_name": "Mindspace Busine",
+        "ticker": "MINDSPACE",
+        "screener_url": "https://www.screener.in/company/MINDSPACE/consolidated/",
+        "market_cap": 37986.18
+      },
+      {
+        "stock_name": "Brookfield India",
+        "ticker": "BIRET",
+        "screener_url": "https://www.screener.in/company/BIRET/consolidated/",
+        "market_cap": 26157.22
+      },
+      {
+        "stock_name": "Nexus Select",
+        "ticker": "NXST",
+        "screener_url": "https://www.screener.in/company/NXST/consolidated/",
+        "market_cap": 23829.28
+      }
+    ]
+  },
+  "Chemicals": {
+    "Specialty Chemicals": [
+      {
+        "stock_name": "Pidilite Inds.",
+        "ticker": "PIDILITIND",
+        "screener_url": "https://www.screener.in/company/PIDILITIND/consolidated/",
+        "market_cap": 137093.36
+      },
+      {
+        "stock_name": "Gujarat Fluoroch",
+        "ticker": "FLUOROCHEM",
+        "screener_url": "https://www.screener.in/company/FLUOROCHEM/consolidated/",
+        "market_cap": 36340.08
+      },
+      {
+        "stock_name": "Navin Fluo.Intl.",
+        "ticker": "NAVINFLUOR",
+        "screener_url": "https://www.screener.in/company/NAVINFLUOR/consolidated/",
+        "market_cap": 31413.88
+      },
+      {
+        "stock_name": "Deepak Nitrite",
+        "ticker": "DEEPAKNTR",
+        "screener_url": "https://www.screener.in/company/DEEPAKNTR/consolidated/",
+        "market_cap": 19398.51
+      },
+      {
+        "stock_name": "Atul",
+        "ticker": "ATUL",
+        "screener_url": "https://www.screener.in/company/ATUL/consolidated/",
+        "market_cap": 19028.88
+      },
+      {
+        "stock_name": "BASF India",
+        "ticker": "BASF",
+        "screener_url": "https://www.screener.in/company/BASF/",
+        "market_cap": 15348.56
+      },
+      {
+        "stock_name": "Aarti Industries",
+        "ticker": "AARTIIND",
+        "screener_url": "https://www.screener.in/company/AARTIIND/consolidated/",
+        "market_cap": 15279.73
+      },
+      {
+        "stock_name": "Aether Industri.",
+        "ticker": "AETHER",
+        "screener_url": "https://www.screener.in/company/AETHER/consolidated/",
+        "market_cap": 15029.39
+      },
+      {
+        "stock_name": "Anupam Rasayan",
+        "ticker": "ANURAS",
+        "screener_url": "https://www.screener.in/company/ANURAS/consolidated/",
+        "market_cap": 14561.13
+      },
+      {
+        "stock_name": "Fine Organic",
+        "ticker": "FINEORG",
+        "screener_url": "https://www.screener.in/company/FINEORG/consolidated/",
+        "market_cap": 14072.88
+      },
+      {
+        "stock_name": "Vinati Organics",
+        "ticker": "VINATIORGA",
+        "screener_url": "https://www.screener.in/company/VINATIORGA/",
+        "market_cap": 13114.01
+      },
+      {
+        "stock_name": "Privi Speci.",
+        "ticker": "PRIVISCL",
+        "screener_url": "https://www.screener.in/company/PRIVISCL/consolidated/",
+        "market_cap": 11393.2
+      },
+      {
+        "stock_name": "Clean Science",
+        "ticker": "CLEAN",
+        "screener_url": "https://www.screener.in/company/CLEAN/",
+        "market_cap": 7614.84
+      },
+      {
+        "stock_name": "Archean Chemical",
+        "ticker": "ACI",
+        "screener_url": "https://www.screener.in/company/ACI/consolidated/",
+        "market_cap": 7514.3
+      },
+      {
+        "stock_name": "Elantas Beck",
+        "ticker": "500123",
+        "screener_url": "https://www.screener.in/company/500123/",
+        "market_cap": 7074.79
+      },
+      {
+        "stock_name": "Alkyl Amines",
+        "ticker": "ALKYLAMINE",
+        "screener_url": "https://www.screener.in/company/ALKYLAMINE/",
+        "market_cap": 6989.96
+      },
+      {
+        "stock_name": "Galaxy Surfact.",
+        "ticker": "GALAXYSURF",
+        "screener_url": "https://www.screener.in/company/GALAXYSURF/consolidated/",
+        "market_cap": 6419.8
+      }
+    ],
+    "Explosives": [
+      {
+        "stock_name": "Solar Industries",
+        "ticker": "SOLARINDS",
+        "screener_url": "https://www.screener.in/company/SOLARINDS/consolidated/",
+        "market_cap": 126044.69
+      }
+    ],
+    "Commodity Chemicals": [
+      {
+        "stock_name": "SRF",
+        "ticker": "SRF",
+        "screener_url": "https://www.screener.in/company/SRF/consolidated/",
+        "market_cap": 71100.99
+      },
+      {
+        "stock_name": "Deepak Fertilis.",
+        "ticker": "DEEPAKFERT",
+        "screener_url": "https://www.screener.in/company/DEEPAKFERT/consolidated/",
+        "market_cap": 13344.49
+      },
+      {
+        "stock_name": "G N F C",
+        "ticker": "GNFC",
+        "screener_url": "https://www.screener.in/company/GNFC/consolidated/",
+        "market_cap": 6291.15
+      }
+    ],
+    "Fertilizers": [
+      {
+        "stock_name": "Coromandel Inter",
+        "ticker": "COROMANDEL",
+        "screener_url": "https://www.screener.in/company/COROMANDEL/consolidated/",
+        "market_cap": 63329.47
+      },
+      {
+        "stock_name": "F A C T",
+        "ticker": "FACT",
+        "screener_url": "https://www.screener.in/company/FACT/consolidated/",
+        "market_cap": 55655.22
+      },
+      {
+        "stock_name": "Chambal Fert.",
+        "ticker": "CHAMBLFERT",
+        "screener_url": "https://www.screener.in/company/CHAMBLFERT/consolidated/",
+        "market_cap": 18233.73
+      },
+      {
+        "stock_name": "Paradeep Phosph.",
+        "ticker": "PARADEEP",
+        "screener_url": "https://www.screener.in/company/PARADEEP/consolidated/",
+        "market_cap": 12385.46
+      },
+      {
+        "stock_name": "R C F",
+        "ticker": "RCF",
+        "screener_url": "https://www.screener.in/company/RCF/consolidated/",
+        "market_cap": 7054.47
+      },
+      {
+        "stock_name": "G S F C",
+        "ticker": "GSFC",
+        "screener_url": "https://www.screener.in/company/GSFC/consolidated/",
+        "market_cap": 6441.4
+      }
+    ],
+    "Industrial Gases": [
+      {
+        "stock_name": "Linde India",
+        "ticker": "LINDEINDIA",
+        "screener_url": "https://www.screener.in/company/LINDEINDIA/",
+        "market_cap": 61272.84
+      }
+    ],
+    "Pesticides & Agrochemicals": [
+      {
+        "stock_name": "UPL",
+        "ticker": "UPL",
+        "screener_url": "https://www.screener.in/company/UPL/consolidated/",
+        "market_cap": 54212.57
+      },
+      {
+        "stock_name": "Bayer Crop Sci.",
+        "ticker": "BAYERCROP",
+        "screener_url": "https://www.screener.in/company/BAYERCROP/",
+        "market_cap": 21641.22
+      },
+      {
+        "stock_name": "Sharda Cropchem",
+        "ticker": "SHARDACROP",
+        "screener_url": "https://www.screener.in/company/SHARDACROP/consolidated/",
+        "market_cap": 9352.3
+      }
+    ],
+    "Carbon Black": [
+      {
+        "stock_name": "Himadri Special",
+        "ticker": "HSCL",
+        "screener_url": "https://www.screener.in/company/HSCL/consolidated/",
+        "market_cap": 23436.1
+      },
+      {
+        "stock_name": "PCBL Chemical",
+        "ticker": "PCBL",
+        "screener_url": "https://www.screener.in/company/PCBL/consolidated/",
+        "market_cap": 10680.63
+      }
+    ],
+    "Petrochemicals": [
+      {
+        "stock_name": "Supreme Petroch.",
+        "ticker": "SPLPETRO",
+        "screener_url": "https://www.screener.in/company/SPLPETRO/",
+        "market_cap": 13906.64
+      },
+      {
+        "stock_name": "Swan Corp",
+        "ticker": "SWANCORP",
+        "screener_url": "https://www.screener.in/company/SWANCORP/consolidated/",
+        "market_cap": 10143.56
+      }
+    ],
+    "Dyes And Pigments": [
+      {
+        "stock_name": "Sudarshan Chem.",
+        "ticker": "SUDARSCHEM",
+        "screener_url": "https://www.screener.in/company/SUDARSCHEM/consolidated/",
+        "market_cap": 6293.31
+      }
+    ]
+  },
+  "Other / Unknown": {
+    "Other / Unknown": [
+      {
+        "stock_name": "Colgate-Palmoliv",
+        "ticker": "COLPAL",
+        "screener_url": "https://www.screener.in/company/COLPAL/",
+        "market_cap": 51867.66
+      },
+      {
+        "stock_name": "Hindustan Copper",
+        "ticker": "HINDCOPPER",
+        "screener_url": "https://www.screener.in/company/HINDCOPPER/",
+        "market_cap": 50493.27
+      },
+      {
+        "stock_name": "P I Industries",
+        "ticker": "PIIND",
+        "screener_url": "https://www.screener.in/company/PIIND/consolidated/",
+        "market_cap": 43694.05
+      },
+      {
+        "stock_name": "Apar Inds.",
+        "ticker": "APARINDS",
+        "screener_url": "https://www.screener.in/company/APARINDS/consolidated/",
+        "market_cap": 43257.89
+      },
+      {
+        "stock_name": "Voltas",
+        "ticker": "VOLTAS",
+        "screener_url": "https://www.screener.in/company/VOLTAS/consolidated/",
+        "market_cap": 42514.22
+      },
+      {
+        "stock_name": "Anthem Bioscienc",
+        "ticker": "ANTHEM",
+        "screener_url": "https://www.screener.in/company/ANTHEM/consolidated/",
+        "market_cap": 40507.29
+      },
+      {
+        "stock_name": "United Breweries",
+        "ticker": "UBL",
+        "screener_url": "https://www.screener.in/company/UBL/consolidated/",
+        "market_cap": 38841.54
+      },
+      {
+        "stock_name": "NLC India",
+        "ticker": "NLCINDIA",
+        "screener_url": "https://www.screener.in/company/NLCINDIA/consolidated/",
+        "market_cap": 37293.55
+      },
+      {
+        "stock_name": "Dalmia BharatLtd",
+        "ticker": "DALBHARAT",
+        "screener_url": "https://www.screener.in/company/DALBHARAT/consolidated/",
+        "market_cap": 35828.9
+      },
+      {
+        "stock_name": "Escorts Kubota",
+        "ticker": "ESCORTS",
+        "screener_url": "https://www.screener.in/company/ESCORTS/consolidated/",
+        "market_cap": 34958.99
+      },
+      {
+        "stock_name": "Poonawalla Fin",
+        "ticker": "POONAWALLA",
+        "screener_url": "https://www.screener.in/company/POONAWALLA/consolidated/",
+        "market_cap": 32654.95
+      },
+      {
+        "stock_name": "Tata Inv.Corpn.",
+        "ticker": "TATAINVEST",
+        "screener_url": "https://www.screener.in/company/TATAINVEST/consolidated/",
+        "market_cap": 32221.62
+      },
+      {
+        "stock_name": "Central Bank",
+        "ticker": "CENTRALBK",
+        "screener_url": "https://www.screener.in/company/CENTRALBK/consolidated/",
+        "market_cap": 31671.16
+      },
+      {
+        "stock_name": "P & G Hygiene",
+        "ticker": "PGHH",
+        "screener_url": "https://www.screener.in/company/PGHH/",
+        "market_cap": 31401.55
+      },
+      {
+        "stock_name": "K P R Mill Ltd",
+        "ticker": "KPRMILL",
+        "screener_url": "https://www.screener.in/company/KPRMILL/consolidated/",
+        "market_cap": 29395.98
+      },
+      {
+        "stock_name": "Physicswallah",
+        "ticker": "PWL",
+        "screener_url": "https://www.screener.in/company/PWL/consolidated/",
+        "market_cap": 28974.6
+      },
+      {
+        "stock_name": "ITI",
+        "ticker": "ITI",
+        "screener_url": "https://www.screener.in/company/ITI/",
+        "market_cap": 28643.39
+      },
+      {
+        "stock_name": "SJVN",
+        "ticker": "SJVN",
+        "screener_url": "https://www.screener.in/company/SJVN/consolidated/",
+        "market_cap": 27767.92
+      },
+      {
+        "stock_name": "Kaynes Tech",
+        "ticker": "KAYNES",
+        "screener_url": "https://www.screener.in/company/KAYNES/consolidated/",
+        "market_cap": 25800.58
+      },
+      {
+        "stock_name": "NBCC",
+        "ticker": "NBCC",
+        "screener_url": "https://www.screener.in/company/NBCC/consolidated/",
+        "market_cap": 23732.82
+      },
+      {
+        "stock_name": "Shyam Metalics",
+        "ticker": "SHYAMMETL",
+        "screener_url": "https://www.screener.in/company/SHYAMMETL/consolidated/",
+        "market_cap": 23204.08
+      },
+      {
+        "stock_name": "Schneider Elect.",
+        "ticker": "SCHNEIDER",
+        "screener_url": "https://www.screener.in/company/SCHNEIDER/",
+        "market_cap": 23174.5
+      },
+      {
+        "stock_name": "Tenneco Clean",
+        "ticker": "TENNIND",
+        "screener_url": "https://www.screener.in/company/TENNIND/consolidated/",
+        "market_cap": 22430.49
+      },
+      {
+        "stock_name": "Gujarat Gas",
+        "ticker": "GUJGASLTD",
+        "screener_url": "https://www.screener.in/company/GUJGASLTD/consolidated/",
+        "market_cap": 22004.41
+      },
+      {
+        "stock_name": "Indraprastha Gas",
+        "ticker": "IGL",
+        "screener_url": "https://www.screener.in/company/IGL/consolidated/",
+        "market_cap": 21704.19
+      },
+      {
+        "stock_name": "Sumitomo Chemi.",
+        "ticker": "SUMICHEM",
+        "screener_url": "https://www.screener.in/company/SUMICHEM/",
+        "market_cap": 20711.94
+      },
+      {
+        "stock_name": "Astrazeneca Phar",
+        "ticker": "ASTRAZEN",
+        "screener_url": "https://www.screener.in/company/ASTRAZEN/",
+        "market_cap": 20123.8
+      },
+      {
+        "stock_name": "RBL Bank",
+        "ticker": "RBLBANK",
+        "screener_url": "https://www.screener.in/company/RBLBANK/",
+        "market_cap": 19663.1
+      },
+      {
+        "stock_name": "Urban Company",
+        "ticker": "URBANCO",
+        "screener_url": "https://www.screener.in/company/URBANCO/consolidated/",
+        "market_cap": 19608.86
+      },
+      {
+        "stock_name": "IndiGrid Trust",
+        "ticker": "INDIGRID",
+        "screener_url": "https://www.screener.in/company/INDIGRID/consolidated/",
+        "market_cap": 19357.53
+      },
+      {
+        "stock_name": "EIH",
+        "ticker": "EIHOTEL",
+        "screener_url": "https://www.screener.in/company/EIHOTEL/consolidated/",
+        "market_cap": 19245.56
+      },
+      {
+        "stock_name": "Netweb Technol.",
+        "ticker": "NETWEB",
+        "screener_url": "https://www.screener.in/company/NETWEB/",
+        "market_cap": 19020.48
+      },
+      {
+        "stock_name": "Neuland Labs.",
+        "ticker": "NEULANDLAB",
+        "screener_url": "https://www.screener.in/company/NEULANDLAB/consolidated/",
+        "market_cap": 18895.36
+      },
+      {
+        "stock_name": "Emami",
+        "ticker": "EMAMILTD",
+        "screener_url": "https://www.screener.in/company/EMAMILTD/consolidated/",
+        "market_cap": 18282.79
+      },
+      {
+        "stock_name": "Sammaan Capital",
+        "ticker": "SAMMAANCAP",
+        "screener_url": "https://www.screener.in/company/SAMMAANCAP/consolidated/",
+        "market_cap": 17791.33
+      },
+      {
+        "stock_name": "Kajaria Ceramics",
+        "ticker": "KAJARIACER",
+        "screener_url": "https://www.screener.in/company/KAJARIACER/consolidated/",
+        "market_cap": 17427.47
+      },
+      {
+        "stock_name": "Brigade Enterpr.",
+        "ticker": "BRIGADE",
+        "screener_url": "https://www.screener.in/company/BRIGADE/consolidated/",
+        "market_cap": 17156.78
+      },
+      {
+        "stock_name": "Tata Chemicals",
+        "ticker": "TATACHEM",
+        "screener_url": "https://www.screener.in/company/TATACHEM/consolidated/",
+        "market_cap": 16541.55
+      },
+      {
+        "stock_name": "Sundram Fasten.",
+        "ticker": "SUNDRMFAST",
+        "screener_url": "https://www.screener.in/company/SUNDRMFAST/consolidated/",
+        "market_cap": 16432.1
+      },
+      {
+        "stock_name": "Gallantt Ispat L",
+        "ticker": "GALLANTT",
+        "screener_url": "https://www.screener.in/company/GALLANTT/consolidated/",
+        "market_cap": 16023.82
+      },
+      {
+        "stock_name": "Emmvee Photovol.",
+        "ticker": "EMMVEE",
+        "screener_url": "https://www.screener.in/company/EMMVEE/consolidated/",
+        "market_cap": 15547.94
+      },
+      {
+        "stock_name": "Kansai Nerolac",
+        "ticker": "KANSAINER",
+        "screener_url": "https://www.screener.in/company/KANSAINER/consolidated/",
+        "market_cap": 15017.16
+      },
+      {
+        "stock_name": "EID Parry",
+        "ticker": "EIDPARRY",
+        "screener_url": "https://www.screener.in/company/EIDPARRY/consolidated/",
+        "market_cap": 14782.04
+      },
+      {
+        "stock_name": "International Ge",
+        "ticker": "IGIL",
+        "screener_url": "https://www.screener.in/company/IGIL/consolidated/",
+        "market_cap": 14561.61
+      },
+      {
+        "stock_name": "CCL Products",
+        "ticker": "CCL",
+        "screener_url": "https://www.screener.in/company/CCL/consolidated/",
+        "market_cap": 14364.35
+      },
+      {
+        "stock_name": "Rubicon Research",
+        "ticker": "RUBICON",
+        "screener_url": "https://www.screener.in/company/RUBICON/consolidated/",
+        "market_cap": 14105.92
+      },
+      {
+        "stock_name": "Ventive Hospital",
+        "ticker": "VENTIVE",
+        "screener_url": "https://www.screener.in/company/VENTIVE/consolidated/",
+        "market_cap": 13980.85
+      },
+      {
+        "stock_name": "Canara HSBC",
+        "ticker": "CANHLIFE",
+        "screener_url": "https://www.screener.in/company/CANHLIFE/",
+        "market_cap": 13887.09
+      },
+      {
+        "stock_name": "TD Power Systems",
+        "ticker": "TDPOWERSYS",
+        "screener_url": "https://www.screener.in/company/TDPOWERSYS/consolidated/",
+        "market_cap": 13683.1
+      },
+      {
+        "stock_name": "J & K Bank",
+        "ticker": "J&KBANK",
+        "screener_url": "https://www.screener.in/company/J&KBANK/consolidated/",
+        "market_cap": 13407.72
+      },
+      {
+        "stock_name": "Ingersoll-Rand",
+        "ticker": "INGERRAND",
+        "screener_url": "https://www.screener.in/company/INGERRAND/",
+        "market_cap": 11975.34
+      },
+      {
+        "stock_name": "Blue Dart Expres",
+        "ticker": "BLUEDART",
+        "screener_url": "https://www.screener.in/company/BLUEDART/consolidated/",
+        "market_cap": 11972.02
+      },
+      {
+        "stock_name": "Central Mine Pla",
+        "ticker": "CMPDI",
+        "screener_url": "https://www.screener.in/company/CMPDI/",
+        "market_cap": 11646.24
+      },
+      {
+        "stock_name": "SignatureGlobal",
+        "ticker": "SIGNATURE",
+        "screener_url": "https://www.screener.in/company/SIGNATURE/consolidated/",
+        "market_cap": 11512.99
+      },
+      {
+        "stock_name": "Godrej Agrovet",
+        "ticker": "GODREJAGRO",
+        "screener_url": "https://www.screener.in/company/GODREJAGRO/consolidated/",
+        "market_cap": 11290.66
+      },
+      {
+        "stock_name": "Concord Biotech",
+        "ticker": "CONCORDBIO",
+        "screener_url": "https://www.screener.in/company/CONCORDBIO/",
+        "market_cap": 11032.82
+      },
+      {
+        "stock_name": "Honasa Consumer",
+        "ticker": "HONASA",
+        "screener_url": "https://www.screener.in/company/HONASA/",
+        "market_cap": 10834.41
+      },
+      {
+        "stock_name": "Sanofi Consumer",
+        "ticker": "SANOFICONR",
+        "screener_url": "https://www.screener.in/company/SANOFICONR/",
+        "market_cap": 10535.76
+      },
+      {
+        "stock_name": "Blackbuck",
+        "ticker": "BLACKBUCK",
+        "screener_url": "https://www.screener.in/company/BLACKBUCK/",
+        "market_cap": 10319.25
+      },
+      {
+        "stock_name": "Jubilant Ingrev.",
+        "ticker": "JUBLINGREA",
+        "screener_url": "https://www.screener.in/company/JUBLINGREA/consolidated/",
+        "market_cap": 10165.19
+      },
+      {
+        "stock_name": "The Bombay Burmah",
+        "ticker": "BBTC",
+        "screener_url": "https://www.screener.in/company/BBTC/consolidated/",
+        "market_cap": 10082.78
+      },
+      {
+        "stock_name": "Vijaya Diagnost.",
+        "ticker": "VIJAYA",
+        "screener_url": "https://www.screener.in/company/VIJAYA/consolidated/",
+        "market_cap": 10036.59
+      },
+      {
+        "stock_name": "Rites",
+        "ticker": "RITES",
+        "screener_url": "https://www.screener.in/company/RITES/consolidated/",
+        "market_cap": 9879.43
+      },
+      {
+        "stock_name": "Balrampur Chini",
+        "ticker": "BALRAMCHIN",
+        "screener_url": "https://www.screener.in/company/BALRAMCHIN/consolidated/",
+        "market_cap": 9647.17
+      },
+      {
+        "stock_name": "Sandur Manganese",
+        "ticker": "SANDUMA",
+        "screener_url": "https://www.screener.in/company/SANDUMA/consolidated/",
+        "market_cap": 9574.35
+      },
+      {
+        "stock_name": "Metropolis Healt",
+        "ticker": "METROPOLIS",
+        "screener_url": "https://www.screener.in/company/METROPOLIS/consolidated/",
+        "market_cap": 9456.22
+      },
+      {
+        "stock_name": "Vesuvius India",
+        "ticker": "VESUVIUS",
+        "screener_url": "https://www.screener.in/company/VESUVIUS/",
+        "market_cap": 9260.06
+      },
+      {
+        "stock_name": "Lemon Tree Hotel",
+        "ticker": "LEMONTREE",
+        "screener_url": "https://www.screener.in/company/LEMONTREE/consolidated/",
+        "market_cap": 8985.67
+      },
+      {
+        "stock_name": "ASK Automotive",
+        "ticker": "ASKAUTOLTD",
+        "screener_url": "https://www.screener.in/company/ASKAUTOLTD/consolidated/",
+        "market_cap": 8647.65
+      },
+      {
+        "stock_name": "Mah. Seamless",
+        "ticker": "MAHSEAMLES",
+        "screener_url": "https://www.screener.in/company/MAHSEAMLES/consolidated/",
+        "market_cap": 8154.73
+      },
+      {
+        "stock_name": "P & G Health Ltd",
+        "ticker": "PGHL",
+        "screener_url": "https://www.screener.in/company/PGHL/",
+        "market_cap": 7981.16
+      },
+      {
+        "stock_name": "Tata Tele. Mah.",
+        "ticker": "TTML",
+        "screener_url": "https://www.screener.in/company/TTML/",
+        "market_cap": 7899.86
+      },
+      {
+        "stock_name": "Tejas Networks",
+        "ticker": "TEJASNET",
+        "screener_url": "https://www.screener.in/company/TEJASNET/consolidated/",
+        "market_cap": 7806.42
+      },
+      {
+        "stock_name": "Manorama Indust.",
+        "ticker": "MANORAMA",
+        "screener_url": "https://www.screener.in/company/MANORAMA/",
+        "market_cap": 7624.55
+      },
+      {
+        "stock_name": "Quality Power El",
+        "ticker": "QPOWER",
+        "screener_url": "https://www.screener.in/company/QPOWER/consolidated/",
+        "market_cap": 7498.53
+      },
+      {
+        "stock_name": "Le Travenues",
+        "ticker": "IXIGO",
+        "screener_url": "https://www.screener.in/company/IXIGO/consolidated/",
+        "market_cap": 7434.42
+      },
+      {
+        "stock_name": "JK Paper",
+        "ticker": "JKPAPER",
+        "screener_url": "https://www.screener.in/company/JKPAPER/consolidated/",
+        "market_cap": 6251.88
+      },
+      {
+        "stock_name": "Praj Industries",
+        "ticker": "PRAJIND",
+        "screener_url": "https://www.screener.in/company/PRAJIND/consolidated/",
+        "market_cap": 6188.96
+      },
+      {
+        "stock_name": "MOIL",
+        "ticker": "MOIL",
+        "screener_url": "https://www.screener.in/company/MOIL/",
+        "market_cap": 6112.71
+      },
+      {
+        "stock_name": "India Glycols",
+        "ticker": "INDIAGLYCO",
+        "screener_url": "https://www.screener.in/company/INDIAGLYCO/consolidated/",
+        "market_cap": 6035.23
+      },
+      {
+        "stock_name": "Garware Tech.",
+        "ticker": "GARFIBRES",
+        "screener_url": "https://www.screener.in/company/GARFIBRES/consolidated/",
+        "market_cap": 5977.82
+      },
+      {
+        "stock_name": "Kovai Medical",
+        "ticker": "KOVAI",
+        "screener_url": "https://www.screener.in/company/KOVAI/",
+        "market_cap": 5840.48
+      },
+      {
+        "stock_name": "Jai Balaji Inds.",
+        "ticker": "JAIBALAJI",
+        "screener_url": "https://www.screener.in/company/JAIBALAJI/consolidated/",
+        "market_cap": 5658.09
+      },
+      {
+        "stock_name": "Sheela Foam",
+        "ticker": "SFL",
+        "screener_url": "https://www.screener.in/company/SFL/consolidated/",
+        "market_cap": 5617.07
+      },
+      {
+        "stock_name": "Piccadily Agro",
+        "ticker": "PICCADIL",
+        "screener_url": "https://www.screener.in/company/PICCADIL/consolidated/",
+        "market_cap": 5491.88
+      },
+      {
+        "stock_name": "Valor Estate",
+        "ticker": "DBREALTY",
+        "screener_url": "https://www.screener.in/company/DBREALTY/consolidated/",
+        "market_cap": 5347.99
+      },
+      {
+        "stock_name": "Ajax Engineering",
+        "ticker": "AJAXENGG",
+        "screener_url": "https://www.screener.in/company/AJAXENGG/",
+        "market_cap": 5319.24
+      },
+      {
+        "stock_name": "Electrost.Cast.",
+        "ticker": "ELECTCAST",
+        "screener_url": "https://www.screener.in/company/ELECTCAST/consolidated/",
+        "market_cap": 5200.84
+      },
+      {
+        "stock_name": "Entero Healthcar",
+        "ticker": "ENTERO",
+        "screener_url": "https://www.screener.in/company/ENTERO/consolidated/",
+        "market_cap": 5130.47
+      },
+      {
+        "stock_name": "Symphony",
+        "ticker": "SYMPHONY",
+        "screener_url": "https://www.screener.in/company/SYMPHONY/consolidated/",
+        "market_cap": 5084.13
+      },
+      {
+        "stock_name": "Keystone Realtor",
+        "ticker": "RUSTOMJEE",
+        "screener_url": "https://www.screener.in/company/RUSTOMJEE/consolidated/",
+        "market_cap": 5012.84
+      }
+    ]
+  },
+  "Textiles": {
+    "Garments & Apparels": [
+      {
+        "stock_name": "Page Industries",
+        "ticker": "PAGEIND",
+        "screener_url": "https://www.screener.in/company/PAGEIND/",
+        "market_cap": 40090.4
+      },
+      {
+        "stock_name": "Arvind Ltd",
+        "ticker": "ARVIND",
+        "screener_url": "https://www.screener.in/company/ARVIND/consolidated/",
+        "market_cap": 10024.55
+      },
+      {
+        "stock_name": "Pearl Global Ind",
+        "ticker": "PGIL",
+        "screener_url": "https://www.screener.in/company/PGIL/consolidated/",
+        "market_cap": 6979.83
+      }
+    ],
+    "Other Textile Products": [
+      {
+        "stock_name": "Vardhman Textile",
+        "ticker": "VTL",
+        "screener_url": "https://www.screener.in/company/VTL/consolidated/",
+        "market_cap": 15930.72
+      },
+      {
+        "stock_name": "Trident",
+        "ticker": "TRIDENT",
+        "screener_url": "https://www.screener.in/company/TRIDENT/consolidated/",
+        "market_cap": 12699.16
+      },
+      {
+        "stock_name": "Welspun Living",
+        "ticker": "WELSPUNLIV",
+        "screener_url": "https://www.screener.in/company/WELSPUNLIV/consolidated/",
+        "market_cap": 11675.87
+      },
+      {
+        "stock_name": "Alok Industries",
+        "ticker": "ALOKINDS",
+        "screener_url": "https://www.screener.in/company/ALOKINDS/consolidated/",
+        "market_cap": 6623.63
+      }
+    ]
+  },
+  "Diversified": {
+    "Diversified": [
+      {
+        "stock_name": "3M India",
+        "ticker": "3MINDIA",
+        "screener_url": "https://www.screener.in/company/3MINDIA/",
+        "market_cap": 34980.01
+      },
+      {
+        "stock_name": "Godrej Industrie",
+        "ticker": "GODREJIND",
+        "screener_url": "https://www.screener.in/company/GODREJIND/consolidated/",
+        "market_cap": 29371.29
+      },
+      {
+        "stock_name": "DCM Shriram",
+        "ticker": "DCMSHRIRAM",
+        "screener_url": "https://www.screener.in/company/DCMSHRIRAM/consolidated/",
+        "market_cap": 17307.86
+      }
+    ]
+  },
+  "Media, Entertainment & Publication": {
+    "Media & Entertainment": [
+      {
+        "stock_name": "Prime Focus",
+        "ticker": "PFOCUS",
+        "screener_url": "https://www.screener.in/company/PFOCUS/consolidated/",
+        "market_cap": 24750.84
+      },
+      {
+        "stock_name": "Tips Music",
+        "ticker": "TIPSMUSIC",
+        "screener_url": "https://www.screener.in/company/TIPSMUSIC/",
+        "market_cap": 6840.2
+      },
+      {
+        "stock_name": "Saregama India",
+        "ticker": "SAREGAMA",
+        "screener_url": "https://www.screener.in/company/SAREGAMA/consolidated/",
+        "market_cap": 6110.19
+      }
+    ],
+    "TV Broadcasting & Software Production": [
+      {
+        "stock_name": "Sun TV Network",
+        "ticker": "SUNTV",
+        "screener_url": "https://www.screener.in/company/SUNTV/consolidated/",
+        "market_cap": 23272.76
+      },
+      {
+        "stock_name": "Zee Entertainmen",
+        "ticker": "ZEEL",
+        "screener_url": "https://www.screener.in/company/ZEEL/consolidated/",
+        "market_cap": 7586.13
+      }
+    ],
+    "Digital Entertainment": [
+      {
+        "stock_name": "Nazara Technolo.",
+        "ticker": "NAZARA",
+        "screener_url": "https://www.screener.in/company/NAZARA/consolidated/",
+        "market_cap": 9283.37
+      }
+    ],
+    "Film Production, Distribution & Exhibition": [
+      {
+        "stock_name": "PVR Inox",
+        "ticker": "PVRINOX",
+        "screener_url": "https://www.screener.in/company/PVRINOX/consolidated/",
+        "market_cap": 9253.34
+      }
+    ]
+  },
+  "Forest Materials": {
+    "Paper & Paper Products": [
+      {
+        "stock_name": "A B Real Estate",
+        "ticker": "ABREL",
+        "screener_url": "https://www.screener.in/company/ABREL/consolidated/",
+        "market_cap": 14406.61
+      }
+    ]
+  },
+  "Utilities": {
+    "Water Supply & Management": [
+      {
+        "stock_name": "Va Tech Wabag",
+        "ticker": "WABAG",
+        "screener_url": "https://www.screener.in/company/WABAG/consolidated/",
+        "market_cap": 8220.86
+      },
+      {
+        "stock_name": "ION Exchange",
+        "ticker": "IONEXCHANG",
+        "screener_url": "https://www.screener.in/company/IONEXCHANG/consolidated/",
+        "market_cap": 5434.72
+      }
+    ]
+  }
+}

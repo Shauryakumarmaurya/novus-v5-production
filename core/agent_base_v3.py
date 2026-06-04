@@ -43,6 +43,7 @@ class AuditTrail:
 
     # Metadata
     confidence: float = 0.0
+    confidence_reasons: list[str] = field(default_factory=list)
     tools_called: int = 0
     llm_calls: int = 0
     execution_time_s: float = 0.0
@@ -55,6 +56,7 @@ class AuditTrail:
             "findings": self.findings,
             "data_gaps": self.data_gaps,
             "confidence": self.confidence,
+            "confidence_reasons": self.confidence_reasons,
             "verification": self.verification,
             "investigation_depth": {
                 "tools_called": self.tools_called,
@@ -375,7 +377,7 @@ class AgentV3(ABC):
             )
 
         # ── 6. Compute confidence ──
-        confidence = self._compute_confidence(react_result, verification)
+        confidence, confidence_reasons = self._compute_confidence(react_result, verification, document_text, financial_tables)
 
         # ── 7. Assemble audit trail ──
         elapsed = round(time.time() - start, 2)
@@ -397,6 +399,7 @@ class AgentV3(ABC):
             verification=verification,
             verified=verification is not None,
             confidence=confidence,
+            confidence_reasons=confidence_reasons,
             tools_called=react_result.tools_called,
             llm_calls=react_result.total_llm_calls,
             execution_time_s=elapsed,
@@ -425,16 +428,60 @@ class AgentV3(ABC):
 
         return trail
 
-    def _compute_confidence(self, react: ReActResult, verif: Optional[dict]) -> float:
+    def _compute_confidence(self, react: ReActResult, verif: Optional[dict], doc_text: str, tables: dict) -> tuple[float, list[str]]:
         if react.final_output is None:
-            return 0.1
-        score = 0.4                                       # base: produced output
-        score += min(react.tools_called * 0.07, 0.25)     # investigation depth
-        if react.unique_tools_used >= 3:
-            score += 0.1                                  # breadth bonus
+            return 0.0, ["Agent failed to produce output"]
+        
+        reasons = []
+        
+        # 1. Data Completeness
+        reqs = getattr(self, "REQUIRED_INPUTS", [])
+        present = 0
+        total = len(reqs) if reqs else 1
+        for req in reqs:
+            if tables and req in tables and tables[req]:
+                present += 1
+            elif req.replace('_', ' ') in doc_text.lower():
+                present += 1
+            else:
+                reasons.append(f"Missing required input: {req}")
+        
+        completeness = present / total if reqs else 1.0
+
+        # 2. Evidence Grounding
+        def _count_evidence(obj) -> tuple[int, int]:
+            if isinstance(obj, dict):
+                e, t = 0, 0
+                if "evidence" in obj or "source" in obj or "source_citation" in obj:
+                    e += 1
+                    t += 1
+                else:
+                    for v in obj.values():
+                        sub_e, sub_t = _count_evidence(v)
+                        e += sub_e; t += sub_t
+                    if t == 0 and len(obj) > 1:
+                        t = 1
+                return e, t
+            elif isinstance(obj, list):
+                e, t = 0, 0
+                for item in obj:
+                    sub_e, sub_t = _count_evidence(item)
+                    e += sub_e; t += sub_t
+                return e, t
+            return 0, 0
+
+        ev_count, total_findings = _count_evidence(react.final_output)
+        grounding = ev_count / total_findings if total_findings > 0 else 1.0
+        if ev_count < total_findings:
+            reasons.append(f"Missing evidence for {total_findings - ev_count} finding(s)")
+
+        # 3. Consistency Penalty
+        errors = 0
         if verif:
-            rel = verif.get("overall_reliability", 0.5)
-            score += 0.25 * rel                           # verification score
-            errors = verif.get("critical_errors", [])
-            score -= len(errors) * 0.1                    # penalise errors
-        return round(max(0.1, min(1.0, score)), 2)
+            errors = len(verif.get("critical_errors", []))
+            for err in verif.get("critical_errors", []):
+                reasons.append(f"Critical error: {err}")
+        
+        confidence = (0.6 * completeness) + (0.4 * grounding) - (0.1 * errors)
+        
+        return round(max(0.0, min(1.0, confidence)), 2), reasons

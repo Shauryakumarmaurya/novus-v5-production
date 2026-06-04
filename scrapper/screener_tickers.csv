@@ -1,0 +1,767 @@
+stock_name,ticker,screener_url,market_cap,sector,industry
+Reliance Industries,RELIANCE,https://www.screener.in/company/RELIANCE/consolidated/,1799885.14,"Oil, Gas & Consumable Fuels",Refineries & Marketing
+I O C L,IOC,https://www.screener.in/company/IOC/consolidated/,199985.83,"Oil, Gas & Consumable Fuels",Refineries & Marketing
+B P C L,BPCL,https://www.screener.in/company/BPCL/consolidated/,129027.1,"Oil, Gas & Consumable Fuels",Refineries & Marketing
+H P C L,HINDPETRO,https://www.screener.in/company/HINDPETRO/consolidated/,76165.6,"Oil, Gas & Consumable Fuels",Refineries & Marketing
+M R P L,MRPL,https://www.screener.in/company/MRPL/consolidated/,30887.8,"Oil, Gas & Consumable Fuels",Refineries & Marketing
+C P C L,CHENNPETRO,https://www.screener.in/company/CHENNPETRO/consolidated/,14658.75,"Oil, Gas & Consumable Fuels",Refineries & Marketing
+O N G C,ONGC,https://www.screener.in/company/ONGC/consolidated/,363066.86,"Oil, Gas & Consumable Fuels",Oil Exploration & Production
+Oil India,OIL,https://www.screener.in/company/OIL/consolidated/,76580.9,"Oil, Gas & Consumable Fuels",Oil Exploration & Production
+Coal India,COALINDIA,https://www.screener.in/company/COALINDIA/consolidated/,279880.64,"Oil, Gas & Consumable Fuels",Coal
+Bharat Coking,BHARATCOAL,https://www.screener.in/company/BHARATCOAL/,15219.08,"Oil, Gas & Consumable Fuels",Coal
+GAIL (India),GAIL,https://www.screener.in/company/GAIL/consolidated/,100086.17,"Oil, Gas & Consumable Fuels",Gas Transmission/Marketing
+Guj.St.Petronet,GSPL,https://www.screener.in/company/GSPL/consolidated/,13543.42,"Oil, Gas & Consumable Fuels",Gas Transmission/Marketing
+Energy InfrTrust,542543,https://www.screener.in/company/542543/consolidated/,5312.0,"Oil, Gas & Consumable Fuels",Gas Transmission/Marketing
+Adani Total Gas,ATGL,https://www.screener.in/company/ATGL/consolidated/,60500.2,"Oil, Gas & Consumable Fuels",LPG/CNG/PNG/LNG Supplier
+Petronet LNG,PETRONET,https://www.screener.in/company/PETRONET/consolidated/,40722.07,"Oil, Gas & Consumable Fuels",LPG/CNG/PNG/LNG Supplier
+Mahanagar Gas,MGL,https://www.screener.in/company/MGL/,10265.18,"Oil, Gas & Consumable Fuels",LPG/CNG/PNG/LNG Supplier
+Aegis Logistics,AEGISLOG,https://www.screener.in/company/AEGISLOG/consolidated/,21237.42,"Oil, Gas & Consumable Fuels",Trading - Gas
+Aegis Vopak Term,AEGISVOPAK,https://www.screener.in/company/AEGISVOPAK/consolidated/,20689.75,"Oil, Gas & Consumable Fuels",Oil Storage & Transportation
+Castrol India,CASTROLIND,https://www.screener.in/company/CASTROLIND/,17746.84,"Oil, Gas & Consumable Fuels",Lubricants
+HDFC Bank,HDFCBANK,https://www.screener.in/company/HDFCBANK/consolidated/,1227928.99,Financial Services,Private Sector Bank
+ICICI Bank,ICICIBANK,https://www.screener.in/company/ICICIBANK/consolidated/,917559.76,Financial Services,Private Sector Bank
+Axis Bank,AXISBANK,https://www.screener.in/company/AXISBANK/consolidated/,409893.77,Financial Services,Private Sector Bank
+Kotak Mah. Bank,KOTAKBANK,https://www.screener.in/company/KOTAKBANK/consolidated/,370055.05,Financial Services,Private Sector Bank
+IDBI Bank,IDBI,https://www.screener.in/company/IDBI/consolidated/,77503.75,Financial Services,Private Sector Bank
+Federal Bank,FEDERALBNK,https://www.screener.in/company/FEDERALBNK/consolidated/,69837.67,Financial Services,Private Sector Bank
+IndusInd Bank,INDUSINDBK,https://www.screener.in/company/INDUSINDBK/consolidated/,63473.47,Financial Services,Private Sector Bank
+Yes Bank,YESBANK,https://www.screener.in/company/YESBANK/consolidated/,59401.88,Financial Services,Private Sector Bank
+IDFC First Bank,IDFCFIRSTB,https://www.screener.in/company/IDFCFIRSTB/consolidated/,56126.33,Financial Services,Private Sector Bank
+Karur Vysya Bank,KARURVYSYA,https://www.screener.in/company/KARURVYSYA/,26835.08,Financial Services,Private Sector Bank
+Bandhan Bank,BANDHANBNK,https://www.screener.in/company/BANDHANBNK/,26756.84,Financial Services,Private Sector Bank
+City Union Bank,CUB,https://www.screener.in/company/CUB/,18747.22,Financial Services,Private Sector Bank
+T N Merc. Bank,TMB,https://www.screener.in/company/TMB/,10162.95,Financial Services,Private Sector Bank
+South Ind.Bank,SOUTHBANK,https://www.screener.in/company/SOUTHBANK/,9993.86,Financial Services,Private Sector Bank
+Karnataka Bank,KTKBANK,https://www.screener.in/company/KTKBANK/,9221.97,Financial Services,Private Sector Bank
+CSB Bank,CSBBANK,https://www.screener.in/company/CSBBANK/,6863.08,Financial Services,Private Sector Bank
+DCB Bank,DCBBANK,https://www.screener.in/company/DCBBANK/,5879.71,Financial Services,Private Sector Bank
+SBI,SBIN,https://www.screener.in/company/SBIN/consolidated/,961178.07,Financial Services,Public Sector Bank
+Bank of Baroda,BANKBARODA,https://www.screener.in/company/BANKBARODA/consolidated/,141809.16,Financial Services,Public Sector Bank
+Union Bank (I),UNIONBANK,https://www.screener.in/company/UNIONBANK/consolidated/,140954.69,Financial Services,Public Sector Bank
+Indian Bank,INDIANB,https://www.screener.in/company/INDIANB/consolidated/,126843.91,Financial Services,Public Sector Bank
+Punjab Natl.Bank,PNB,https://www.screener.in/company/PNB/consolidated/,125939.83,Financial Services,Public Sector Bank
+Canara Bank,CANBK,https://www.screener.in/company/CANBK/consolidated/,125129.31,Financial Services,Public Sector Bank
+Bank of India,BANKINDIA,https://www.screener.in/company/BANKINDIA/consolidated/,65708.39,Financial Services,Public Sector Bank
+I O B,IOB,https://www.screener.in/company/IOB/,65473.85,Financial Services,Public Sector Bank
+Bank of Maha,MAHABANK,https://www.screener.in/company/MAHABANK/consolidated/,53817.79,Financial Services,Public Sector Bank
+UCO Bank,UCOBANK,https://www.screener.in/company/UCOBANK/,32176.89,Financial Services,Public Sector Bank
+Pun. & Sind Bank,PSB,https://www.screener.in/company/PSB/,17142.93,Financial Services,Public Sector Bank
+Bajaj Finance,BAJFINANCE,https://www.screener.in/company/BAJFINANCE/consolidated/,562113.6,Financial Services,Non Banking Financial Company (NBFC)
+Shriram Finance,SHRIRAMFIN,https://www.screener.in/company/SHRIRAMFIN/consolidated/,187396.26,Financial Services,Non Banking Financial Company (NBFC)
+Muthoot Finance,MUTHOOTFIN,https://www.screener.in/company/MUTHOOTFIN/consolidated/,139611.97,Financial Services,Non Banking Financial Company (NBFC)
+Tata Capital,TATACAP,https://www.screener.in/company/TATACAP/consolidated/,138595.02,Financial Services,Non Banking Financial Company (NBFC)
+Cholaman.Inv.&Fn,CHOLAFIN,https://www.screener.in/company/CHOLAFIN/consolidated/,130655.24,Financial Services,Non Banking Financial Company (NBFC)
+L&T Finance Ltd,LTF,https://www.screener.in/company/LTF/consolidated/,68150.63,Financial Services,Non Banking Financial Company (NBFC)
+SBI Cards,SBICARD,https://www.screener.in/company/SBICARD/,63657.29,Financial Services,Non Banking Financial Company (NBFC)
+Sundaram Finance,SUNDARMFIN,https://www.screener.in/company/SUNDARMFIN/consolidated/,54400.88,Financial Services,Non Banking Financial Company (NBFC)
+HDB FINANC SER,HDBFS,https://www.screener.in/company/HDBFS/,51413.77,Financial Services,Non Banking Financial Company (NBFC)
+M & M Fin. Serv.,M&MFIN,https://www.screener.in/company/M&MFIN/consolidated/,41122.39,Financial Services,Non Banking Financial Company (NBFC)
+Authum Invest,AIIL,https://www.screener.in/company/AIIL/,36575.21,Financial Services,Non Banking Financial Company (NBFC)
+Manappuram Fin.,MANAPPURAM,https://www.screener.in/company/MANAPPURAM/consolidated/,22261.13,Financial Services,Non Banking Financial Company (NBFC)
+IIFL Finance,IIFL,https://www.screener.in/company/IIFL/consolidated/,18829.87,Financial Services,Non Banking Financial Company (NBFC)
+Capri Global,CGCL,https://www.screener.in/company/CGCL/consolidated/,17119.59,Financial Services,Non Banking Financial Company (NBFC)
+Five-Star Bus.Fi,FIVESTAR,https://www.screener.in/company/FIVESTAR/,12485.57,Financial Services,Non Banking Financial Company (NBFC)
+SBFC Finance,SBFC,https://www.screener.in/company/SBFC/,9740.84,Financial Services,Non Banking Financial Company (NBFC)
+Bengal & Assam,533095,https://www.screener.in/company/533095/consolidated/,6410.3,Financial Services,Non Banking Financial Company (NBFC)
+MAS FINANC SER,MASFIN,https://www.screener.in/company/MASFIN/consolidated/,5635.01,Financial Services,Non Banking Financial Company (NBFC)
+Dhenu Buildcon,501945,https://www.screener.in/company/501945/,5251.4,Financial Services,Non Banking Financial Company (NBFC)
+Fedbank Financi.,FEDFINA,https://www.screener.in/company/FEDFINA/,5214.29,Financial Services,Non Banking Financial Company (NBFC)
+Life Insurance,LICI,https://www.screener.in/company/LICI/consolidated/,501951.8,Financial Services,Life Insurance
+SBI Life Insuran,SBILIFE,https://www.screener.in/company/SBILIFE/,190989.41,Financial Services,Life Insurance
+HDFC Life Insur.,HDFCLIFE,https://www.screener.in/company/HDFCLIFE/consolidated/,127463.77,Financial Services,Life Insurance
+ICICI Pru Life,ICICIPRULI,https://www.screener.in/company/ICICIPRULI/consolidated/,78548.04,Financial Services,Life Insurance
+Max Financial,MFSL,https://www.screener.in/company/MFSL/consolidated/,55423.1,Financial Services,Life Insurance
+Bajaj Finserv,BAJAJFINSV,https://www.screener.in/company/BAJAJFINSV/consolidated/,283008.51,Financial Services,Holding Company
+Bajaj Holdings,BAJAJHLDNG,https://www.screener.in/company/BAJAJHLDNG/consolidated/,110352.74,Financial Services,Holding Company
+Choice Intl.,CHOICEIN,https://www.screener.in/company/CHOICEIN/consolidated/,15295.98,Financial Services,Holding Company
+JM Financial,JMFINANCIL,https://www.screener.in/company/JMFINANCIL/consolidated/,12482.79,Financial Services,Holding Company
+Edelweiss.Fin.,EDELWEISS,https://www.screener.in/company/EDELWEISS/consolidated/,10862.38,Financial Services,Holding Company
+Kama Holdings,532468,https://www.screener.in/company/532468/consolidated/,7829.62,Financial Services,Holding Company
+ICICI AMC,ICICIAMC,https://www.screener.in/company/ICICIAMC/consolidated/,160608.69,Financial Services,Asset Management Company
+HDFC AMC,HDFCAMC,https://www.screener.in/company/HDFCAMC/,107326.34,Financial Services,Asset Management Company
+Nippon Life Ind.,NAM-INDIA,https://www.screener.in/company/NAM-INDIA/consolidated/,57950.33,Financial Services,Asset Management Company
+Aditya AMC,ABSLAMC,https://www.screener.in/company/ABSLAMC/consolidated/,27982.27,Financial Services,Asset Management Company
+UTI AMC,UTIAMC,https://www.screener.in/company/UTIAMC/,12103.47,Financial Services,Asset Management Company
+Canara Robeco,CRAMC,https://www.screener.in/company/CRAMC/,5078.18,Financial Services,Asset Management Company
+Jio Financial,JIOFIN,https://www.screener.in/company/JIOFIN/consolidated/,151713.85,Financial Services,Investment Company
+Aditya Birla Cap,ABCAPITAL,https://www.screener.in/company/ABCAPITAL/consolidated/,87614.39,Financial Services,Investment Company
+Chola Financial,CHOLAHLDNG,https://www.screener.in/company/CHOLAHLDNG/consolidated/,29665.04,Financial Services,Investment Company
+TVS Holdings,TVSHLTD,https://www.screener.in/company/TVSHLTD/consolidated/,27818.04,Financial Services,Investment Company
+Mah. Scooters,MAHSCOOTER,https://www.screener.in/company/MAHSCOOTER/,14990.23,Financial Services,Investment Company
+JSW Holdings,JSWHL,https://www.screener.in/company/JSWHL/consolidated/,14357.0,Financial Services,Investment Company
+Tsf Investments,TSFINV,https://www.screener.in/company/TSFINV/consolidated/,8201.18,Financial Services,Investment Company
+Religare Enterp.,RELIGARE,https://www.screener.in/company/RELIGARE/consolidated/,7425.7,Financial Services,Investment Company
+Power Fin.Corpn.,PFC,https://www.screener.in/company/PFC/consolidated/,141430.17,Financial Services,Financial Institution
+I R F C,IRFC,https://www.screener.in/company/IRFC/,128607.69,Financial Services,Financial Institution
+REC Ltd,RECLTD,https://www.screener.in/company/RECLTD/consolidated/,91306.88,Financial Services,Financial Institution
+H U D C O,HUDCO,https://www.screener.in/company/HUDCO/consolidated/,36400.58,Financial Services,Financial Institution
+Indian Renewable,IREDA,https://www.screener.in/company/IREDA/,34592.89,Financial Services,Financial Institution
+IFCI,IFCI,https://www.screener.in/company/IFCI/consolidated/,15093.51,Financial Services,Financial Institution
+BSE,BSE,https://www.screener.in/company/BSE/consolidated/,132673.61,Financial Services,Exchange and Data Platform
+Multi Comm. Exc.,MCX,https://www.screener.in/company/MCX/consolidated/,67741.9,Financial Services,Exchange and Data Platform
+Indian Energy Ex,IEX,https://www.screener.in/company/IEX/,11563.47,Financial Services,Exchange and Data Platform
+Billionbrains,GROWW,https://www.screener.in/company/GROWW/consolidated/,117077.08,Financial Services,Stockbroking & Allied
+Motil.Oswal.Fin.,MOTILALOFS,https://www.screener.in/company/MOTILALOFS/consolidated/,45771.3,Financial Services,Stockbroking & Allied
+360 ONE,360ONE,https://www.screener.in/company/360ONE/consolidated/,40360.15,Financial Services,Stockbroking & Allied
+Angel One,ANGELONE,https://www.screener.in/company/ANGELONE/consolidated/,25684.32,Financial Services,Stockbroking & Allied
+Nuvama Wealth,NUVAMA,https://www.screener.in/company/NUVAMA/consolidated/,23575.34,Financial Services,Stockbroking & Allied
+IIFL Capital,IIFLCAPS,https://www.screener.in/company/IIFLCAPS/consolidated/,8569.89,Financial Services,Stockbroking & Allied
+ICICI Lombard,ICICIGI,https://www.screener.in/company/ICICIGI/,88135.17,Financial Services,General Insurance
+General Insuranc,GICRE,https://www.screener.in/company/GICRE/consolidated/,68263.73,Financial Services,General Insurance
+Go Digit General,GODIGIT,https://www.screener.in/company/GODIGIT/,29482.04,Financial Services,General Insurance
+Star Health Insu,STARHEALTH,https://www.screener.in/company/STARHEALTH/,27357.58,Financial Services,General Insurance
+New India Assura,NIACL,https://www.screener.in/company/NIACL/consolidated/,21381.43,Financial Services,General Insurance
+Niva Bupa Health,NIVABUPA,https://www.screener.in/company/NIVABUPA/,13575.12,Financial Services,General Insurance
+AU Small Finance,AUBANK,https://www.screener.in/company/AUBANK/,72087.92,Financial Services,Other Bank
+Ujjivan Small,UJJIVANSFB,https://www.screener.in/company/UJJIVANSFB/,11432.86,Financial Services,Other Bank
+Equitas Sma. Fin,EQUITASBNK,https://www.screener.in/company/EQUITASBNK/,6776.92,Financial Services,Other Bank
+One 97,PAYTM,https://www.screener.in/company/PAYTM/consolidated/,70267.5,Financial Services,Financial Technology (Fintech)
+PB Fintech.,POLICYBZR,https://www.screener.in/company/POLICYBZR/consolidated/,69096.27,Financial Services,Financial Technology (Fintech)
+Pine Labs,PINELABS,https://www.screener.in/company/PINELABS/consolidated/,19544.53,Financial Services,Financial Technology (Fintech)
+AvenuesAI,CCAVENUE,https://www.screener.in/company/CCAVENUE/consolidated/,5246.87,Financial Services,Financial Technology (Fintech)
+Bajaj Housing,BAJAJHFL,https://www.screener.in/company/BAJAJHFL/,69916.51,Financial Services,Housing Finance Company
+Piramal Finance.,PIRAMALFIN,https://www.screener.in/company/PIRAMALFIN/consolidated/,38961.41,Financial Services,Housing Finance Company
+LIC Housing Fin.,LICHSGFIN,https://www.screener.in/company/LICHSGFIN/consolidated/,29277.09,Financial Services,Housing Finance Company
+PNB Housing,PNBHOUSING,https://www.screener.in/company/PNBHOUSING/,22477.69,Financial Services,Housing Finance Company
+Aadhar Hsg. Fin.,AADHARHFC,https://www.screener.in/company/AADHARHFC/consolidated/,20545.6,Financial Services,Housing Finance Company
+Can Fin Homes,CANFINHOME,https://www.screener.in/company/CANFINHOME/,11200.24,Financial Services,Housing Finance Company
+Home First Finan,HOMEFIRST,https://www.screener.in/company/HOMEFIRST/,11067.64,Financial Services,Housing Finance Company
+Aptus Value Hou.,APTUS,https://www.screener.in/company/APTUS/consolidated/,10896.88,Financial Services,Housing Finance Company
+AAVAS Financiers,AAVAS,https://www.screener.in/company/AAVAS/,9688.07,Financial Services,Housing Finance Company
+INDIA SHELTE FIN,INDIASHLTR,https://www.screener.in/company/INDIASHLTR/,8323.9,Financial Services,Housing Finance Company
+Anand Rathi Wea.,ANANDRATHI,https://www.screener.in/company/ANANDRATHI/,29509.12,Financial Services,Financial Products Distributor
+Prudent Corp.,PRUDENT,https://www.screener.in/company/PRUDENT/consolidated/,9633.58,Financial Services,Financial Products Distributor
+CRISIL,CRISIL,https://www.screener.in/company/CRISIL/consolidated/,28603.23,Financial Services,Other Financial Services
+RRPSemiconductor,504346,https://www.screener.in/company/504346/,13264.87,Financial Services,Other Financial Services
+C D S L,CDSL,https://www.screener.in/company/CDSL/consolidated/,26737.37,Financial Services,"Depositories, Clearing Houses and Other Intermediaries"
+N S D L,544467,https://www.screener.in/company/544467/consolidated/,18265.0,Financial Services,"Depositories, Clearing Houses and Other Intermediaries"
+Cams Services,CAMS,https://www.screener.in/company/CAMS/,17327.98,Financial Services,"Depositories, Clearing Houses and Other Intermediaries"
+KFin Technolog.,KFINTECH,https://www.screener.in/company/KFINTECH/consolidated/,15387.6,Financial Services,"Depositories, Clearing Houses and Other Intermediaries"
+CreditAcc. Gram.,CREDITACC,https://www.screener.in/company/CREDITACC/,19812.27,Financial Services,Microfinance Institutions
+ICRA,ICRA,https://www.screener.in/company/ICRA/consolidated/,5109.66,Financial Services,Ratings
+Bharti Airtel,BHARTIARTL,https://www.screener.in/company/BHARTIARTL/consolidated/,1132982.16,Telecommunication,Telecom - Cellular & Fixed line services
+Vodafone Idea,IDEA,https://www.screener.in/company/IDEA/consolidated/,98701.56,Telecommunication,Telecom - Cellular & Fixed line services
+Bharti Hexacom,BHARTIHEXA,https://www.screener.in/company/BHARTIHEXA/,76462.77,Telecommunication,Telecom - Cellular & Fixed line services
+Tata Comm,TATACOMM,https://www.screener.in/company/TATACOMM/consolidated/,41949.21,Telecommunication,Telecom - Cellular & Fixed line services
+Indus Towers,INDUSTOWER,https://www.screener.in/company/INDUSTOWER/consolidated/,115578.51,Telecommunication,Telecom - Infrastructure
+Altius Telecom,543225,https://www.screener.in/company/543225/consolidated/,47859.42,Telecommunication,Telecom - Infrastructure
+HFCL,HFCL,https://www.screener.in/company/HFCL/consolidated/,12181.89,Telecommunication,Telecom - Infrastructure
+Sterlite Tech.,STLTECH,https://www.screener.in/company/STLTECH/consolidated/,10761.43,Telecommunication,Telecom -  Equipment & Accessories
+Railtel Corpn.,RAILTEL,https://www.screener.in/company/RAILTEL/,9063.3,Telecommunication,Other Telecom Services
+TCS,TCS,https://www.screener.in/company/TCS/consolidated/,936503.3,Information Technology,Computers - Software & Consulting
+Infosys,INFY,https://www.screener.in/company/INFY/consolidated/,540026.75,Information Technology,Computers - Software & Consulting
+HCL Technologies,HCLTECH,https://www.screener.in/company/HCLTECH/consolidated/,398561.44,Information Technology,Computers - Software & Consulting
+Wipro,WIPRO,https://www.screener.in/company/WIPRO/consolidated/,212906.1,Information Technology,Computers - Software & Consulting
+Tech Mahindra,TECHM,https://www.screener.in/company/TECHM/consolidated/,143267.89,Information Technology,Computers - Software & Consulting
+LTIMindtree,LTM,https://www.screener.in/company/LTM/consolidated/,135585.23,Information Technology,Computers - Software & Consulting
+Persistent Systems,PERSISTENT,https://www.screener.in/company/PERSISTENT/consolidated/,86312.22,Information Technology,Computers - Software & Consulting
+Mphasis,MPHASIS,https://www.screener.in/company/MPHASIS/consolidated/,45560.6,Information Technology,Computers - Software & Consulting
+Coforge,COFORGE,https://www.screener.in/company/COFORGE/consolidated/,42485.08,Information Technology,Computers - Software & Consulting
+Hexaware Tech.,HEXT,https://www.screener.in/company/HEXT/consolidated/,29019.57,Information Technology,Computers - Software & Consulting
+Tata Elxsi,TATAELXSI,https://www.screener.in/company/TATAELXSI/,27780.21,Information Technology,Computers - Software & Consulting
+KPIT Technologi.,KPITTECH,https://www.screener.in/company/KPITTECH/consolidated/,19635.51,Information Technology,Computers - Software & Consulting
+Fractal Analyt.,FRACTAL,https://www.screener.in/company/FRACTAL/consolidated/,14132.09,Information Technology,Computers - Software & Consulting
+Zensar Tech.,ZENSARTECH,https://www.screener.in/company/ZENSARTECH/consolidated/,12604.21,Information Technology,Computers - Software & Consulting
+Birlasoft Ltd,BSOFT,https://www.screener.in/company/BSOFT/consolidated/,10429.74,Information Technology,Computers - Software & Consulting
+Intellect Design,INTELLECT,https://www.screener.in/company/INTELLECT/consolidated/,9394.45,Information Technology,Computers - Software & Consulting
+Sonata Software,SONATSOFTW,https://www.screener.in/company/SONATSOFTW/consolidated/,6862.52,Information Technology,Computers - Software & Consulting
+Rategain Travel,RATEGAIN,https://www.screener.in/company/RATEGAIN/consolidated/,6535.83,Information Technology,Computers - Software & Consulting
+Newgen Software,NEWGEN,https://www.screener.in/company/NEWGEN/consolidated/,6496.19,Information Technology,Computers - Software & Consulting
+Latent View,LATENTVIEW,https://www.screener.in/company/LATENTVIEW/consolidated/,6170.5,Information Technology,Computers - Software & Consulting
+Happiest Minds,HAPPSTMNDS,https://www.screener.in/company/HAPPSTMNDS/consolidated/,5773.54,Information Technology,Computers - Software & Consulting
+Oracle Fin.Serv.,OFSS,https://www.screener.in/company/OFSS/consolidated/,62828.55,Information Technology,Software Products
+Tanla Platforms,TANLA,https://www.screener.in/company/TANLA/consolidated/,6283.43,Information Technology,Software Products
+C.E. Info System,MAPMYINDIA,https://www.screener.in/company/MAPMYINDIA/consolidated/,5064.01,Information Technology,Software Products
+L&T Technology,LTTS,https://www.screener.in/company/LTTS/consolidated/,35297.85,Information Technology,IT Enabled Services
+Inventurus Knowl,IKS,https://www.screener.in/company/IKS/consolidated/,25348.51,Information Technology,IT Enabled Services
+Tata Technolog.,TATATECH,https://www.screener.in/company/TATATECH/consolidated/,22680.08,Information Technology,IT Enabled Services
+Sagility,SAGILITY,https://www.screener.in/company/SAGILITY/consolidated/,19979.98,Information Technology,IT Enabled Services
+Affle 3i,AFFLE,https://www.screener.in/company/AFFLE/consolidated/,19637.93,Information Technology,IT Enabled Services
+Cyient,CYIENT,https://www.screener.in/company/CYIENT/consolidated/,9893.61,Information Technology,IT Enabled Services
+Black Box,BBOX,https://www.screener.in/company/BBOX/consolidated/,8598.28,Information Technology,IT Enabled Services
+Amagi Media Labs,AMAGI,https://www.screener.in/company/AMAGI/consolidated/,7368.7,Information Technology,IT Enabled Services
+Larsen & Toubro,LT,https://www.screener.in/company/LT/consolidated/,535779.88,Construction,Civil Construction
+Rail Vikas,RVNL,https://www.screener.in/company/RVNL/consolidated/,56852.52,Construction,Civil Construction
+IRB Infra.Devl.,IRB,https://www.screener.in/company/IRB/consolidated/,25218.9,Construction,Civil Construction
+Kalpataru Proj.,KPIL,https://www.screener.in/company/KPIL/consolidated/,19515.85,Construction,Civil Construction
+KEC International,KEC,https://www.screener.in/company/KEC/consolidated/,15382.2,Construction,Civil Construction
+Ircon Intl.,IRCON,https://www.screener.in/company/IRCON/consolidated/,12544.63,Construction,Civil Construction
+Techno Elec.Engg,TECHNOE,https://www.screener.in/company/TECHNOE/consolidated/,12494.63,Construction,Civil Construction
+Engineers India,ENGINERSIN,https://www.screener.in/company/ENGINERSIN/consolidated/,11727.05,Construction,Civil Construction
+Afcons Infrastr.,AFCONS,https://www.screener.in/company/AFCONS/,11487.62,Construction,Civil Construction
+Cemindia Project,CEMPRO,https://www.screener.in/company/CEMPRO/consolidated/,10381.98,Construction,Civil Construction
+NCC,NCC,https://www.screener.in/company/NCC/consolidated/,9284.57,Construction,Civil Construction
+G R Infraproject,GRINFRA,https://www.screener.in/company/GRINFRA/consolidated/,8113.65,Construction,Civil Construction
+ISGEC Heavy,ISGEC,https://www.screener.in/company/ISGEC/consolidated/,7007.38,Construction,Civil Construction
+Dilip Buildcon,DBL,https://www.screener.in/company/DBL/consolidated/,7004.71,Construction,Civil Construction
+Power Mech Proj.,POWERMECH,https://www.screener.in/company/POWERMECH/consolidated/,6570.66,Construction,Civil Construction
+Shrem InvIT,SHREMINVIT,https://www.screener.in/company/SHREMINVIT/consolidated/,6108.44,Construction,Civil Construction
+Welspun Enterp,WELENT,https://www.screener.in/company/WELENT/consolidated/,5982.63,Construction,Civil Construction
+Ahluwalia Contr.,AHLUCONT,https://www.screener.in/company/AHLUCONT/consolidated/,5110.15,Construction,Civil Construction
+Ceigall India,CEIGALL,https://www.screener.in/company/CEIGALL/consolidated/,5084.52,Construction,Civil Construction
+Hind. Unilever,HINDUNILVR,https://www.screener.in/company/HINDUNILVR/consolidated/,501203.13,Fast Moving Consumer Goods,Diversified FMCG
+ITC,ITC,https://www.screener.in/company/ITC/consolidated/,379768.45,Fast Moving Consumer Goods,Diversified FMCG
+Hindustan Foods,HNDFDS,https://www.screener.in/company/HNDFDS/consolidated/,6020.09,Fast Moving Consumer Goods,Diversified FMCG
+Nestle India,NESTLEIND,https://www.screener.in/company/NESTLEIND/,237029.63,Fast Moving Consumer Goods,Packaged Foods
+Britannia Inds.,BRITANNIA,https://www.screener.in/company/BRITANNIA/consolidated/,131795.3,Fast Moving Consumer Goods,Packaged Foods
+Bikaji Foods,BIKAJI,https://www.screener.in/company/BIKAJI/consolidated/,16030.83,Fast Moving Consumer Goods,Packaged Foods
+Zydus Wellness,ZYDUSWELL,https://www.screener.in/company/ZYDUSWELL/consolidated/,15495.19,Fast Moving Consumer Goods,Packaged Foods
+Mrs Bectors,BECTORFOOD,https://www.screener.in/company/BECTORFOOD/,5782.51,Fast Moving Consumer Goods,Packaged Foods
+Varun Beverages,VBL,https://www.screener.in/company/VBL/consolidated/,143045.72,Fast Moving Consumer Goods,Other Beverages
+Godrej Consumer,GODREJCP,https://www.screener.in/company/GODREJCP/consolidated/,108892.8,Fast Moving Consumer Goods,Personal Care
+Dabur India,DABUR,https://www.screener.in/company/DABUR/consolidated/,76144.43,Fast Moving Consumer Goods,Personal Care
+Gillette India,GILLETTE,https://www.screener.in/company/GILLETTE/,24814.2,Fast Moving Consumer Goods,Personal Care
+Cupid,CUPID,https://www.screener.in/company/CUPID/,12434.03,Fast Moving Consumer Goods,Personal Care
+Bajaj Consumer,BAJAJCON,https://www.screener.in/company/BAJAJCON/consolidated/,5143.23,Fast Moving Consumer Goods,Personal Care
+Tata Consumer,TATACONSUM,https://www.screener.in/company/TATACONSUM/consolidated/,106699.73,Fast Moving Consumer Goods,Tea & Coffee
+Marico,MARICO,https://www.screener.in/company/MARICO/consolidated/,97017.16,Fast Moving Consumer Goods,Edible Oil
+Patanjali Foods,PATANJALI,https://www.screener.in/company/PATANJALI/,49834.02,Fast Moving Consumer Goods,Edible Oil
+AWL Agri Busine.,AWL,https://www.screener.in/company/AWL/consolidated/,23014.74,Fast Moving Consumer Goods,Edible Oil
+Gokul Agro,GOKULAGRO,https://www.screener.in/company/GOKULAGRO/consolidated/,5896.71,Fast Moving Consumer Goods,Edible Oil
+United Spirits,UNITDSPR,https://www.screener.in/company/UNITDSPR/consolidated/,90900.67,Fast Moving Consumer Goods,Breweries & Distilleries
+Radico Khaitan,RADICO,https://www.screener.in/company/RADICO/,36389.32,Fast Moving Consumer Goods,Breweries & Distilleries
+Allied Blenders,ABDL,https://www.screener.in/company/ABDL/consolidated/,13054.16,Fast Moving Consumer Goods,Breweries & Distilleries
+Tilaknagar Inds.,TI,https://www.screener.in/company/TI/consolidated/,10431.98,Fast Moving Consumer Goods,Breweries & Distilleries
+Godfrey Phillips,GODFRYPHLP,https://www.screener.in/company/GODFRYPHLP/consolidated/,31723.35,Fast Moving Consumer Goods,Cigarettes & Tobacco Products
+Elitecon Inter.,539533,https://www.screener.in/company/539533/consolidated/,6310.88,Fast Moving Consumer Goods,Cigarettes & Tobacco Products
+Hatsun Agro,HATSUN,https://www.screener.in/company/HATSUN/,20247.83,Fast Moving Consumer Goods,Dairy Products
+Dodla Dairy,DODLA,https://www.screener.in/company/DODLA/consolidated/,6224.38,Fast Moving Consumer Goods,Dairy Products
+Kwality Wall's,KWIL,https://www.screener.in/company/KWIL/,5622.62,Fast Moving Consumer Goods,Dairy Products
+Avanti Feeds,AVANTIFEED,https://www.screener.in/company/AVANTIFEED/consolidated/,17529.99,Fast Moving Consumer Goods,Animal Feed
+DOMS Industries,DOMS,https://www.screener.in/company/DOMS/consolidated/,14541.2,Fast Moving Consumer Goods,Stationary
+L T Foods,LTFOODS,https://www.screener.in/company/LTFOODS/consolidated/,14075.85,Fast Moving Consumer Goods,Other Agricultural Products
+KRBL,KRBL,https://www.screener.in/company/KRBL/consolidated/,7462.94,Fast Moving Consumer Goods,Other Agricultural Products
+Guj. Ambuja Exp,GAEL,https://www.screener.in/company/GAEL/consolidated/,7000.46,Fast Moving Consumer Goods,Other Agricultural Products
+Orkla India,ORKLAINDIA,https://www.screener.in/company/ORKLAINDIA/consolidated/,8530.92,Fast Moving Consumer Goods,Other Food Products
+Triven.Engg.Ind.,TRIVENI,https://www.screener.in/company/TRIVENI/consolidated/,8370.77,Fast Moving Consumer Goods,Sugar
+Sh.Renuka Sugar,RENUKA,https://www.screener.in/company/RENUKA/consolidated/,5859.73,Fast Moving Consumer Goods,Sugar
+Jyothy Labs,JYOTHYLAB,https://www.screener.in/company/JYOTHYLAB/,8130.15,Fast Moving Consumer Goods,Household Products
+Maruti Suzuki,MARUTI,https://www.screener.in/company/MARUTI/consolidated/,427224.38,Automobile and Auto Components,Passenger Cars & Utility Vehicles
+M & M,M&M,https://www.screener.in/company/M&M/consolidated/,393727.12,Automobile and Auto Components,Passenger Cars & Utility Vehicles
+Hyundai Motor I,HYUNDAI,https://www.screener.in/company/HYUNDAI/,143625.13,Automobile and Auto Components,Passenger Cars & Utility Vehicles
+Tata Motors PVeh,TMPV,https://www.screener.in/company/TMPV/consolidated/,122605.36,Automobile and Auto Components,Passenger Cars & Utility Vehicles
+Force Motors,FORCEMOT,https://www.screener.in/company/FORCEMOT/consolidated/,29200.54,Automobile and Auto Components,Passenger Cars & Utility Vehicles
+Olectra Greentec,OLECTRA,https://www.screener.in/company/OLECTRA/consolidated/,9292.64,Automobile and Auto Components,Passenger Cars & Utility Vehicles
+Bajaj Auto,BAJAJ-AUTO,https://www.screener.in/company/BAJAJ-AUTO/consolidated/,266047.81,Automobile and Auto Components,2/3 Wheelers
+Eicher Motors,EICHERMOT,https://www.screener.in/company/EICHERMOT/consolidated/,196008.36,Automobile and Auto Components,2/3 Wheelers
+TVS Motor Co.,TVSMOTOR,https://www.screener.in/company/TVSMOTOR/consolidated/,177239.7,Automobile and Auto Components,2/3 Wheelers
+Hero Motocorp,HEROMOTOCO,https://www.screener.in/company/HEROMOTOCO/consolidated/,105758.44,Automobile and Auto Components,2/3 Wheelers
+Ather Energy,ATHERENERG,https://www.screener.in/company/ATHERENERG/,31382.66,Automobile and Auto Components,2/3 Wheelers
+Ola Electric,OLAELEC,https://www.screener.in/company/OLAELEC/consolidated/,16009.55,Automobile and Auto Components,2/3 Wheelers
+Samvardh. Mothe.,MOTHERSON,https://www.screener.in/company/MOTHERSON/consolidated/,123444.14,Automobile and Auto Components,Auto Components & Equipments
+Bosch,BOSCHLTD,https://www.screener.in/company/BOSCHLTD/,108426.09,Automobile and Auto Components,Auto Components & Equipments
+Bharat Forge,BHARATFORG,https://www.screener.in/company/BHARATFORG/consolidated/,83196.1,Automobile and Auto Components,Auto Components & Equipments
+Uno Minda,UNOMINDA,https://www.screener.in/company/UNOMINDA/consolidated/,60853.04,Automobile and Auto Components,Auto Components & Equipments
+Schaeffler India,SCHAEFFLER,https://www.screener.in/company/SCHAEFFLER/,60132.99,Automobile and Auto Components,Auto Components & Equipments
+Tube Investments,TIINDIA,https://www.screener.in/company/TIINDIA/consolidated/,53023.47,Automobile and Auto Components,Auto Components & Equipments
+Endurance Tech.,ENDURANCE,https://www.screener.in/company/ENDURANCE/consolidated/,33474.97,Automobile and Auto Components,Auto Components & Equipments
+Sona BLW Precis.,SONACOMS,https://www.screener.in/company/SONACOMS/consolidated/,32516.56,Automobile and Auto Components,Auto Components & Equipments
+ZF Commercial,ZFCVINDIA,https://www.screener.in/company/ZFCVINDIA/,26973.95,Automobile and Auto Components,Auto Components & Equipments
+Exide Inds.,EXIDEIND,https://www.screener.in/company/EXIDEIND/consolidated/,26426.81,Automobile and Auto Components,Auto Components & Equipments
+Motherson Wiring,MSUMI,https://www.screener.in/company/MSUMI/,25578.35,Automobile and Auto Components,Auto Components & Equipments
+Asahi India Glas,ASAHIINDIA,https://www.screener.in/company/ASAHIINDIA/consolidated/,21884.19,Automobile and Auto Components,Auto Components & Equipments
+CIE Automotive,CIEINDIA,https://www.screener.in/company/CIEINDIA/consolidated/,18182.59,Automobile and Auto Components,Auto Components & Equipments
+Belrise Industri,BELRISE,https://www.screener.in/company/BELRISE/consolidated/,18020.15,Automobile and Auto Components,Auto Components & Equipments
+Craftsman Auto,CRAFTSMAN,https://www.screener.in/company/CRAFTSMAN/consolidated/,17708.21,Automobile and Auto Components,Auto Components & Equipments
+JBM Auto,JBMA,https://www.screener.in/company/JBMA/consolidated/,14301.79,Automobile and Auto Components,Auto Components & Equipments
+Shriram Pistons,SHRIPISTON,https://www.screener.in/company/SHRIPISTON/consolidated/,14184.03,Automobile and Auto Components,Auto Components & Equipments
+Sansera Enginee.,SANSERA,https://www.screener.in/company/SANSERA/consolidated/,14044.68,Automobile and Auto Components,Auto Components & Equipments
+Amara Raja Ener.,ARE&M,https://www.screener.in/company/ARE&M/,13546.62,Automobile and Auto Components,Auto Components & Equipments
+Gabriel India,GABRIEL,https://www.screener.in/company/GABRIEL/,13029.25,Automobile and Auto Components,Auto Components & Equipments
+Minda Corp,MINDACORP,https://www.screener.in/company/MINDACORP/consolidated/,12301.71,Automobile and Auto Components,Auto Components & Equipments
+Lumax Auto Tech.,LUMAXTECH,https://www.screener.in/company/LUMAXTECH/consolidated/,11740.47,Automobile and Auto Components,Auto Components & Equipments
+Ramkrishna Forg.,RKFORGE,https://www.screener.in/company/RKFORGE/consolidated/,9647.64,Automobile and Auto Components,Auto Components & Equipments
+Banco Products,BANCOINDIA,https://www.screener.in/company/BANCOINDIA/consolidated/,8098.08,Automobile and Auto Components,Auto Components & Equipments
+Varroc Engineer,VARROC,https://www.screener.in/company/VARROC/consolidated/,7634.73,Automobile and Auto Components,Auto Components & Equipments
+Sedemac Mechatro,SEDEMAC,https://www.screener.in/company/SEDEMAC/,7205.21,Automobile and Auto Components,Auto Components & Equipments
+Pricol Ltd,PRICOLLTD,https://www.screener.in/company/PRICOLLTD/consolidated/,6970.42,Automobile and Auto Components,Auto Components & Equipments
+Suprajit Engg.,SUPRAJIT,https://www.screener.in/company/SUPRAJIT/consolidated/,5927.21,Automobile and Auto Components,Auto Components & Equipments
+Fiem Industries,FIEMIND,https://www.screener.in/company/FIEMIND/consolidated/,5681.1,Automobile and Auto Components,Auto Components & Equipments
+L G Balakrishnan,LGBBROSLTD,https://www.screener.in/company/LGBBROSLTD/consolidated/,5628.43,Automobile and Auto Components,Auto Components & Equipments
+SJS Enterprises,SJS,https://www.screener.in/company/SJS/consolidated/,5555.31,Automobile and Auto Components,Auto Components & Equipments
+MRF,MRF,https://www.screener.in/company/MRF/consolidated/,56835.08,Automobile and Auto Components,Tyres & Rubber Products
+Balkrishna Inds,BALKRISIND,https://www.screener.in/company/BALKRISIND/consolidated/,42889.43,Automobile and Auto Components,Tyres & Rubber Products
+Apollo Tyres,APOLLOTYRE,https://www.screener.in/company/APOLLOTYRE/consolidated/,27992.34,Automobile and Auto Components,Tyres & Rubber Products
+CEAT,CEATLTD,https://www.screener.in/company/CEATLTD/consolidated/,14334.9,Automobile and Auto Components,Tyres & Rubber Products
+JK Tyre & Indust,JKTYRE,https://www.screener.in/company/JKTYRE/consolidated/,12142.75,Automobile and Auto Components,Tyres & Rubber Products
+Sun Pharma.Inds.,SUNPHARMA,https://www.screener.in/company/SUNPHARMA/consolidated/,412230.23,Healthcare,Pharmaceuticals
+Divi's Lab.,DIVISLAB,https://www.screener.in/company/DIVISLAB/consolidated/,158040.32,Healthcare,Pharmaceuticals
+Torrent Pharma.,TORNTPHARM,https://www.screener.in/company/TORNTPHARM/consolidated/,138631.54,Healthcare,Pharmaceuticals
+Lupin,LUPIN,https://www.screener.in/company/LUPIN/consolidated/,104952.34,Healthcare,Pharmaceuticals
+Dr Reddy's Labs,DRREDDY,https://www.screener.in/company/DRREDDY/consolidated/,101147.83,Healthcare,Pharmaceuticals
+Cipla,CIPLA,https://www.screener.in/company/CIPLA/consolidated/,98913.04,Healthcare,Pharmaceuticals
+Zydus Lifesci.,ZYDUSLIFE,https://www.screener.in/company/ZYDUSLIFE/consolidated/,90787.46,Healthcare,Pharmaceuticals
+Mankind Pharma,MANKIND,https://www.screener.in/company/MANKIND/consolidated/,84790.74,Healthcare,Pharmaceuticals
+Aurobindo Pharma,AUROPHARMA,https://www.screener.in/company/AUROPHARMA/consolidated/,77885.63,Healthcare,Pharmaceuticals
+Alkem Lab,ALKEM,https://www.screener.in/company/ALKEM/consolidated/,64203.21,Healthcare,Pharmaceuticals
+Glenmark Pharma.,GLENMARK,https://www.screener.in/company/GLENMARK/consolidated/,61188.25,Healthcare,Pharmaceuticals
+Laurus Labs,LAURUSLABS,https://www.screener.in/company/LAURUSLABS/consolidated/,58482.65,Healthcare,Pharmaceuticals
+Biocon,BIOCON,https://www.screener.in/company/BIOCON/consolidated/,56002.76,Healthcare,Pharmaceuticals
+Abbott India,ABBOTINDIA,https://www.screener.in/company/ABBOTINDIA/,54775.51,Healthcare,Pharmaceuticals
+Glaxosmi. Pharma,GLAXO,https://www.screener.in/company/GLAXO/consolidated/,39967.1,Healthcare,Pharmaceuticals
+Ipca Labs.,IPCALAB,https://www.screener.in/company/IPCALAB/consolidated/,36769.31,Healthcare,Pharmaceuticals
+Ajanta Pharma,AJANTPHARM,https://www.screener.in/company/AJANTPHARM/consolidated/,34360.28,Healthcare,Pharmaceuticals
+J B Chemicals &,JBCHEPHARM,https://www.screener.in/company/JBCHEPHARM/consolidated/,31586.12,Healthcare,Pharmaceuticals
+Emcure Pharma,EMCURE,https://www.screener.in/company/EMCURE/consolidated/,30444.73,Healthcare,Pharmaceuticals
+Gland Pharma,GLAND,https://www.screener.in/company/GLAND/consolidated/,28805.88,Healthcare,Pharmaceuticals
+Wockhardt,WOCKPHARMA,https://www.screener.in/company/WOCKPHARMA/consolidated/,22282.96,Healthcare,Pharmaceuticals
+Pfizer,PFIZER,https://www.screener.in/company/PFIZER/,21755.3,Healthcare,Pharmaceuticals
+Sai Life,SAILIFE,https://www.screener.in/company/SAILIFE/consolidated/,20734.36,Healthcare,Pharmaceuticals
+Natco Pharma,NATCOPHARM,https://www.screener.in/company/NATCOPHARM/consolidated/,20141.97,Healthcare,Pharmaceuticals
+Piramal Pharma,PPLPHARMA,https://www.screener.in/company/PPLPHARMA/consolidated/,18984.44,Healthcare,Pharmaceuticals
+Acutaas Chemical,ACUTAAS,https://www.screener.in/company/ACUTAAS/consolidated/,18969.07,Healthcare,Pharmaceuticals
+ERIS Lifescience,ERIS,https://www.screener.in/company/ERIS/consolidated/,18900.04,Healthcare,Pharmaceuticals
+OneSource Speci.,ONESOURCE,https://www.screener.in/company/ONESOURCE/consolidated/,15788.42,Healthcare,Pharmaceuticals
+Granules India,GRANULES,https://www.screener.in/company/GRANULES/consolidated/,15396.51,Healthcare,Pharmaceuticals
+Alembic Pharma,APLLTD,https://www.screener.in/company/APLLTD/consolidated/,14086.64,Healthcare,Pharmaceuticals
+Jubilant Pharmo,JUBLPHARMA,https://www.screener.in/company/JUBLPHARMA/consolidated/,14002.47,Healthcare,Pharmaceuticals
+Alivus Life,ALIVUS,https://www.screener.in/company/ALIVUS/,12808.14,Healthcare,Pharmaceuticals
+Caplin Point Lab,CAPLIPOINT,https://www.screener.in/company/CAPLIPOINT/consolidated/,12633.52,Healthcare,Pharmaceuticals
+Cohance Life,COHANCE,https://www.screener.in/company/COHANCE/consolidated/,12127.51,Healthcare,Pharmaceuticals
+Corona Remedies,CORONA,https://www.screener.in/company/CORONA/,9586.82,Healthcare,Pharmaceuticals
+Strides Pharma,STAR,https://www.screener.in/company/STAR/consolidated/,9157.07,Healthcare,Pharmaceuticals
+Viyash Scientific,VIYASH,https://www.screener.in/company/VIYASH/consolidated/,8952.74,Healthcare,Pharmaceuticals
+Shilpa Medicare,SHILPAMED,https://www.screener.in/company/SHILPAMED/consolidated/,8216.25,Healthcare,Pharmaceuticals
+Jeena Sikho,JSLL,https://www.screener.in/company/JSLL/,8086.42,Healthcare,Pharmaceuticals
+Sanofi India,SANOFI,https://www.screener.in/company/SANOFI/,7970.85,Healthcare,Pharmaceuticals
+Marksans Pharma,MARKSANS,https://www.screener.in/company/MARKSANS/consolidated/,7927.19,Healthcare,Pharmaceuticals
+Akums Drugs,AKUMS,https://www.screener.in/company/AKUMS/consolidated/,7703.99,Healthcare,Pharmaceuticals
+Sudeep Pharma,SUDEEPPHRM,https://www.screener.in/company/SUDEEPPHRM/consolidated/,6929.95,Healthcare,Pharmaceuticals
+Blue Jet Health,BLUEJET,https://www.screener.in/company/BLUEJET/,6417.34,Healthcare,Pharmaceuticals
+Aarti Pharma,AARTIPHARM,https://www.screener.in/company/AARTIPHARM/consolidated/,6185.92,Healthcare,Pharmaceuticals
+FDC,FDC,https://www.screener.in/company/FDC/consolidated/,5534.91,Healthcare,Pharmaceuticals
+Supriya Lifesci.,SUPRIYA,https://www.screener.in/company/SUPRIYA/,5066.7,Healthcare,Pharmaceuticals
+Apollo Hospitals,APOLLOHOSP,https://www.screener.in/company/APOLLOHOSP/consolidated/,107587.02,Healthcare,Hospital
+Max Healthcare,MAXHEALTH,https://www.screener.in/company/MAXHEALTH/consolidated/,93004.19,Healthcare,Hospital
+Fortis Health.,FORTIS,https://www.screener.in/company/FORTIS/consolidated/,64198.13,Healthcare,Hospital
+Narayana Hrudaya,NH,https://www.screener.in/company/NH/consolidated/,35309.41,Healthcare,Hospital
+Aster DM Health.,ASTERDM,https://www.screener.in/company/ASTERDM/consolidated/,34618.27,Healthcare,Hospital
+Global Health,MEDANTA,https://www.screener.in/company/MEDANTA/consolidated/,28236.41,Healthcare,Hospital
+Krishna Institu.,KIMS,https://www.screener.in/company/KIMS/consolidated/,26487.2,Healthcare,Hospital
+Dr Agarwal's Hea,AGARWALEYE,https://www.screener.in/company/AGARWALEYE/consolidated/,13753.54,Healthcare,Hospital
+Rainbow Child.,RAINBOW,https://www.screener.in/company/RAINBOW/consolidated/,12736.01,Healthcare,Hospital
+Park Medi World,PARKHOSPS,https://www.screener.in/company/PARKHOSPS/consolidated/,8845.96,Healthcare,Hospital
+Health.Global,HCG,https://www.screener.in/company/HCG/consolidated/,8166.59,Healthcare,Hospital
+Jupiter Life Lin,JLHL,https://www.screener.in/company/JLHL/consolidated/,8122.33,Healthcare,Hospital
+Yatharth Hospit.,YATHARTH,https://www.screener.in/company/YATHARTH/consolidated/,6788.64,Healthcare,Hospital
+Dr Lal Pathlabs,LALPATHLAB,https://www.screener.in/company/LALPATHLAB/consolidated/,23400.2,Healthcare,Healthcare Service Provider
+Thyrocare Tech.,THYROCARE,https://www.screener.in/company/THYROCARE/consolidated/,6250.4,Healthcare,Healthcare Service Provider
+Nephrocare Health Services,NEPHROPLUS,https://www.screener.in/company/NEPHROPLUS/consolidated/,5528.64,Healthcare,Healthcare Service Provider
+Syngene Intl.,SYNGENE,https://www.screener.in/company/SYNGENE/consolidated/,15835.58,Healthcare,"Healthcare Research, Analytics & Technology"
+Indegene,INDGN,https://www.screener.in/company/INDGN/consolidated/,11813.57,Healthcare,"Healthcare Research, Analytics & Technology"
+Poly Medicure,POLYMED,https://www.screener.in/company/POLYMED/consolidated/,14601.34,Healthcare,Medical Equipment & Supplies
+Titan Company,TITAN,https://www.screener.in/company/TITAN/consolidated/,394176.85,Consumer Durables,"Gems, Jewellery And Watches"
+Kalyan Jewellers,KALYANKJIL,https://www.screener.in/company/KALYANKJIL/consolidated/,46086.06,Consumer Durables,"Gems, Jewellery And Watches"
+Thangamayil Jew.,THANGAMAYL,https://www.screener.in/company/THANGAMAYL/,12713.17,Consumer Durables,"Gems, Jewellery And Watches"
+P N Gadgil Jewe.,PNGJL,https://www.screener.in/company/PNGJL/consolidated/,8406.5,Consumer Durables,"Gems, Jewellery And Watches"
+PC Jeweller,PCJEWELLER,https://www.screener.in/company/PCJEWELLER/consolidated/,7707.27,Consumer Durables,"Gems, Jewellery And Watches"
+Bluestone Jewel,BLUESTONE,https://www.screener.in/company/BLUESTONE/,7465.09,Consumer Durables,"Gems, Jewellery And Watches"
+Ethos,ETHOSLTD,https://www.screener.in/company/ETHOSLTD/consolidated/,6469.75,Consumer Durables,"Gems, Jewellery And Watches"
+Sky Gold & Diam.,SKYGOLD,https://www.screener.in/company/SKYGOLD/consolidated/,5870.56,Consumer Durables,"Gems, Jewellery And Watches"
+Senco Gold,SENCO,https://www.screener.in/company/SENCO/,5313.7,Consumer Durables,"Gems, Jewellery And Watches"
+Asian Paints,ASIANPAINT,https://www.screener.in/company/ASIANPAINT/consolidated/,217442.3,Consumer Durables,Paints
+Berger Paints,BERGEPAINT,https://www.screener.in/company/BERGEPAINT/consolidated/,50657.17,Consumer Durables,Paints
+Akzo Nobel,AKZOINDIA,https://www.screener.in/company/AKZOINDIA/,13575.57,Consumer Durables,Paints
+LG Electronics,LGEINDIA,https://www.screener.in/company/LGEINDIA/,97098.39,Consumer Durables,Household Appliances
+Blue Star,BLUESTARCO,https://www.screener.in/company/BLUESTARCO/consolidated/,34048.94,Consumer Durables,Household Appliances
+Amber Enterp.,AMBER,https://www.screener.in/company/AMBER/consolidated/,24252.08,Consumer Durables,Household Appliances
+Crompton Gr. Con,CROMPTON,https://www.screener.in/company/CROMPTON/consolidated/,15312.52,Consumer Durables,Household Appliances
+V-Guard Industri,VGUARD,https://www.screener.in/company/VGUARD/,14329.3,Consumer Durables,Household Appliances
+Whirlpool India,WHIRLPOOL,https://www.screener.in/company/WHIRLPOOL/consolidated/,10456.06,Consumer Durables,Household Appliances
+Eureka Forbes,EUREKAFORB,https://www.screener.in/company/EUREKAFORB/,9231.77,Consumer Durables,Household Appliances
+TTK Prestige,TTKPRESTIG,https://www.screener.in/company/TTKPRESTIG/consolidated/,6449.66,Consumer Durables,Household Appliances
+Havells India,HAVELLS,https://www.screener.in/company/HAVELLS/consolidated/,78814.57,Consumer Durables,Consumer Electronics
+Dixon Technolog.,DIXON,https://www.screener.in/company/DIXON/consolidated/,64546.8,Consumer Durables,Consumer Electronics
+PG Electroplast,PGEL,https://www.screener.in/company/PGEL/consolidated/,13692.16,Consumer Durables,Consumer Electronics
+Metro Brands,METROBRAND,https://www.screener.in/company/METROBRAND/consolidated/,27153.71,Consumer Durables,Footwear
+Bata India,BATAINDIA,https://www.screener.in/company/BATAINDIA/consolidated/,9016.84,Consumer Durables,Footwear
+Campus Activewe.,CAMPUS,https://www.screener.in/company/CAMPUS/,7258.8,Consumer Durables,Footwear
+Relaxo Footwear,RELAXO,https://www.screener.in/company/RELAXO/,7005.91,Consumer Durables,Footwear
+Redtape,REDTAPE,https://www.screener.in/company/REDTAPE/consolidated/,6746.86,Consumer Durables,Footwear
+Century Plyboard,CENTURYPLY,https://www.screener.in/company/CENTURYPLY/consolidated/,16362.95,Consumer Durables,Plywood Boards/ Laminates
+Greenlam Industr,GREENLAM,https://www.screener.in/company/GREENLAM/consolidated/,5619.09,Consumer Durables,Plywood Boards/ Laminates
+Cello World,CELLO,https://www.screener.in/company/CELLO/consolidated/,9147.15,Consumer Durables,Houseware
+Safari Inds.,SAFARI,https://www.screener.in/company/SAFARI/consolidated/,7650.88,Consumer Durables,Plastic Products - Consumer
+Cera Sanitary.,CERA,https://www.screener.in/company/CERA/,6494.74,Consumer Durables,Sanitary Ware
+NTPC,NTPC,https://www.screener.in/company/NTPC/consolidated/,367066.15,Power,Power Generation
+Adani Green,ADANIGREEN,https://www.screener.in/company/ADANIGREEN/consolidated/,172039.07,Power,Power Generation
+JSW Energy,JSWENERGY,https://www.screener.in/company/JSWENERGY/consolidated/,85983.64,Power,Power Generation
+NTPC Green Ene.,NTPCGREEN,https://www.screener.in/company/NTPCGREEN/consolidated/,81228.15,Power,Power Generation
+NHPC Ltd,NHPC,https://www.screener.in/company/NHPC/consolidated/,77487.57,Power,Power Generation
+Nava,NAVA,https://www.screener.in/company/NAVA/consolidated/,16799.84,Power,Power Generation
+ACME Solar Hold.,ACMESOLAR,https://www.screener.in/company/ACMESOLAR/consolidated/,16527.92,Power,Power Generation
+JP Power Ven.,JPPOWER,https://www.screener.in/company/JPPOWER/consolidated/,11520.67,Power,Power Generation
+Reliance Power,RPOWER,https://www.screener.in/company/RPOWER/consolidated/,10174.05,Power,Power Generation
+Clean Max Enviro,CLEANMAX,https://www.screener.in/company/CLEANMAX/consolidated/,10053.57,Power,Power Generation
+KPI Green Energy,KPIGREEN,https://www.screener.in/company/KPIGREEN/consolidated/,7978.48,Power,Power Generation
+GMR Urban,GMRP&UI,https://www.screener.in/company/GMRP&UI/consolidated/,7956.07,Power,Power Generation
+Inox Green,INOXGREEN,https://www.screener.in/company/INOXGREEN/consolidated/,6091.11,Power,Power Generation
+Adani Power,ADANIPOWER,https://www.screener.in/company/ADANIPOWER/consolidated/,332549.2,Power,Integrated Power Utilities
+Tata Power Co.,TATAPOWER,https://www.screener.in/company/TATAPOWER/consolidated/,126136.03,Power,Integrated Power Utilities
+Torrent Power,TORNTPOWER,https://www.screener.in/company/TORNTPOWER/consolidated/,72874.52,Power,Integrated Power Utilities
+CESC,CESC,https://www.screener.in/company/CESC/consolidated/,20769.08,Power,Integrated Power Utilities
+Power Grid Corpn,POWERGRID,https://www.screener.in/company/POWERGRID/consolidated/,277251.0,Power,Power - Transmission
+Powergrid Infra.,PGINVIT,https://www.screener.in/company/PGINVIT/consolidated/,8386.55,Power,Power - Transmission
+Adani Energy Sol,ADANIENSOL,https://www.screener.in/company/ADANIENSOL/consolidated/,129588.37,Power,Power Distribution
+UltraTech Cem.,ULTRACEMCO,https://www.screener.in/company/ULTRACEMCO/consolidated/,337450.5,Construction Materials,Cement & Cement Products
+Grasim Inds,GRASIM,https://www.screener.in/company/GRASIM/consolidated/,186514.08,Construction Materials,Cement & Cement Products
+Ambuja Cements,AMBUJACEM,https://www.screener.in/company/AMBUJACEM/consolidated/,107313.52,Construction Materials,Cement & Cement Products
+Shree Cement,SHREECEM,https://www.screener.in/company/SHREECEM/consolidated/,86661.59,Construction Materials,Cement & Cement Products
+J K Cements,JKCEMENT,https://www.screener.in/company/JKCEMENT/consolidated/,42808.89,Construction Materials,Cement & Cement Products
+ACC,ACC,https://www.screener.in/company/ACC/consolidated/,26153.86,Construction Materials,Cement & Cement Products
+The Ramco Cement,RAMCOCEM,https://www.screener.in/company/RAMCOCEM/consolidated/,23194.1,Construction Materials,Cement & Cement Products
+JSW Cement,JSWCEMENT,https://www.screener.in/company/JSWCEMENT/consolidated/,17197.47,Construction Materials,Cement & Cement Products
+India Cements,INDIACEM,https://www.screener.in/company/INDIACEM/consolidated/,11721.88,Construction Materials,Cement & Cement Products
+Nuvoco Vistas,NUVOCO,https://www.screener.in/company/NUVOCO/consolidated/,10939.8,Construction Materials,Cement & Cement Products
+Star Cement,STARCEMENT,https://www.screener.in/company/STARCEMENT/consolidated/,8561.85,Construction Materials,Cement & Cement Products
+JK Lakshmi Cem.,JKLAKSHMI,https://www.screener.in/company/JKLAKSHMI/consolidated/,7629.29,Construction Materials,Cement & Cement Products
+Birla Corpn.,BIRLACORPN,https://www.screener.in/company/BIRLACORPN/consolidated/,7170.02,Construction Materials,Cement & Cement Products
+Prism Johnson,PRSMJOHNSN,https://www.screener.in/company/PRSMJOHNSN/consolidated/,6251.58,Construction Materials,Cement & Cement Products
+Midwest Gold,526570,https://www.screener.in/company/526570/consolidated/,5792.14,Construction Materials,Other Construction Materials
+Adani Ports,ADANIPORTS,https://www.screener.in/company/ADANIPORTS/consolidated/,333371.82,Services,Port & Port services
+JSW Infrast,JSWINFRA,https://www.screener.in/company/JSWINFRA/consolidated/,53921.85,Services,Port & Port services
+Guj Pipavav Port,GPPL,https://www.screener.in/company/GPPL/,7244.99,Services,Port & Port services
+Interglobe Aviat,INDIGO,https://www.screener.in/company/INDIGO/,171967.01,Services,Airline
+GMR Airports,GMRAIRPORT,https://www.screener.in/company/GMRAIRPORT/consolidated/,99866.11,Services,Airport & Airport services
+Container Corpn.,CONCOR,https://www.screener.in/company/CONCOR/consolidated/,36736.78,Services,Logistics Solution Provider
+Delhivery,DELHIVERY,https://www.screener.in/company/DELHIVERY/consolidated/,35161.88,Services,Logistics Solution Provider
+Transport Corp.,TCI,https://www.screener.in/company/TCI/consolidated/,7736.92,Services,Logistics Solution Provider
+Shadowfax Technologies,SHADOWFAX,https://www.screener.in/company/SHADOWFAX/consolidated/,7221.24,Services,Logistics Solution Provider
+National High,NHIT,https://www.screener.in/company/NHIT/consolidated/,31764.35,Services,"Road AssetsToll, Annuity, Hybrid-Annuity"
+Cube Highways,CUBEINVIT,https://www.screener.in/company/CUBEINVIT/consolidated/,19737.66,Services,"Road AssetsToll, Annuity, Hybrid-Annuity"
+Vertis Infra.,VERTIS,https://www.screener.in/company/VERTIS/consolidated/,16005.83,Services,"Road AssetsToll, Annuity, Hybrid-Annuity"
+Maple Inf. Trust,543925,https://www.screener.in/company/543925/consolidated/,10022.49,Services,"Road AssetsToll, Annuity, Hybrid-Annuity"
+RaajMarg Infra,RIIT,https://www.screener.in/company/RIIT/,6579.58,Services,"Road AssetsToll, Annuity, Hybrid-Annuity"
+Indus Inf. Trust,INDUSINVIT,https://www.screener.in/company/INDUSINVIT/consolidated/,5517.83,Services,"Road AssetsToll, Annuity, Hybrid-Annuity"
+GE Shipping Co,GESHIP,https://www.screener.in/company/GESHIP/consolidated/,19860.33,Services,Shipping
+S C I,SCI,https://www.screener.in/company/SCI/consolidated/,11120.48,Services,Shipping
+Shreeji Ship. Gl,SHREEJISPG,https://www.screener.in/company/SHREEJISPG/consolidated/,5674.41,Services,Shipping
+Redington,REDINGTON,https://www.screener.in/company/REDINGTON/consolidated/,17051.29,Services,Trading & Distributors
+MMTC,MMTC,https://www.screener.in/company/MMTC/consolidated/,8812.5,Services,Trading & Distributors
+Firstsour.Solu.,FSL,https://www.screener.in/company/FSL/consolidated/,15497.19,Services,Business Process Outsourcing (BPO)/ Knowledge Process Outsourcing (KPO)
+eClerx Services,ECLERX,https://www.screener.in/company/ECLERX/consolidated/,14067.68,Services,Business Process Outsourcing (BPO)/ Knowledge Process Outsourcing (KPO)
+NESCO,NESCO,https://www.screener.in/company/NESCO/consolidated/,7926.09,Services,Diversified Commercial Services
+Wework India,WEWORK,https://www.screener.in/company/WEWORK/,6570.23,Services,Diversified Commercial Services
+NDR INVIT Trust,NDRINVIT,https://www.screener.in/company/NDRINVIT/consolidated/,5332.7,Services,Diversified Commercial Services
+Bharat Electron,BEL,https://www.screener.in/company/BEL/consolidated/,321521.76,Capital Goods,Aerospace & Defense
+Hind.Aeronautics,HAL,https://www.screener.in/company/HAL/consolidated/,269865.66,Capital Goods,Aerospace & Defense
+Bharat Dynamics,BDL,https://www.screener.in/company/BDL/,48597.27,Capital Goods,Aerospace & Defense
+Garden Reach Sh.,GRSE,https://www.screener.in/company/GRSE/,28885.02,Capital Goods,Aerospace & Defense
+Data Pattern,DATAPATTNS,https://www.screener.in/company/DATAPATTNS/,18855.77,Capital Goods,Aerospace & Defense
+Zen Technologies,ZENTEC,https://www.screener.in/company/ZENTEC/consolidated/,13850.95,Capital Goods,Aerospace & Defense
+MTAR Technologie,MTARTECH,https://www.screener.in/company/MTARTECH/,12794.31,Capital Goods,Aerospace & Defense
+Astra Microwave,ASTRAMICRO,https://www.screener.in/company/ASTRAMICRO/consolidated/,9614.2,Capital Goods,Aerospace & Defense
+Aequs,AEQUS,https://www.screener.in/company/AEQUS/consolidated/,8373.95,Capital Goods,Aerospace & Defense
+Apollo Micro Sys,APOLLO,https://www.screener.in/company/APOLLO/consolidated/,8311.76,Capital Goods,Aerospace & Defense
+AXISCADES Tech.,AXISCADES,https://www.screener.in/company/AXISCADES/consolidated/,7290.82,Capital Goods,Aerospace & Defense
+Mishra Dhatu Nig,MIDHANI,https://www.screener.in/company/MIDHANI/,6013.62,Capital Goods,Aerospace & Defense
+Paras Defence,PARAS,https://www.screener.in/company/PARAS/consolidated/,5437.6,Capital Goods,Aerospace & Defense
+Tata Motors,TMCV,https://www.screener.in/company/TMCV/,156828.41,Capital Goods,Commercial Vehicles
+Ashok Leyland,ASHOKLEY,https://www.screener.in/company/ASHOKLEY/consolidated/,100183.28,Capital Goods,Commercial Vehicles
+SML Mahindra,SMLMAH,https://www.screener.in/company/SMLMAH/,5963.95,Capital Goods,Commercial Vehicles
+A B B,ABB,https://www.screener.in/company/ABB/,140163.67,Capital Goods,Heavy Electrical Equipment
+Hitachi Energy,POWERINDIA,https://www.screener.in/company/POWERINDIA/,121790.77,Capital Goods,Heavy Electrical Equipment
+Siemens,SIEMENS,https://www.screener.in/company/SIEMENS/consolidated/,114706.5,Capital Goods,Heavy Electrical Equipment
+CG Power & Ind,CGPOWER,https://www.screener.in/company/CGPOWER/consolidated/,113574.83,Capital Goods,Heavy Electrical Equipment
+GE Vernova T&D,GVT&D,https://www.screener.in/company/GVT&D/,100108.53,Capital Goods,Heavy Electrical Equipment
+Siemens Ener.Ind,ENRIN,https://www.screener.in/company/ENRIN/,98545.24,Capital Goods,Heavy Electrical Equipment
+B H E L,BHEL,https://www.screener.in/company/BHEL/consolidated/,96486.48,Capital Goods,Heavy Electrical Equipment
+Suzlon Energy,SUZLON,https://www.screener.in/company/SUZLON/consolidated/,60145.2,Capital Goods,Heavy Electrical Equipment
+Thermax,THERMAX,https://www.screener.in/company/THERMAX/consolidated/,41999.82,Capital Goods,Heavy Electrical Equipment
+Inox Wind,INOXWIND,https://www.screener.in/company/INOXWIND/consolidated/,14752.31,Capital Goods,Heavy Electrical Equipment
+Triveni Turbine,TRITURBINE,https://www.screener.in/company/TRITURBINE/consolidated/,14464.16,Capital Goods,Heavy Electrical Equipment
+Azad Engineering,AZAD,https://www.screener.in/company/AZAD/,10799.26,Capital Goods,Heavy Electrical Equipment
+Atlanta Electric,ATLANTAELE,https://www.screener.in/company/ATLANTAELE/,9808.93,Capital Goods,Heavy Electrical Equipment
+Elecon Engg.Co,ELECON,https://www.screener.in/company/ELECON/consolidated/,9560.63,Capital Goods,Heavy Electrical Equipment
+Volt.Transform.,VOLTAMP,https://www.screener.in/company/VOLTAMP/,9186.59,Capital Goods,Heavy Electrical Equipment
+T R I L,TARIL,https://www.screener.in/company/TARIL/consolidated/,8316.14,Capital Goods,Heavy Electrical Equipment
+Transrail Light,TRANSRAILL,https://www.screener.in/company/TRANSRAILL/consolidated/,7010.86,Capital Goods,Heavy Electrical Equipment
+Powerica Ltd,POWERICA,https://www.screener.in/company/POWERICA/consolidated/,5025.19,Capital Goods,Heavy Electrical Equipment
+Cummins India,CUMMINSIND,https://www.screener.in/company/CUMMINSIND/consolidated/,135941.02,Capital Goods,"Compressors, Pumps & Diesel Engines"
+Kirloskar Oil,KIRLOSENG,https://www.screener.in/company/KIRLOSENG/consolidated/,21191.2,Capital Goods,"Compressors, Pumps & Diesel Engines"
+Elgi Equipments,ELGIEQUIP,https://www.screener.in/company/ELGIEQUIP/consolidated/,15845.48,Capital Goods,"Compressors, Pumps & Diesel Engines"
+KSB,KSB,https://www.screener.in/company/KSB/consolidated/,14971.7,Capital Goods,"Compressors, Pumps & Diesel Engines"
+Kirl. Brothers,KIRLOSBROS,https://www.screener.in/company/KIRLOSBROS/consolidated/,12179.05,Capital Goods,"Compressors, Pumps & Diesel Engines"
+Kirl.Pneumatic,KIRLPNU,https://www.screener.in/company/KIRLPNU/,7644.04,Capital Goods,"Compressors, Pumps & Diesel Engines"
+Shakti Pumps,SHAKTIPUMP,https://www.screener.in/company/SHAKTIPUMP/consolidated/,6351.29,Capital Goods,"Compressors, Pumps & Diesel Engines"
+Polycab India,POLYCAB,https://www.screener.in/company/POLYCAB/consolidated/,114515.61,Capital Goods,Cables - Electricals
+KEI Industries,KEI,https://www.screener.in/company/KEI/consolidated/,42248.79,Capital Goods,Cables - Electricals
+R R Kabel,RRKABEL,https://www.screener.in/company/RRKABEL/consolidated/,15690.46,Capital Goods,Cables - Electricals
+Finolex Cables,FINCABLES,https://www.screener.in/company/FINCABLES/consolidated/,12914.9,Capital Goods,Cables - Electricals
+Mazagon Dock,MAZDOCK,https://www.screener.in/company/MAZDOCK/consolidated/,98214.49,Capital Goods,Ship Building & Allied Services
+Cochin Shipyard,COCHINSHIP,https://www.screener.in/company/COCHINSHIP/,37456.0,Capital Goods,Ship Building & Allied Services
+Swan Defence,SWANDEF,https://www.screener.in/company/SWANDEF/consolidated/,9471.0,Capital Goods,Ship Building & Allied Services
+Waaree Energies,WAAREEENER,https://www.screener.in/company/WAAREEENER/consolidated/,92979.03,Capital Goods,Other Electrical Equipment
+Premier Energies,PREMIERENE,https://www.screener.in/company/PREMIERENE/consolidated/,43304.08,Capital Goods,Other Electrical Equipment
+Waaree Renewab.,WAAREERTL,https://www.screener.in/company/WAAREERTL/consolidated/,9294.09,Capital Goods,Other Electrical Equipment
+Genus Power,GENUSPOWER,https://www.screener.in/company/GENUSPOWER/,7817.49,Capital Goods,Other Electrical Equipment
+Vikram Solar,VIKRAMSOLR,https://www.screener.in/company/VIKRAMSOLR/consolidated/,7251.37,Capital Goods,Other Electrical Equipment
+Diamond Power,DIACABS,https://www.screener.in/company/DIACABS/consolidated/,7014.97,Capital Goods,Other Electrical Equipment
+Avalon Tech,AVALON,https://www.screener.in/company/AVALON/consolidated/,6992.32,Capital Goods,Other Electrical Equipment
+Fujiyama Power,UTLSOLAR,https://www.screener.in/company/UTLSOLAR/,6771.68,Capital Goods,Other Electrical Equipment
+Saatvik Green,SAATVIKGL,https://www.screener.in/company/SAATVIKGL/consolidated/,5331.36,Capital Goods,Other Electrical Equipment
+Shilchar Tech.,SHILCTECH,https://www.screener.in/company/SHILCTECH/,5049.83,Capital Goods,Other Electrical Equipment
+APL Apollo Tubes,APLAPOLLO,https://www.screener.in/company/APLAPOLLO/consolidated/,56628.52,Capital Goods,Iron & Steel Products
+Welspun Corp,WELCORP,https://www.screener.in/company/WELCORP/consolidated/,25040.19,Capital Goods,Iron & Steel Products
+Godawari Power,GPIL,https://www.screener.in/company/GPIL/consolidated/,19160.8,Capital Goods,Iron & Steel Products
+Ratnamani Metals,RATNAMANI,https://www.screener.in/company/RATNAMANI/consolidated/,16257.78,Capital Goods,Iron & Steel Products
+Usha Martin,USHAMART,https://www.screener.in/company/USHAMART/consolidated/,13183.65,Capital Goods,Iron & Steel Products
+Jindal Saw,JINDALSAW,https://www.screener.in/company/JINDALSAW/consolidated/,12934.01,Capital Goods,Iron & Steel Products
+Jayaswal Neco,JAYNECOIND,https://www.screener.in/company/JAYNECOIND/,7966.02,Capital Goods,Iron & Steel Products
+Technocraf.Inds.,TIIL,https://www.screener.in/company/TIIL/consolidated/,5349.14,Capital Goods,Iron & Steel Products
+Supreme Inds.,SUPREMEIND,https://www.screener.in/company/SUPREMEIND/consolidated/,47843.8,Capital Goods,Plastic Products - Industrial
+Astral,ASTRAL,https://www.screener.in/company/ASTRAL/consolidated/,41909.92,Capital Goods,Plastic Products - Industrial
+Finolex Inds.,FINPIPE,https://www.screener.in/company/FINPIPE/,10049.9,Capital Goods,Plastic Products - Industrial
+Shaily Engineer.,SHAILY,https://www.screener.in/company/SHAILY/,9168.96,Capital Goods,Plastic Products - Industrial
+Time Technoplast,TIMETECHNO,https://www.screener.in/company/TIMETECHNO/consolidated/,8813.34,Capital Goods,Plastic Products - Industrial
+Garware Hi Tech,GRWRHITECH,https://www.screener.in/company/GRWRHITECH/consolidated/,8464.76,Capital Goods,Plastic Products - Industrial
+Kingfa Science,KINGFA,https://www.screener.in/company/KINGFA/,5799.85,Capital Goods,Plastic Products - Industrial
+AIA Engineering,AIAENG,https://www.screener.in/company/AIAENG/consolidated/,33911.93,Capital Goods,Castings & Forgings
+Happy Forgings,HAPPYFORGE,https://www.screener.in/company/HAPPYFORGE/,11983.49,Capital Goods,Castings & Forgings
+Balu Forge,BALUFORGE,https://www.screener.in/company/BALUFORGE/consolidated/,5695.75,Capital Goods,Castings & Forgings
+Timken India,TIMKEN,https://www.screener.in/company/TIMKEN/,26000.56,Capital Goods,Abrasives & Bearings
+Grindwell Norton,GRINDWELL,https://www.screener.in/company/GRINDWELL/consolidated/,16538.8,Capital Goods,Abrasives & Bearings
+Carborundum Uni.,CARBORUNIV,https://www.screener.in/company/CARBORUNIV/consolidated/,16290.93,Capital Goods,Abrasives & Bearings
+SKF India Indus.,SKFINDUS,https://www.screener.in/company/SKFINDUS/,11148.22,Capital Goods,Abrasives & Bearings
+SKF India,SKFINDIA,https://www.screener.in/company/SKFINDIA/,7863.82,Capital Goods,Abrasives & Bearings
+Honeywell Auto,HONAUT,https://www.screener.in/company/HONAUT/,24537.49,Capital Goods,Industrial Products
+Aditya Infotech,CPPLUS,https://www.screener.in/company/CPPLUS/consolidated/,22428.76,Capital Goods,Industrial Products
+Jyoti CNC Auto.,JYOTICNC,https://www.screener.in/company/JYOTICNC/consolidated/,18362.19,Capital Goods,Industrial Products
+Syrma SGS Tech.,SYRMA,https://www.screener.in/company/SYRMA/consolidated/,16357.88,Capital Goods,Industrial Products
+LMW,LMW,https://www.screener.in/company/LMW/consolidated/,14264.89,Capital Goods,Industrial Products
+Tega Inds.,TEGA,https://www.screener.in/company/TEGA/consolidated/,12863.02,Capital Goods,Industrial Products
+Lloyds Engineeri,LLOYDSENGG,https://www.screener.in/company/LLOYDSENGG/consolidated/,6850.95,Capital Goods,Industrial Products
+Dynamatic Tech.,DYNAMATECH,https://www.screener.in/company/DYNAMATECH/consolidated/,6817.49,Capital Goods,Industrial Products
+PTC Industries,PTCIL,https://www.screener.in/company/PTCIL/consolidated/,23186.28,Capital Goods,Other Industrial Products
+HBL Engineering,HBLENGINE,https://www.screener.in/company/HBLENGINE/consolidated/,20007.83,Capital Goods,Other Industrial Products
+Inox India,INOXINDIA,https://www.screener.in/company/INOXINDIA/consolidated/,11106.29,Capital Goods,Other Industrial Products
+Esab India,ESABINDIA,https://www.screener.in/company/ESABINDIA/,8336.69,Capital Goods,Other Industrial Products
+KRN Heat Exchan,KRN,https://www.screener.in/company/KRN/consolidated/,5991.57,Capital Goods,Other Industrial Products
+BEML Ltd,BEML,https://www.screener.in/company/BEML/consolidated/,13345.79,Capital Goods,Construction Vehicles
+Action Const.Eq.,ACE,https://www.screener.in/company/ACE/consolidated/,10307.81,Capital Goods,Construction Vehicles
+Graphite India,GRAPHITE,https://www.screener.in/company/GRAPHITE/consolidated/,12473.74,Capital Goods,Electrodes & Refractories
+HEG,HEG,https://www.screener.in/company/HEG/consolidated/,10798.02,Capital Goods,Electrodes & Refractories
+RHI Magnesita,RHIM,https://www.screener.in/company/RHIM/consolidated/,7848.15,Capital Goods,Electrodes & Refractories
+Jupiter Wagons,JWL,https://www.screener.in/company/JWL/,11495.79,Capital Goods,Railway Wagons
+Titagarh Rail,TITAGARH,https://www.screener.in/company/TITAGARH/consolidated/,9539.62,Capital Goods,Railway Wagons
+EPL Ltd,EPL,https://www.screener.in/company/EPL/consolidated/,7351.27,Capital Goods,Packaging
+Borosil Renew.,BORORENEW,https://www.screener.in/company/BORORENEW/consolidated/,6309.19,Capital Goods,Glass - Industrial
+Prec. Wires (I),PRECWIRE,https://www.screener.in/company/PRECWIRE/,6014.52,Capital Goods,"Aluminium, Copper & Zinc Products"
+JSW Steel,JSWSTEEL,https://www.screener.in/company/JSWSTEEL/consolidated/,295888.51,Metals & Mining,Iron & Steel
+Tata Steel,TATASTEEL,https://www.screener.in/company/TATASTEEL/consolidated/,256074.19,Metals & Mining,Iron & Steel
+Jindal Steel,JINDALSTEL,https://www.screener.in/company/JINDALSTEL/consolidated/,122435.37,Metals & Mining,Iron & Steel
+S A I L,SAIL,https://www.screener.in/company/SAIL/consolidated/,67496.77,Metals & Mining,Iron & Steel
+Jindal Stain.,JSL,https://www.screener.in/company/JSL/consolidated/,62425.09,Metals & Mining,Iron & Steel
+Sarda Energy,SARDAEN,https://www.screener.in/company/SARDAEN/consolidated/,19266.48,Metals & Mining,Iron & Steel
+NMDC Steel,NSLNISP,https://www.screener.in/company/NSLNISP/,11968.74,Metals & Mining,Iron & Steel
+Vedanta,VEDL,https://www.screener.in/company/VEDL/consolidated/,288295.5,Metals & Mining,Diversified Metals
+Jain Resource,JAINREC,https://www.screener.in/company/JAINREC/,14578.24,Metals & Mining,Diversified Metals
+Adani Enterp.,ADANIENT,https://www.screener.in/company/ADANIENT/consolidated/,263591.21,Metals & Mining,Trading - Minerals
+Hindustan Zinc,HINDZINC,https://www.screener.in/company/HINDZINC/,236068.48,Metals & Mining,Zinc
+Hindalco Inds.,HINDALCO,https://www.screener.in/company/HINDALCO/consolidated/,221474.61,Metals & Mining,Aluminium
+Natl. Aluminium,NATIONALUM,https://www.screener.in/company/NATIONALUM/consolidated/,75752.44,Metals & Mining,Aluminium
+Lloyds Metals,LLOYDSME,https://www.screener.in/company/LLOYDSME/consolidated/,83590.34,Metals & Mining,Industrial Minerals
+NMDC,NMDC,https://www.screener.in/company/NMDC/consolidated/,74211.26,Metals & Mining,Industrial Minerals
+G M D C,GMDCLTD,https://www.screener.in/company/GMDCLTD/consolidated/,19224.74,Metals & Mining,Industrial Minerals
+Gravita India,GRAVITA,https://www.screener.in/company/GRAVITA/consolidated/,11143.34,Metals & Mining,Industrial Minerals
+KIOCL,KIOCL,https://www.screener.in/company/KIOCL/,21408.07,Metals & Mining,Sponge Iron
+Lloyds Enterpris,LLOYDSENT,https://www.screener.in/company/LLOYDSENT/consolidated/,9129.04,Metals & Mining,Trading - Metals
+SG Mart,SGMART,https://www.screener.in/company/SGMART/consolidated/,6688.02,Metals & Mining,Trading - Metals
+Indian Metals,IMFA,https://www.screener.in/company/IMFA/consolidated/,7381.28,Metals & Mining,Ferro & Silica Manganese
+Kirl. Ferrous,KIRLFER,https://www.screener.in/company/KIRLFER/,6593.57,Metals & Mining,Pig Iron
+Avenue Super.,DMART,https://www.screener.in/company/DMART/consolidated/,287875.77,Consumer Services,Diversified Retail
+Vishal Mega Mart,VMM,https://www.screener.in/company/VMM/consolidated/,52368.37,Consumer Services,Diversified Retail
+Eternal,ETERNAL,https://www.screener.in/company/ETERNAL/consolidated/,229591.04,Consumer Services,E-Retail/ E-Commerce
+Meesho,MEESHO,https://www.screener.in/company/MEESHO/consolidated/,75556.05,Consumer Services,E-Retail/ E-Commerce
+Swiggy,SWIGGY,https://www.screener.in/company/SWIGGY/consolidated/,75120.57,Consumer Services,E-Retail/ E-Commerce
+FSN E-Commerce,NYKAA,https://www.screener.in/company/NYKAA/consolidated/,73012.37,Consumer Services,E-Retail/ E-Commerce
+Brainbees Solut.,FIRSTCRY,https://www.screener.in/company/FIRSTCRY/consolidated/,12653.13,Consumer Services,E-Retail/ E-Commerce
+Cartrade Tech,CARTRADE,https://www.screener.in/company/CARTRADE/consolidated/,8696.54,Consumer Services,E-Retail/ E-Commerce
+Trent,TRENT,https://www.screener.in/company/TRENT/consolidated/,136864.77,Consumer Services,Speciality Retail
+Lenskart Solut.,LENSKART,https://www.screener.in/company/LENSKART/consolidated/,89330.07,Consumer Services,Speciality Retail
+A B Lifestyle,ABLBL,https://www.screener.in/company/ABLBL/consolidated/,12166.08,Consumer Services,Speciality Retail
+Vedant Fashions,MANYAVAR,https://www.screener.in/company/MANYAVAR/,9409.13,Consumer Services,Speciality Retail
+Aditya Bir. Fas.,ABFRL,https://www.screener.in/company/ABFRL/consolidated/,7129.04,Consumer Services,Speciality Retail
+V2 Retail,V2RETAIL,https://www.screener.in/company/V2RETAIL/consolidated/,7087.75,Consumer Services,Speciality Retail
+Arvind Fashions.,ARVINDFASN,https://www.screener.in/company/ARVINDFASN/consolidated/,6136.65,Consumer Services,Speciality Retail
+Aditya Vision,AVL,https://www.screener.in/company/AVL/,6122.66,Consumer Services,Speciality Retail
+Indian Hotels Co,INDHOTEL,https://www.screener.in/company/INDHOTEL/consolidated/,89576.27,Consumer Services,Hotels & Resorts
+ITC Hotels,ITCHOTELS,https://www.screener.in/company/ITCHOTELS/consolidated/,31600.72,Consumer Services,Hotels & Resorts
+Chalet Hotels,CHALET,https://www.screener.in/company/CHALET/consolidated/,16536.03,Consumer Services,Hotels & Resorts
+Leela Palaces Hotels,THELEELA,https://www.screener.in/company/THELEELA/consolidated/,14243.02,Consumer Services,Hotels & Resorts
+Info Edg.(India),NAUKRI,https://www.screener.in/company/NAUKRI/consolidated/,64994.54,Consumer Services,Internet & Catalogue Retail
+Indiamart Inter.,INDIAMART,https://www.screener.in/company/INDIAMART/consolidated/,12618.3,Consumer Services,Internet & Catalogue Retail
+I R C T C,IRCTC,https://www.screener.in/company/IRCTC/,42524.0,Consumer Services,"Tour, Travel Related Services"
+TBO Tek,TBOTEK,https://www.screener.in/company/TBOTEK/consolidated/,12596.75,Consumer Services,"Tour, Travel Related Services"
+BLS Internat.,BLS,https://www.screener.in/company/BLS/consolidated/,11777.28,Consumer Services,"Tour, Travel Related Services"
+Jubilant Food.,JUBLFOOD,https://www.screener.in/company/JUBLFOOD/consolidated/,28234.71,Consumer Services,Restaurants
+Travel Food,TRAVELFOOD,https://www.screener.in/company/TRAVELFOOD/consolidated/,16827.32,Consumer Services,Restaurants
+Devyani Intl.,DEVYANI,https://www.screener.in/company/DEVYANI/consolidated/,12895.38,Consumer Services,Restaurants
+Westlife Food,WESTLIFE,https://www.screener.in/company/WESTLIFE/consolidated/,7119.28,Consumer Services,Restaurants
+Sapphire Foods,SAPPHIRE,https://www.screener.in/company/SAPPHIRE/consolidated/,5193.9,Consumer Services,Restaurants
+Medplus Health,MEDPLUS,https://www.screener.in/company/MEDPLUS/consolidated/,10272.49,Consumer Services,Pharmacy Retail
+DLF,DLF,https://www.screener.in/company/DLF/consolidated/,139250.44,Realty,"Residential, Commercial Projects"
+Lodha Developers,LODHA,https://www.screener.in/company/LODHA/consolidated/,78833.91,Realty,"Residential, Commercial Projects"
+Phoenix Mills,PHOENIXLTD,https://www.screener.in/company/PHOENIXLTD/consolidated/,61194.81,Realty,"Residential, Commercial Projects"
+Oberoi Realty,OBEROIRLTY,https://www.screener.in/company/OBEROIRLTY/consolidated/,60123.46,Realty,"Residential, Commercial Projects"
+Prestige Estates,PRESTIGE,https://www.screener.in/company/PRESTIGE/consolidated/,56783.26,Realty,"Residential, Commercial Projects"
+Godrej Propert.,GODREJPROP,https://www.screener.in/company/GODREJPROP/consolidated/,51059.27,Realty,"Residential, Commercial Projects"
+Anant Raj,ANANTRAJ,https://www.screener.in/company/ANANTRAJ/consolidated/,17171.29,Realty,"Residential, Commercial Projects"
+Sobha,SOBHA,https://www.screener.in/company/SOBHA/consolidated/,13918.45,Realty,"Residential, Commercial Projects"
+Embassy Develop,EMBDL,https://www.screener.in/company/EMBDL/consolidated/,7370.0,Realty,"Residential, Commercial Projects"
+Mahindra Life.,MAHLIFE,https://www.screener.in/company/MAHLIFE/consolidated/,7271.99,Realty,"Residential, Commercial Projects"
+Sri Lotus,LOTUSDEV,https://www.screener.in/company/LOTUSDEV/consolidated/,6612.76,Realty,"Residential, Commercial Projects"
+Kalpat.,KALPATARU,https://www.screener.in/company/KALPATARU/consolidated/,6134.34,Realty,"Residential, Commercial Projects"
+Max Estates,MAXESTATES,https://www.screener.in/company/MAXESTATES/consolidated/,6035.38,Realty,"Residential, Commercial Projects"
+Knowledge Realty,KRT,https://www.screener.in/company/KRT/,50592.13,Realty,Real Estate Investment Trusts (REITs)
+Embassy Off.REIT,EMBASSY,https://www.screener.in/company/EMBASSY/consolidated/,41649.28,Realty,Real Estate Investment Trusts (REITs)
+Mindspace Busine,MINDSPACE,https://www.screener.in/company/MINDSPACE/consolidated/,37986.18,Realty,Real Estate Investment Trusts (REITs)
+Brookfield India,BIRET,https://www.screener.in/company/BIRET/consolidated/,26157.22,Realty,Real Estate Investment Trusts (REITs)
+Nexus Select,NXST,https://www.screener.in/company/NXST/consolidated/,23829.28,Realty,Real Estate Investment Trusts (REITs)
+Pidilite Inds.,PIDILITIND,https://www.screener.in/company/PIDILITIND/consolidated/,137093.36,Chemicals,Specialty Chemicals
+Gujarat Fluoroch,FLUOROCHEM,https://www.screener.in/company/FLUOROCHEM/consolidated/,36340.08,Chemicals,Specialty Chemicals
+Navin Fluo.Intl.,NAVINFLUOR,https://www.screener.in/company/NAVINFLUOR/consolidated/,31413.88,Chemicals,Specialty Chemicals
+Deepak Nitrite,DEEPAKNTR,https://www.screener.in/company/DEEPAKNTR/consolidated/,19398.51,Chemicals,Specialty Chemicals
+Atul,ATUL,https://www.screener.in/company/ATUL/consolidated/,19028.88,Chemicals,Specialty Chemicals
+BASF India,BASF,https://www.screener.in/company/BASF/,15348.56,Chemicals,Specialty Chemicals
+Aarti Industries,AARTIIND,https://www.screener.in/company/AARTIIND/consolidated/,15279.73,Chemicals,Specialty Chemicals
+Aether Industri.,AETHER,https://www.screener.in/company/AETHER/consolidated/,15029.39,Chemicals,Specialty Chemicals
+Anupam Rasayan,ANURAS,https://www.screener.in/company/ANURAS/consolidated/,14561.13,Chemicals,Specialty Chemicals
+Fine Organic,FINEORG,https://www.screener.in/company/FINEORG/consolidated/,14072.88,Chemicals,Specialty Chemicals
+Vinati Organics,VINATIORGA,https://www.screener.in/company/VINATIORGA/,13114.01,Chemicals,Specialty Chemicals
+Privi Speci.,PRIVISCL,https://www.screener.in/company/PRIVISCL/consolidated/,11393.2,Chemicals,Specialty Chemicals
+Clean Science,CLEAN,https://www.screener.in/company/CLEAN/,7614.84,Chemicals,Specialty Chemicals
+Archean Chemical,ACI,https://www.screener.in/company/ACI/consolidated/,7514.3,Chemicals,Specialty Chemicals
+Elantas Beck,500123,https://www.screener.in/company/500123/,7074.79,Chemicals,Specialty Chemicals
+Alkyl Amines,ALKYLAMINE,https://www.screener.in/company/ALKYLAMINE/,6989.96,Chemicals,Specialty Chemicals
+Galaxy Surfact.,GALAXYSURF,https://www.screener.in/company/GALAXYSURF/consolidated/,6419.8,Chemicals,Specialty Chemicals
+Solar Industries,SOLARINDS,https://www.screener.in/company/SOLARINDS/consolidated/,126044.69,Chemicals,Explosives
+SRF,SRF,https://www.screener.in/company/SRF/consolidated/,71100.99,Chemicals,Commodity Chemicals
+Deepak Fertilis.,DEEPAKFERT,https://www.screener.in/company/DEEPAKFERT/consolidated/,13344.49,Chemicals,Commodity Chemicals
+G N F C,GNFC,https://www.screener.in/company/GNFC/consolidated/,6291.15,Chemicals,Commodity Chemicals
+Coromandel Inter,COROMANDEL,https://www.screener.in/company/COROMANDEL/consolidated/,63329.47,Chemicals,Fertilizers
+F A C T,FACT,https://www.screener.in/company/FACT/consolidated/,55655.22,Chemicals,Fertilizers
+Chambal Fert.,CHAMBLFERT,https://www.screener.in/company/CHAMBLFERT/consolidated/,18233.73,Chemicals,Fertilizers
+Paradeep Phosph.,PARADEEP,https://www.screener.in/company/PARADEEP/consolidated/,12385.46,Chemicals,Fertilizers
+R C F,RCF,https://www.screener.in/company/RCF/consolidated/,7054.47,Chemicals,Fertilizers
+G S F C,GSFC,https://www.screener.in/company/GSFC/consolidated/,6441.4,Chemicals,Fertilizers
+Linde India,LINDEINDIA,https://www.screener.in/company/LINDEINDIA/,61272.84,Chemicals,Industrial Gases
+UPL,UPL,https://www.screener.in/company/UPL/consolidated/,54212.57,Chemicals,Pesticides & Agrochemicals
+Bayer Crop Sci.,BAYERCROP,https://www.screener.in/company/BAYERCROP/,21641.22,Chemicals,Pesticides & Agrochemicals
+Sharda Cropchem,SHARDACROP,https://www.screener.in/company/SHARDACROP/consolidated/,9352.3,Chemicals,Pesticides & Agrochemicals
+Himadri Special,HSCL,https://www.screener.in/company/HSCL/consolidated/,23436.1,Chemicals,Carbon Black
+PCBL Chemical,PCBL,https://www.screener.in/company/PCBL/consolidated/,10680.63,Chemicals,Carbon Black
+Supreme Petroch.,SPLPETRO,https://www.screener.in/company/SPLPETRO/,13906.64,Chemicals,Petrochemicals
+Swan Corp,SWANCORP,https://www.screener.in/company/SWANCORP/consolidated/,10143.56,Chemicals,Petrochemicals
+Sudarshan Chem.,SUDARSCHEM,https://www.screener.in/company/SUDARSCHEM/consolidated/,6293.31,Chemicals,Dyes And Pigments
+Colgate-Palmoliv,COLPAL,https://www.screener.in/company/COLPAL/,51867.66,Other / Unknown,Other / Unknown
+Hindustan Copper,HINDCOPPER,https://www.screener.in/company/HINDCOPPER/,50493.27,Other / Unknown,Other / Unknown
+P I Industries,PIIND,https://www.screener.in/company/PIIND/consolidated/,43694.05,Other / Unknown,Other / Unknown
+Apar Inds.,APARINDS,https://www.screener.in/company/APARINDS/consolidated/,43257.89,Other / Unknown,Other / Unknown
+Voltas,VOLTAS,https://www.screener.in/company/VOLTAS/consolidated/,42514.22,Other / Unknown,Other / Unknown
+Anthem Bioscienc,ANTHEM,https://www.screener.in/company/ANTHEM/consolidated/,40507.29,Other / Unknown,Other / Unknown
+United Breweries,UBL,https://www.screener.in/company/UBL/consolidated/,38841.54,Other / Unknown,Other / Unknown
+NLC India,NLCINDIA,https://www.screener.in/company/NLCINDIA/consolidated/,37293.55,Other / Unknown,Other / Unknown
+Dalmia BharatLtd,DALBHARAT,https://www.screener.in/company/DALBHARAT/consolidated/,35828.9,Other / Unknown,Other / Unknown
+Escorts Kubota,ESCORTS,https://www.screener.in/company/ESCORTS/consolidated/,34958.99,Other / Unknown,Other / Unknown
+Poonawalla Fin,POONAWALLA,https://www.screener.in/company/POONAWALLA/consolidated/,32654.95,Other / Unknown,Other / Unknown
+Tata Inv.Corpn.,TATAINVEST,https://www.screener.in/company/TATAINVEST/consolidated/,32221.62,Other / Unknown,Other / Unknown
+Central Bank,CENTRALBK,https://www.screener.in/company/CENTRALBK/consolidated/,31671.16,Other / Unknown,Other / Unknown
+P & G Hygiene,PGHH,https://www.screener.in/company/PGHH/,31401.55,Other / Unknown,Other / Unknown
+K P R Mill Ltd,KPRMILL,https://www.screener.in/company/KPRMILL/consolidated/,29395.98,Other / Unknown,Other / Unknown
+Physicswallah,PWL,https://www.screener.in/company/PWL/consolidated/,28974.6,Other / Unknown,Other / Unknown
+ITI,ITI,https://www.screener.in/company/ITI/,28643.39,Other / Unknown,Other / Unknown
+SJVN,SJVN,https://www.screener.in/company/SJVN/consolidated/,27767.92,Other / Unknown,Other / Unknown
+Kaynes Tech,KAYNES,https://www.screener.in/company/KAYNES/consolidated/,25800.58,Other / Unknown,Other / Unknown
+NBCC,NBCC,https://www.screener.in/company/NBCC/consolidated/,23732.82,Other / Unknown,Other / Unknown
+Shyam Metalics,SHYAMMETL,https://www.screener.in/company/SHYAMMETL/consolidated/,23204.08,Other / Unknown,Other / Unknown
+Schneider Elect.,SCHNEIDER,https://www.screener.in/company/SCHNEIDER/,23174.5,Other / Unknown,Other / Unknown
+Tenneco Clean,TENNIND,https://www.screener.in/company/TENNIND/consolidated/,22430.49,Other / Unknown,Other / Unknown
+Gujarat Gas,GUJGASLTD,https://www.screener.in/company/GUJGASLTD/consolidated/,22004.41,Other / Unknown,Other / Unknown
+Indraprastha Gas,IGL,https://www.screener.in/company/IGL/consolidated/,21704.19,Other / Unknown,Other / Unknown
+Sumitomo Chemi.,SUMICHEM,https://www.screener.in/company/SUMICHEM/,20711.94,Other / Unknown,Other / Unknown
+Astrazeneca Phar,ASTRAZEN,https://www.screener.in/company/ASTRAZEN/,20123.8,Other / Unknown,Other / Unknown
+RBL Bank,RBLBANK,https://www.screener.in/company/RBLBANK/,19663.1,Other / Unknown,Other / Unknown
+Urban Company,URBANCO,https://www.screener.in/company/URBANCO/consolidated/,19608.86,Other / Unknown,Other / Unknown
+IndiGrid Trust,INDIGRID,https://www.screener.in/company/INDIGRID/consolidated/,19357.53,Other / Unknown,Other / Unknown
+EIH,EIHOTEL,https://www.screener.in/company/EIHOTEL/consolidated/,19245.56,Other / Unknown,Other / Unknown
+Netweb Technol.,NETWEB,https://www.screener.in/company/NETWEB/,19020.48,Other / Unknown,Other / Unknown
+Neuland Labs.,NEULANDLAB,https://www.screener.in/company/NEULANDLAB/consolidated/,18895.36,Other / Unknown,Other / Unknown
+Emami,EMAMILTD,https://www.screener.in/company/EMAMILTD/consolidated/,18282.79,Other / Unknown,Other / Unknown
+Sammaan Capital,SAMMAANCAP,https://www.screener.in/company/SAMMAANCAP/consolidated/,17791.33,Other / Unknown,Other / Unknown
+Kajaria Ceramics,KAJARIACER,https://www.screener.in/company/KAJARIACER/consolidated/,17427.47,Other / Unknown,Other / Unknown
+Brigade Enterpr.,BRIGADE,https://www.screener.in/company/BRIGADE/consolidated/,17156.78,Other / Unknown,Other / Unknown
+Tata Chemicals,TATACHEM,https://www.screener.in/company/TATACHEM/consolidated/,16541.55,Other / Unknown,Other / Unknown
+Sundram Fasten.,SUNDRMFAST,https://www.screener.in/company/SUNDRMFAST/consolidated/,16432.1,Other / Unknown,Other / Unknown
+Gallantt Ispat L,GALLANTT,https://www.screener.in/company/GALLANTT/consolidated/,16023.82,Other / Unknown,Other / Unknown
+Emmvee Photovol.,EMMVEE,https://www.screener.in/company/EMMVEE/consolidated/,15547.94,Other / Unknown,Other / Unknown
+Kansai Nerolac,KANSAINER,https://www.screener.in/company/KANSAINER/consolidated/,15017.16,Other / Unknown,Other / Unknown
+EID Parry,EIDPARRY,https://www.screener.in/company/EIDPARRY/consolidated/,14782.04,Other / Unknown,Other / Unknown
+International Ge,IGIL,https://www.screener.in/company/IGIL/consolidated/,14561.61,Other / Unknown,Other / Unknown
+CCL Products,CCL,https://www.screener.in/company/CCL/consolidated/,14364.35,Other / Unknown,Other / Unknown
+Rubicon Research,RUBICON,https://www.screener.in/company/RUBICON/consolidated/,14105.92,Other / Unknown,Other / Unknown
+Ventive Hospital,VENTIVE,https://www.screener.in/company/VENTIVE/consolidated/,13980.85,Other / Unknown,Other / Unknown
+Canara HSBC,CANHLIFE,https://www.screener.in/company/CANHLIFE/,13887.09,Other / Unknown,Other / Unknown
+TD Power Systems,TDPOWERSYS,https://www.screener.in/company/TDPOWERSYS/consolidated/,13683.1,Other / Unknown,Other / Unknown
+J & K Bank,J&KBANK,https://www.screener.in/company/J&KBANK/consolidated/,13407.72,Other / Unknown,Other / Unknown
+Ingersoll-Rand,INGERRAND,https://www.screener.in/company/INGERRAND/,11975.34,Other / Unknown,Other / Unknown
+Blue Dart Expres,BLUEDART,https://www.screener.in/company/BLUEDART/consolidated/,11972.02,Other / Unknown,Other / Unknown
+Central Mine Pla,CMPDI,https://www.screener.in/company/CMPDI/,11646.24,Other / Unknown,Other / Unknown
+SignatureGlobal,SIGNATURE,https://www.screener.in/company/SIGNATURE/consolidated/,11512.99,Other / Unknown,Other / Unknown
+Godrej Agrovet,GODREJAGRO,https://www.screener.in/company/GODREJAGRO/consolidated/,11290.66,Other / Unknown,Other / Unknown
+Concord Biotech,CONCORDBIO,https://www.screener.in/company/CONCORDBIO/,11032.82,Other / Unknown,Other / Unknown
+Honasa Consumer,HONASA,https://www.screener.in/company/HONASA/,10834.41,Other / Unknown,Other / Unknown
+Sanofi Consumer,SANOFICONR,https://www.screener.in/company/SANOFICONR/,10535.76,Other / Unknown,Other / Unknown
+Blackbuck,BLACKBUCK,https://www.screener.in/company/BLACKBUCK/,10319.25,Other / Unknown,Other / Unknown
+Jubilant Ingrev.,JUBLINGREA,https://www.screener.in/company/JUBLINGREA/consolidated/,10165.19,Other / Unknown,Other / Unknown
+The Bombay Burmah,BBTC,https://www.screener.in/company/BBTC/consolidated/,10082.78,Other / Unknown,Other / Unknown
+Vijaya Diagnost.,VIJAYA,https://www.screener.in/company/VIJAYA/consolidated/,10036.59,Other / Unknown,Other / Unknown
+Rites,RITES,https://www.screener.in/company/RITES/consolidated/,9879.43,Other / Unknown,Other / Unknown
+Balrampur Chini,BALRAMCHIN,https://www.screener.in/company/BALRAMCHIN/consolidated/,9647.17,Other / Unknown,Other / Unknown
+Sandur Manganese,SANDUMA,https://www.screener.in/company/SANDUMA/consolidated/,9574.35,Other / Unknown,Other / Unknown
+Metropolis Healt,METROPOLIS,https://www.screener.in/company/METROPOLIS/consolidated/,9456.22,Other / Unknown,Other / Unknown
+Vesuvius India,VESUVIUS,https://www.screener.in/company/VESUVIUS/,9260.06,Other / Unknown,Other / Unknown
+Lemon Tree Hotel,LEMONTREE,https://www.screener.in/company/LEMONTREE/consolidated/,8985.67,Other / Unknown,Other / Unknown
+ASK Automotive,ASKAUTOLTD,https://www.screener.in/company/ASKAUTOLTD/consolidated/,8647.65,Other / Unknown,Other / Unknown
+Mah. Seamless,MAHSEAMLES,https://www.screener.in/company/MAHSEAMLES/consolidated/,8154.73,Other / Unknown,Other / Unknown
+P & G Health Ltd,PGHL,https://www.screener.in/company/PGHL/,7981.16,Other / Unknown,Other / Unknown
+Tata Tele. Mah.,TTML,https://www.screener.in/company/TTML/,7899.86,Other / Unknown,Other / Unknown
+Tejas Networks,TEJASNET,https://www.screener.in/company/TEJASNET/consolidated/,7806.42,Other / Unknown,Other / Unknown
+Manorama Indust.,MANORAMA,https://www.screener.in/company/MANORAMA/,7624.55,Other / Unknown,Other / Unknown
+Quality Power El,QPOWER,https://www.screener.in/company/QPOWER/consolidated/,7498.53,Other / Unknown,Other / Unknown
+Le Travenues,IXIGO,https://www.screener.in/company/IXIGO/consolidated/,7434.42,Other / Unknown,Other / Unknown
+JK Paper,JKPAPER,https://www.screener.in/company/JKPAPER/consolidated/,6251.88,Other / Unknown,Other / Unknown
+Praj Industries,PRAJIND,https://www.screener.in/company/PRAJIND/consolidated/,6188.96,Other / Unknown,Other / Unknown
+MOIL,MOIL,https://www.screener.in/company/MOIL/,6112.71,Other / Unknown,Other / Unknown
+India Glycols,INDIAGLYCO,https://www.screener.in/company/INDIAGLYCO/consolidated/,6035.23,Other / Unknown,Other / Unknown
+Garware Tech.,GARFIBRES,https://www.screener.in/company/GARFIBRES/consolidated/,5977.82,Other / Unknown,Other / Unknown
+Kovai Medical,KOVAI,https://www.screener.in/company/KOVAI/,5840.48,Other / Unknown,Other / Unknown
+Jai Balaji Inds.,JAIBALAJI,https://www.screener.in/company/JAIBALAJI/consolidated/,5658.09,Other / Unknown,Other / Unknown
+Sheela Foam,SFL,https://www.screener.in/company/SFL/consolidated/,5617.07,Other / Unknown,Other / Unknown
+Piccadily Agro,PICCADIL,https://www.screener.in/company/PICCADIL/consolidated/,5491.88,Other / Unknown,Other / Unknown
+Valor Estate,DBREALTY,https://www.screener.in/company/DBREALTY/consolidated/,5347.99,Other / Unknown,Other / Unknown
+Ajax Engineering,AJAXENGG,https://www.screener.in/company/AJAXENGG/,5319.24,Other / Unknown,Other / Unknown
+Electrost.Cast.,ELECTCAST,https://www.screener.in/company/ELECTCAST/consolidated/,5200.84,Other / Unknown,Other / Unknown
+Entero Healthcar,ENTERO,https://www.screener.in/company/ENTERO/consolidated/,5130.47,Other / Unknown,Other / Unknown
+Symphony,SYMPHONY,https://www.screener.in/company/SYMPHONY/consolidated/,5084.13,Other / Unknown,Other / Unknown
+Keystone Realtor,RUSTOMJEE,https://www.screener.in/company/RUSTOMJEE/consolidated/,5012.84,Other / Unknown,Other / Unknown
+Page Industries,PAGEIND,https://www.screener.in/company/PAGEIND/,40090.4,Textiles,Garments & Apparels
+Arvind Ltd,ARVIND,https://www.screener.in/company/ARVIND/consolidated/,10024.55,Textiles,Garments & Apparels
+Pearl Global Ind,PGIL,https://www.screener.in/company/PGIL/consolidated/,6979.83,Textiles,Garments & Apparels
+Vardhman Textile,VTL,https://www.screener.in/company/VTL/consolidated/,15930.72,Textiles,Other Textile Products
+Trident,TRIDENT,https://www.screener.in/company/TRIDENT/consolidated/,12699.16,Textiles,Other Textile Products
+Welspun Living,WELSPUNLIV,https://www.screener.in/company/WELSPUNLIV/consolidated/,11675.87,Textiles,Other Textile Products
+Alok Industries,ALOKINDS,https://www.screener.in/company/ALOKINDS/consolidated/,6623.63,Textiles,Other Textile Products
+3M India,3MINDIA,https://www.screener.in/company/3MINDIA/,34980.01,Diversified,Diversified
+Godrej Industrie,GODREJIND,https://www.screener.in/company/GODREJIND/consolidated/,29371.29,Diversified,Diversified
+DCM Shriram,DCMSHRIRAM,https://www.screener.in/company/DCMSHRIRAM/consolidated/,17307.86,Diversified,Diversified
+Prime Focus,PFOCUS,https://www.screener.in/company/PFOCUS/consolidated/,24750.84,"Media, Entertainment & Publication",Media & Entertainment
+Tips Music,TIPSMUSIC,https://www.screener.in/company/TIPSMUSIC/,6840.2,"Media, Entertainment & Publication",Media & Entertainment
+Saregama India,SAREGAMA,https://www.screener.in/company/SAREGAMA/consolidated/,6110.19,"Media, Entertainment & Publication",Media & Entertainment
+Sun TV Network,SUNTV,https://www.screener.in/company/SUNTV/consolidated/,23272.76,"Media, Entertainment & Publication",TV Broadcasting & Software Production
+Zee Entertainmen,ZEEL,https://www.screener.in/company/ZEEL/consolidated/,7586.13,"Media, Entertainment & Publication",TV Broadcasting & Software Production
+Nazara Technolo.,NAZARA,https://www.screener.in/company/NAZARA/consolidated/,9283.37,"Media, Entertainment & Publication",Digital Entertainment
+PVR Inox,PVRINOX,https://www.screener.in/company/PVRINOX/consolidated/,9253.34,"Media, Entertainment & Publication","Film Production, Distribution & Exhibition"
+A B Real Estate,ABREL,https://www.screener.in/company/ABREL/consolidated/,14406.61,Forest Materials,Paper & Paper Products
+Va Tech Wabag,WABAG,https://www.screener.in/company/WABAG/consolidated/,8220.86,Utilities,Water Supply & Management
+ION Exchange,IONEXCHANG,https://www.screener.in/company/IONEXCHANG/consolidated/,5434.72,Utilities,Water Supply & Management

@@ -1,0 +1,3837 @@
+{
+  "total_stocks": 766,
+  "total_files": 42756,
+  "failed": [],
+  "results": [
+    {
+      "symbol": "IOC",
+      "status": "ok",
+      "downloaded": 43
+    },
+    {
+      "symbol": "RELIANCE",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "HINDPETRO",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "BPCL",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "MRPL",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "CHENNPETRO",
+      "status": "ok",
+      "downloaded": 35
+    },
+    {
+      "symbol": "ONGC",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "COALINDIA",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "OIL",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "GAIL",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "BHARATCOAL",
+      "status": "ok",
+      "downloaded": 14
+    },
+    {
+      "symbol": "GSPL",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "542543",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "ATGL",
+      "status": "ok",
+      "downloaded": 42
+    },
+    {
+      "symbol": "PETRONET",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "MGL",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "AEGISVOPAK",
+      "status": "ok",
+      "downloaded": 24
+    },
+    {
+      "symbol": "AEGISLOG",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "CASTROLIND",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "HDFCBANK",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "ICICIBANK",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "AXISBANK",
+      "status": "ok",
+      "downloaded": 118
+    },
+    {
+      "symbol": "KOTAKBANK",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "FEDERALBNK",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "IDBI",
+      "status": "ok",
+      "downloaded": 49
+    },
+    {
+      "symbol": "YESBANK",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "INDUSINDBK",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "IDFCFIRSTB",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "KARURVYSYA",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "BANDHANBNK",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "TMB",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "CUB",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "SOUTHBANK",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "KTKBANK",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "DCBBANK",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "CSBBANK",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "SBIN",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "BANKBARODA",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "UNIONBANK",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "PNB",
+      "status": "ok",
+      "downloaded": 49
+    },
+    {
+      "symbol": "INDIANB",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "CANBK",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "BANKINDIA",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "IOB",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "MAHABANK",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "UCOBANK",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "PSB",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "BAJFINANCE",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "SHRIRAMFIN",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "TATACAP",
+      "status": "ok",
+      "downloaded": 21
+    },
+    {
+      "symbol": "MUTHOOTFIN",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "CHOLAFIN",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "LTF",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "SBICARD",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "SUNDARMFIN",
+      "status": "ok",
+      "downloaded": 21
+    },
+    {
+      "symbol": "HDBFS",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "M&MFIN",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "AIIL",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "IIFL",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "CGCL",
+      "status": "ok",
+      "downloaded": 105
+    },
+    {
+      "symbol": "FIVESTAR",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "SBFC",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "533095",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "MANAPPURAM",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "501945",
+      "status": "ok",
+      "downloaded": 24
+    },
+    {
+      "symbol": "FEDFINA",
+      "status": "ok",
+      "downloaded": 49
+    },
+    {
+      "symbol": "MASFIN",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "SBILIFE",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "LICI",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "HDFCLIFE",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "ICICIPRULI",
+      "status": "ok",
+      "downloaded": 134
+    },
+    {
+      "symbol": "MFSL",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "BAJAJHLDNG",
+      "status": "ok",
+      "downloaded": 24
+    },
+    {
+      "symbol": "BAJAJFINSV",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "JMFINANCIL",
+      "status": "ok",
+      "downloaded": 94
+    },
+    {
+      "symbol": "CHOICEIN",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "532468",
+      "status": "ok",
+      "downloaded": 15
+    },
+    {
+      "symbol": "ICICIAMC",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "HDFCAMC",
+      "status": "ok",
+      "downloaded": 86
+    },
+    {
+      "symbol": "EDELWEISS",
+      "status": "ok",
+      "downloaded": 119
+    },
+    {
+      "symbol": "NAM-INDIA",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "ABSLAMC",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "CRAMC",
+      "status": "ok",
+      "downloaded": 21
+    },
+    {
+      "symbol": "UTIAMC",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "JIOFIN",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "ABCAPITAL",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "CHOLAHLDNG",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "TVSHLTD",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "MAHSCOOTER",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "JSWHL",
+      "status": "ok",
+      "downloaded": 11
+    },
+    {
+      "symbol": "TSFINV",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "RELIGARE",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "PFC",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "RECLTD",
+      "status": "ok",
+      "downloaded": 43
+    },
+    {
+      "symbol": "IRFC",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "HUDCO",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "IREDA",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "IFCI",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "MCX",
+      "status": "ok",
+      "downloaded": 130
+    },
+    {
+      "symbol": "IEX",
+      "status": "ok",
+      "downloaded": 91
+    },
+    {
+      "symbol": "BSE",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "GROWW",
+      "status": "ok",
+      "downloaded": 17
+    },
+    {
+      "symbol": "360ONE",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "MOTILALOFS",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "ANGELONE",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "NUVAMA",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "IIFLCAPS",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "ICICIGI",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "GODIGIT",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "GICRE",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "STARHEALTH",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "NIVABUPA",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "NIACL",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "UJJIVANSFB",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "AUBANK",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "PAYTM",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "EQUITASBNK",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "PINELABS",
+      "status": "ok",
+      "downloaded": 17
+    },
+    {
+      "symbol": "POLICYBZR",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "BAJAJHFL",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "PIRAMALFIN",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "CCAVENUE",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "LICHSGFIN",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "PNBHOUSING",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "AADHARHFC",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "CANFINHOME",
+      "status": "ok",
+      "downloaded": 86
+    },
+    {
+      "symbol": "HOMEFIRST",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "AAVAS",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "INDIASHLTR",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "APTUS",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "ANANDRATHI",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "PRUDENT",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "504346",
+      "status": "ok",
+      "downloaded": 24
+    },
+    {
+      "symbol": "CRISIL",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "CDSL",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "544467",
+      "status": "ok",
+      "downloaded": 16
+    },
+    {
+      "symbol": "CAMS",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "CREDITACC",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "KFINTECH",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "ICRA",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "BHARTIARTL",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "BHARTIHEXA",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "IDEA",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "INDUSTOWER",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "543225",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "TATACOMM",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "HFCL",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "RAILTEL",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "TCS",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "STLTECH",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "HCLTECH",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "WIPRO",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "INFY",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "TECHM",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "LTM",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "PERSISTENT",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "MPHASIS",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "HEXT",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "COFORGE",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "TATAELXSI",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "KPITTECH",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "FRACTAL",
+      "status": "ok",
+      "downloaded": 12
+    },
+    {
+      "symbol": "BSOFT",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "ZENSARTECH",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "INTELLECT",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "RATEGAIN",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "SONATSOFTW",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "NEWGEN",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "LATENTVIEW",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "OFSS",
+      "status": "ok",
+      "downloaded": 18
+    },
+    {
+      "symbol": "HAPPSTMNDS",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "TANLA",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "LTTS",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "MAPMYINDIA",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "IKS",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "TATATECH",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "SAGILITY",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "CYIENT",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "AFFLE",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "AMAGI",
+      "status": "ok",
+      "downloaded": 11
+    },
+    {
+      "symbol": "BBOX",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "RVNL",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "LT",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "IRB",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "KEC",
+      "status": "ok",
+      "downloaded": 101
+    },
+    {
+      "symbol": "KPIL",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "IRCON",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "ENGINERSIN",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "AFCONS",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "TECHNOE",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "CEMPRO",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "NCC",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "GRINFRA",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "ISGEC",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "DBL",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "POWERMECH",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "WELENT",
+      "status": "ok",
+      "downloaded": 90
+    },
+    {
+      "symbol": "AHLUCONT",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "CEIGALL",
+      "status": "ok",
+      "downloaded": 35
+    },
+    {
+      "symbol": "SHREMINVIT",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "ITC",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "HINDUNILVR",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "HNDFDS",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "NESTLEIND",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "BRITANNIA",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "BIKAJI",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "ZYDUSWELL",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "BECTORFOOD",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "VBL",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "GODREJCP",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "DABUR",
+      "status": "ok",
+      "downloaded": 98
+    },
+    {
+      "symbol": "CUPID",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "GILLETTE",
+      "status": "ok",
+      "downloaded": 32
+    },
+    {
+      "symbol": "BAJAJCON",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "TATACONSUM",
+      "status": "ok",
+      "downloaded": 97
+    },
+    {
+      "symbol": "MARICO",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "PATANJALI",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "GOKULAGRO",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "UNITDSPR",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "AWL",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "ABDL",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "RADICO",
+      "status": "ok",
+      "downloaded": 88
+    },
+    {
+      "symbol": "TI",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "539533",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "GODFRYPHLP",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "HATSUN",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "KWIL",
+      "status": "ok",
+      "downloaded": 15
+    },
+    {
+      "symbol": "DODLA",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "AVANTIFEED",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "DOMS",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "LTFOODS",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "GAEL",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "ORKLAINDIA",
+      "status": "ok",
+      "downloaded": 12
+    },
+    {
+      "symbol": "KRBL",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "RENUKA",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "TRIVENI",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "JYOTHYLAB",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "MARUTI",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "HYUNDAI",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "M&M",
+      "status": "ok",
+      "downloaded": 121
+    },
+    {
+      "symbol": "TMPV",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "FORCEMOT",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "OLECTRA",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "BAJAJ-AUTO",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "TVSMOTOR",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "HEROMOTOCO",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "ATHERENERG",
+      "status": "ok",
+      "downloaded": 20
+    },
+    {
+      "symbol": "EICHERMOT",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "OLAELEC",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "MOTHERSON",
+      "status": "ok",
+      "downloaded": 87
+    },
+    {
+      "symbol": "BHARATFORG",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "BOSCHLTD",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "SCHAEFFLER",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "UNOMINDA",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "ENDURANCE",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "TIINDIA",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "ZFCVINDIA",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "SONACOMS",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "MSUMI",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "EXIDEIND",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "ASAHIINDIA",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "BELRISE",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "CRAFTSMAN",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "CIEINDIA",
+      "status": "ok",
+      "downloaded": 86
+    },
+    {
+      "symbol": "JBMA",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "SHRIPISTON",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "ARE&M",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "SANSERA",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "MINDACORP",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "GABRIEL",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "LUMAXTECH",
+      "status": "ok",
+      "downloaded": 89
+    },
+    {
+      "symbol": "BANCOINDIA",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "RKFORGE",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "SEDEMAC",
+      "status": "ok",
+      "downloaded": 5
+    },
+    {
+      "symbol": "VARROC",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "SUPRAJIT",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "PRICOLLTD",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "LGBBROSLTD",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "FIEMIND",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "MRF",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "SJS",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "BALKRISIND",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "APOLLOTYRE",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "JKTYRE",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "CEATLTD",
+      "status": "ok",
+      "downloaded": 105
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "DIVISLAB",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "TORNTPHARM",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "LUPIN",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "DRREDDY",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "CIPLA",
+      "status": "ok",
+      "downloaded": 91
+    },
+    {
+      "symbol": "ZYDUSLIFE",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "AUROPHARMA",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "MANKIND",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "GLENMARK",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "LAURUSLABS",
+      "status": "ok",
+      "downloaded": 87
+    },
+    {
+      "symbol": "ALKEM",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "BIOCON",
+      "status": "ok",
+      "downloaded": 88
+    },
+    {
+      "symbol": "ABBOTINDIA",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "GLAXO",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "AJANTPHARM",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "JBCHEPHARM",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "EMCURE",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "IPCALAB",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "GLAND",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "PFIZER",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "WOCKPHARMA",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "SAILIFE",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "NATCOPHARM",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "PPLPHARMA",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "ACUTAAS",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "ERIS",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "ONESOURCE",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "GRANULES",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "APLLTD",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "JUBLPHARMA",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "ALIVUS",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "CAPLIPOINT",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "CORONA",
+      "status": "ok",
+      "downloaded": 11
+    },
+    {
+      "symbol": "STAR",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "COHANCE",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "VIYASH",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "SHILPAMED",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "JSLL",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "SANOFI",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "AKUMS",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "SUDEEPPHRM",
+      "status": "ok",
+      "downloaded": 14
+    },
+    {
+      "symbol": "MARKSANS",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "BLUEJET",
+      "status": "ok",
+      "downloaded": 42
+    },
+    {
+      "symbol": "AARTIPHARM",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "FDC",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "SUPRIYA",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "APOLLOHOSP",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "MAXHEALTH",
+      "status": "ok",
+      "downloaded": 89
+    },
+    {
+      "symbol": "FORTIS",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "NH",
+      "status": "ok",
+      "downloaded": 90
+    },
+    {
+      "symbol": "ASTERDM",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "MEDANTA",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "AGARWALEYE",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "KIMS",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "PARKHOSPS",
+      "status": "ok",
+      "downloaded": 20
+    },
+    {
+      "symbol": "RAINBOW",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "HCG",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "JLHL",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "YATHARTH",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "THYROCARE",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "LALPATHLAB",
+      "status": "ok",
+      "downloaded": 91
+    },
+    {
+      "symbol": "NEPHROPLUS",
+      "status": "ok",
+      "downloaded": 7
+    },
+    {
+      "symbol": "INDGN",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "SYNGENE",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "POLYMED",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "TITAN",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "KALYANKJIL",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "THANGAMAYL",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "PNGJL",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "PCJEWELLER",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "BLUESTONE",
+      "status": "ok",
+      "downloaded": 16
+    },
+    {
+      "symbol": "ETHOSLTD",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "SKYGOLD",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "SENCO",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "ASIANPAINT",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "BERGEPAINT",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "LGEINDIA",
+      "status": "ok",
+      "downloaded": 24
+    },
+    {
+      "symbol": "AKZOINDIA",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "AMBER",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "BLUESTARCO",
+      "status": "ok",
+      "downloaded": 86
+    },
+    {
+      "symbol": "CROMPTON",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "VGUARD",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "WHIRLPOOL",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "TTKPRESTIG",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "EUREKAFORB",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "DIXON",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "HAVELLS",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "PGEL",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "METROBRAND",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "BATAINDIA",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "RELAXO",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "CAMPUS",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "CENTURYPLY",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "REDTAPE",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "GREENLAM",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "CELLO",
+      "status": "ok",
+      "downloaded": 42
+    },
+    {
+      "symbol": "SAFARI",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "CERA",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "NTPC",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "ADANIGREEN",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "NTPCGREEN",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "NHPC",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "JSWENERGY",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "ACMESOLAR",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "JPPOWER",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "RPOWER",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "CLEANMAX",
+      "status": "ok",
+      "downloaded": 15
+    },
+    {
+      "symbol": "NAVA",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "GMRP&UI",
+      "status": "ok",
+      "downloaded": 43
+    },
+    {
+      "symbol": "KPIGREEN",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "INOXGREEN",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "ADANIPOWER",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "TATAPOWER",
+      "status": "ok",
+      "downloaded": 86
+    },
+    {
+      "symbol": "TORNTPOWER",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "CESC",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "POWERGRID",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "PGINVIT",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "ADANIENSOL",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "ULTRACEMCO",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "GRASIM",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "SHREECEM",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "AMBUJACEM",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "JKCEMENT",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "ACC",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "RAMCOCEM",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "JSWCEMENT",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "INDIACEM",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "NUVOCO",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "STARCEMENT",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "BIRLACORPN",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "JKLAKSHMI",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "526570",
+      "status": "ok",
+      "downloaded": 21
+    },
+    {
+      "symbol": "PRSMJOHNSN",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "ADANIPORTS",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "GPPL",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "JSWINFRA",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "INDIGO",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "CONCOR",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "GMRAIRPORT",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "DELHIVERY",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "SHADOWFAX",
+      "status": "ok",
+      "downloaded": 11
+    },
+    {
+      "symbol": "TCI",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "NHIT",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "CUBEINVIT",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "VERTIS",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "543925",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "INDUSINVIT",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "GESHIP",
+      "status": "ok",
+      "downloaded": 93
+    },
+    {
+      "symbol": "SCI",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "SHREEJISPG",
+      "status": "ok",
+      "downloaded": 17
+    },
+    {
+      "symbol": "RIIT",
+      "status": "ok",
+      "downloaded": 6
+    },
+    {
+      "symbol": "REDINGTON",
+      "status": "ok",
+      "downloaded": 90
+    },
+    {
+      "symbol": "FSL",
+      "status": "ok",
+      "downloaded": 96
+    },
+    {
+      "symbol": "MMTC",
+      "status": "ok",
+      "downloaded": 32
+    },
+    {
+      "symbol": "NESCO",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "WEWORK",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "ECLERX",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "BEL",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "NDRINVIT",
+      "status": "ok",
+      "downloaded": 35
+    },
+    {
+      "symbol": "HAL",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "BDL",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "DATAPATTNS",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "GRSE",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "MTARTECH",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "ASTRAMICRO",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "AEQUS",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "ZENTEC",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "APOLLO",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "AXISCADES",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "MIDHANI",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "TMCV",
+      "status": "ok",
+      "downloaded": 18
+    },
+    {
+      "symbol": "ASHOKLEY",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "SMLMAH",
+      "status": "ok",
+      "downloaded": 32
+    },
+    {
+      "symbol": "ABB",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "POWERINDIA",
+      "status": "ok",
+      "downloaded": 88
+    },
+    {
+      "symbol": "SIEMENS",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "CGPOWER",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "GVT&D",
+      "status": "ok",
+      "downloaded": 92
+    },
+    {
+      "symbol": "ENRIN",
+      "status": "ok",
+      "downloaded": 16
+    },
+    {
+      "symbol": "BHEL",
+      "status": "ok",
+      "downloaded": 42
+    },
+    {
+      "symbol": "PARAS",
+      "status": "ok",
+      "downloaded": 32
+    },
+    {
+      "symbol": "THERMAX",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "SUZLON",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "INOXWIND",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "TRITURBINE",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "ATLANTAELE",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "AZAD",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "VOLTAMP",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "ELECON",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "TARIL",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "POWERICA",
+      "status": "ok",
+      "downloaded": 7
+    },
+    {
+      "symbol": "TRANSRAILL",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "CUMMINSIND",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "KIRLOSENG",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "ELGIEQUIP",
+      "status": "ok",
+      "downloaded": 71
+    },
+    {
+      "symbol": "KSB",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "KIRLPNU",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "KIRLOSBROS",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "POLYCAB",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "SHAKTIPUMP",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "RRKABEL",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "KEI",
+      "status": "ok",
+      "downloaded": 87
+    },
+    {
+      "symbol": "FINCABLES",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "COCHINSHIP",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "SWANDEF",
+      "status": "ok",
+      "downloaded": 24
+    },
+    {
+      "symbol": "WAAREEENER",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "MAZDOCK",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "PREMIERENE",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "WAAREERTL",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "GENUSPOWER",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "VIKRAMSOLR",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "AVALON",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "DIACABS",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "SAATVIKGL",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "UTLSOLAR",
+      "status": "ok",
+      "downloaded": 13
+    },
+    {
+      "symbol": "SHILCTECH",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "APLAPOLLO",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "WELCORP",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "GPIL",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "RATNAMANI",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "JINDALSAW",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "USHAMART",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "JAYNECOIND",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "SUPREMEIND",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "TIIL",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "FINPIPE",
+      "status": "ok",
+      "downloaded": 74
+    },
+    {
+      "symbol": "ASTRAL",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "SHAILY",
+      "status": "ok",
+      "downloaded": 72
+    },
+    {
+      "symbol": "GRWRHITECH",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "KINGFA",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "AIAENG",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "TIMETECHNO",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "HAPPYFORGE",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "BALUFORGE",
+      "status": "ok",
+      "downloaded": 45
+    },
+    {
+      "symbol": "GRINDWELL",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "TIMKEN",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "SKFINDUS",
+      "status": "ok",
+      "downloaded": 11
+    },
+    {
+      "symbol": "SKFINDIA",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "HONAUT",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "CPPLUS",
+      "status": "ok",
+      "downloaded": 22
+    },
+    {
+      "symbol": "JYOTICNC",
+      "status": "ok",
+      "downloaded": 35
+    },
+    {
+      "symbol": "SYRMA",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "LMW",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "CARBORUNIV",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "TEGA",
+      "status": "ok",
+      "downloaded": 62
+    },
+    {
+      "symbol": "LLOYDSENGG",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "DYNAMATECH",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "PTCIL",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "HBLENGINE",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "ESABINDIA",
+      "status": "ok",
+      "downloaded": 19
+    },
+    {
+      "symbol": "INOXINDIA",
+      "status": "ok",
+      "downloaded": 43
+    },
+    {
+      "symbol": "KRN",
+      "status": "ok",
+      "downloaded": 33
+    },
+    {
+      "symbol": "BEML",
+      "status": "ok",
+      "downloaded": 43
+    },
+    {
+      "symbol": "GRAPHITE",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "HEG",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "RHIM",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "ACE",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "TITAGARH",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "JWL",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "EPL",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "PRECWIRE",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "BORORENEW",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "JSWSTEEL",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "TATASTEEL",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "JINDALSTEL",
+      "status": "ok",
+      "downloaded": 87
+    },
+    {
+      "symbol": "SAIL",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "JSL",
+      "status": "ok",
+      "downloaded": 86
+    },
+    {
+      "symbol": "SARDAEN",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "NSLNISP",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "VEDL",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "JAINREC",
+      "status": "ok",
+      "downloaded": 19
+    },
+    {
+      "symbol": "ADANIENT",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "HINDZINC",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "NATIONALUM",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "HINDALCO",
+      "status": "ok",
+      "downloaded": 113
+    },
+    {
+      "symbol": "LLOYDSME",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "GMDCLTD",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "NMDC",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "GRAVITA",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "KIOCL",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "LLOYDSENT",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "SGMART",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "IMFA",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "KIRLFER",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "DMART",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "VMM",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "ETERNAL",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "MEESHO",
+      "status": "ok",
+      "downloaded": 11
+    },
+    {
+      "symbol": "SWIGGY",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "FIRSTCRY",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "NYKAA",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "CARTRADE",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "LENSKART",
+      "status": "ok",
+      "downloaded": 13
+    },
+    {
+      "symbol": "ABLBL",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "TRENT",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "MANYAVAR",
+      "status": "ok",
+      "downloaded": 61
+    },
+    {
+      "symbol": "ABFRL",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "V2RETAIL",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "AVL",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "ARVINDFASN",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "INDHOTEL",
+      "status": "ok",
+      "downloaded": 88
+    },
+    {
+      "symbol": "ITCHOTELS",
+      "status": "ok",
+      "downloaded": 18
+    },
+    {
+      "symbol": "THELEELA",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "CHALET",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "INDIAMART",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "NAUKRI",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "TBOTEK",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "BLS",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "IRCTC",
+      "status": "ok",
+      "downloaded": 49
+    },
+    {
+      "symbol": "TRAVELFOOD",
+      "status": "ok",
+      "downloaded": 17
+    },
+    {
+      "symbol": "DEVYANI",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "JUBLFOOD",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "WESTLIFE",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "MEDPLUS",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "DLF",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "SAPPHIRE",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "LODHA",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "OBEROIRLTY",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "PHOENIXLTD",
+      "status": "ok",
+      "downloaded": 102
+    },
+    {
+      "symbol": "GODREJPROP",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "ANANTRAJ",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "SOBHA",
+      "status": "ok",
+      "downloaded": 66
+    },
+    {
+      "symbol": "PRESTIGE",
+      "status": "ok",
+      "downloaded": 47
+    },
+    {
+      "symbol": "EMBDL",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "LOTUSDEV",
+      "status": "ok",
+      "downloaded": 22
+    },
+    {
+      "symbol": "MAHLIFE",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "MAXESTATES",
+      "status": "ok",
+      "downloaded": 45
+    },
+    {
+      "symbol": "KALPATARU",
+      "status": "ok",
+      "downloaded": 26
+    },
+    {
+      "symbol": "KRT",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "EMBASSY",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "BIRET",
+      "status": "ok",
+      "downloaded": 34
+    },
+    {
+      "symbol": "NXST",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "PIDILITIND",
+      "status": "ok",
+      "downloaded": 97
+    },
+    {
+      "symbol": "FLUOROCHEM",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "MINDSPACE",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "DEEPAKNTR",
+      "status": "ok",
+      "downloaded": 57
+    },
+    {
+      "symbol": "ATUL",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "BASF",
+      "status": "ok",
+      "downloaded": 49
+    },
+    {
+      "symbol": "NAVINFLUOR",
+      "status": "ok",
+      "downloaded": 122
+    },
+    {
+      "symbol": "AARTIIND",
+      "status": "ok",
+      "downloaded": 84
+    },
+    {
+      "symbol": "AETHER",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "ANURAS",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "FINEORG",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "VINATIORGA",
+      "status": "ok",
+      "downloaded": 35
+    },
+    {
+      "symbol": "CLEAN",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "PRIVISCL",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "500123",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "ALKYLAMINE",
+      "status": "ok",
+      "downloaded": 33
+    },
+    {
+      "symbol": "GALAXYSURF",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "ACI",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "SOLARINDS",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "SRF",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "DEEPAKFERT",
+      "status": "ok",
+      "downloaded": 75
+    },
+    {
+      "symbol": "GNFC",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "COROMANDEL",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "FACT",
+      "status": "ok",
+      "downloaded": 6
+    },
+    {
+      "symbol": "CHAMBLFERT",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "PARADEEP",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "RCF",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "GSFC",
+      "status": "ok",
+      "downloaded": 59
+    },
+    {
+      "symbol": "LINDEINDIA",
+      "status": "ok",
+      "downloaded": 33
+    },
+    {
+      "symbol": "BAYERCROP",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "UPL",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "SHARDACROP",
+      "status": "ok",
+      "downloaded": 50
+    },
+    {
+      "symbol": "HSCL",
+      "status": "ok",
+      "downloaded": 58
+    },
+    {
+      "symbol": "PCBL",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "SPLPETRO",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "SWANCORP",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "SUDARSCHEM",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "COLPAL",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "PIIND",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "HINDCOPPER",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "VOLTAS",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "ANTHEM",
+      "status": "ok",
+      "downloaded": 10
+    },
+    {
+      "symbol": "APARINDS",
+      "status": "ok",
+      "downloaded": 95
+    },
+    {
+      "symbol": "UBL",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "NLCINDIA",
+      "status": "ok",
+      "downloaded": 46
+    },
+    {
+      "symbol": "DALBHARAT",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "POONAWALLA",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "TATAINVEST",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "ESCORTS",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "CENTRALBK",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "PGHH",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "KPRMILL",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "PWL",
+      "status": "ok",
+      "downloaded": 18
+    },
+    {
+      "symbol": "ITI",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "SJVN",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "KAYNES",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "NBCC",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "SHYAMMETL",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "TENNIND",
+      "status": "ok",
+      "downloaded": 12
+    },
+    {
+      "symbol": "GUJGASLTD",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "SCHNEIDER",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "IGL",
+      "status": "ok",
+      "downloaded": 51
+    },
+    {
+      "symbol": "SUMICHEM",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "ASTRAZEN",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "URBANCO",
+      "status": "ok",
+      "downloaded": 16
+    },
+    {
+      "symbol": "RBLBANK",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "EIHOTEL",
+      "status": "ok",
+      "downloaded": 77
+    },
+    {
+      "symbol": "NETWEB",
+      "status": "ok",
+      "downloaded": 56
+    },
+    {
+      "symbol": "NEULANDLAB",
+      "status": "ok",
+      "downloaded": 67
+    },
+    {
+      "symbol": "EMAMILTD",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "INDIGRID",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "SAMMAANCAP",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "KAJARIACER",
+      "status": "ok",
+      "downloaded": 63
+    },
+    {
+      "symbol": "BRIGADE",
+      "status": "ok",
+      "downloaded": 79
+    },
+    {
+      "symbol": "TATACHEM",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "SUNDRMFAST",
+      "status": "ok",
+      "downloaded": 40
+    },
+    {
+      "symbol": "EMMVEE",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "GALLANTT",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "KANSAINER",
+      "status": "ok",
+      "downloaded": 83
+    },
+    {
+      "symbol": "IGIL",
+      "status": "ok",
+      "downloaded": 22
+    },
+    {
+      "symbol": "EIDPARRY",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "RUBICON",
+      "status": "ok",
+      "downloaded": 13
+    },
+    {
+      "symbol": "CCL",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "CANHLIFE",
+      "status": "ok",
+      "downloaded": 20
+    },
+    {
+      "symbol": "VENTIVE",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "J&KBANK",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "TDPOWERSYS",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "INGERRAND",
+      "status": "ok",
+      "downloaded": 22
+    },
+    {
+      "symbol": "CMPDI",
+      "status": "ok",
+      "downloaded": 4
+    },
+    {
+      "symbol": "SIGNATURE",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "BLUEDART",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "GODREJAGRO",
+      "status": "ok",
+      "downloaded": 92
+    },
+    {
+      "symbol": "CONCORDBIO",
+      "status": "ok",
+      "downloaded": 48
+    },
+    {
+      "symbol": "SANOFICONR",
+      "status": "ok",
+      "downloaded": 21
+    },
+    {
+      "symbol": "HONASA",
+      "status": "ok",
+      "downloaded": 39
+    },
+    {
+      "symbol": "BLACKBUCK",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "BBTC",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "JUBLINGREA",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "VIJAYA",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "RITES",
+      "status": "ok",
+      "downloaded": 81
+    },
+    {
+      "symbol": "SANDUMA",
+      "status": "ok",
+      "downloaded": 52
+    },
+    {
+      "symbol": "BALRAMCHIN",
+      "status": "ok",
+      "downloaded": 73
+    },
+    {
+      "symbol": "METROPOLIS",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "VESUVIUS",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "LEMONTREE",
+      "status": "ok",
+      "downloaded": 85
+    },
+    {
+      "symbol": "ASKAUTOLTD",
+      "status": "ok",
+      "downloaded": 42
+    },
+    {
+      "symbol": "MAHSEAMLES",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "PGHL",
+      "status": "ok",
+      "downloaded": 23
+    },
+    {
+      "symbol": "TTML",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "TEJASNET",
+      "status": "ok",
+      "downloaded": 87
+    },
+    {
+      "symbol": "QPOWER",
+      "status": "ok",
+      "downloaded": 31
+    },
+    {
+      "symbol": "IXIGO",
+      "status": "ok",
+      "downloaded": 38
+    },
+    {
+      "symbol": "MANORAMA",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "JKPAPER",
+      "status": "ok",
+      "downloaded": 33
+    },
+    {
+      "symbol": "MOIL",
+      "status": "ok",
+      "downloaded": 36
+    },
+    {
+      "symbol": "INDIAGLYCO",
+      "status": "ok",
+      "downloaded": 68
+    },
+    {
+      "symbol": "PRAJIND",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "KOVAI",
+      "status": "ok",
+      "downloaded": 29
+    },
+    {
+      "symbol": "GARFIBRES",
+      "status": "ok",
+      "downloaded": 45
+    },
+    {
+      "symbol": "JAIBALAJI",
+      "status": "ok",
+      "downloaded": 43
+    },
+    {
+      "symbol": "SFL",
+      "status": "ok",
+      "downloaded": 80
+    },
+    {
+      "symbol": "PICCADIL",
+      "status": "ok",
+      "downloaded": 37
+    },
+    {
+      "symbol": "AJAXENGG",
+      "status": "ok",
+      "downloaded": 20
+    },
+    {
+      "symbol": "DBREALTY",
+      "status": "ok",
+      "downloaded": 28
+    },
+    {
+      "symbol": "ENTERO",
+      "status": "ok",
+      "downloaded": 41
+    },
+    {
+      "symbol": "ELECTCAST",
+      "status": "ok",
+      "downloaded": 64
+    },
+    {
+      "symbol": "SYMPHONY",
+      "status": "ok",
+      "downloaded": 69
+    },
+    {
+      "symbol": "RUSTOMJEE",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "PAGEIND",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "ARVIND",
+      "status": "ok",
+      "downloaded": 55
+    },
+    {
+      "symbol": "PGIL",
+      "status": "ok",
+      "downloaded": 65
+    },
+    {
+      "symbol": "VTL",
+      "status": "ok",
+      "downloaded": 44
+    },
+    {
+      "symbol": "TRIDENT",
+      "status": "ok",
+      "downloaded": 60
+    },
+    {
+      "symbol": "WELSPUNLIV",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "ALOKINDS",
+      "status": "ok",
+      "downloaded": 30
+    },
+    {
+      "symbol": "3MINDIA",
+      "status": "ok",
+      "downloaded": 32
+    },
+    {
+      "symbol": "GODREJIND",
+      "status": "ok",
+      "downloaded": 54
+    },
+    {
+      "symbol": "DCMSHRIRAM",
+      "status": "ok",
+      "downloaded": 82
+    },
+    {
+      "symbol": "PFOCUS",
+      "status": "ok",
+      "downloaded": 27
+    },
+    {
+      "symbol": "TIPSMUSIC",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "SUNTV",
+      "status": "ok",
+      "downloaded": 25
+    },
+    {
+      "symbol": "ZEEL",
+      "status": "ok",
+      "downloaded": 53
+    },
+    {
+      "symbol": "SAREGAMA",
+      "status": "ok",
+      "downloaded": 90
+    },
+    {
+      "symbol": "NAZARA",
+      "status": "ok",
+      "downloaded": 76
+    },
+    {
+      "symbol": "ABREL",
+      "status": "ok",
+      "downloaded": 87
+    },
+    {
+      "symbol": "PVRINOX",
+      "status": "ok",
+      "downloaded": 78
+    },
+    {
+      "symbol": "WABAG",
+      "status": "ok",
+      "downloaded": 70
+    },
+    {
+      "symbol": "IONEXCHANG",
+      "status": "ok",
+      "downloaded": 86
+    }
+  ]
+}

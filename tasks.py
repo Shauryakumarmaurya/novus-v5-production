@@ -299,6 +299,7 @@ def generate_financial_report_from_rag(ticker):
             "evasion_data": evasion_data,
             "agent_trails": agent_trails_summary,
             "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
+            "data_ingestion_completeness": getattr(state, "data_ingestion_completeness", 1.0),
             "status": "completed"
         }
 
@@ -398,6 +399,7 @@ def generate_financial_report(ticker, files_data):
             "agent_trails": agent_trails_summary,
             "rag_stats": rag_stats,
             "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
+            "data_ingestion_completeness": getattr(state, "data_ingestion_completeness", 1.0),
             "status": "completed",
         }
 

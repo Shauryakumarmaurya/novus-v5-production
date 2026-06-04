@@ -26,6 +26,7 @@ from novus_v3.core.tools import Tool, ToolRegistry, build_shared_tools
 # ═══════════════════════════════════════════════════════════════════════════
 
 class ForensicInvestigatorV3(AgentV3):
+    REQUIRED_INPUTS = ["profit_loss", "balance_sheet", "cash_flow", "notes_to_accounts"]
     """
     v2 → v3 changes:
     - Was: raw schema dump, 1 LLM call, no verification, no sector awareness
@@ -113,6 +114,7 @@ class ForensicInvestigatorV3(AgentV3):
 # ═══════════════════════════════════════════════════════════════════════════
 
 class NarrativeDecoderV3(AgentV3):
+    REQUIRED_INPUTS = ["earnings_transcript"]
     """
     v2 → v3 changes:
     - Was: raw schema dump, compared Q3 vs Q4 without verifying both exist
@@ -217,6 +219,7 @@ class NarrativeDecoderV3(AgentV3):
 # ═══════════════════════════════════════════════════════════════════════════
 
 class MoatArchitectV3(AgentV3):
+    REQUIRED_INPUTS = ["management_discussion_and_analysis", "profit_loss"]
     """
     v2 → v3 changes:
     - Was: already best-in-class with example prompts and sector config
@@ -294,6 +297,7 @@ class MoatArchitectV3(AgentV3):
 # ═══════════════════════════════════════════════════════════════════════════
 
 class CapitalAllocatorV3(AgentV3):
+    REQUIRED_INPUTS = ["cash_flow", "balance_sheet", "management_discussion_and_analysis"]
     """
     v2 → v3 changes:
     - Was: already well-scoped (qualitative only, ROIC in forensic_quant)
@@ -323,6 +327,7 @@ class CapitalAllocatorV3(AgentV3):
     "unrelated_acquisitions": [
       "Acquired D2C beauty brand for Rs 450 Cr — outside core FMCG competency"
     ],
+    "evidence": "Mentioned in Q2 MD&A",
     "cash_hoarding": false,
     "excessive_goodwill": false,
     "verdict": "1 unrelated acquisition in 12 months — early stage, not yet a pattern"
@@ -333,7 +338,8 @@ class CapitalAllocatorV3(AgentV3):
        "integration_status": "Integrated — 15% revenue growth post-acquisition",
        "evidence": "Q4 transcript: 'Our nutrition portfolio grew 15% since acquisition'"}
     ],
-    "goodwill_impairment_history": "No impairment in last 3 years"
+    "goodwill_impairment_history": "No impairment in last 3 years",
+    "evidence": "Checked historical Balance Sheets"
   },
   "capital_return": {
     "dividend_pattern": "Growing — DPS Rs 34 to Rs 39 over 3 years",
@@ -375,6 +381,7 @@ class CapitalAllocatorV3(AgentV3):
 # ═══════════════════════════════════════════════════════════════════════════
 
 class ManagementQualityV3(AgentV3):
+    REQUIRED_INPUTS = ["corporate_governance_report", "shareholding_pattern"]
     """
     NEW in v3. Your v2 had NO agent for this.
     
@@ -404,7 +411,8 @@ class ManagementQualityV3(AgentV3):
     "holding_pct": 67.2,
     "pledge_pct": 0.0,
     "holding_trend": "Stable for 3 years — no stake sales",
-    "insider_transactions": "No significant insider transactions in last 12 months"
+    "insider_transactions": "No significant insider transactions in last 12 months",
+    "evidence": "SAST disclosures and shareholding pattern Q4"
   },
   "board_quality": {
     "independent_directors_pct": 50,
@@ -422,7 +430,8 @@ class ManagementQualityV3(AgentV3):
   "compensation_alignment": {
     "md_compensation_vs_profit": "MD comp Rs 42 Cr on Rs 9,800 Cr PAT — 0.4% — reasonable",
     "variable_vs_fixed": "60% variable — aligned with performance",
-    "esos_dilution": "ESOS pool is 0.8% of outstanding shares — minimal dilution"
+    "esos_dilution": "ESOS pool is 0.8% of outstanding shares — minimal dilution",
+    "evidence": "Annual report remuneration section"
   },
   "governance_flags": [
     "2 independent directors serving > 8 years — re-evaluate independence",
@@ -462,6 +471,7 @@ class ManagementQualityV3(AgentV3):
 # already correctly designed (Law 2: Python calculates, LLM narrates).
 
 class ForensicQuantV3:
+    REQUIRED_INPUTS = ["profit_loss", "balance_sheet", "cash_flow"]
     """
     Pure Python agent — no LLM calls, no ReAct loop.
     
@@ -618,6 +628,7 @@ class ForensicQuantV3:
 # ═══════════════════════════════════════════════════════════════════════════
 
 class PMSynthesisV3(AgentV3):
+    REQUIRED_INPUTS = []
     """
     v2 → v3 changes:
     - Was: hardcoded agent name lookups from state, single LLM call
