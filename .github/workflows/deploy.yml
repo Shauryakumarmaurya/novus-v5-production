@@ -32,9 +32,12 @@ jobs:
           echo "Found app in: $APP_DIR"
           cd "$APP_DIR"
           
+          # Fix git ownership issue if cloned via sudo
+          git config --global --add safe.directory "$APP_DIR"
+          
           # Pull the latest changes from GitHub
           git reset --hard
           git pull origin main
           
-          # Rebuild and restart the containers with 10 workers
-          docker compose up -d --build --scale worker=10
+          # Rebuild and restart the containers with 10 workers (using sudo for permissions)
+          sudo docker compose up -d --build --scale worker=10
