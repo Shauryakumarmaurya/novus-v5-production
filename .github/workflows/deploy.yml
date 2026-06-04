@@ -20,8 +20,16 @@ jobs:
         username: ${{ secrets.AZURE_VM_USERNAME }}
         key: ${{ secrets.AZURE_VM_SSH_KEY }}
         script: |
-          # Go to the project directory (update this path if it's different on the VM)
-          cd ~/novus-v5-production || cd /var/www/novus-v5-production
+          # Find the directory containing docker-compose.yml in the home folder
+          APP_DIR=$(find ~ -maxdepth 3 -name "docker-compose.yml" -type f 2>/dev/null | head -n 1)
+          
+          if [ -z "$APP_DIR" ]; then
+            echo "Error: Could not find the app directory containing docker-compose.yml"
+            exit 1
+          fi
+          
+          echo "Found app in: $APP_DIR"
+          cd "$APP_DIR"
           
           # Pull the latest changes from GitHub
           git reset --hard
