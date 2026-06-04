@@ -622,54 +622,54 @@ def export_pdf():
     report_date = date.today().strftime("%B %d, %Y")
     
     # Wrap in minimal HTML with professional research-report typography
-    html_template = f"""
+    html_template = """
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <style>
-            @page {{
+            @page {
                 margin: 2cm 2cm 2.5cm 2cm;
-                @top-left {{
+                @top-left {
                     content: "{ticker} — Novus Research Report";
                     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                     font-size: 7.5pt;
                     color: #888;
                     letter-spacing: 0.5pt;
-                }}
-                @top-right {{
+                }
+                @top-right {
                     content: "As of {report_date}";
                     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                     font-size: 7.5pt;
                     color: #888;
-                }}
-                @bottom-center {{
+                }
+                @bottom-center {
                     content: "{ticker} — p." counter(page) " of " counter(pages);
                     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                     font-size: 7.5pt;
                     color: #888;
                     letter-spacing: 0.5pt;
-                }}
-            }}
-            @page :first {{
-                @top-left {{ content: none; }}
-                @top-right {{ content: none; }}
-            }}
-            body {{
+                }
+            }
+            @page :first {
+                @top-left { content: none; }
+                @top-right { content: none; }
+            }
+            body {
                 font-family: "Georgia", "Times New Roman", serif;
                 font-size: 10.5pt;
                 line-height: 1.55;
                 color: #1a1a1a;
                 background: #fff;
-            }}
+            }
             /* ── Report Title Block ── */
-            .report-header {{
+            .report-header {
                 text-align: center;
                 border-bottom: 2.5px solid #111;
                 padding-bottom: 14px;
                 margin-bottom: 24px;
-            }}
-            .report-header h1 {{
+            }
+            .report-header h1 {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 20pt;
                 font-weight: 700;
@@ -678,22 +678,22 @@ def export_pdf():
                 border: none;
                 padding: 0;
                 color: #000;
-            }}
-            .report-header .subtitle {{
+            }
+            .report-header .subtitle {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 9pt;
                 color: #666;
                 letter-spacing: 1pt;
                 text-transform: uppercase;
-            }}
-            .report-header .date {{
+            }
+            .report-header .date {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 8pt;
                 color: #999;
                 margin-top: 2px;
-            }}
+            }
             /* ── Typography Hierarchy ── */
-            h1 {{
+            h1 {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 16pt;
                 font-weight: 700;
@@ -703,8 +703,8 @@ def export_pdf():
                 margin-top: 28px;
                 margin-bottom: 10px;
                 page-break-after: avoid;
-            }}
-            h2 {{
+            }
+            h2 {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 13pt;
                 font-weight: 600;
@@ -714,8 +714,8 @@ def export_pdf():
                 margin-top: 22px;
                 margin-bottom: 8px;
                 page-break-after: avoid;
-            }}
-            h3 {{
+            }
+            h3 {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 11pt;
                 font-weight: 600;
@@ -725,8 +725,8 @@ def export_pdf():
                 border: none;
                 padding: 0;
                 page-break-after: avoid;
-            }}
-            h4 {{
+            }
+            h4 {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 10pt;
                 font-weight: 600;
@@ -736,66 +736,66 @@ def export_pdf():
                 border: none;
                 padding: 0;
                 page-break-after: avoid;
-            }}
-            p {{
+            }
+            p {
                 margin-bottom: 8px;
                 orphans: 3;
                 widows: 3;
-            }}
-            ul, ol {{
+            }
+            ul, ol {
                 margin-left: 1.2em;
                 margin-bottom: 10px;
-            }}
-            li {{
+            }
+            li {
                 margin-bottom: 4px;
-            }}
-            strong {{
+            }
+            strong {
                 font-weight: 700;
-            }}
+            }
             /* ── Code / Metric badges ── */
-            pre, code {{
+            pre, code {
                 font-family: "Courier New", Courier, monospace;
                 font-size: 8.5pt;
                 background: #f5f5f5;
                 padding: 2px 4px;
                 border-radius: 2px;
-            }}
-            pre {{
+            }
+            pre {
                 padding: 10px;
                 border: 1px solid #e0e0e0;
                 overflow-x: auto;
                 page-break-inside: avoid;
-            }}
-            .calc-badge {{
+            }
+            .calc-badge {
                 font-family: monospace;
                 font-weight: bold;
                 background: #eee;
                 padding: 1px 3px;
                 border: 1px solid #ccc;
-            }}
+            }
             /* ── Tables ── */
-            table {{
+            table {
                 width: 100%;
                 border-collapse: collapse;
                 margin: 14px 0;
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-size: 8.5pt;
                 page-break-inside: avoid;
-            }}
-            th, td {{
+            }
+            th, td {
                 border: 1px solid #d0d0d0;
                 padding: 6px 8px;
                 text-align: left;
-            }}
-            th {{
+            }
+            th {
                 background-color: #f0f0f0;
                 font-weight: 600;
-            }}
-            tr:nth-child(even) {{
+            }
+            tr:nth-child(even) {
                 background-color: #fafafa;
-            }}
+            }
             /* ── Disclaimer ── */
-            .disclaimer {{
+            .disclaimer {
                 margin-top: 30px;
                 padding-top: 12px;
                 border-top: 1px solid #ccc;
@@ -803,7 +803,7 @@ def export_pdf():
                 color: #999;
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                 line-height: 1.4;
-            }}
+            }
             /* ── Tearsheet CSS ── */
             .tearsheet {
                 margin-bottom: 24px;
@@ -1068,7 +1068,7 @@ def export_pdf():
     try:
         # Prepend tearsheet and append signals to content_html
         full_html = tearsheet_html + content_html + signal_html
-        pdf_bytes = HTML(string=html_template.format(ticker=ticker, report_date=report_date, content_html=full_html)).write_pdf()
+        pdf_bytes = HTML(string=html_template.replace("{ticker}", ticker).replace("{report_date}", report_date).replace("{content_html}", full_html)).write_pdf()
         
         return send_file(
             io.BytesIO(pdf_bytes),
