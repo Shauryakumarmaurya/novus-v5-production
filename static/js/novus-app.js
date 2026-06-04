@@ -341,3 +341,29 @@ modalBackdrop.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalBackdrop.classList.contains('visible')) closeModal();
 });
+
+// ── RAG UI Bindings ──
+import { ragBtn, setRagLoadingState } from './novus-core.js';
+
+if (ragBtn) {
+    ragBtn.addEventListener('click', async () => {
+        const ticker = tickerInput.value.trim();
+        if (!ticker) { alert('ENTER_TICKER'); return; }
+        setRagLoadingState(true);
+        startAnalysis('rag');
+        try {
+            const resp = await fetch('/api/v1/analyze_rag', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ticker }),
+            });
+            if (!resp.ok) { let msg = `Status: ${resp.status}`; try { const e = await resp.json(); msg = e.error || msg; } catch {} throw new Error(msg); }
+            const { job_id } = await resp.json();
+            pollJob(job_id);
+        } catch (err) {
+            displayError(err.message || 'RAG Exception.');
+            setLoadingState(false);
+            setRagLoadingState(false);
+        }
+    });
+}
