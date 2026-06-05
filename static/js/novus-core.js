@@ -72,6 +72,45 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Highlight negative growth metrics
                     text = text.replace(/(declining|down|decrease[d]?|negative|drop|loss|falling|contraction)\s+([^\s<]*?(?:\d+\.?\d*[%x]?|bps|mn|cr))\b/gi, '$1 <span class="text-semantic-red font-mono font-bold">$2</span>');
 
+                    // Intercept Risk/Opportunity Arrays
+                    text = text.replace(/<li>\s*<strong>(Risk|Opportunity):?<\/strong>\s*(.*?)\s*\|\s*<strong>(?:Probability|Likelihood):?<\/strong>\s*(.*?)\s*\|\s*<strong>Impact:?<\/strong>\s*(.*?)\s*<\/li>/gi, function(match, typeLabel, contentText, probText, impactText) {
+                        const isRisk = typeLabel.toLowerCase() === 'risk';
+                        const probClean = probText.replace(/<\/?[^>]+(>|$)/g, "").trim().toUpperCase(); // Strip HTML tags just in case
+                        
+                        let probClass = 'text-semantic-green bg-semantic-green/10 border-semantic-green/30';
+                        if (probClean === 'HIGH' || probClean.includes('HIGH')) {
+                            probClass = isRisk ? 'text-semantic-red bg-semantic-red/10 border-semantic-red/30' : 'text-semantic-green bg-semantic-green/10 border-semantic-green/30';
+                        } else if (probClean === 'MEDIUM' || probClean.includes('MEDIUM')) {
+                            probClass = 'text-semantic-amber bg-semantic-amber/10 border-semantic-amber/30';
+                        }
+                        
+                        const accentBorder = isRisk ? 'border-l-semantic-red' : 'border-l-semantic-green';
+
+                        return `
+                            <div class="mb-4 bg-base-elevated rounded-r-md border border-base-border ${accentBorder} border-l-4 overflow-hidden shadow-sm not-prose">
+                                <div class="px-4 py-3 border-b border-base-border/50 bg-black/20 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                                    <div class="font-sans font-medium text-txt-primary leading-snug">
+                                        <span class="text-[10px] uppercase tracking-wider font-bold ${isRisk ? 'text-semantic-red' : 'text-semantic-green'} mr-2">${typeLabel.toUpperCase()}</span>
+                                        ${contentText.trim()}
+                                    </div>
+                                    <div class="flex flex-col items-start sm:items-end shrink-0 gap-1 mt-1 sm:mt-0">
+                                        <span class="text-[10px] uppercase tracking-wider font-semibold text-txt-muted">Probability</span>
+                                        <span class="text-[11px] px-2 py-0.5 rounded border ${probClass} font-mono font-bold">${probText.trim()}</span>
+                                    </div>
+                                </div>
+                                <div class="px-4 py-3 bg-base-bg/50">
+                                    <div class="text-[10px] uppercase tracking-wider font-semibold text-txt-muted mb-1.5">Impact Analysis</div>
+                                    <div class="text-sm font-sans text-txt-secondary leading-relaxed">${impactText.trim()}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // Cleanup empty <ul> wrappers left behind if all LIs are converted to divs
+                    text = text.replace(/<ul>\s*(<div class="mb-4 bg-base-elevated[\s\S]*?<\/div>\s*)+<\/ul>/gi, function(match) {
+                        return match.replace(/<ul>|<\/ul>/g, '');
+                    });
+
                     return text;
                 }
             };
@@ -1085,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ── PDF Export (Backend WeasyPrint) ──
             exportPdfBtn.addEventListener('click', async () => {
                 const element = document.getElementById('report-content');
-                if (!element || !element.innerHTML.trim()) { alert('No report content to export.'); return; }
+                if (!element || !element.innerHTML.trim()) { showToast('No report content to export.', 'error'); return; }
                 const originalText = exportPdfBtn.innerHTML;
                 exportPdfBtn.innerHTML = '<div class="w-3 h-3 border border-accent-brand/30 border-t-accent-brand rounded-full animate-spin mr-1.5"></div>GENERATING...';
                 exportPdfBtn.disabled = true;
@@ -1143,7 +1182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                 } catch (error) {
                     console.error('PDF Export Error:', error);
-                    alert("Failed to export: " + error.message);
+                    showToast("Failed to export: " + error.message, 'error');
                 } finally {
                     exportPdfBtn.innerHTML = originalText;
                     exportPdfBtn.disabled = false;
@@ -1199,7 +1238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ragBtn.addEventListener('click', async () => {
                 const ticker = tickerInput.value.trim();
-                if (!ticker) { alert('ENTER_TICKER'); return; }
+                if (!ticker) { showToast('Please enter a target ticker first.', 'error'); return; }
                 setRagLoadingState(true);
                 startAnalysis('rag');
                 try {
