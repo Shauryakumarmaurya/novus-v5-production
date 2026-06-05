@@ -115,7 +115,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
-            const markdownConverter = new showdown.Converter({ extensions: [terminalStylesExt, semanticExt], tables: true });
+            // Phase 2 Extension: Wrap H2 sections in beautiful UI cards
+            const sectionCardExt = {
+                type: 'output',
+                filter: function (text) {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = text;
+                    
+                    const h2s = temp.querySelectorAll('h2');
+                    if (h2s.length === 0) return text; // If no H2, leave as is
+
+                    const newContainer = document.createElement('div');
+                    let currentSection = null;
+                    let currentBody = null;
+
+                    Array.from(temp.childNodes).forEach(node => {
+                        if (node.nodeName === 'H2') {
+                            currentSection = document.createElement('div');
+                            currentSection.className = 'mb-8 bg-base-elevated rounded-lg border border-base-border/50 shadow-lg overflow-hidden';
+                            
+                            const headerBg = document.createElement('div');
+                            headerBg.className = 'px-6 py-4 border-b border-base-border/30 bg-black/40';
+                            
+                            const h2Clone = node.cloneNode(true);
+                            // Override default prose h2 styles with high specificity tailwind
+                            h2Clone.className = 'font-sans font-semibold text-xl text-txt-primary !m-0 !p-0 !border-none';
+                            headerBg.appendChild(h2Clone);
+                            
+                            currentSection.appendChild(headerBg);
+                            
+                            currentBody = document.createElement('div');
+                            // Keep report-prose formatting inside the body, but add padding
+                            currentBody.className = 'p-6 report-prose-body';
+                            currentSection.appendChild(currentBody);
+                            
+                            newContainer.appendChild(currentSection);
+                        } else if (currentBody) {
+                            currentBody.appendChild(node.cloneNode(true));
+                        } else {
+                            newContainer.appendChild(node.cloneNode(true));
+                        }
+                    });
+                    
+                    return newContainer.innerHTML;
+                }
+            };
+
+            const markdownConverter = new showdown.Converter({
+                tables: true,
+                extensions: [terminalStylesExt, semanticExt, sectionCardExt]
+            });
             window.terminalStylesExt = terminalStylesExt;
             window.semanticExt = semanticExt;
 
