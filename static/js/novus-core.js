@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 assemble: 'Assembling Final Report',
                 complete: 'Finalizing Display',
             };
-            const allAgents = ['extract_pdfs', 'planning', 'forensic_quant', 'forensic_investigator', 'narrative_decoder', 'moat_architect', 'capital_allocator', 'synthesis'];
+            const allAgents = ['extract_pdfs', 'planning', 'forensic_quant', 'forensic_investigator', 'narrative_decoder', 'moat_architect', 'capital_allocator', 'pm_synthesis'];
 
             function initAgentDots() {
                 agentStatusList.innerHTML = '';
@@ -474,6 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 narrative_decoder: { name: 'Narrative Decoder', type: 'nlp', thinkingMsg: 'Parsing management commentary for evasion patterns...' },
                 moat_architect: { name: 'Moat Architect', type: 'nlp', thinkingMsg: 'Evaluating competitive moat durability & pricing power...' },
                 capital_allocator: { name: 'Capital Allocator', type: 'quant', thinkingMsg: 'Reviewing ROIC vs WACC, capital deployment efficiency...' },
+                pm_synthesis: { name: 'Final Synthesis', type: 'pm', thinkingMsg: 'Synthesizing findings into a final Institutional Report...' },
             };
 
             // Track which cards have already been populated to avoid re-rendering
@@ -608,9 +609,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     populateCard(agentName, output);
                 }
 
-                // Update counter
-                const total = 5;
-                const agentsDone = completedAgents.filter(a => a !== 'planning').length;
+                // Update counter dynamically
+                const total = allAgents.filter(a => a !== 'planning' && a !== 'extract_pdfs').length;
+                const agentsDone = completedAgents.filter(a => a !== 'planning' && a !== 'management_quality').length; // exclude management_quality since it's not in the UI pipeline
                 liveCounter.textContent = `${agentsDone} / ${total} Agents Completed`;
             }
 
