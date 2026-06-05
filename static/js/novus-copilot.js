@@ -84,7 +84,7 @@
                 const msgDiv = document.createElement('div');
                 msgDiv.className = `chat-msg assistant`;
                 const bubble = document.createElement('div');
-                bubble.className = 'chat-bubble';
+                bubble.className = 'chat-bubble report-prose !text-[13px]';
                 msgDiv.appendChild(bubble);
                 chatMessages.appendChild(msgDiv);
 
@@ -172,7 +172,7 @@
             const msgDiv = document.createElement('div');
             msgDiv.className = `chat-msg ${role}`;
             const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble';
+            bubble.className = role === 'user' ? 'chat-bubble' : 'chat-bubble report-prose !text-[13px]';
             
             // Format content with showdown
             let htmlStr = role === 'user' ? escapeHtml(content) : md.makeHtml(content);
