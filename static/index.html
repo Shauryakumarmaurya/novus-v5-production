@@ -350,13 +350,13 @@
                                     <option value="" disabled selected>Select ticker...</option>
                                 </select>
                             </div>
-                            <div>
+                            <div class="hidden">
                                 <label class="block text-xs font-sans font-medium text-txt-secondary mb-1.5">Supporting Documents</label>
                                 <div id="drop-zone" class="flex justify-center px-4 py-6 border-2 border-dashed border-base-border bg-base-bg rounded-md cursor-pointer hover:border-accent-brand hover:bg-base-elevated transition-colors">
                                     <div class="text-center">
                                         <svg class="mx-auto h-8 w-8 text-txt-muted mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                                         <p class="text-xs font-sans text-txt-secondary">Drop PDFs or click to upload</p>
-                                        <input id="files" name="files" type="file" class="sr-only" multiple accept=".pdf" required aria-label="Upload PDF files">
+                                        <input id="files" name="files" type="file" class="sr-only" multiple accept=".pdf" aria-label="Upload PDF files">
                                     </div>
                                 </div>
                                 <div id="file-list" class="mt-2 text-xs font-sans text-txt-muted"></div>

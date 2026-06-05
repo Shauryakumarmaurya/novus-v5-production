@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 startAnalysis('upload');
                 const formData = new FormData();
                 formData.append('ticker', tickerInput.value.trim());
-                if (!fileInput.files.length) { displayError("NO_PDFS_INDEXED"); setLoadingState(false); return; }
+                // PDF requirement temporarily disabled
                 for (const file of fileInput.files) formData.append('files', file);
                 try {
                     const resp = await fetch('/api/v1/generate_report', { method: 'POST', body: formData });
