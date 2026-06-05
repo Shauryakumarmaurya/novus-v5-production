@@ -278,6 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 narrative_decoder: 'Narrative & Bias Detection',
                 moat_architect: 'Economic Moat Architecture',
                 capital_allocator: 'Capital Allocation Review',
+                management_quality: 'Management & Governance Analysis',
+                pm_synthesis: 'Final Synthesis Generation',
                 synthesis: 'Final Synthesis Generation',
                 assemble: 'Assembling Final Report',
                 complete: 'Finalizing Display',
@@ -523,6 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 narrative_decoder: { name: 'Narrative Decoder', type: 'nlp', thinkingMsg: 'Parsing management commentary for evasion patterns...' },
                 moat_architect: { name: 'Moat Architect', type: 'nlp', thinkingMsg: 'Evaluating competitive moat durability & pricing power...' },
                 capital_allocator: { name: 'Capital Allocator', type: 'quant', thinkingMsg: 'Reviewing ROIC vs WACC, capital deployment efficiency...' },
+                management_quality: { name: 'Management Quality', type: 'nlp', thinkingMsg: 'Evaluating governance, executive compensation, and capital discipline...' },
                 pm_synthesis: { name: 'Final Synthesis', type: 'pm', thinkingMsg: 'Synthesizing findings into a final Institutional Report...' },
             };
 
