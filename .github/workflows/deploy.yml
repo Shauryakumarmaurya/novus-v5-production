@@ -34,10 +34,11 @@ jobs:
           
           # Fix git ownership issue if cloned via sudo
           git config --global --add safe.directory "$APP_DIR"
+          sudo git config --global --add safe.directory "$APP_DIR"
           
-          # Pull the latest changes from GitHub
-          git reset --hard
-          git pull origin main
+          # Pull the latest changes from GitHub (using sudo because files are owned by root)
+          sudo git reset --hard
+          sudo git pull origin main
           
           # Rebuild and restart the containers with 10 workers (using sudo for permissions)
           sudo docker compose up -d --build --scale worker=10
