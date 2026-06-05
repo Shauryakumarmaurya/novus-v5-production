@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             window.terminalStylesExt = terminalStylesExt;
             window.semanticExt = semanticExt;
+            window.sectionCardExt = sectionCardExt;
 
             // ── Tab Switching ──
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -555,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="agent-card-body" data-body>
                         <div class="px-4 py-3" data-skeleton>
-                            <p class="text-[11px] font-mono text-txt-muted mb-3 status-running cursor-blink">> ${info.thinkingMsg}</p>
+                            <p class="text-[11px] font-mono text-txt-muted mb-3 status-running cursor-blink" id="thinking-text-${agentName}"></p>
                             <div class="space-y-2">
                                 <div class="skeleton-line w-full"></div>
                                 <div class="skeleton-line"></div>
@@ -566,6 +567,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
 
                 liveAgentFeed.appendChild(card);
+                
+                // Typing effect
+                const textEl = card.querySelector(`#thinking-text-${agentName}`);
+                if (textEl) {
+                    const fullText = `> ${info.thinkingMsg}`;
+                    textEl.textContent = '>';
+                    let charIdx = 1;
+                    const typingInt = setInterval(() => {
+                        textEl.textContent += fullText.charAt(charIdx);
+                        charIdx++;
+                        if (charIdx >= fullText.length) clearInterval(typingInt);
+                    }, 30);
+                    // Save interval so we could clear it if needed
+                    card.dataset.typingInterval = typingInt;
+                }
 
                 // Trigger entrance animation
                 requestAnimationFrame(() => {
@@ -610,6 +626,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const body = card.querySelector('[data-body]');
                 const renderedHtml = markdownConverter.makeHtml(output);
                 if (body) {
+                    if (card.dataset.typingInterval) {
+                        clearInterval(card.dataset.typingInterval);
+                    }
                     body.innerHTML = `
                         <div class="px-4 py-3 text-sm text-txt-secondary leading-relaxed max-h-[175px] overflow-y-auto report-prose">
                             ${renderedHtml}

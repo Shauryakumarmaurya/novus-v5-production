@@ -24,7 +24,7 @@
         };
         
         if (window.terminalStylesExt) {
-            mdOptions.extensions = [window.terminalStylesExt, window.semanticExt, copilotLogsExt];
+            mdOptions.extensions = [window.terminalStylesExt, window.semanticExt, window.sectionCardExt, copilotLogsExt];
         } else {
             mdOptions.extensions = [copilotLogsExt];
         }
