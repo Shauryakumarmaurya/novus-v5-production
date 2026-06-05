@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="agent-card-body" data-body>
                         <div class="px-4 py-3" data-skeleton>
-                            <p class="text-[11px] font-mono text-txt-muted mb-3 status-running">> ${info.thinkingMsg}</p>
+                            <p class="text-[11px] font-mono text-txt-muted mb-3 status-running cursor-blink">> ${info.thinkingMsg}</p>
                             <div class="space-y-2">
                                 <div class="skeleton-line w-full"></div>
                                 <div class="skeleton-line"></div>

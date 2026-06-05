@@ -260,6 +260,39 @@
             background: #262626; /* base-borderLight */
         }
 
+        /* Phase 2: Dynamic Visuals - Streaming Cascade Effect */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .cascade-item {
+            opacity: 0;
+            animation: fadeUp 0.4s ease-out forwards;
+        }
+
+        /* Phase 2: Dynamic Visuals - Blinking Terminal Cursor */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink::after {
+            content: '█';
+            display: inline-block;
+            margin-left: 4px;
+            color: #60A5FA; /* accent-brand */
+            animation: blink 1s step-end infinite;
+        }
+
+        /* Phase 2: Active Pipeline Pulse */
+        @keyframes subtlePing {
+            0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(96, 165, 250, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+        }
+        .step-icon.active {
+            animation: subtlePing 2s infinite;
+        }
+
         .section-modal-body .report-prose ul {
             list-style: none;
             padding: 0;
