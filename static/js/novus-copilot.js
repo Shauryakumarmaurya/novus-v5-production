@@ -4,7 +4,32 @@
         const chatMessages = document.getElementById('chat-messages');
         const chatClear = document.getElementById('chat-clear');
         const mainTickerInput = document.getElementById('ticker');
-        const md = new showdown.Converter(window.terminalStylesExt ? { extensions: [window.terminalStylesExt, window.semanticExt], tables: true } : { tables: true });
+        const copilotLogsExt = {
+            type: 'lang',
+            filter: function(text) {
+                // Wrap lines starting with [Copilot] or [Tool] in a styled log block
+                return text.replace(/^(\[(Copilot|Tool)\][^\n]*)$/gm, function(match) {
+                    // By wrapping in backticks, we ensure showdown treats it as code 
+                    // and doesn't parse special markdown characters inside the JSON payload.
+                    return `\n<div class="font-mono text-[10px] text-txt-muted border-l-2 border-accent-brand/30 pl-2 py-0.5 my-0.5 bg-black/20 break-all rounded-r-sm">\n\`${match}\`\n</div>\n`;
+                });
+            }
+        };
+
+        const mdOptions = { 
+            tables: true, 
+            literalMidWordUnderscores: true,
+            simplifiedAutoLink: true,
+            strikethrough: true
+        };
+        
+        if (window.terminalStylesExt) {
+            mdOptions.extensions = [window.terminalStylesExt, window.semanticExt, copilotLogsExt];
+        } else {
+            mdOptions.extensions = [copilotLogsExt];
+        }
+        
+        const md = new showdown.Converter(mdOptions);
 
         let chatHistory = [];
         let isSending = false;
