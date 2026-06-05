@@ -75,10 +75,14 @@
         .report-prose h3 { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: #E2E8F0; margin: 1rem 0 0.25rem; }
         .report-prose h4 { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; color: #7DD3FC; margin: 1.75rem 0 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 0.4rem; display: flex; align-items: center; }
         .report-prose h4::before { content: '✦'; color: #38BDF8; margin-right: 8px; font-size: 0.9em; opacity: 0.8; }
-        .report-prose p { margin-bottom: 0.75rem; }
-        .report-prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .report-prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .report-prose li { margin-bottom: 0.25rem; }
+        .report-prose p { margin-bottom: 1rem; }
+        .report-prose ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
+        .report-prose ul > li { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(51, 65, 85, 0.5); border-left: 3px solid #3B82F6; border-radius: 6px; padding: 12px 16px; margin-bottom: 0.5rem; color: #E2E8F0; }
+        .report-prose ul > li:last-child { margin-bottom: 0; }
+        .report-prose ul > li strong { color: #60A5FA; } /* Accentuate bold text in cards */
+        .report-prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .report-prose ol > li { background: rgba(15, 23, 42, 0.3); border: 1px solid rgba(51, 65, 85, 0.4); border-radius: 6px; padding: 10px 14px; margin-bottom: 0.5rem; padding-left: 0.5rem; }
+        .report-prose ol > li::marker { color: #38BDF8; font-weight: 600; }
         .report-prose strong { color: #F8FAFC; font-weight: 600; }
         .report-prose blockquote { border-left: 3px solid #3B82F6; padding: 0.25rem 1rem; margin: 1rem 0; background: rgba(59,130,246,0.05); color: #94A3B8; font-style: italic; }
         .report-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
