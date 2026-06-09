@@ -5,9 +5,17 @@
 (() => {
     const STORAGE_KEY = 'novus_api_key';
 
+    // Users sometimes paste a whole curl command or a quoted/whitespace-padded
+    // value. Extract the first long header-safe token; anything else would make
+    // fetch() throw "Header 'X-API-Key' has invalid value".
+    const sanitize = (raw) => {
+        const m = String(raw || '').match(/[A-Za-z0-9._~-]{16,}/);
+        return m ? m[0] : '';
+    };
+
     try {
         const params = new URLSearchParams(window.location.search);
-        const fromUrl = params.get('api_key');
+        const fromUrl = sanitize(params.get('api_key'));
         if (fromUrl) {
             localStorage.setItem(STORAGE_KEY, fromUrl);
             params.delete('api_key');
@@ -17,7 +25,11 @@
     } catch (e) { /* localStorage unavailable — fall through unauthenticated */ }
 
     const getKey = () => {
-        try { return localStorage.getItem(STORAGE_KEY) || ''; } catch (e) { return ''; }
+        try {
+            const clean = sanitize(localStorage.getItem(STORAGE_KEY));
+            if (clean) localStorage.setItem(STORAGE_KEY, clean); // self-heal polluted values
+            return clean;
+        } catch (e) { return ''; }
     };
 
     const isApiPath = (url) => {
@@ -42,9 +54,9 @@
         const resp = await origFetch(input, init);
         if (resp.status === 401 && isApiPath(url) && !promptedOnce) {
             promptedOnce = true;
-            const entered = window.prompt('This Novus server requires an API key. Enter your X-API-Key:');
+            const entered = sanitize(window.prompt('This Novus server requires an API key. Enter your X-API-Key:'));
             if (entered) {
-                try { localStorage.setItem(STORAGE_KEY, entered.trim()); } catch (e) { /* ignore */ }
+                try { localStorage.setItem(STORAGE_KEY, entered); } catch (e) { /* ignore */ }
                 promptedOnce = false;
                 return window.fetch(input, init);
             }
