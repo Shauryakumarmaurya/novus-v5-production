@@ -12,12 +12,14 @@
             theme: {
                 extend: {
                     colors: {
-                        base: { bg: '#0B0F19', card: '#111827', elevated: '#1F2937', border: '#1A1A1A', borderLight: '#262626' },
-                        accent: { brand: '#60A5FA', brandLight: '#93C5FD', brandDim: 'rgba(96, 165, 250, 0.15)' },
-                        semantic: { red: '#F87171', amber: '#FBBF24', green: '#34D399', redDim: 'rgba(248, 113, 113, 0.12)', amberDim: 'rgba(251, 191, 36, 0.12)', greenDim: 'rgba(52, 211, 153, 0.12)' },
-                        txt: { primary: '#FFFFFF', secondary: '#A3A3A3', muted: '#737373', dim: '#404040' }
+                        base: { bg: '#0A0A0C', card: '#111114', elevated: '#18181D', border: '#222228', borderLight: '#2E2E36' },
+                        accent: { brand: '#5B9DFF', brandLight: '#93C0FF', brandDim: 'rgba(91, 157, 255, 0.12)' },
+                        semantic: { red: '#F26D7E', amber: '#F2B94B', green: '#3DD9A4', redDim: 'rgba(242, 109, 126, 0.10)', amberDim: 'rgba(242, 185, 75, 0.10)', greenDim: 'rgba(61, 217, 164, 0.10)' },
+                        txt: { primary: '#F4F4F6', secondary: '#B4B4BE', muted: '#8A8A94', dim: '#7C7C86' },
+                        stripe: '#FFFFFF'
                     },
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] },
+                    borderRadius: { 'tk-sm': '6px', 'tk-md': '10px', 'tk-lg': '14px' },
                 }
             }
         }
@@ -28,326 +30,386 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* ════════════════════════════════════════════════════════════════
+           NOVUS DESIGN SYSTEM — single source of truth
+           Palette: near-black neutrals, one blue accent, semantic colors
+           reserved strictly for meaning. Inter for UI, mono for data.
+           ════════════════════════════════════════════════════════════════ */
+        :root {
+            --bg: #0A0A0C;
+            --card: #111114;
+            --elevated: #18181D;
+            --border: #222228;
+            --border-strong: #2E2E36;
+            --accent: #5B9DFF;
+            --accent-light: #93C0FF;
+            --accent-dim: rgba(91, 157, 255, 0.12);
+            --red: #F26D7E;
+            --amber: #F2B94B;
+            --green: #3DD9A4;
+            --t1: #F4F4F6;
+            --t2: #B4B4BE;
+            --t3: #8A8A94;
+            --t4: #7C7C86;
+            --r-sm: 6px;
+            --r-md: 10px;
+            --r-lg: 14px;
+            --shadow-card: 0 1px 0 rgba(255,255,255,0.025) inset, 0 10px 28px -18px rgba(0,0,0,0.7);
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
         *, *::before, *::after { box-sizing: border-box; }
-        
-        /* Base / Terminal overrides */
-        body { font-family: 'JetBrains Mono', monospace; background-color: #000000; color: #FFFFFF; }
-        
-        /* Tooltip CSS */
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            background-image: radial-gradient(1100px 380px at 50% -120px, rgba(91,157,255,0.06), transparent 70%);
+            background-repeat: no-repeat;
+            color: var(--t1);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        ::selection { background: rgba(91,157,255,0.28); }
+
+        /* Focus — visible, consistent, accessible */
+        :focus-visible { outline: 2px solid rgba(91,157,255,0.75); outline-offset: 2px; border-radius: 4px; }
+        button, [role="button"], select, summary { cursor: pointer; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3A3A44; }
+
+        /* ── Surfaces ── */
+        .ws-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow-card);
+        }
+        .ws-card-flush {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+
+        /* Card section title — quiet, consistent */
+        .card-title {
+            font-family: var(--font-sans);
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--t3);
+            display: flex; align-items: center; gap: 8px;
+            padding-bottom: 12px; margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-title svg { width: 14px; height: 14px; opacity: 0.9; }
+
+        /* ── Buttons ── */
+        .btn-primary {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 10px 16px;
+            background: #FFFFFF; color: #0A0A0C;
+            border: 1px solid #FFFFFF; border-radius: var(--r-md);
+            font-family: var(--font-sans); font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+            transition: background-color 0.15s ease, opacity 0.15s ease;
+        }
+        .btn-primary:hover:not(:disabled) { background: rgba(255,255,255,0.88); }
+        .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 12px;
+            background: transparent; color: var(--t2);
+            border: 1px solid var(--border-strong); border-radius: var(--r-sm);
+            font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+            transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+        }
+        .btn-ghost:hover:not(:disabled) { color: var(--t1); border-color: #3A3A44; background: rgba(255,255,255,0.03); }
+
+        /* ── Form controls ── */
+        .field-label {
+            display: block; font-size: 11px; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase;
+            color: var(--t3); margin-bottom: 8px;
+        }
+        .field-select {
+            width: 100%; appearance: none; -webkit-appearance: none;
+            background-color: var(--elevated);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8A94' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 12px center;
+            border: 1px solid var(--border-strong); border-radius: var(--r-md);
+            color: var(--t1); font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+            padding: 10px 36px 10px 12px;
+            transition: border-color 0.15s ease;
+        }
+        .field-select:hover { border-color: #3A3A44; }
+        .field-select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-dim); }
+
+        /* ── Tabs ── */
+        .tab-btn {
+            padding: 14px 16px; font-family: var(--font-sans);
+            font-size: 12.5px; font-weight: 500; letter-spacing: 0.01em;
+            color: var(--t3);
+            border: none; background: none; white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.15s ease, border-color 0.15s ease;
+        }
+        .tab-btn:hover { color: var(--t1); }
+        .tab-btn.active { color: var(--t1); border-bottom-color: var(--accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeUp 0.25s ease-out; }
+
+        /* ── Verdict banner (the hero) ── */
+        .verdict-banner {
+            background: linear-gradient(180deg, rgba(91,157,255,0.07), rgba(91,157,255,0.02)), var(--card);
+            border: 1px solid rgba(91,157,255,0.22);
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow-card);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            display: flex; flex-wrap: wrap; align-items: center; gap: 24px;
+        }
+        .verdict-rating {
+            font-family: var(--font-mono); font-weight: 700;
+            font-size: clamp(30px, 2.8vw, 42px); line-height: 1.05; letter-spacing: -0.02em;
+            font-variant-numeric: tabular-nums;
+        }
+        .verdict-meta-label {
+            font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--t4); margin-bottom: 4px;
+        }
+
+        /* ── Insight metric cards ── */
+        .insight-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 16px;
+            transition: border-color 0.15s ease;
+        }
+        .insight-card:hover { border-color: var(--border-strong); }
+        .insight-card .ic-label {
+            font-size: 10px; font-weight: 600; color: var(--t3);
+            margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;
+            text-transform: uppercase; letter-spacing: 0.08em;
+        }
+        .insight-card .ic-value {
+            font-family: var(--font-mono); font-size: 22px; font-weight: 600;
+            color: var(--t1); font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+        }
+        .insight-card .ic-sub { font-size: 11px; font-weight: 500; margin-top: 6px; display: flex; align-items: center; gap: 4px; color: var(--t3); }
+
+        /* ── Risk badges ── */
+        .risk-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 10px; border-radius: 999px;
+            font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+            border: 1px solid transparent;
+        }
+        .risk-low { background: rgba(61,217,164,0.10); color: var(--green); border-color: rgba(61,217,164,0.25); }
+        .risk-medium { background: rgba(242,185,75,0.10); color: var(--amber); border-color: rgba(242,185,75,0.25); }
+        .risk-high { background: rgba(242,109,126,0.10); color: var(--red); border-color: rgba(242,109,126,0.25); }
+
+        /* ── Tooltips ── */
         .tooltip { position: relative; display: inline-flex; align-items: center; cursor: help; }
-        .tooltip .tooltip-text { visibility: hidden; width: 220px; background-color: #0A0A0A; color: #A3A3A3; text-align: left; border-radius: 4px; padding: 8px; position: absolute; z-index: 50; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; border: 1px solid #262626; font-size: 10px; font-family: 'Inter', sans-serif; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); pointer-events: none; white-space: normal; }
-        .tooltip .tooltip-text::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #262626 transparent transparent transparent; }
+        .tooltip .tooltip-text {
+            visibility: hidden; width: 230px;
+            background: var(--elevated); color: var(--t2);
+            text-align: left; border-radius: var(--r-sm); padding: 10px 12px;
+            position: absolute; z-index: 60; bottom: 130%; left: 50%; transform: translateX(-50%);
+            opacity: 0; transition: opacity 0.18s ease;
+            border: 1px solid var(--border-strong);
+            font-size: 11px; line-height: 1.5; font-family: var(--font-sans); font-weight: 400;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5); pointer-events: none; white-space: normal;
+            text-transform: none; letter-spacing: 0;
+        }
         .tooltip:hover .tooltip-text, .tooltip:focus .tooltip-text { visibility: visible; opacity: 1; }
 
-        body { background-image: linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px); background-size: 20px 20px; min-height: 100vh; color: #FFFFFF; }
-
-        /* Card surfaces - Sharp edges */
-        .ws-card { background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(12px); border: 1px solid #1A1A1A; border-radius: 2px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-        .ws-card-flush { background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(12px); border: 1px solid #1A1A1A; border-radius: 2px; overflow: hidden; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-
-        /* Tabs */
-        .tab-btn { padding: 8px 16px; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #64748B; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
-        .tab-btn:hover { color: #CBD5E1; }
-        .tab-btn.active { color: #3B82F6; border-bottom-color: #3B82F6; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeUp 0.3s ease-out; }
-
-        /* Insight cards */
-        .insight-card { background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(8px); border: 1px dashed #1A1A1A; border-radius: 2px; padding: 12px; transition: all 0.25s; }
-        .insight-card:hover { border-color: #00E5FF; box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.1); }
-        .insight-card .ic-label { font-size: 0.65rem; color: #737373; margin-bottom: 4px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.05em;}
-        .insight-card .ic-value { font-size: 1.25rem; font-weight: 600; color: #FFFFFF; text-shadow: 0 0 8px rgba(255,255,255,0.2); }
-        .insight-card .ic-sub { font-size: 0.75rem; font-weight: 500; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
-
-        /* Risk indicator */
-        .risk-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; border: 1px solid transparent; }
-        .risk-low { background: rgba(16,185,129,0.1); color: #10b981; border-color: rgba(16,185,129,0.2); }
-        .risk-medium { background: rgba(245,158,11,0.1); color: #f59e0b; border-color: rgba(245,158,11,0.2); }
-        .risk-high { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.2); }
-
-        /* Report prose - High Density */
-        .report-prose { font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; font-size: 0.9rem; color: #CBD5E1; }
-        .report-prose h1 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 600; color: #F8FAFC; margin: 1.5rem 0 0.75rem; padding-bottom: 0.25rem; border-bottom: 1px solid #475569; }
-        .report-prose h2 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: #F8FAFC; margin: 1.25rem 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid #475569; }
-        .report-prose h3 { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: #E2E8F0; margin: 1rem 0 0.25rem; }
-        .report-prose h4 { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; color: #7DD3FC; margin: 1.75rem 0 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 0.4rem; display: flex; align-items: center; }
-        .report-prose h4::before { content: '✦'; color: #38BDF8; margin-right: 8px; font-size: 0.9em; opacity: 0.8; }
+        /* ── Report prose ── */
+        .report-prose { font-family: var(--font-sans); line-height: 1.7; font-size: 13.5px; color: var(--t2); }
+        .report-prose h1 { font-size: 19px; font-weight: 600; color: var(--t1); letter-spacing: -0.01em; margin: 1.6rem 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+        .report-prose h2 { font-size: 16px; font-weight: 600; color: var(--t1); letter-spacing: -0.01em; margin: 1.4rem 0 0.6rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--border); }
+        .report-prose h3 { font-size: 14px; font-weight: 600; color: var(--t1); margin: 1.1rem 0 0.35rem; }
+        .report-prose h4 {
+            font-size: 11px; font-weight: 600; color: var(--accent-light);
+            margin: 1.75rem 0 0.75rem; text-transform: uppercase; letter-spacing: 0.09em;
+            border-bottom: 1px solid rgba(91,157,255,0.18); padding-bottom: 0.45rem;
+        }
         .report-prose p { margin-bottom: 1rem; }
-        .report-prose ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
-        .report-prose ul > li { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(51, 65, 85, 0.5); border-left: 3px solid #3B82F6; border-radius: 6px; padding: 12px 16px; margin-bottom: 0.5rem; color: #E2E8F0; }
-        .report-prose ul > li:last-child { margin-bottom: 0; }
-        .report-prose ul > li strong { color: #60A5FA; } /* Accentuate bold text in cards */
-        .report-prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; }
-        .report-prose ol > li { background: rgba(15, 23, 42, 0.3); border: 1px solid rgba(51, 65, 85, 0.4); border-radius: 6px; padding: 10px 14px; margin-bottom: 0.5rem; padding-left: 0.5rem; }
-        .report-prose ol > li::marker { color: #38BDF8; font-weight: 600; }
-        .report-prose strong { color: #F8FAFC; font-weight: 600; }
-        .report-prose blockquote { border-left: 3px solid #3B82F6; padding: 0.25rem 1rem; margin: 1rem 0; background: rgba(59,130,246,0.05); color: #94A3B8; font-style: italic; }
-        .report-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
-        .report-prose th { background: #334155; font-weight: 600; color: #F8FAFC; padding: 8px 12px; border-bottom: 2px solid #475569; text-align: left; }
-        .report-prose td { padding: 6px 12px; border-bottom: 1px solid #475569; color: #CBD5E1; font-variant-numeric: tabular-nums; }
-        .report-prose tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-        .report-prose tr:hover td { background: rgba(59,130,246,0.05); }
-        .report-prose code { background: #334155; color: #60A5FA; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; border: 1px solid #475569; }
+        .report-prose ul { list-style: none; padding-left: 0; margin-bottom: 1.25rem; }
+        .report-prose ul > li { position: relative; padding-left: 1.15rem; margin-bottom: 0.55rem; color: var(--t2); }
+        .report-prose ul > li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 7px; height: 2px; border-radius: 1px; background: var(--accent); opacity: 0.85; }
+        .report-prose ul > li strong { color: var(--t1); }
+        .report-prose ol { list-style: decimal; padding-left: 1.4rem; margin-bottom: 1.25rem; }
+        .report-prose ol > li { margin-bottom: 0.5rem; padding-left: 0.25rem; }
+        .report-prose ol > li::marker { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+        .report-prose strong { color: var(--t1); font-weight: 600; }
+        .report-prose blockquote { border-left: 2px solid var(--accent); padding: 0.35rem 1rem; margin: 1rem 0; background: var(--accent-dim); border-radius: 0 var(--r-sm) var(--r-sm) 0; color: var(--t2); }
+        .report-prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 12px; }
+        .report-prose th { background: var(--elevated); font-family: var(--font-sans); font-weight: 600; color: var(--t1); padding: 9px 12px; border-bottom: 1px solid var(--border-strong); text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .report-prose td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--t2); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+        .report-prose td:first-child { font-family: var(--font-sans); }
+        .report-prose tr:hover td { background: rgba(255,255,255,0.02); }
+        .report-prose code { background: var(--elevated); color: var(--accent-light); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; font-family: var(--font-mono); border: 1px solid var(--border); }
 
-        /* Data tables (screener) */
-        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+        /* ── Data tables (screener) ── */
+        .data-table { width: 100%; border-collapse: separate; border-spacing: 0; font-family: var(--font-mono); font-size: 12px; }
         .data-table thead { position: sticky; top: 0; z-index: 10; }
-        .data-table th { background: #334155; color: #F8FAFC; font-weight: 600; padding: 8px 12px; text-align: left; border-bottom: 2px solid #64748B; font-family: 'Inter', sans-serif; font-size: 0.75rem; }
-        .data-table td { padding: 6px 12px; border-bottom: 1px solid #475569; color: #94A3B8; }
-        .data-table td.num { text-align: right; font-variant-numeric: tabular-nums; color: #E2E8F0; }
-        .data-table tr:hover td { background: rgba(59,130,246,0.08); color: #F8FAFC; }
-        .data-table td.line-item { color: #F8FAFC; font-weight: 500; font-family: 'Inter', sans-serif; position: sticky; left: 0; background: #1E293B; border-right: 1px solid #475569; z-index: 5; box-shadow: 2px 0 5px rgba(0,0,0,0.05); }
+        .data-table th { background: var(--elevated); color: var(--t2); font-weight: 600; padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--border-strong); font-family: var(--font-sans); font-size: 11px; white-space: nowrap; }
+        .data-table th:first-child { text-align: left; }
+        .data-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); color: var(--t3); }
+        .data-table td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--t2); }
+        .data-table tr:hover td { background: rgba(91,157,255,0.05); color: var(--t1); }
+        .data-table td.line-item { color: var(--t1); font-weight: 500; font-family: var(--font-sans); position: sticky; left: 0; background: var(--card); border-right: 1px solid var(--border-strong); z-index: 5; }
 
-        /* Citation badge */
-        .calc-badge { background: #334155; color: #94A3B8; padding: 2px 6px; border-radius: 4px; font-weight: 500; font-size: 0.7rem; border: 1px solid #475569; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s; }
-        .calc-badge:hover { background: #475569; color: #F8FAFC; }
+        /* ── Citation badge ── */
+        .calc-badge { background: var(--elevated); color: var(--t3); padding: 2px 7px; border-radius: 4px; font-weight: 500; font-size: 10.5px; border: 1px solid var(--border-strong); font-family: var(--font-mono); cursor: pointer; transition: color 0.15s ease, border-color 0.15s ease; }
+        .calc-badge:hover { border-color: var(--accent); color: var(--accent-light); }
 
-        /* Animations */
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* ── Animations (one system, used sparingly) ── */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-        @keyframes cascadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .animate-fadeUp { animation: fadeUp 0.3s ease-out; }
+        .cascade-item { opacity: 0; animation: fadeUp 0.35s ease-out forwards; }
+        .status-running { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .cursor-blink::after { content: '▍'; display: inline-block; margin-left: 3px; color: var(--accent); animation: blink 1.1s step-end infinite; }
 
-        /* Agent card progressive disclosure */
+        /* ── Agent live-feed cards ── */
         .agent-card { display: grid; grid-template-rows: auto 0fr; transition: grid-template-rows 0.4s ease-out; overflow: hidden; }
         .agent-card.expanded { grid-template-rows: auto 1fr; }
         .agent-card-body { overflow: hidden; }
-
-        /* Skeleton thinking state */
-        .skeleton-line { height: 10px; border-radius: 2px; background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%); background-size: 200% 100%; animation: shimmer 1.8s ease-in-out infinite; }
+        .skeleton-line { height: 9px; border-radius: 4px; background: linear-gradient(90deg, var(--elevated) 25%, #202026 50%, var(--elevated) 75%); background-size: 200% 100%; animation: shimmer 1.8s ease-in-out infinite; }
         .skeleton-line:nth-child(2) { width: 75%; animation-delay: 0.15s; }
         .skeleton-line:nth-child(3) { width: 60%; animation-delay: 0.3s; }
 
-        /* Thinking status badge pulse */
-        .status-running { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        /* ── Pipeline stepper ── */
+        .progress-step { display: flex; align-items: flex-start; gap: 12px; position: relative; padding-bottom: 18px; }
+        .progress-step:last-child { padding-bottom: 0; }
+        .progress-step:not(:last-child)::after { content: ''; position: absolute; left: 11px; top: 26px; bottom: 2px; width: 1px; background: var(--border); }
+        .progress-step.completed:not(:last-child)::after { background: rgba(61,217,164,0.4); }
+        .step-icon {
+            width: 23px; height: 23px; border-radius: 999px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-size: 10px; font-weight: 600; z-index: 2;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+        }
+        .step-icon.idle { background: transparent; border: 1px solid var(--border-strong); color: var(--t4); }
+        .step-icon.active { background: var(--accent-dim); border: 1px solid var(--accent); color: var(--accent); }
+        .step-icon.active svg { animation: spin 1.4s linear infinite; }
+        .step-icon.completed { background: rgba(61,217,164,0.10); border: 1px solid rgba(61,217,164,0.45); color: var(--green); }
+        .step-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 23px; }
+        .step-title { font-size: 12px; font-weight: 500; color: var(--t4); transition: color 0.25s ease; line-height: 1.35; }
+        .step-title.active { color: var(--t1); font-weight: 500; }
+        .step-title.completed { color: var(--t2); }
 
-        /* Staggered cascade for completed list items */
-        .cascade-item { opacity: 0; animation: cascadeIn 0.3s ease-out forwards; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0,229,153,0.3); border-radius: 0; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(0,229,153,0.5); }
-
-        /* Chat Copilot - High Density */
-        .copilot-panel { display: flex; flex-direction: column; height: calc(100vh - 64px); position: sticky; top: 60px; overflow: hidden; border-radius: 4px; border: 1px solid #1E293B; background: #070A11; }
-        .copilot-messages { flex: 1; overflow-y: auto; padding: 12px; scroll-behavior: auto; font-family: 'Inter', sans-serif; font-size: 0.8rem; }
-        .chat-msg { margin-bottom: 12px; display: flex; flex-direction: column; }
+        /* ── Copilot ── */
+        .copilot-panel { display: flex; flex-direction: column; height: calc(100vh - 92px); position: sticky; top: 76px; overflow: hidden; }
+        @media (max-width: 1023px) {
+            .copilot-panel { position: static; height: 65vh; }
+        }
+        .copilot-messages { flex: 1; overflow-y: auto; padding: 16px 14px; scroll-behavior: auto; font-family: var(--font-sans); font-size: 13px; }
+        .chat-msg { margin-bottom: 14px; display: flex; flex-direction: column; }
         .chat-msg.user { align-items: flex-end; }
         .chat-msg.assistant { align-items: flex-start; }
-        .chat-bubble { max-width: 95%; padding: 8px 12px; line-height: 1.4; color: #F8FAFC; border-radius: 4px; }
-        .chat-msg.user .chat-bubble { background: #1E293B; color: #94A3B8; border: 1px solid #334155; border-radius: 4px; }
-        .chat-msg.assistant .chat-bubble { background: transparent; border-left: 2px solid #3B82F6; border-radius: 0; padding-left: 10px; color: #E2E8F0; }
-        .chat-bubble h1, .chat-bubble h2, .chat-bubble h3 { font-size: 0.9rem; font-weight: 600; margin: 8px 0 4px; color: #F8FAFC; }
-        .chat-bubble ul { padding-left: 16px; margin: 6px 0; }
-        .chat-bubble li { margin-bottom: 3px; }
-        .chat-bubble strong { color: #FFFFFF; }
-        .chat-bubble code { background: #1E293B; color: #60A5FA; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.8em; }
-        .chat-sources { font-size: 0.7rem; color: #94A3B8; margin-top: 6px; padding: 4px 10px; border-left: 2px solid #64748B; max-width: 90%; }
+        .chat-bubble { max-width: 95%; padding: 9px 12px; line-height: 1.55; color: var(--t1); border-radius: var(--r-md); }
+        .chat-msg.user .chat-bubble { background: var(--elevated); color: var(--t1); border: 1px solid var(--border-strong); border-bottom-right-radius: 4px; }
+        .chat-msg.assistant .chat-bubble { background: transparent; border-left: 2px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 2px 0 2px 12px; color: var(--t2); }
+        .chat-bubble h1, .chat-bubble h2, .chat-bubble h3 { font-size: 13px; font-weight: 600; margin: 8px 0 4px; color: var(--t1); }
+        .chat-bubble ul { padding-left: 0; margin: 6px 0; }
+        .chat-bubble li { margin-bottom: 4px; }
+        .chat-bubble strong { color: var(--t1); }
+        .chat-bubble code { background: var(--elevated); color: var(--accent-light); padding: 2px 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.82em; }
+        .chat-sources { font-size: 10.5px; color: var(--t3); margin-top: 6px; padding: 4px 10px; border-left: 1px solid var(--border-strong); max-width: 90%; font-family: var(--font-mono); }
 
-        .copilot-input-container { padding: 12px; border-top: 1px solid #475569; background: #1E293B; display: flex; flex-direction: column; gap: 8px; }
-        .copilot-chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
-        .copilot-chip { font-size: 0.7rem; padding: 4px 10px; border-radius: 12px; background: #334155; border: 1px solid #475569; color: #CBD5E1; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
-        .copilot-chip:hover { background: #475569; color: #F8FAFC; }
-        
-        .copilot-input { display: flex; gap: 8px; align-items: center; background: #0F172A; border: 1px solid #475569; border-radius: 8px; padding: 6px 8px; transition: border-color 0.2s; }
-        .copilot-input:focus-within { border-color: #3B82F6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
-        .copilot-input input { flex: 1; background: transparent; border: none; color: #F8FAFC; font-size: 0.85rem; outline: none; padding: 4px 6px; }
-        .copilot-input input::placeholder { color: #64748B; }
-        .copilot-send { width: 32px; height: 32px; border-radius: 6px; background: #3B82F6; color: #FFFFFF; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; border: none; font-weight: bold; }
-        .copilot-send:hover { background: #2563EB; }
-        .copilot-send:disabled { opacity: 0.5; cursor: not-allowed; background: #475569; color: #94A3B8; }
+        .copilot-input-container { padding: 12px; border-top: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 10px; }
+        .copilot-chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+        .copilot-chips::-webkit-scrollbar { display: none; }
+        .copilot-chip { font-size: 11px; font-weight: 500; padding: 5px 11px; border-radius: 999px; background: transparent; border: 1px solid var(--border-strong); color: var(--t3); white-space: nowrap; transition: color 0.15s ease, border-color 0.15s ease; }
+        .copilot-chip:hover { border-color: var(--accent); color: var(--accent-light); }
 
-        /* Loader */
-        .typing-indicator span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #94A3B8; margin: 0 2px; animation: typing 1.4s infinite ease-in-out; }
+        .copilot-input { display: flex; gap: 8px; align-items: center; background: var(--elevated); border: 1px solid var(--border-strong); border-radius: var(--r-md); padding: 6px 6px 6px 12px; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+        .copilot-input:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+        .copilot-input input { flex: 1; background: transparent; border: none; color: var(--t1); font-size: 13px; outline: none; padding: 4px 0; font-family: var(--font-sans); }
+        .copilot-input input::placeholder { color: var(--t4); }
+        .copilot-send { width: 30px; height: 30px; border-radius: var(--r-sm); background: var(--accent); color: #0A0A0C; display: flex; justify-content: center; align-items: center; transition: opacity 0.15s ease; border: none; flex-shrink: 0; }
+        .copilot-send:hover:not(:disabled) { opacity: 0.85; }
+        .copilot-send:disabled { opacity: 0.35; cursor: not-allowed; }
+
+        .typing-indicator span { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--t3); margin: 0 2px; animation: typing 1.4s infinite ease-in-out; }
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes typing { 0%, 80%, 100% { transform: translateY(0); opacity: 0.5; } 40% { transform: translateY(-4px); opacity: 1; } }
 
-        /* Stepper styles */
-        .progress-step { display: flex; align-items: flex-start; gap: 12px; position: relative; padding-bottom: 16px; }
-        .progress-step:last-child { padding-bottom: 0; }
-        .progress-step:not(:last-child)::after { content: ''; position: absolute; left: 11px; top: 24px; bottom: 0; width: 2px; background: #1A1A1A; }
-        .progress-step.completed:not(:last-child)::after { background: #00E5FF; }
-        .step-icon { width: 24px; height: 24px; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; z-index: 2; transition: all 0.3s; }
-        .step-icon.idle { background: #0A0A0A; border: 1px solid #262626; color: #404040; }
-        .step-icon.active { background: rgba(0, 229, 255, 0.1); border: 1px solid #00E5FF; color: #00E5FF; box-shadow: 0 0 10px rgba(0,229,255,0.4); }
-        .step-icon.active svg { animation: spin 1.5s linear infinite; }
-        .step-icon.completed { background: rgba(0, 255, 65, 0.1); border: 1px solid #00FF41; color: #00FF41; }
-        .step-content { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 24px; }
-        .step-title { font-size: 0.8rem; font-weight: 500; color: #737373; transition: color 0.3s; }
-        .step-title.active { color: #00E5FF; font-weight: 600; text-shadow: 0 0 5px rgba(0,229,255,0.3); }
-        .step-title.completed { color: #FFFFFF; }
-
-        /* ── Section Detail Modal ── */
+        /* ── Section detail modal ── */
         .section-modal-backdrop {
             position: fixed; inset: 0; z-index: 200;
-            background: rgba(10, 18, 38, 0.75);
-            backdrop-filter: blur(6px);
+            background: rgba(6, 6, 8, 0.72);
+            backdrop-filter: blur(4px);
             display: flex; align-items: flex-end; justify-content: center;
-            opacity: 0; transition: opacity 0.25s ease;
+            opacity: 0; transition: opacity 0.22s ease;
             pointer-events: none;
         }
-        .section-modal-backdrop.open {
-            opacity: 1; pointer-events: all;
-        }
+        .section-modal-backdrop.open { opacity: 1; pointer-events: all; }
         .section-modal {
             width: 100%; max-width: 860px;
-            background: #1E293B;
-            border: 1px solid #475569;
-            border-radius: 12px 12px 0 0;
-            box-shadow: 0 -8px 48px rgba(0,0,0,0.5);
+            background: var(--card);
+            border: 1px solid var(--border-strong); border-bottom: none;
+            border-radius: var(--r-lg) var(--r-lg) 0 0;
+            box-shadow: 0 -16px 60px rgba(0,0,0,0.6);
             max-height: 82vh;
             display: flex; flex-direction: column;
             transform: translateY(100%);
             transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
         }
-        .section-modal-backdrop.open .section-modal {
-            transform: translateY(0);
-        }
+        .section-modal-backdrop.open .section-modal { transform: translateY(0); }
         .section-modal-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 16px 20px;
-            border-bottom: 1px solid #334155;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
             flex-shrink: 0;
         }
-        .section-modal-title {
-            font-size: 0.95rem; font-weight: 700; color: #F8FAFC;
-            font-family: 'Inter', sans-serif;
-            display: flex; align-items: center; gap: 8px;
-        }
+        .section-modal-title { font-size: 14px; font-weight: 600; color: var(--t1); font-family: var(--font-sans); display: flex; align-items: center; gap: 8px; }
         .section-modal-close {
-            width: 28px; height: 28px; border-radius: 6px;
-            background: #334155; border: 1px solid #475569;
-            color: #94A3B8; cursor: pointer;
+            width: 28px; height: 28px; border-radius: var(--r-sm);
+            background: var(--elevated); border: 1px solid var(--border-strong);
+            color: var(--t3);
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.15s; font-size: 14px;
+            transition: color 0.15s ease, border-color 0.15s ease; font-size: 14px;
         }
-        .section-modal-close:hover { background: #475569; color: #F8FAFC; }
-        .section-modal-body {
-            padding: 20px 24px; overflow-y: auto; flex: 1;
-        }
-        /* Clickable headings */
-        .clickable-section-heading {
-            cursor: pointer;
-            display: flex; align-items: center; gap: 6px;
-            transition: color 0.2s;
-        }
-        .clickable-section-heading:hover { color: #60A5FA !important; }
-        .clickable-section-heading::after {
-            content: '⤢';
-            font-size: 0.8em;
-            opacity: 0.5;
-            transition: opacity 0.2s;
-        }
+        .section-modal-close:hover { color: var(--t1); border-color: #3A3A44; }
+        .section-modal-body { padding: 24px 28px; overflow-y: auto; flex: 1; }
+
+        .clickable-section-heading { cursor: pointer; display: flex; align-items: center; gap: 6px; transition: color 0.15s ease; }
+        .clickable-section-heading:hover { color: var(--accent-light) !important; }
+        .clickable-section-heading::after { content: '⤢'; font-size: 0.85em; opacity: 0.45; transition: opacity 0.15s ease; }
         .clickable-section-heading:hover::after { opacity: 1; }
-        
-        /* Modal specific formal list styling (Premium Data Panel Look) */
-        /* Custom Scrollbar for a sleek institutional look */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0B0F19; /* base-bg */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1F2937; /* base-elevated */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #262626; /* base-borderLight */
-        }
-
-        /* Phase 2: Dynamic Visuals - Streaming Cascade Effect */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .cascade-item {
-            opacity: 0;
-            animation: fadeUp 0.4s ease-out forwards;
-        }
-
-        /* Phase 2: Dynamic Visuals - Blinking Terminal Cursor */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        .cursor-blink::after {
-            content: '█';
-            display: inline-block;
-            margin-left: 4px;
-            color: #60A5FA; /* accent-brand */
-            animation: blink 1s step-end infinite;
-        }
-
-        /* Phase 2: Active Pipeline Pulse */
-        @keyframes subtlePing {
-            0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
-            70% { box-shadow: 0 0 0 6px rgba(96, 165, 250, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
-        }
-        .step-icon.active {
-            animation: subtlePing 2s infinite;
-        }
 
         .section-modal-body .report-prose ul {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0 2rem 0;
-            background: linear-gradient(to bottom, #0F172A, #0B1120);
-            border: 1px solid #1E293B;
-            border-radius: 10px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            list-style: none; padding: 0; margin: 1rem 0 2rem 0;
+            background: var(--elevated);
+            border: 1px solid var(--border); border-radius: var(--r-md);
             overflow: hidden;
         }
-        .section-modal-body .report-prose ul li {
-            padding: 14px 20px;
-            border-bottom: 1px solid rgba(30, 41, 59, 0.8);
-            margin: 0;
-            font-size: 0.9rem;
-            color: #E2E8F0;
-            line-height: 1.6;
-            transition: background 0.2s ease;
-        }
-        .section-modal-body .report-prose ul li:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-        .section-modal-body .report-prose ul li:last-child {
-            border-bottom: none;
-        }
-        .section-modal-body .report-prose ul li > strong {
-            color: #38BDF8; /* Accent color for keys */
-            font-weight: 700;
-            margin-right: 4px;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-        
-        /* Nested lists blend seamlessly into the grid but with inset depth */
-        .section-modal-body .report-prose ul ul {
-            margin: 14px -20px -14px -20px;
-            border: none;
-            border-top: 1px solid rgba(30, 41, 59, 0.8);
-            border-radius: 0;
-            background: rgba(0, 0, 0, 0.25);
-            box-shadow: inset 0 4px 6px -4px rgba(0,0,0,0.2);
-        }
-        .section-modal-body .report-prose ul ul li {
-            padding: 12px 20px 12px 28px;
-            font-size: 0.85rem;
-            background: transparent;
-        }
-        .section-modal-body .report-prose ul ul li:hover {
-            background: rgba(56, 189, 248, 0.04);
-        }
+        .section-modal-body .report-prose ul li { padding: 13px 18px; border-bottom: 1px solid var(--border); margin: 0; font-size: 13px; color: var(--t2); line-height: 1.6; }
+        .section-modal-body .report-prose ul li::before { display: none; }
+        .section-modal-body .report-prose ul li:hover { background: rgba(255,255,255,0.02); }
+        .section-modal-body .report-prose ul li:last-child { border-bottom: none; }
+        .section-modal-body .report-prose ul li > strong { color: var(--accent-light); font-weight: 600; margin-right: 4px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+        .section-modal-body .report-prose ul ul { margin: 12px -18px -13px -18px; border: none; border-top: 1px solid var(--border); border-radius: 0; background: rgba(0,0,0,0.22); }
+        .section-modal-body .report-prose ul ul li { padding: 11px 18px 11px 26px; font-size: 12.5px; background: transparent; }
     </style>
 </head>
 
@@ -355,17 +417,24 @@
     <div class="min-h-screen flex flex-col">
 
         <!-- ═══ HEADER ═══ -->
-        <header class="ws-card sticky top-0 z-50 rounded-none border-x-0 border-t-0 bg-base-card shadow-sm">
+        <header class="sticky top-0 z-50 border-b border-base-border bg-base-bg/85" style="backdrop-filter: blur(12px);">
             <div class="max-w-[1920px] mx-auto px-4 sm:px-6">
-                <div class="flex items-center justify-between h-[60px]">
-                    <div class="flex items-center space-x-3">
-                        <div class="flex items-center text-xl font-bold font-sans tracking-wide">
-                            <span class="text-txt-primary">Novus</span><span class="text-accent-brandLight ml-1 font-light">FinLLM</span>
+                <div class="flex items-center justify-between h-14">
+                    <div class="flex items-center gap-2" id="brand-lockup">
+                        <div class="w-6 h-6 rounded-md bg-accent-brand flex items-center justify-center mr-1">
+                            <span class="text-[13px] font-bold font-mono text-base-bg leading-none">N</span>
                         </div>
+                        <span class="text-[15px] font-semibold tracking-tight text-txt-primary">Novus</span>
+                        <span class="text-[15px] font-normal tracking-tight text-txt-muted">FinLLM</span>
+                        <span id="demo-badge-slot" class="flex items-center"></span>
+                    </div>
+                    <div id="header-context" class="hidden md:flex items-center gap-3 text-xs">
+                        <span id="header-ticker" class="font-mono font-semibold text-txt-primary tracking-wide"></span>
+                        <span id="header-status" class="text-txt-muted"></span>
                     </div>
                     <div class="flex items-center">
-                        <button id="export-pdf-btn" aria-label="Export report to PDF" class="flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-base-border text-txt-secondary hover:text-white hover:border-txt-muted transition-colors text-[10px] font-mono tracking-widest uppercase">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <button id="export-pdf-btn" aria-label="Export report to PDF" class="btn-ghost">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                             Export PDF
                         </button>
                     </div>
@@ -375,45 +444,43 @@
 
         <!-- ═══ MAIN WORKSPACE ═══ -->
         <main class="flex-grow max-w-[1920px] mx-auto w-full px-4 sm:px-6 py-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
                 <!-- ═══ LEFT: Command Center ═══ -->
                 <div class="lg:col-span-2">
-                    <div class="ws-card p-5 sticky top-[80px] space-y-5">
+                    <div class="ws-card p-5 lg:sticky top-[76px] space-y-5">
                         <form id="report-form" class="space-y-4">
                             <div>
-                                <label for="ticker" class="block text-xs font-sans font-medium text-txt-secondary mb-1.5">Target Company</label>
-                                <select id="ticker" name="ticker" class="w-full bg-base-bg border border-base-border text-txt-primary text-sm rounded-md focus:ring-accent-brand focus:border-accent-brand p-2 font-mono" required>
-                                    <option value="" disabled selected>Select ticker...</option>
+                                <label for="ticker" class="field-label">Target Company</label>
+                                <select id="ticker" name="ticker" class="field-select" required>
+                                    <option value="" disabled selected>Select ticker…</option>
                                 </select>
                             </div>
                             <div class="hidden">
-                                <label class="block text-xs font-sans font-medium text-txt-secondary mb-1.5">Supporting Documents</label>
-                                <div id="drop-zone" class="flex justify-center px-4 py-6 border-2 border-dashed border-base-border bg-base-bg rounded-md cursor-pointer hover:border-accent-brand hover:bg-base-elevated transition-colors">
+                                <label class="field-label">Supporting Documents</label>
+                                <div id="drop-zone" class="flex justify-center px-4 py-6 border border-dashed border-base-borderLight bg-base-elevated rounded-tk-md cursor-pointer hover:border-accent-brand transition-colors">
                                     <div class="text-center">
-                                        <svg class="mx-auto h-8 w-8 text-txt-muted mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
-                                        <p class="text-xs font-sans text-txt-secondary">Drop PDFs or click to upload</p>
+                                        <svg class="mx-auto h-7 w-7 text-txt-muted mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                                        <p class="text-xs text-txt-secondary">Drop PDFs or click to upload</p>
                                         <input id="files" name="files" type="file" class="sr-only" multiple accept=".pdf" aria-label="Upload PDF files">
                                     </div>
                                 </div>
-                                <div id="file-list" class="mt-2 text-xs font-sans text-txt-muted"></div>
+                                <div id="file-list" class="mt-2 text-xs text-txt-muted"></div>
                             </div>
-                            <button type="submit" id="generate-btn" class="hidden w-full flex justify-center items-center py-2.5 px-4 rounded-sm border border-accent-brand bg-accent-brandDim text-accent-brand hover:bg-accent-brand hover:text-black transition-all font-mono font-bold tracking-widest shadow-[0_0_15px_rgba(0,229,255,0.15)] uppercase disabled:opacity-50">
-                                <span id="btn-text" class="text-sm">Generate Analysis</span>
-                                <div id="btn-loader" class="hidden ml-2"><div class="w-4 h-4 border-2 border-accent-brand border-t-transparent rounded-full animate-spin"></div></div>
+                            <button type="submit" id="generate-btn" class="hidden btn-primary">
+                                <span id="btn-text">Generate Analysis</span>
+                                <div id="btn-loader" class="hidden"><div class="w-4 h-4 border-2 border-base-bg/30 border-t-base-bg rounded-full animate-spin"></div></div>
                             </button>
                         </form>
 
-                        <div class="hidden items-center gap-2"><div class="flex-grow border-t border-base-border"></div><span class="text-[10px] font-sans text-txt-muted uppercase">or</span><div class="flex-grow border-t border-base-border"></div></div>
-
-                        <button id="rag-analyze-btn" class="w-full flex justify-center items-center py-2.5 px-4 rounded-sm border border-accent-brand bg-accent-brandDim text-accent-brand hover:bg-accent-brand hover:text-black transition-all font-mono font-bold tracking-widest shadow-[0_0_15px_rgba(0,229,255,0.15)] uppercase disabled:opacity-50">
-                            <span id="rag-btn-text" class="text-sm">Generate Analysis</span>
-                            <div id="rag-btn-loader" class="hidden ml-2"><div class="w-4 h-4 border-2 border-txt-muted border-t-txt-primary rounded-full animate-spin"></div></div>
+                        <button id="rag-analyze-btn" class="btn-primary">
+                            <span id="rag-btn-text">Generate Analysis</span>
+                            <div id="rag-btn-loader" class="hidden"><div class="w-4 h-4 border-2 border-base-bg/30 border-t-base-bg rounded-full animate-spin"></div></div>
                         </button>
 
                         <!-- Agent Pipeline Status -->
-                        <div id="agent-pipeline" class="hidden pt-4 border-t border-base-border mt-4">
-                            <h3 class="text-xs font-semibold font-sans text-txt-primary mb-3">Execution Pipeline</h3>
+                        <div id="agent-pipeline" class="hidden pt-5 border-t border-base-border">
+                            <h3 class="field-label mb-4">Execution Pipeline</h3>
                             <div class="space-y-0" id="agent-status-list">
                                 <!-- Pipeline items auto-generate here -->
                             </div>
@@ -425,230 +492,203 @@
                 <div class="lg:col-span-7">
                     <div class="ws-card-flush min-h-[85vh] flex flex-col">
                         <!-- Tab Bar -->
-                        <div class="flex border-b border-base-border overflow-x-auto bg-base-card px-4" id="tab-bar">
+                        <div class="flex border-b border-base-border overflow-x-auto px-4" id="tab-bar">
                             <button class="tab-btn active" data-tab="synthesis">Executive Summary</button>
-                            <button class="tab-btn" data-tab="forensic">Risk & Forensic Audit</button>
+                            <button class="tab-btn" data-tab="forensic">Risk &amp; Forensics</button>
                             <button class="tab-btn" data-tab="financial">Quant Canvas</button>
-                            <button class="tab-btn" data-tab="signals">Live Signals <span id="tab-badge-signals" class="hidden ml-1.5 px-1.5 py-0.5 text-[9px] bg-accent-brand text-white rounded-full font-bold"></span></button>
+                            <button class="tab-btn" data-tab="signals">Live Signals <span id="tab-badge-signals" class="hidden ml-1.5 px-1.5 py-0.5 text-[9px] bg-accent-brand text-base-bg rounded-full font-bold font-mono"></span></button>
                         </div>
 
                         <!-- Panel Bodies -->
-                        <div class="flex-1 relative bg-base-bg">
-                            
+                        <div class="flex-1 relative">
+
                             <!-- Tab: Synthesis (default) -->
                             <div class="tab-content active p-6" id="tab-synthesis">
-                                <!-- Placeholder state -->
-                                <div id="report-placeholder" class="text-center py-24">
-                                    <div class="w-16 h-16 bg-base-card rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-base-border">
-                                        <svg class="w-8 h-8 text-txt-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    </div>
-                                    <h2 class="text-lg font-sans font-semibold text-txt-primary mb-2">Awaiting Target Parameters</h2>
-                                    <p class="text-sm font-sans text-txt-secondary max-w-sm mx-auto mb-6">Enter a target ticker and upload supporting PDF documents to initialize the Multi-Agent System.</p>
-                                    <button type="button" id="demo-mode-btn" class="inline-flex items-center gap-2 py-2 px-4 rounded-sm border border-accent-brandLight bg-transparent hover:bg-accent-brand/10 text-accent-brandLight transition-all font-mono text-xs uppercase tracking-widest cursor-pointer shadow-sm mx-auto">
-                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                <!-- Placeholder / landing state -->
+                                <div id="report-placeholder" class="flex flex-col items-center justify-center text-center py-28 px-6">
+                                    <div class="text-[10px] font-mono font-semibold tracking-[0.2em] text-accent-brand uppercase mb-5">Multi-Agent Equity Research</div>
+                                    <h2 class="text-[26px] leading-tight font-semibold tracking-tight text-txt-primary mb-3 max-w-md">Forensic-grade analysis,<br>built by eight specialist agents.</h2>
+                                    <p class="text-[13.5px] text-txt-muted max-w-sm mx-auto mb-8 leading-relaxed">Select a target company to deploy forensic, narrative and capital-allocation agents against its filings and live data.</p>
+                                    <button type="button" id="demo-mode-btn" class="btn-primary !w-auto px-6">
                                         View Sample Report
                                     </button>
+                                    <p class="text-[11px] text-txt-dim mt-4">or pick a ticker in the command panel</p>
                                 </div>
 
-                                <!-- Live Engine Feed (Formerly Terminal) -->
-                                <div id="live-terminal" class="hidden bg-base-card border border-base-border rounded-lg p-6 shadow-sm">
+                                <!-- Live Engine Feed -->
+                                <div id="live-terminal" class="hidden ws-card p-6">
                                     <div class="flex items-center justify-between mb-6 pb-4 border-b border-base-border">
                                         <div class="flex flex-col">
-                                            <span class="text-sm font-sans font-semibold text-txt-primary">Engine Initialization</span>
-                                            <span class="text-xs font-sans text-txt-secondary">Multi-agent analysis framework running</span>
+                                            <span class="text-sm font-semibold text-txt-primary">Engine Initialization</span>
+                                            <span class="text-xs text-txt-muted mt-0.5">Multi-agent analysis framework running</span>
                                         </div>
-                                        <span class="text-xs font-sans font-semibold px-3 py-1 bg-accent-brand/10 text-accent-brand rounded-full border border-accent-brand/30" id="live-counter">0 / 5 Agents Active</span>
+                                        <span class="text-[11px] font-mono font-medium px-3 py-1 bg-accent-brandDim text-accent-brandLight rounded-full border border-accent-brand/25" id="live-counter">0 / 5 Agents Active</span>
                                     </div>
                                     <div id="live-agent-feed" class="space-y-4"></div>
                                 </div>
 
                                 <div id="insight-dashboard" class="hidden">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="insight-cards"></div>
-                                    <!-- P0: Financial Snapshot Charts -->
-                                    <div id="exec-charts-row" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+                                    <!-- Verdict banner (hero) — populated by JS -->
+                                    <div id="verdict-banner" class="hidden"></div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-5" id="insight-cards"></div>
+                                    <!-- Financial Snapshot Charts -->
+                                    <div id="exec-charts-row" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
                                         <div class="ws-card p-5">
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                                                Revenue &amp; PAT Trend
-                                            </h3>
+                                            <h3 class="card-title">Revenue &amp; PAT Trend</h3>
                                             <div style="height:260px;"><canvas id="chart-revenue-pat"></canvas></div>
                                         </div>
                                         <div class="ws-card p-5">
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                                                Agent Confidence Radar
-                                            </h3>
+                                            <h3 class="card-title">Agent Confidence Radar</h3>
                                             <div style="height:260px;"><canvas id="chart-agent-radar"></canvas></div>
                                         </div>
                                     </div>
-                                    <div class="ws-card p-6 shadow-sm">
+                                    <div class="ws-card p-6">
                                         <div id="report-content" class="report-prose px-1"></div>
                                     </div>
                                 </div>
 
                                 <!-- Loader -->
-                                <div id="report-loader" class="hidden text-center py-20 font-sans">
-                                    <div class="w-10 h-10 mx-auto border-4 border-base-border border-t-accent-brand rounded-full animate-spin mb-4"></div>
-                                    <p class="text-sm font-semibold text-txt-primary tracking-wide" id="loader-stage">Initializing...</p>
+                                <div id="report-loader" class="hidden text-center py-24">
+                                    <div class="w-9 h-9 mx-auto border-2 border-base-borderLight border-t-accent-brand rounded-full animate-spin mb-5"></div>
+                                    <p class="text-[13px] font-medium font-mono text-txt-secondary tracking-wide" id="loader-stage">Initializing…</p>
                                 </div>
-                                <div id="error-message" class="hidden text-center p-4 mt-6 text-sm font-sans font-semibold text-semantic-red border border-semantic-red/50 bg-semantic-red/10 rounded-md"></div>
+                                <div id="error-message" class="hidden text-center p-4 mt-6 text-[12.5px] font-mono text-semantic-red border border-semantic-red/40 bg-semantic-redDim rounded-tk-md"></div>
                             </div>
 
                             <!-- Tab: Forensic Audit -->
                             <div class="tab-content p-6" id="tab-forensic">
                                 <!-- Top Health Gauge -->
-                                <div id="forensic-header" class="mb-6 flex items-center justify-between ws-card p-5">
+                                <div id="forensic-header" class="mb-5 flex items-center justify-between ws-card p-5">
                                     <div>
-                                        <h3 class="text-sm font-sans text-txt-secondary font-medium tooltip">Platform Forensic Health<span class="tooltip-text">Aggregate health score based on accounting anomalies and cash flow quality. Higher = healthier.</span></h3>
-                                        <div class="flex items-center gap-3 mt-1">
-                                            <span id="health-gauge" class="text-2xl font-sans font-bold text-txt-primary">Awaiting Scan</span>
+                                        <h3 class="text-[11px] font-semibold uppercase tracking-[0.08em] text-txt-muted tooltip">Platform Forensic Health<span class="tooltip-text">Aggregate health score based on accounting anomalies and cash flow quality. Higher = healthier.</span></h3>
+                                        <div class="flex items-center gap-3 mt-1.5">
+                                            <span id="health-gauge" class="text-2xl font-semibold tracking-tight text-txt-primary">Awaiting Scan</span>
                                             <span id="health-badge" class="risk-badge risk-low hidden">--</span>
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="text-xs text-txt-muted uppercase font-sans tracking-wide mb-1">Forensic NLP Scan</div>
-                                        <div id="quant-triage-status" class="text-sm font-semibold font-sans text-txt-secondary">Pending Output</div>
+                                        <div class="text-[10px] text-txt-dim uppercase tracking-[0.08em] font-semibold mb-1">Forensic NLP Scan</div>
+                                        <div id="quant-triage-status" class="text-sm font-semibold text-txt-secondary">Pending Output</div>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                                     <!-- Critical Alerts / Kill Screen -->
                                     <div class="ws-card p-5">
-                                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-semantic-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                        <h3 class="card-title">
+                                            <svg class="text-semantic-red" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                             Critical Accounting Alerts
                                         </h3>
                                         <div id="forensic-alerts" class="space-y-3 report-prose text-sm max-h-[250px] overflow-y-auto pr-2">
-                                            <p class="text-sm text-txt-muted italic">Will populate upon scan completion...</p>
+                                            <p class="text-[12.5px] text-txt-dim italic">Will populate upon scan completion…</p>
                                         </div>
                                     </div>
                                     <!-- Management Transparency Scorecard -->
                                     <div class="ws-card p-5">
-                                        <h3 id="evasion-heading" class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2 clickable-section-heading" style="cursor:pointer" title="Click for full detail">
-                                            <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        <h3 id="evasion-heading" class="card-title clickable-section-heading" title="Click for full detail">
                                             <div class="tooltip">Management Evasion Likelihood<span class="tooltip-text">Overall assessment of management's willingness to answer tough questions directly.</span></div>
                                         </h3>
                                         <div class="mb-5">
-                                            <div class="flex justify-between text-xs font-sans mb-1">
-                                                <span class="text-txt-secondary font-medium tooltip">NLP Evasion Score<span class="tooltip-text">Measures the frequency of evasive language or non-answers from management in earnings calls. Higher score = more evasion (worse).</span></span>
-                                                <span id="evasion-score-text" class="text-txt-primary font-bold">--/100</span>
+                                            <div class="flex justify-between items-baseline text-xs mb-2">
+                                                <span class="text-txt-muted font-medium tooltip">NLP Evasion Score<span class="tooltip-text">Measures the frequency of evasive language or non-answers from management in earnings calls. Higher score = more evasion (worse).</span></span>
+                                                <span id="evasion-score-text" class="text-txt-primary font-mono font-semibold text-sm">--/100</span>
                                             </div>
-                                            <div class="w-full bg-base-elevated rounded-full h-2 overflow-hidden">
-                                                <div id="evasion-progress" class="bg-blue-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                                            <div class="w-full bg-base-elevated rounded-full h-1.5 overflow-hidden">
+                                                <div id="evasion-progress" class="bg-accent-brand h-1.5 rounded-full transition-all duration-1000" style="width: 0%"></div>
                                             </div>
                                         </div>
                                         <div id="mgmt-dodging-log" class="space-y-3 report-prose text-sm max-h-[175px] overflow-y-auto pr-2">
-                                            <p class="text-sm text-txt-muted italic">Scanning narratives for obfuscation...</p>
+                                            <p class="text-[12.5px] text-txt-dim italic">Scanning narratives for obfuscation…</p>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- P1: Forensic Charts Row -->
-                                <div id="forensic-charts-row" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <!-- Forensic Charts Row -->
+                                <div id="forensic-charts-row" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                                     <div class="ws-card p-5">
-                                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-semantic-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                            Cash Quality (OCF / EBITDA)
-                                        </h3>
+                                        <h3 class="card-title">Cash Quality (OCF / EBITDA)</h3>
                                         <div style="height:200px;display:flex;align-items:center;justify-content:center;"><canvas id="chart-cash-quality"></canvas></div>
                                     </div>
                                     <div class="ws-card p-5">
-                                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                            <svg class="w-4 h-4 text-semantic-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-                                            Working Capital Cycle
-                                        </h3>
+                                        <h3 class="card-title">Working Capital Cycle</h3>
                                         <div style="height:200px;"><canvas id="chart-working-capital"></canvas></div>
                                     </div>
                                 </div>
-                                <div id="forensic-tab-content" class="mt-6 space-y-4">
-                                    <p class="text-sm font-sans text-txt-muted text-center py-6">Pending system processing.</p>
+                                <div id="forensic-tab-content" class="mt-5 space-y-4">
+                                    <p class="text-[12.5px] text-txt-dim text-center py-6">Pending system processing.</p>
                                 </div>
                             </div>
 
                             <!-- Tab: Financial Data -->
                             <div class="tab-content p-6" id="tab-financial">
-                                <div class="mb-6 flex items-center justify-between ws-card p-5">
+                                <div class="mb-5 flex items-center justify-between ws-card p-5">
                                     <div>
-                                        <h2 id="quant-ticker" class="text-2xl font-sans font-bold text-txt-primary">TICKER</h2>
-                                        <div class="text-sm font-sans text-txt-secondary mt-1">Institutional Quant Canvas</div>
+                                        <h2 id="quant-ticker" class="text-2xl font-semibold tracking-tight font-mono text-txt-primary">TICKER</h2>
+                                        <div class="text-xs text-txt-muted mt-1">Institutional Quant Canvas</div>
                                     </div>
                                     <div class="text-right">
-                                        <div class="text-xs text-txt-muted uppercase font-sans tracking-wide mb-1 font-semibold tooltip">Novus Rating<span class="tooltip-text">Proprietary overall forensic and fundamental rating.</span></div>
-                                        <div id="quant-rating" class="text-3xl font-bold font-sans text-accent-brand">--</div>
+                                        <div class="text-[10px] text-txt-dim uppercase tracking-[0.08em] mb-1 font-semibold tooltip">Novus Rating<span class="tooltip-text">Proprietary overall forensic and fundamental rating.</span></div>
+                                        <div id="quant-rating" class="text-3xl font-bold font-mono text-accent-brand">--</div>
                                     </div>
                                 </div>
 
                                 <!-- 4-card metric grid -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
                                     <div class="insight-card">
                                         <div class="ic-label tooltip">ROIC Trend<span class="tooltip-text">Return on Invested Capital trend over time. Evaluates capital allocation efficiency.</span></div>
                                         <div id="quant-roic" class="ic-value">--</div>
-                                        <div id="quant-roic-sub" class="ic-sub text-txt-muted">vs 5Yr Avg</div>
+                                        <div id="quant-roic-sub" class="ic-sub">vs 5Yr Avg</div>
                                     </div>
                                     <div class="insight-card">
                                         <div class="ic-label">Cash Conversion Cycle</div>
                                         <div id="quant-ccc" class="ic-value">--</div>
-                                        <div id="quant-ccc-sub" class="ic-sub text-txt-muted">--</div>
+                                        <div id="quant-ccc-sub" class="ic-sub">--</div>
                                     </div>
                                     <div class="insight-card">
                                         <div class="ic-label tooltip">EBITDA/OCF Match<span class="tooltip-text">Compares Operating Cash Flow to EBITDA. Low match suggests aggressive accounting or poor cash conversion.</span></div>
                                         <div id="quant-ocf" class="ic-value">--</div>
-                                        <div id="quant-ocf-sub" class="ic-sub text-txt-muted">--</div>
+                                        <div id="quant-ocf-sub" class="ic-sub">--</div>
                                     </div>
                                     <div class="insight-card">
                                         <div class="ic-label tooltip">Implied Growth<span class="tooltip-text">The market's implied growth rate embedded in the current valuation.</span></div>
                                         <div id="quant-dcf" class="ic-value">--</div>
-                                        <div id="quant-dcf-sub" class="ic-sub text-txt-muted">Rev. DCF</div>
+                                        <div id="quant-dcf-sub" class="ic-sub">Rev. DCF</div>
                                     </div>
                                 </div>
 
-                                <!-- P0/P1: Quant Charts -->
-                                <div id="quant-charts-row" class="hidden space-y-4 mb-6">
+                                <!-- Quant Charts -->
+                                <div id="quant-charts-row" class="hidden space-y-4 mb-5">
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                         <div class="ws-card p-5">
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                                DuPont ROE Decomposition
-                                            </h3>
+                                            <h3 class="card-title">DuPont ROE Decomposition</h3>
                                             <div style="height:240px;"><canvas id="chart-dupont"></canvas></div>
                                         </div>
                                         <div class="ws-card p-5">
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                                                Revenue / EBITDA / PAT
-                                            </h3>
+                                            <h3 class="card-title">Revenue / EBITDA / PAT</h3>
                                             <div style="height:240px;"><canvas id="chart-rev-ebitda-pat"></canvas></div>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                         <div class="ws-card p-5">
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-semantic-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                Free Cash Flow Trend
-                                            </h3>
+                                            <h3 class="card-title">Free Cash Flow Trend</h3>
                                             <div style="height:240px;"><canvas id="chart-fcf-trend"></canvas></div>
                                         </div>
                                         <div class="ws-card p-5">
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                                <svg class="w-4 h-4 text-semantic-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-                                                Debt vs Cash Position
-                                            </h3>
+                                            <h3 class="card-title">Debt vs Cash Position</h3>
                                             <div style="height:240px;"><canvas id="chart-debt-cash"></canvas></div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- DuPont Breakdown Text -->
-                                <div class="ws-card p-5 mb-6">
-                                    <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-accent-brandLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                        DuPont Decomposition Matrix
-                                    </h3>
-                                    <div id="quant-dupont-text" class="text-sm font-sans text-txt-secondary leading-relaxed border-l-4 border-accent-brand bg-accent-brand/5 p-4 rounded-r-md">
-                                        <span class="italic">Analyzing fundamental ROE drivers...</span>
+                                <div class="ws-card p-5 mb-5">
+                                    <h3 class="card-title">DuPont Decomposition Matrix</h3>
+                                    <div id="quant-dupont-text" class="text-[13px] text-txt-secondary leading-relaxed border-l-2 border-accent-brand bg-accent-brandDim p-4 rounded-r-tk-md">
+                                        <span class="italic">Analyzing fundamental ROE drivers…</span>
                                     </div>
                                 </div>
 
                                 <div id="screener-container" class="ws-card p-5 overflow-x-auto">
-                                    <p class="text-sm font-sans text-txt-muted text-center py-10">Awaiting dataset generation.</p>
+                                    <p class="text-[12.5px] text-txt-dim text-center py-10">Awaiting dataset generation.</p>
                                 </div>
                             </div>
 
@@ -659,24 +699,24 @@
                                     <!-- Header / Query Bar -->
                                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-base-border pb-4">
                                         <div>
-                                            <h3 class="text-sm font-sans font-semibold text-txt-primary flex items-center gap-2">
+                                            <h3 class="text-sm font-semibold text-txt-primary flex items-center gap-2">
                                                 <svg class="w-4 h-4 text-accent-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                                                 Live Signal Intelligence
                                             </h3>
-                                            <div id="signal-freshness" class="text-[10px] font-mono text-txt-muted mt-1"></div>
+                                            <div id="signal-freshness" class="text-[10px] font-mono text-txt-dim mt-1"></div>
                                         </div>
                                         <!-- Query proxy bar -->
                                         <div class="relative w-full md:w-64">
-                                            <input type="text" id="signal-query-input" placeholder="Query these signals..." aria-label="Query Live Signals" class="w-full bg-base-bg border border-base-border rounded px-3 py-1.5 text-xs text-txt-primary focus:outline-none focus:border-accent-brand focus:ring-1 focus:ring-accent-brand/50 placeholder:text-txt-muted/50" onkeydown="if(event.key === 'Enter') { document.getElementById('chat-input').value = this.value; document.getElementById('chat-send').click(); this.value = ''; }">
-                                            <svg class="w-3.5 h-3.5 text-txt-muted absolute right-2.5 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                            <input type="text" id="signal-query-input" placeholder="Query these signals…" aria-label="Query Live Signals" class="w-full bg-base-elevated border border-base-borderLight rounded-tk-md px-3 py-2 text-xs text-txt-primary focus:outline-none focus:border-accent-brand placeholder:text-txt-dim transition-colors" onkeydown="if(event.key === 'Enter') { document.getElementById('chat-input').value = this.value; document.getElementById('chat-send').click(); this.value = ''; }">
+                                            <svg class="w-3.5 h-3.5 text-txt-dim absolute right-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                                         </div>
                                     </div>
 
-                                    <div id="signal-unavailable" class="hidden mb-4 p-3 bg-semantic-amber/10 border border-semantic-amber/30 rounded-md text-xs font-mono text-semantic-amber"></div>
+                                    <div id="signal-unavailable" class="hidden mb-4 p-3 bg-semantic-amberDim border border-semantic-amber/30 rounded-tk-md text-xs font-mono text-semantic-amber"></div>
 
                                     <!-- Macro / Sector Context Band -->
-                                    <div id="signal-macro-band" class="hidden mb-6 p-4 rounded bg-base-elevated border border-base-border">
-                                        <h4 class="text-[10px] font-mono font-semibold text-txt-dim uppercase tracking-widest mb-3 flex items-center gap-2"><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg> Macro & Sector Context</h4>
+                                    <div id="signal-macro-band" class="hidden mb-6 p-4 rounded-tk-md bg-base-elevated border border-base-border">
+                                        <h4 class="text-[10px] font-semibold text-txt-dim uppercase tracking-[0.12em] mb-3">Macro &amp; Sector Context</h4>
                                         <div id="signal-macro-list" class="space-y-3"></div>
                                     </div>
 
@@ -685,25 +725,25 @@
 
                                     <!-- Toggle for lower-materiality -->
                                     <div class="mt-6 text-center">
-                                        <button id="signal-toggle-btn" class="hidden text-xs font-mono text-txt-muted hover:text-txt-primary transition-colors focus:outline-none focus:underline" onclick="window.toggleLowerSignals()">Show lower-materiality signals (<span id="signal-hidden-count">0</span>)</button>
+                                        <button id="signal-toggle-btn" class="hidden text-xs text-txt-muted hover:text-txt-primary transition-colors focus:outline-none focus:underline" onclick="window.toggleLowerSignals()">Show lower-materiality signals (<span id="signal-hidden-count">0</span>)</button>
                                     </div>
-                                    
-                                    <div class="mt-8 text-center border-t border-base-border/50 pt-4">
-                                        <p class="text-[10px] font-mono text-txt-muted/60 uppercase tracking-widest">Not Investment Advice — AI Generated Signals</p>
+
+                                    <div class="mt-8 text-center border-t border-base-border pt-4">
+                                        <p class="text-[10px] font-mono text-txt-dim uppercase tracking-[0.12em]">Not Investment Advice — AI Generated Signals</p>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Loading State -->
                                 <div id="signal-loading-state" class="hidden text-center py-24">
-                                    <div class="w-12 h-12 rounded-full border-2 border-base-border border-t-accent-brand animate-spin mx-auto mb-4"></div>
-                                    <h3 class="text-sm font-sans font-semibold text-txt-primary mb-1">Signal Pipeline Running</h3>
-                                    <p class="text-xs font-sans text-txt-secondary">Scanning sources and scoring materiality concurrently...</p>
+                                    <div class="w-9 h-9 rounded-full border-2 border-base-borderLight border-t-accent-brand animate-spin mx-auto mb-5"></div>
+                                    <h3 class="text-sm font-semibold text-txt-primary mb-1">Signal Pipeline Running</h3>
+                                    <p class="text-xs text-txt-muted">Scanning sources and scoring materiality concurrently…</p>
                                 </div>
-                                
+
                                 <!-- Empty State -->
-                                <div id="signal-empty-state" class="hidden text-center py-24 border border-dashed border-base-border rounded-lg bg-base-card/50">
-                                    <svg class="w-8 h-8 text-txt-muted mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                                    <p class="text-sm font-sans text-txt-secondary" id="signal-empty-text">No material signals detected as of <time>.</p>
+                                <div id="signal-empty-state" class="hidden text-center py-24 border border-dashed border-base-borderLight rounded-tk-lg">
+                                    <svg class="w-7 h-7 text-txt-dim mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                                    <p class="text-sm text-txt-muted" id="signal-empty-text">No material signals detected.</p>
                                 </div>
                             </div>
                         </div>
@@ -713,15 +753,15 @@
                 <!-- ═══ RIGHT: AI Copilot ═══ -->
                 <div class="lg:col-span-3">
                     <div class="ws-card-flush copilot-panel" id="chat-panel">
-                        <div class="px-4 py-3 border-b border-base-border bg-base-card flex items-center justify-between">
-                            <h3 class="text-sm font-sans font-semibold text-txt-primary flex items-center gap-2">
-                                <svg class="w-4 h-4 text-accent-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                        <div class="px-4 py-3 border-b border-base-border flex items-center justify-between">
+                            <h3 class="text-[13px] font-semibold text-txt-primary flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-accent-brand"></span>
                                 Novus Copilot
                             </h3>
-                            <button id="chat-clear" aria-label="Clear chat history" class="text-txt-muted hover:text-accent-brand text-xs font-sans font-medium transition-colors">Clear</button>
+                            <button id="chat-clear" aria-label="Clear chat history" class="text-txt-dim hover:text-txt-primary text-xs font-medium transition-colors">Clear</button>
                         </div>
                         <div class="copilot-messages" id="chat-messages">
-                            <!-- Rigid Chatbot Tone Initialized by JS -->
+                            <!-- Initialized by JS -->
                         </div>
                         <div class="copilot-input-container">
                             <div class="copilot-chips">
@@ -730,27 +770,37 @@
                                 <button class="copilot-chip" onclick="document.getElementById('chat-input').value='Highlight red flags'; document.getElementById('chat-send').click()">Red Flags</button>
                             </div>
                             <div class="copilot-input">
-                                <svg class="w-4 h-4 text-txt-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                                <input type="text" id="chat-input" placeholder="Ask Novus a question..." autocomplete="off">
+                                <input type="text" id="chat-input" placeholder="Ask Novus a question…" autocomplete="off">
                                 <button id="chat-send" class="copilot-send" disabled aria-label="Send message">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M13 6l6 6-6 6" /></svg>
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <div id="triage-panel" class="ws-card p-4 mt-4 hidden">
-                        <h3 class="text-xs font-sans font-semibold text-txt-primary border-b border-base-border pb-2 mb-3">Triage Results</h3>
-                        <div id="triage-content" class="text-sm font-sans text-txt-secondary"></div>
+                        <h3 class="card-title">Triage Results</h3>
+                        <div id="triage-content" class="text-[13px] text-txt-secondary"></div>
                     </div>
-                    
+
                     <div id="forensic-panel" class="ws-card p-4 mt-4 hidden">
-                        <h3 class="text-xs font-sans font-semibold text-txt-primary border-b border-base-border pb-2 mb-3">Executive Summary</h3>
-                        <div id="forensic-content" class="text-sm font-sans"></div>
+                        <h3 class="card-title">Executive Summary</h3>
+                        <div id="forensic-content" class="text-[13px]"></div>
                     </div>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- ═══ Section Detail Modal ═══ -->
+    <div id="section-modal-backdrop" class="section-modal-backdrop" aria-hidden="true">
+        <div class="section-modal" role="dialog" aria-modal="true" aria-labelledby="section-modal-title-text">
+            <div class="section-modal-header">
+                <div class="section-modal-title"><span id="section-modal-title-text"></span></div>
+                <button id="section-modal-close-btn" class="section-modal-close" aria-label="Close detail view">✕</button>
+            </div>
+            <div id="section-modal-body" class="section-modal-body report-prose"></div>
+        </div>
     </div>
 
     <!-- Toast Container -->

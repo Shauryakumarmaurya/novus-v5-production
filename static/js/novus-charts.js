@@ -1,14 +1,14 @@
 window.NovusCharts = (() => {
         try {
-            // ── Theme ──
+            // ── Theme — aligned with the Novus design tokens (see index.html) ──
             const T = {
-                bg: '#000000', grid: 'rgba(0,229,255,0.1)', tick: '#00E5FF', label: '#FFFFFF',
-                blue: '#00E5FF', blueLight: '#66FFFF', blueDim: 'rgba(0,229,255,0.15)',
-                green: '#00FF41', greenDim: 'rgba(0,255,65,0.12)',
-                amber: '#FFB300', amberDim: 'rgba(255,179,0,0.12)',
-                red: '#FF0055', redDim: 'rgba(255,0,85,0.12)',
-                cyan: '#00E5FF', purple: '#B026FF', pink: '#FF00A0',
-                font: "'JetBrains Mono', monospace",
+                bg: '#0A0A0C', grid: 'rgba(255,255,255,0.06)', tick: '#8A8A94', label: '#B4B4BE',
+                blue: '#5B9DFF', blueLight: '#93C0FF', blueDim: 'rgba(91,157,255,0.14)',
+                green: '#3DD9A4', greenDim: 'rgba(61,217,164,0.12)',
+                amber: '#F2B94B', amberDim: 'rgba(242,185,75,0.12)',
+                red: '#F26D7E', redDim: 'rgba(242,109,126,0.12)',
+                cyan: '#5BC8E8', purple: '#A78BFA', pink: '#E879F9',
+                font: "'Inter', sans-serif",
                 mono: "'JetBrains Mono', monospace",
             };
 
@@ -19,13 +19,16 @@ window.NovusCharts = (() => {
             Chart.defaults.plugins.legend.labels.usePointStyle = true;
             Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
             Chart.defaults.plugins.legend.labels.padding = 16;
-            Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(5,5,5,0.9)';
-            Chart.defaults.plugins.tooltip.borderColor = '#00E5FF';
+            Chart.defaults.plugins.legend.labels.color = T.label;
+            Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(17,17,20,0.96)';
+            Chart.defaults.plugins.tooltip.borderColor = '#2E2E36';
             Chart.defaults.plugins.tooltip.borderWidth = 1;
-            Chart.defaults.plugins.tooltip.titleFont = { family: T.mono, weight: '600' };
-            Chart.defaults.plugins.tooltip.bodyFont = { family: T.mono };
-            Chart.defaults.plugins.tooltip.padding = 10;
-            Chart.defaults.plugins.tooltip.cornerRadius = 2;
+            Chart.defaults.plugins.tooltip.titleColor = '#F4F4F6';
+            Chart.defaults.plugins.tooltip.bodyColor = '#B4B4BE';
+            Chart.defaults.plugins.tooltip.titleFont = { family: T.font, weight: '600' };
+            Chart.defaults.plugins.tooltip.bodyFont = { family: T.mono, size: 11 };
+            Chart.defaults.plugins.tooltip.padding = 12;
+            Chart.defaults.plugins.tooltip.cornerRadius = 8;
 
             const _instances = {};
             function _destroy(id) { if (_instances[id]) { _instances[id].destroy(); delete _instances[id]; } }
@@ -120,7 +123,7 @@ window.NovusCharts = (() => {
                             label: 'Confidence %',
                             data: values,
                             borderColor: T.blue,
-                            backgroundColor: 'rgba(59,130,246,0.15)',
+                            backgroundColor: T.blueDim,
                             pointBackgroundColor: T.blueLight,
                             pointBorderColor: T.blue,
                             pointRadius: 4,
@@ -166,7 +169,7 @@ window.NovusCharts = (() => {
                     type: 'doughnut',
                     data: {
                         labels: ['OCF/EBITDA', 'Gap'],
-                        datasets: [{ data: [pct, remaining], backgroundColor: [color, 'rgba(30,41,59,0.3)'], borderWidth: 0, cutout: '75%' }],
+                        datasets: [{ data: [pct, remaining], backgroundColor: [color, 'rgba(255,255,255,0.06)'], borderWidth: 0, cutout: '75%' }],
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false,

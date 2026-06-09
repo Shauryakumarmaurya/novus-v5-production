@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ── Screener Fetch ──
             async function fetchAndRenderScreener(ticker) {
                 const container = document.getElementById('screener-container');
-                container.innerHTML = '<div class="flex items-center gap-2 text-[11px] font-mono text-accent-brandLight animate-pulse py-4"><span class="w-2 h-2 rounded-none bg-accent-brand"></span>>_ Fetching quantitative datasets...</div>';
+                container.innerHTML = '<div class="flex items-center gap-2 text-[11px] font-mono text-txt-muted animate-pulse py-4"><span class="w-1.5 h-1.5 rounded-full bg-accent-brand"></span>Fetching quantitative datasets…</div>';
                 try {
                     const res = await fetch(`/api/v1/screener_data?ticker=${ticker}`);
                     if (!res.ok) throw new Error('Screener fetch failed');
@@ -239,12 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                     const isLineItem = key === "Line Item" || key === "Unnamed: 0" || isFirst;
                                     
                                     if (isLineItem) {
-                                        const tdStyle = isSubItem 
-                                            ? `font-weight: 400; padding-left: 2rem; color: #94A3B8; background: ${isEvenParent ? '#243147' : '#1E293B'}; white-space: nowrap;`
-                                            : `font-weight: 700; color: #F8FAFC; background: ${isEvenParent ? '#243147' : '#1E293B'}; white-space: nowrap;`;
+                                        const tdStyle = isSubItem
+                                            ? `font-weight: 400; padding-left: 2rem; color: var(--t3); background: ${isEvenParent ? '#16161B' : 'var(--card)'}; white-space: nowrap;`
+                                            : `font-weight: 600; color: var(--t1); background: ${isEvenParent ? '#16161B' : 'var(--card)'}; white-space: nowrap;`;
                                         html += `<td class="line-item" style="${tdStyle}">${cv}</td>`;
                                     } else {
-                                        const numStyle = isSubItem ? `color: #94A3B8; font-size: 0.65rem;` : `color: #e2e8f0; font-size: 0.75rem;`;
+                                        const numStyle = isSubItem ? `color: var(--t3); font-size: 11px;` : `color: var(--t2); font-size: 12px;`;
                                         html += `<td class="num" style="${numStyle}">${cv}</td>`;
                                     }
                                     isFirst = false;
@@ -437,6 +437,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 setLoadingState(true);
                 reportPlaceholder.classList.add('hidden');
                 liveTerminal.classList.remove('hidden');
+                const vb = document.getElementById('verdict-banner');
+                if (vb) { vb.classList.add('hidden'); vb.innerHTML = ''; }
+                setHeaderContext((tickerInput.value || '').trim().toUpperCase(), 'Analyzing\u2026');
                 liveAgentFeed.innerHTML = '';
                 populatedCards.clear();
                 insightDashboard.classList.add('hidden');
@@ -720,7 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     evasionScoreText.textContent = `${score}/100`;
                     evasionProgress.style.width = `${score}%`;
-                    evasionProgress.className = `h-2 rounded-full transition-all duration-1000 ${score > 70 ? 'bg-semantic-red' : score > 40 ? 'bg-semantic-amber' : 'bg-semantic-green'}`;
+                    evasionProgress.className = `h-1.5 rounded-full transition-all duration-1000 ${score > 70 ? 'bg-semantic-red' : score > 40 ? 'bg-semantic-amber' : 'bg-semantic-green'}`;
                     
                     // Render narrative content + verdict banner
                     let verdictHtml = '';
@@ -748,7 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.className = 'ws-card overflow-hidden animate-fadeUp p-5';
                     const fullHtml = markdownConverter.makeHtml(output);
                     div.innerHTML = `
-                        <h3 class="text-sm font-sans font-semibold text-txt-primary border-b border-base-border pb-3 mb-4 clickable-section-heading" data-modal-title="${info.name}" data-modal-agent="${name}">${info.name}</h3>
+                        <h3 class="card-title clickable-section-heading" data-modal-title="${info.name}" data-modal-agent="${name}">${info.name}</h3>
                         <div class="text-sm text-txt-secondary leading-relaxed max-h-[300px] overflow-y-auto report-prose pr-2">
                             ${fullHtml}
                         </div>
@@ -809,7 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ratingEl = document.getElementById('quant-rating');
                 if (ratingEl && !ratingEl.dataset.rendered) {
                     ratingEl.textContent = eq === 'HIGH' ? 'A' : eq === 'MODERATE' ? 'B' : eq === 'LOW' ? 'C' : '--';
-                    ratingEl.className = 'text-3xl font-bold font-sans ' + (eq === 'HIGH' ? 'text-semantic-green' : eq === 'LOW' ? 'text-semantic-red' : 'text-semantic-amber');
+                    ratingEl.className = 'text-3xl font-bold font-mono ' + (eq === 'HIGH' ? 'text-semantic-green' : eq === 'LOW' ? 'text-semantic-red' : 'text-semantic-amber');
                     ratingEl.dataset.rendered = 'true';
                 }
 
@@ -916,10 +919,84 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // ── Verdict Banner (hero) ──
+            // The single most important output of the platform: rating + risk +
+            // headline metrics, rendered above everything else.
+            function renderVerdictBanner(data) {
+                const banner = document.getElementById('verdict-banner');
+                if (!banner) return;
+
+                const ticker = (tickerInput.value || '').trim().toUpperCase();
+                const scorecard = data.forensic_scorecard || {};
+                const triage = data.triage_result;
+
+                // Rating: explicit string from scorecard, else letter from cash quality
+                let rating = typeof scorecard.rating === 'string' ? scorecard.rating : null;
+                let ratingColor = 'text-accent-brandLight';
+                if (!rating && scorecard.ocf_ebitda_ratio != null) {
+                    const r = scorecard.ocf_ebitda_ratio;
+                    rating = r >= 0.8 ? 'A' : r >= 0.5 ? 'B' : 'C';
+                }
+                if (rating) {
+                    const rl = String(rating).toLowerCase();
+                    if (rl === 'a' || rl.includes('outperform') || rl.includes('buy')) ratingColor = 'text-semantic-green';
+                    else if (rl === 'c' || rl.includes('underperform') || rl.includes('sell') || rl.includes('avoid')) ratingColor = 'text-semantic-red';
+                    else if (rl === 'b' || rl.includes('neutral') || rl.includes('hold')) ratingColor = 'text-semantic-amber';
+                }
+
+                // Risk posture from triage
+                let riskHtml = '';
+                if (triage && typeof triage === 'object' && 'passed' in triage) {
+                    riskHtml = triage.passed
+                        ? '<span class="risk-badge risk-low">LOW RISK</span>'
+                        : '<span class="risk-badge risk-high">INVESTIGATE</span>';
+                }
+
+                const healthScore = typeof scorecard.health_score === 'number' ? scorecard.health_score : null;
+                const evasionScore = (data.evasion_data && typeof data.evasion_data.score === 'number')
+                    ? data.evasion_data.score
+                    : (typeof scorecard.evasion_score === 'number' ? scorecard.evasion_score : null);
+
+                if (!rating && !riskHtml && healthScore == null) { banner.classList.add('hidden'); return; }
+
+                const metric = (label, value, colorClass) => value == null ? '' : `
+                    <div class="min-w-[88px]">
+                        <div class="verdict-meta-label">${label}</div>
+                        <div class="font-mono text-xl font-semibold ${colorClass || 'text-txt-primary'}" style="font-variant-numeric: tabular-nums;">${value}</div>
+                    </div>`;
+
+                banner.className = 'verdict-banner animate-fadeUp';
+                banner.innerHTML = `
+                    <div class="flex-1 min-w-[200px]">
+                        <div class="flex items-center gap-3 mb-1.5">
+                            <span class="font-mono text-[13px] font-semibold tracking-wider text-txt-secondary">${ticker || 'TARGET'}</span>
+                            ${riskHtml}
+                        </div>
+                        <div class="verdict-meta-label">Novus Verdict</div>
+                        <div class="verdict-rating ${ratingColor}">${rating || '—'}</div>
+                    </div>
+                    <div class="flex items-center gap-7 flex-wrap ml-auto lg:pl-8 lg:border-l lg:border-white/[0.06]">
+                        ${metric('Forensic Health', healthScore != null ? healthScore + '<span class="text-txt-dim text-sm">/100</span>' : null, healthScore != null ? (healthScore >= 70 ? 'text-semantic-green' : healthScore >= 40 ? 'text-semantic-amber' : 'text-semantic-red') : null)}
+                        ${metric('Mgmt Evasion', evasionScore != null ? evasionScore + '<span class="text-txt-dim text-sm">/100</span>' : null, evasionScore != null ? (evasionScore <= 30 ? 'text-semantic-green' : evasionScore <= 60 ? 'text-semantic-amber' : 'text-semantic-red') : null)}
+                        ${metric('Cash Quality', scorecard.ocf_ebitda_ratio != null ? Math.round(scorecard.ocf_ebitda_ratio * 100) + '%' : null, null)}
+                    </div>`;
+            }
+
+            function setHeaderContext(ticker, status) {
+                const ctx = document.getElementById('header-context');
+                if (!ctx) return;
+                document.getElementById('header-ticker').textContent = ticker || '';
+                document.getElementById('header-status').textContent = status || '';
+                ctx.classList.toggle('hidden', !ticker);
+            }
+            window._setHeaderContext = setHeaderContext;
+
             function renderReport(data) {
                 window._currentReportData = data;
                 reportLoader.classList.add('hidden');
                 renderPartialReport(data);
+                renderVerdictBanner(data);
+                setHeaderContext((tickerInput.value || '').trim().toUpperCase(), 'Analysis complete');
                 if (!document.getElementById('report-disclaimer')) {
                     const disc = document.createElement('div');
                     disc.id = 'report-disclaimer';
@@ -1162,9 +1239,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 sigList.innerHTML = specificSignals.map(renderSignalCard).join('');
                 
                 const macroBand = document.getElementById('signal-macro-band');
+                macroBand.classList.remove('signal-subthreshold');
                 if (macroSignals.length > 0) {
-                    macroBand.classList.remove('hidden');
                     document.getElementById('signal-macro-list').innerHTML = macroSignals.map(renderSignalCard).join('');
+                    // If every macro signal is below threshold, hide the band with them
+                    // (revealed together via the lower-materiality toggle).
+                    if (macroSignals.every(s => s.materiality_score < threshold)) {
+                        macroBand.classList.add('hidden', 'signal-subthreshold');
+                    } else {
+                        macroBand.classList.remove('hidden');
+                    }
                 } else {
                     macroBand.classList.add('hidden');
                 }
@@ -1280,10 +1364,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('loader-stage').textContent = "Loading Demo Data (CIPLA)...";
                 
                 document.getElementById('ticker').value = 'CIPLA';
-                
-                const header = document.querySelector('header .flex.items-center.gap-2');
-                if (header && !document.getElementById('demo-badge')) {
-                    header.insertAdjacentHTML('beforeend', '<span id="demo-badge" class="ml-4 px-2 py-0.5 text-[10px] font-mono font-bold bg-semantic-amber/20 text-semantic-amber border border-semantic-amber/50 rounded-sm tracking-widest">DEMO MODE</span>');
+                document.getElementById('quant-ticker').textContent = 'CIPLA';
+
+                const badgeSlot = document.getElementById('demo-badge-slot');
+                if (badgeSlot && !document.getElementById('demo-badge')) {
+                    badgeSlot.insertAdjacentHTML('beforeend', '<span id="demo-badge" class="ml-3 px-2 py-0.5 text-[9px] font-mono font-semibold bg-semantic-amberDim text-semantic-amber border border-semantic-amber/40 rounded-full tracking-[0.12em]">DEMO</span>');
                 }
                 
                 try {

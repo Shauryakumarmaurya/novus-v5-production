@@ -1,58 +1,101 @@
 {
-    "signal_payload": {
-        "signals": [
-            {
-                "id": "sig_demo1",
-                "category": "regulatory",
-                "direction": "negative",
-                "materiality_score": 65,
-                "confidence": "high",
-                "time_horizon": "quarters",
-                "highest_source_tier": 1,
-                "summary": "USFDA Form 483 with 7 observations at Eugia Unit II signals potential regulatory compliance issues that may delay approvals or impact operations."
-            }
-        ],
-        "impacts": [
-            {
-                "signal_id": "sig_demo1",
-                "affected_thesis_drivers": ["Regulatory risks at key facilities threatening approvals"],
-                "direction": "negative",
-                "qualitative_magnitude": "Moderate",
-                "horizon": "1-2 Quarters",
-                "what_to_watch": "Eugia Unit II's official FDA classification (OAI, VAI, or NAI)",
-                "confirms_or_contradicts_thesis": "confirms",
-                "triggers_kill_criterion_id": null,
-                "confidence": "high"
-            }
-        ],
-        "unavailable_sources": []
+  "final_report": "## Investment Verdict\n\nCipla presents a **structurally improving franchise** with strengthening US generics momentum, a deleveraged balance sheet, and best-in-class respiratory pipeline optionality. The forensic scan surfaced **no critical accounting anomalies**; earnings quality is high with OCF/EBITDA conversion at 92% [CALC: OCF 4,581 Cr / EBITDA 4,979 Cr].\n\n- **Thesis:** Margin expansion driven by US peptide launches and India branded growth outpacing sector\n- **Quality:** Cash conversion remains above the 80% institutional threshold for the 4th consecutive year\n- **Valuation:** Market-implied growth of 8.5% sits below management's 11-12% guided trajectory\n\n## Key Strengths\n\n- **Balance sheet firepower** — Net cash position of 7,800 Cr enables inorganic optionality without equity dilution\n- **US respiratory franchise** — Advair, Abraxane and Symbicort generics provide a 3-year visibility runway\n- **India branded resilience** — 61% of chronic portfolio growing at 1.4x IPM average\n\n## Risk Matrix\n\n- **Risk:** US FDA re-inspection of Goa facility pending since Q2 | **Probability:** MEDIUM | **Impact:** Could delay 2 ANDA approvals worth est. 480 Cr annualized revenue\n- **Risk:** Price erosion in US base generics portfolio | **Probability:** HIGH | **Impact:** 200-300 bps gross margin headwind absent new launches\n- **Opportunity:** Peptide injectables ramp in US | **Probability:** HIGH | **Impact:** 8-10% EPS accretion by FY27 on current filing cadence\n\n## Financial Quality Assessment\n\n| Metric | FY24 | FY25 | Trend |\n|---|---|---|---|\n| OCF / EBITDA | 88% | 92% | Improving |\n| ROIC | 18.2% | 21.4% | Improving |\n| CCC (days) | 81 | 74 | Improving |\n| Net Debt / EBITDA | -0.8x | -1.2x | Deleveraging |\n\n## Synthesis\n\nThe multi-agent review converged on an **Outperform** posture with high cross-agent confidence. The critic agent verified chronology across all causal claims; no timeline hallucinations were flagged. Management transparency scored well — evasion likelihood of 12/100 places Cipla in the top decile of coverage.\n",
+  "agent_outputs": {
+    "forensic_quant": "### Quantitative Forensics\n\n- **DuPont:** ROE of 17.8% is margin-led (net margin 16.4%), not leverage-led — equity multiplier just 1.21x\n- **Cash quality:** OCF/EBITDA at 92% [CALC: 4,581 / 4,979], FCF/PAT at 84%\n- **Working capital:** CCC compressed from 81d to 74d on payables discipline\n- No divergence between revenue growth and receivables growth detected",
+    "forensic_investigator": "### Deep Forensic Audit\n\n- Revenue recognition policies consistent across 5 fiscal years\n- R&D capitalization at 4.1% of spend — within industry norms (peer median 5.2%)\n- Related-party transactions immaterial at 0.3% of revenue\n- Auditor tenure 4 years, no qualified opinions, no CFO churn",
+    "narrative_decoder": "### Narrative & Bias Detection\n\n- Management answered 19 of 21 analyst questions directly\n- Two soft dodges on FY26 US pricing trajectory — flagged, not material\n- Tone delta vs prior quarter: +0.4 (more confident), consistent with order book data\n- No guidance walk-backs detected against FY24 commitments",
+    "moat_architect": "### Economic Moat\n\n- **Regulatory moat:** 64 US ANDAs pending, 12 Para-IV first-to-file positions\n- **Brand moat:** 6 of India's top-50 pharma brands; chronic mix shifting favorably\n- Respiratory device-drug combos carry 3-5 year replication barriers\n- Moat trajectory: **widening**",
+    "capital_allocator": "### Capital Allocation Review\n\n- ROIC 21.4% vs WACC 12% — value-creative spread of 940 bps\n- Capex discipline: 5-year average 6.2% of revenue, returns-accretive\n- Dividend payout conservative at 22%; buyback capacity unused\n- M&A posture: bolt-on biosimilars optionality, no empire-building signals",
+    "pm_synthesis": "### PM Synthesis\n\nAll specialist findings converged without material conflict. Verdict: **Outperform** with margin-led quality, widening moat, and clean forensic profile. Primary watch item: Goa facility FDA re-inspection timeline."
+  },
+  "completed_agents": ["extract_pdfs", "planning", "forensic_quant", "forensic_investigator", "narrative_decoder", "moat_architect", "capital_allocator", "pm_synthesis"],
+  "triage_result": { "passed": true, "kill_reasons": [], "warnings": [] },
+  "forensic_scorecard": {
+    "rating": "Outperform",
+    "health_score": 88,
+    "ocf_ebitda_ratio": 0.92,
+    "roic_latest": 0.214,
+    "working_capital": { "dio": 78.0, "dso": 84.0, "dpo": 88.0, "ccc_days": 74.0 },
+    "dupont": { "roe": 0.178, "net_margin": 0.164, "asset_turnover": 0.89, "equity_multiplier": 1.21, "primary_driver": "margin" },
+    "flags": []
+  },
+  "evasion_data": {
+    "score": 12,
+    "verdict": "LOW EVASION — Management addressed analyst questions directly",
+    "breakdown": { "guidance_misses": 0, "tone_shifts": 1, "analyst_dodges": 2, "flagged_phrases": 2 }
+  },
+  "rag_stats": { "total_chunks": 1432, "doc_types": ["annual_report", "investor_presentation", "earnings_transcript"] },
+  "agent_trails": {
+    "forensic_quant": {
+      "confidence": 0.88,
+      "findings": {
+        "ocf_ebitda_ratio": 0.92,
+        "roic_latest": 0.214,
+        "working_capital": { "dio": 78.0, "dso": 84.0, "dpo": 88.0, "ccc_days": 74.0 },
+        "dupont": { "roe": 0.178, "net_margin": 0.164, "asset_turnover": 0.89, "equity_multiplier": 1.21, "primary_driver": "margin" }
+      }
     },
-    "triage_result": "<p>Initial triage indicates strong revenue stability with minor margin pressures due to raw material costs. Core US generics business is tracking well.</p>",
-    "forensic_scorecard": {
-        "health_score": 88,
-        "evasion_score": 12,
-        "evasion_log": "<p>Management addressed all major questions directly. No significant dodging on US FDA warning letters or pricing pressure.</p>",
-        "critical_alerts": [
-            "No aggressive revenue recognition detected.",
-            "Minor capitalization of R&D expenses noted, within industry norms."
-        ],
-        "rating": "Outperform"
-    },
-    "rag_stats": {
-        "total_chunks": 1432,
-        "docTypes": "annual_report, investor_presentation, earnings_transcript"
-    },
-    "agent_trails": {
-        "forensic_quant": {
-            "findings": "\nAnalysis complete.\n[METRIC: Cash Quality|92%]\n[METRIC: Working Capital Cycle|74 days]\n[METRIC: ROIC Trend|Improving]\n[METRIC: Implied Growth|8.5%]\n[METRIC: EBITDA/OCF Match|96%]\n[METRIC: FCF_Trend|[1200, 1450, 1600, 1550, 2100]]\n[METRIC: Debt_Cash_Position|[{\"debt\":4000,\"cash\":2500},{\"debt\":3800,\"cash\":3100},{\"debt\":3500,\"cash\":4200}]]\n[METRIC: Rev_Ebitda_Pat|[{\"rev\":19000,\"ebitda\":4000,\"pat\":2500},{\"rev\":21000,\"ebitda\":4500,\"pat\":2800},{\"rev\":23500,\"ebitda\":5200,\"pat\":3400}]]\n[METRIC: DuPont_Components|{\"net_margin\":14.5,\"asset_turnover\":0.85,\"equity_multiplier\":1.4}]\n"
-        },
-        "confidence_radar": [
-            90,
-            85,
-            95,
-            80,
-            88,
-            92
-        ]
-    }
+    "forensic_investigator": { "confidence": 0.84 },
+    "narrative_decoder": { "confidence": 0.79 },
+    "moat_architect": { "confidence": 0.82 },
+    "capital_allocator": { "confidence": 0.86 },
+    "management_quality": { "confidence": 0.81 }
+  },
+  "signal_payload": {
+    "signals": [
+      {
+        "id": "sig-001",
+        "category": "regulatory",
+        "direction": "positive",
+        "materiality_score": 78,
+        "summary": "USFDA classified the Pithampur plant inspection as VAI (Voluntary Action Indicated), clearing the path for two pending injectable approvals.",
+        "as_of": "2026-06-08T09:30:00Z",
+        "event_ids": ["evt-101"],
+        "is_novel": true,
+        "highest_source_tier": 1
+      },
+      {
+        "id": "sig-002",
+        "category": "competitive",
+        "direction": "negative",
+        "materiality_score": 64,
+        "summary": "A third generic entrant filed for the lead respiratory product, pulling forward expected price erosion by roughly two quarters.",
+        "as_of": "2026-06-07T14:00:00Z",
+        "event_ids": ["evt-102"],
+        "is_novel": false,
+        "highest_source_tier": 2
+      },
+      {
+        "id": "sig-003",
+        "category": "macro_sector",
+        "direction": "neutral",
+        "materiality_score": 55,
+        "summary": "US generics pricing index flat month-over-month; sector deflation appears to be bottoming.",
+        "as_of": "2026-06-05T11:00:00Z",
+        "event_ids": ["evt-103"],
+        "is_novel": false,
+        "highest_source_tier": 1
+      }
+    ],
+    "impacts": [
+      {
+        "signal_id": "sig-001",
+        "horizon": "6-12 months",
+        "affected_thesis_drivers": ["US injectables ramp", "Margin expansion"],
+        "what_to_watch": "Formal approval letters for the two pending ANDAs within 90 days"
+      },
+      {
+        "signal_id": "sig-002",
+        "horizon": "2-3 quarters",
+        "affected_thesis_drivers": ["US base business pricing"],
+        "what_to_watch": "Quarterly price/volume disclosure on the respiratory franchise"
+      }
+    ],
+    "events": [
+      { "id": "evt-101", "raw_title": "USFDA closes Pithampur inspection with VAI status", "source_name": "Exchange Filing", "url": "#", "published_at": "2026-06-08T09:00:00Z", "raw_summary": "Company informed exchanges that the USFDA inspection conducted in May has been classified VAI." },
+      { "id": "evt-102", "raw_title": "Third ANDA filer emerges for key respiratory generic", "source_name": "Industry Wire", "url": "#", "published_at": "2026-06-07T13:30:00Z", "raw_summary": "Patent database shows a new Para-IV certification against the reference product." },
+      { "id": "evt-103", "raw_title": "US generic drug pricing index flat in May", "source_name": "Sector Research", "url": "#", "published_at": "2026-06-05T10:00:00Z", "raw_summary": "Monthly tracker shows pricing stabilization across oral solids." }
+    ],
+    "unavailable_sources": []
+  }
 }
