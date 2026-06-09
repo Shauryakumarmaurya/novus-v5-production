@@ -48,7 +48,11 @@ class ForensicQuantV3:
 
     def execute(self, ticker: str, financial_tables: dict, **kwargs) -> AuditTrail:
         start = time.time()
-        
+
+        # Temporal bleed guard: confine RAG lookups to the active fiscal window
+        from core.tools import fiscal_year_window
+        self._fiscal_window = fiscal_year_window(kwargs.get("fiscal_period", ""))
+
         # Data is pre-normalized at the boundary (structured_data_fetcher.py)
         # Internal keys: profit_loss, balance_sheet, cash_flow
         pl = financial_tables.get("profit_loss", {})
@@ -238,7 +242,7 @@ class ForensicQuantV3:
                 )
 
                 if (pat_growth_q and pat_growth_q > 0.30) or (other_inc_ratio and other_inc_ratio > 0.15):
-                    res = rag_query(ticker, f"Why did net profit or other income jump heavily in the {latest_q} quarter? exceptional items", top_k=2)
+                    res = rag_query(ticker, f"Why did net profit or other income jump heavily in the {latest_q} quarter? exceptional items", top_k=2, target_fiscal_year=getattr(self, "_fiscal_window", None))
                     ex = " | ".join(r['text'][:400] for r in res) if res else "No context found."
                     findings["anomaly_flag"] = f"Quarterly Spike: {latest_q} PAT changed {pat_growth_q:.1%} QoQ. RAG: {ex}"
             
@@ -257,7 +261,7 @@ class ForensicQuantV3:
                     ocf_growth = (curr_ocf - prev_ocf) / abs(prev_ocf) if prev_ocf else 0
                     
                     if (pat_growth > ocf_growth + 0.10) or (curr_pat > curr_ocf):
-                        res = rag_query(ticker, f"Why did net profit grow faster than operating cash flow or exceed it in {latest}? exceptional items, other income", top_k=2)
+                        res = rag_query(ticker, f"Why did net profit grow faster than operating cash flow or exceed it in {latest}? exceptional items, other income", top_k=2, target_fiscal_year=getattr(self, "_fiscal_window", None))
                         ex = " | ".join(r['text'][:400] for r in res) if res else "No context found."
                         findings["anomaly_flag"] = f"Earnings Quality Divergence: {latest} PAT ({curr_pat}) vs OCF ({curr_ocf}). RAG: {ex}"
         except Exception as e:

@@ -1,29 +1,37 @@
-Flask
-python-dotenv
-openai
-google-generativeai
-requests
-PyMuPDF
-beautifulsoup4
-lxml
-redis
-rq
-pandas
-numpy
-markdown
-# gunicorn is for Linux deployments; on Windows use waitress or run via python
-gunicorn
+# Web / API
+Flask==3.1.3
+flask-cors==6.0.2
+Flask-Limiter==4.1.1
+gunicorn==25.3.0  # Linux deployments; on Windows use waitress or run via python
 
-yfinance
-flask_cors
-chromadb
+# Jobs / queue
+redis==7.4.0
+rq==2.7.0
 
+# LLM / embeddings
+openai==2.30.0
+google-generativeai==0.8.6
+voyageai==0.3.7
 
-# Backend v2.1 Dependencies
-fastapi>=0.110.0
-pydantic>=2.0.0
-sse-starlette>=3.0.0
-uvicorn>=0.30.0
-structlog>=24.0.0
-flask_limiter
-voyageai
+# RAG / vector store
+chromadb==1.5.5
+
+# Document parsing & scraping
+PyMuPDF==1.27.2.2
+beautifulsoup4==4.14.3
+lxml==6.0.2
+requests==2.33.1
+aiohttp==3.13.5  # novus_v3.signals live-signal sources
+
+# Data
+pandas==3.0.1
+numpy==2.4.4
+yfinance==1.2.0
+pydantic==2.12.5
+
+# Misc
+python-dotenv==1.2.2
+markdown==3.10.2
+
+# Testing
+pytest==9.0.3

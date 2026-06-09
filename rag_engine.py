@@ -595,9 +595,14 @@ def chunk_document_with_sections(
 
 import time
 
-def embed_texts(texts: list[str]) -> list[list[float]]:
+def embed_texts(texts: list[str]) -> list:
     """
     Generate embeddings using Voyage AI Finance model with robust rate-limit handling.
+
+    Returns a list aligned with `texts`; entries are embedding vectors or None
+    for chunks whose batch failed. Callers MUST skip None entries — zero
+    vectors must never be inserted into the store (they silently poison
+    cosine-similarity retrieval).
     """
     embeddings = []
 
@@ -626,31 +631,30 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
                     logger.warning(f"[RAG] Rate limit hit on batch {i}. Retrying in {sleep_time}s... (Attempt {attempt+1}/{max_retries})")
                     time.sleep(sleep_time)
                 else:
-                    logger.error(f"[RAG] Final Embedding error for batch {i}: {e}")
-                    # Only fallback if completely unrecoverable non-rate-limit error
-                    embeddings.extend([[0.0] * 1024] * len(batch))
+                    logger.error(f"[RAG] Final Embedding error for batch {i}: {e}. Marking batch as failed (chunks will be SKIPPED).")
+                    embeddings.extend([None] * len(batch))
                     break
         else:
             # If we exhausted all 5 retries due to persistent rate limiting
-            logger.error(f"[RAG] Exhausted all retries for batch {i}. Injecting zero vectors.")
-            embeddings.extend([[0.0] * 1024] * len(batch))
+            logger.error(f"[RAG] Exhausted all retries for batch {i}. Marking batch as failed (chunks will be SKIPPED).")
+            embeddings.extend([None] * len(batch))
 
     return embeddings
 
 
 def embed_query(query: str) -> list[float]:
-    """Embed a single query string for retrieval using Voyage AI."""
-    try:
-        result = voyage_client.embed(
-            [query],
-            model=EMBEDDING_MODEL,
-            input_type="query",
-            truncation=True
-        )
-        return result.embeddings[0]
-    except Exception as e:
-        logger.error(f"[RAG] Query embedding error: {e}")
-        return [0.0] * 1024
+    """Embed a single query string for retrieval using Voyage AI.
+
+    Raises on failure — a zero-vector query would return arbitrary neighbors,
+    which is worse than an explicit 'Data Unavailable' result downstream.
+    """
+    result = voyage_client.embed(
+        [query],
+        model=EMBEDDING_MODEL,
+        input_type="query",
+        truncation=True
+    )
+    return result.embeddings[0]
 
 
 # ── ChromaDB Management ──────────────────────────────────────────────────────
@@ -663,6 +667,35 @@ def get_chroma_client() -> chromadb.ClientAPI:
     if _chroma_client is None:
         _chroma_client = chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
     return _chroma_client
+
+
+def list_ingested_tickers() -> list[dict]:
+    """List every ticker with documents in the RAG store.
+
+    Returns [{ticker, chunks}] sorted by ticker. Drives the UI ticker
+    universe so coverage reflects what's actually ingested instead of a
+    hardcoded list.
+    """
+    client = get_chroma_client()
+    counts: dict[str, int] = {}
+    for col in client.list_collections():
+        name = col.name
+        if not name.startswith("novus_"):
+            continue
+        ticker = name[len("novus_"):].upper().strip("_")
+        if not ticker or ticker == "DOCS":
+            continue
+        try:
+            count = client.get_collection(name).count()
+        except Exception:
+            count = 0
+        if count > 0:
+            # Legacy stores may have both upper/lowercase collections — merge.
+            counts[ticker] = counts.get(ticker, 0) + count
+    return [
+        {"ticker": t, "chunks": c}
+        for t, c in sorted(counts.items())
+    ]
 
 
 def get_collection(ticker: str) -> chromadb.Collection:
@@ -702,6 +735,7 @@ def ingest_documents(
     """
     collection = get_collection(ticker)
     total_chunks = 0
+    failed_embeddings = 0
     doc_types_found = set()
     all_sections = set()
 
@@ -810,19 +844,36 @@ def ingest_documents(
         texts = [c["text"] for c in chunks]
         embeddings = embed_texts(texts)
 
+        # Drop chunks whose embedding failed — never store zero/None vectors.
+        kept = [
+            (c, emb) for c, emb in zip(chunks, embeddings)
+            if emb is not None
+        ]
+        skipped = len(chunks) - len(kept)
+        if skipped:
+            failed_embeddings += skipped
+            logger.error(
+                f"[RAG] {filename}: SKIPPED {skipped}/{len(chunks)} chunks "
+                "due to embedding failures. Re-ingest this file once the "
+                "embedding service recovers."
+            )
+        if not kept:
+            continue
+
         # Store in ChromaDB
         collection.upsert(
-            ids=[c["id"] for c in chunks],
-            embeddings=embeddings,
-            documents=texts,
-            metadatas=[c["metadata"] for c in chunks],
+            ids=[c["id"] for c, _ in kept],
+            embeddings=[emb for _, emb in kept],
+            documents=[c["text"] for c, _ in kept],
+            metadatas=[c["metadata"] for c, _ in kept],
         )
 
-        total_chunks += len(chunks)
-        logger.info(f"[RAG] Ingested {filename}: {len(chunks)} chunks, type={doc_type}")
+        total_chunks += len(kept)
+        logger.info(f"[RAG] Ingested {filename}: {len(kept)} chunks, type={doc_type}")
 
     return {
         "total_chunks": total_chunks,
+        "failed_chunks": failed_embeddings,
         "doc_types": list(doc_types_found),
         "sections_found": list(all_sections),
         "collection_name": collection.name,
@@ -907,10 +958,9 @@ def query(
         else:
             final_where = {"ticker": ticker.upper()}
 
-    # Embed query
-    query_embedding = embed_query(question)
-
     try:
+        # Embed query (raises on failure — handled below, no zero-vector search)
+        query_embedding = embed_query(question)
         results = collection.query(
             query_embeddings=[query_embedding],
             n_results=min(top_k, collection.count() or 1),

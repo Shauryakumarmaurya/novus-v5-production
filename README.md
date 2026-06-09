@@ -1,81 +1,99 @@
-# giga-finanalytix
+# Novus — Institutional Equity Research Engine
 
-MVP backend that ingests earnings call PDFs, scrapes financial statement data, calls Gemini for qualitative analysis, and assembles a background-generated report using Redis + RQ.
+Financial LLM stack for Indian equity research (mutual funds, AMCs, PMs).
+Deterministic, audit-first extraction: numbers and causal claims must trace to
+tools or document chunks — see [architecture.md](architecture.md) for the
+engineering constitution.
 
-## Components
+## Stack
 
-- `app.py`: Flask API (enqueue report job, check status, health)
-- `tasks.py`: Long-running report generation with progress meta
-- `redis_config.py`: Lazy Redis + Queue factory (supports `REDIS_URL` or host/port)
-- `logic.py`: Financial parsing, scraping, Gemini prompt logic
-- `static/`: Minimal frontend placeholder
+| Concern | Implementation |
+|---------|----------------|
+| API + UI | Flask (`app.py`) serving the static UI at `/` (`static/index.html` + `static/js/novus-*.js`) |
+| Jobs | Redis + RQ (`tasks.py`, `worker.py`) |
+| Orchestration | `cio_orchestrator.py` — parallel specialists → Auditor (critic) → PM synthesis |
+| Copilot chat | `agents/copilot_agent.py` ReAct loop, SSE via `POST /api/v1/chat` |
+| RAG | ChromaDB + voyage-finance-2 (`rag_engine.py`), time-aware fiscal filters |
+| Memory | SQLite WAL (`data/novus_master.db`, `core/memory.py`) |
+| Structured data | Screener.in scrape (`structured_data_fetcher.py`, `screener_scraper.py`) |
+| PDF export | Gotenberg (`/export_pdf`) |
 
-## Why RQ / background job?
-Render / typical PaaS impose ~30s request timeouts. Offloading the heavy multi-step Gemini + scraping workflow to a worker avoids request timeout failures and gives progress visibility.
+The Next.js app previously in `frontend/` is archived at
+`_archive/frontend-next/` — it targeted a `/api/v1/research/*` API that was
+never built. The static UI is canonical.
 
-## Quick Start (Local)
+## Quick start (local)
 
-```cmd
-REM 1. (Optional) Create virtualenv
-python -m venv .venv
-call .venv\Scripts\activate
-
-REM 2. Install deps
+```bash
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
-REM 3. Run Redis (Docker example)
-docker run -p 6379:6379 redis:7-alpine
+cp .env.example .env   # fill in keys (DeepSeek, Voyage, NOVUS_API_KEY, ...)
 
-REM 4. Set env vars
-set GEMINI_API_KEY=your_key
-set FMP_API_KEY=your_key
-set REDIS_HOST=localhost
+docker run -p 6379:6379 redis:7-alpine   # Redis
 
-REM 5. Start Flask API
-python app.py
-
-REM 6. In another terminal start an RQ worker
-rq worker financial_analysis
+./run_dev.sh           # starts worker + Flask on http://localhost:5001
 ```
 
-## API
+## Auth
 
-### POST /generate_report
-Multipart form-data:
-- `ticker`: (string) Screener.in ticker (e.g. TCS)
-- `files`: 1..N PDF uploads
+All data-bearing endpoints require the `X-API-Key` header matching
+`NOVUS_API_KEY`. In production (`NOVUS_ENV=production` or
+`FLASK_ENV=production`) the app refuses to boot without a key (fails closed).
+In the browser UI, open `/?api_key=<key>` once — it's stored in localStorage.
 
-Response:
-```json
-{ "job_id": "<uuid>", "status": "queued" }
+## Onboarding a company
+
+```bash
+# 1. Drop PDFs (annual reports, transcripts, quarterly results) into:
+#    data/raw/<TICKER>/
+python onboard_tenant.py SUNPHARMA
+# or point at any folder:
+python onboard_tenant.py SUNPHARMA --folder /path/to/pdfs
 ```
 
-### GET /job_status/<job_id>
-Returns job state and (on completion) the report payload. Includes `progress.stage` while running.
+Everything ingests into ChromaDB (`chroma_db/`) — the same store the copilot
+and report pipeline query. The UI ticker dropdown is driven by
+`GET /api/v1/tickers` (whatever is actually ingested).
 
-### GET /health
-Simple Redis connectivity probe.
+## Keeping data fresh
 
-## Progress Meta
-`tasks.py` updates `job.meta['stage']` through stages:
+```bash
+# cron-able: re-scrapes financials + ingests new files in data/raw/<TICKER>/
+python scripts/scheduled_refresh.py
+# crontab example (02:30 daily):
+# 30 2 * * * cd /path/to/repo && venv/bin/python scripts/scheduled_refresh.py >> data/refresh.log 2>&1
 ```
-extract_pdfs → fetch_financials → business_model → quarterly_updates → management_commentary → risks → prompt_set → assumptions → projections → assemble
+
+Bulk Screener document downloads (`scrapper/scrape_screener_docs.py`) need
+`SCREENER_SESSIONID` / `SCREENER_CSRFTOKEN` in `.env`.
+
+## API summary
+
+| Endpoint | Purpose |
+|----------|---------|
+| `POST /api/v1/generate_report` | Upload PDFs + ticker → queued deep-dive job |
+| `POST /api/v1/analyze_rag` | RAG-only deep dive (no upload) |
+| `GET /api/v1/job_status/<id>` | Poll job progress / result |
+| `POST /api/v1/chat` | Copilot SSE chat |
+| `GET /api/v1/tickers` | Ingested ticker universe |
+| `GET /api/v1/screener_data?ticker=` | Structured financial tables |
+| `POST /ingest_local` | Ingest a local folder (allowlisted paths only) |
+| `GET /rag_stats/<ticker>` | RAG store stats |
+| `POST /export_pdf` | Render report PDF via Gotenberg |
+| `GET /health` | Liveness (no auth) |
+
+## Tests
+
+```bash
+python -m pytest tests/ -q
 ```
 
-If JSON parsing of assumptions fails, an `assumptions_parse_error` is stored.
+CI (`.github/workflows/deploy.yml`) runs the suite on every push to `main`
+and only deploys to the Azure VM (Docker Compose + Caddy) if it passes.
 
-## Deployment Tips
-- Set `REDIS_URL` in production if using a hosted Redis.
-- Use `WEB_CONCURRENCY=1` (or more) for gunicorn, but keep worker separate.
-- Scale workers based on throughput: each job runs multiple Gemini calls + scraping, so start small.
+## Deployment
 
-## Future Enhancements (ideas)
-- Stream partial markdown sections as they finish (Server-Sent Events)
-- Add caching layer for financial statement HTML
-- Persist final report to a database (for retrieval without Redis job retention)
-- Add authentication / API keys for external use
-- Replace sleeps with rate-limit aware wrapper + exponential backoff
-
-## License
-Internal MVP (add a proper license if open-sourcing).
-
+Production is Docker Compose on an Azure VM behind Caddy
+(`docker-compose.yml`, `Caddyfile`, `deploy_azure.sh`). Set `NOVUS_API_KEY`
+and `CORS_ORIGINS` in the VM environment — compose fails fast without the key.

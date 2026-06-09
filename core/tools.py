@@ -72,10 +72,36 @@ class ToolRegistry:
 # Shared Tools — available to EVERY agent
 # ═══════════════════════════════════════════════════════════════════════════
 
-def build_shared_tools(document_text: str, financial_tables: dict, ticker: str = "") -> ToolRegistry:
+def fiscal_year_window(fiscal_period: str, lookback_years: int = 1) -> Optional[list[str]]:
+    """Derive a recent fiscal-year window from a canonical fiscal_period string.
+
+    'Q3_FY26' / 'FY26' -> ['FY26', 'FY25'] (current + lookback). This is the
+    default retrieval window enforcing stale-alpha decay: old quarters are
+    background, not fresh edge.
+    """
+    if not fiscal_period:
+        return None
+    m = re.search(r"FY(\d{2})", fiscal_period)
+    if not m:
+        return None
+    yy = int(m.group(1))
+    return [f"FY{yy - i:02d}" for i in range(lookback_years + 1)]
+
+
+def build_shared_tools(
+    document_text: str,
+    financial_tables: dict,
+    ticker: str = "",
+    fiscal_period: str = "",
+) -> ToolRegistry:
     """
     Core toolkit every v3 agent gets.  Individual agents extend this
     with their own specialized tools via build_agent_tools().
+
+    fiscal_period: the orchestrator-inferred active period (e.g. 'Q3_FY26').
+    When set, search_document defaults to a recent fiscal-year window so RAG
+    retrieval stays on the same fiscal clock as prompts and memory (temporal
+    bleed guard). Agents can opt out per-call with all_periods=true.
     """
     reg = ToolRegistry()
 
@@ -90,14 +116,27 @@ def build_shared_tools(document_text: str, financial_tables: dict, ticker: str =
             "render Hover-to-Verify provenance for compliance reviewers. "
             "Use for: 'related party transactions', 'auditor qualification', "
             "'goodwill impairment', 'contingent liabilities', 'segment revenue', "
-            "'management guidance', 'capex plans', 'debt maturity profile', etc."
+            "'management guidance', 'capex plans', 'debt maturity profile', etc. "
+            "By default results are confined to the most recent fiscal window "
+            "(stale-alpha discipline). If you get 'Data Unavailable for this "
+            "specific fiscal period', and the user/task explicitly needs history, "
+            "retry with all_periods=true and label the output as Historical Context."
         ),
         parameters=_schema({
             "query":       ("string",  True,  "What to search for"),
             "max_results": ("integer", False, "1-5, default 3"),
             "min_year":    ("integer", False, "Only return documents from this year or newer (e.g. 2023). Crucial for current strategy."),
+            "fiscal_period": ("string", False, "Exact fiscal period to search, e.g. 'Q3_FY26' or 'FY24'. Overrides the default recent window."),
+            "all_periods": ("boolean", False, "Set true ONLY when historical context is explicitly required. Disables the recent fiscal window."),
         }),
-        handler=lambda query, max_results=3, min_year=None: _search_doc(document_text, query, max_results, ticker, min_year),
+        # NB: the closure's `fiscal_period` is the orchestrator default; the
+        # LLM's optional per-call `fiscal_period` argument arrives via **kw.
+        handler=lambda query, max_results=3, min_year=None, all_periods=False, **kw: _search_doc(
+            document_text, query, max_results, ticker, min_year,
+            fiscal_period=kw.get("fiscal_period") or "",
+            default_fiscal_period=fiscal_period,
+            all_periods=all_periods,
+        ),
     ))
 
     # ── 2. Get a specific page / note ─────────────────────────────────
@@ -417,14 +456,39 @@ def _fuzzy_get(data: dict, key: str):
     return None
 
 
-def _search_doc(text: str, query: str, max_results: int = 3, ticker: str = "", min_year: int = None) -> list[dict]:
+def _search_doc(
+    text: str,
+    query: str,
+    max_results: int = 3,
+    ticker: str = "",
+    min_year: int = None,
+    fiscal_period: str = "",
+    default_fiscal_period: str = "",
+    all_periods: bool = False,
+) -> list[dict]:
     """BM25-style keyword search over document paragraphs, with an option to use semantic RAG.
 
     Returns list of {passage, score, position, chunk_id, doc_id, page} so the caller can
     cite results back in structured citations[] for Hover-to-Verify provenance.
+
+    Temporal bleed guard: unless the caller explicitly opts out (all_periods or
+    min_year), retrieval is confined to either an exact fiscal_period requested
+    by the agent, or the recent fiscal-year window derived from the
+    orchestrator-supplied default_fiscal_period.
     """
     if ticker:
-        results = rag_query(ticker, query, top_k=max_results, min_year=min_year)
+        target_period = None
+        target_years = None
+        if not all_periods and not min_year:
+            if fiscal_period:
+                target_period = fiscal_period
+            else:
+                target_years = fiscal_year_window(default_fiscal_period)
+        results = rag_query(
+            ticker, query, top_k=max_results, min_year=min_year,
+            target_fiscal_period=target_period,
+            target_fiscal_year=target_years,
+        )
         if results:
             return [
                 {

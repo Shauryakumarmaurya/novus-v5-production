@@ -425,6 +425,48 @@ async def run_pipeline(
     
     print(f"> [CIO] Critic Agent: {len(critic_corrections)} corrections. Status: {critic_status}")
 
+    # ── VERIFICATION GATE: timeline rejection must not flow into the PM ──
+    # When the critic rejects on chronological hallucination, deterministically
+    # scrub the offending causal blocks from peer findings BEFORE synthesis and
+    # force the PM to acknowledge the rejection. Specialist JSON never reaches
+    # the PM uncorrected after a rejection.
+    timeline_rejection_note = ""
+    if critic_status == "REJECTED_TIMELINE_HALLUCINATION":
+        rejection_reason = (critic_trail.findings or {}).get("rejection_reason", "Chronological inconsistency detected.")
+        print(f"> [CIO] 🚨 VERIFICATION GATE: {rejection_reason} — scrubbing causal blocks before PM synthesis.")
+        from utils.temporal_logic import verify_chronology
+
+        def _scrub_bad_chronology(node):
+            """Recursively remove causal blocks whose dates fail chronology."""
+            removed = []
+            if isinstance(node, dict):
+                if "cause_date" in node and "effect_date" in node:
+                    if not verify_chronology(node["cause_date"], node["effect_date"]):
+                        removed.append(f"{node.get('cause_date')} -> {node.get('effect_date')}")
+                        node.clear()
+                        node["removed_by_auditor"] = "Causal claim removed: failed chronological verification."
+                        return removed
+                for v in node.values():
+                    removed.extend(_scrub_bad_chronology(v))
+            elif isinstance(node, list):
+                for item in node:
+                    removed.extend(_scrub_bad_chronology(item))
+            return removed
+
+        removed_chains = []
+        for name, trail in state.agent_trails.items():
+            if name == "critic_agent" or not trail.findings:
+                continue
+            removed_chains.extend(_scrub_bad_chronology(trail.findings))
+
+        timeline_rejection_note = (
+            "\n\n## AUDITOR TIMELINE REJECTION (NON-NEGOTIABLE)\n"
+            f"The Auditor REJECTED the specialist findings for chronological hallucination: {rejection_reason}\n"
+            f"The offending causal chains have been removed: {removed_chains or ['(see rejection reason)']}\n"
+            "You MUST NOT reconstruct or reference these cause→effect claims. "
+            "Treat the affected narratives as UNVERIFIED and lower your conviction accordingly."
+        )
+
     # ═══════════════════════════════════════════════════════════════════
     # PHASE 4: SYNTHESIS — PM merges everything, with Critic overrides
     # ═══════════════════════════════════════════════════════════════════
@@ -478,6 +520,9 @@ async def run_pipeline(
             pm_mandate += pm_memory
     except Exception as e:
         print(f"> [CIO] ⚠️ Memory injection failed for pm_synthesis: {e}")
+
+    if timeline_rejection_note:
+        pm_mandate += timeline_rejection_note
 
     if critic_corrections:
         corrections_text = json.dumps(critic_corrections, indent=2, default=str)

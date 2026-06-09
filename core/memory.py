@@ -42,7 +42,7 @@ logger = get_logger(__name__)
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_DB_PATH = os.path.join(_REPO_ROOT, "data", "novus_master.db")
 
-SCHEMA_VERSION = 2                # bump to force drop+recreate of memory tables
+SCHEMA_VERSION = 2                # bump when schema changes; migrations are ADDITIVE (no drops)
 CRITIC_CONFIDENCE_FLOOR = 0.8     # only inject high-conviction facts into prompts
 ADJUDICATOR_TIMEOUT_S = 10.0      # per-pair hard cap for Tier 2 V3 call
 ADJUDICATOR_WORKERS = 5           # bounded LLM fan-out width
@@ -249,25 +249,56 @@ class MemoryLayer:
 
     # ── Schema init / migration ───────────────────────────────────────────
 
+    # Columns each table must have (name -> ALTER-safe declaration). Used for
+    # additive migrations: existing tables get missing columns added, never
+    # dropped. Institutional memory must survive schema upgrades and
+    # concurrent workers racing through deploys.
+    _REQUIRED_COLUMNS = {
+        "agent_mistakes": {
+            "fiscal_period": "TEXT NOT NULL DEFAULT 'UNKNOWN'",
+            "metric_category": "TEXT NOT NULL DEFAULT 'uncategorized'",
+            "citations_json": "TEXT",
+            "source_citation": "TEXT",
+            "critic_confidence": "REAL DEFAULT 0.0",
+        },
+        "data_gaps": {
+            "metric_category": "TEXT NOT NULL DEFAULT 'uncategorized'",
+            "fiscal_period": "TEXT NOT NULL DEFAULT 'UNKNOWN'",
+            "occurrence_count": "INTEGER DEFAULT 1",
+        },
+        "investigation_patterns": {
+            "fiscal_period": "TEXT",
+        },
+        "narrative_inconsistencies": {
+            "inconsistency_type": "TEXT",
+            "severity": "TEXT",
+            "adjudicator_rationale": "TEXT",
+        },
+    }
+
+    @staticmethod
+    def _ensure_columns(conn, table: str, required: dict) -> None:
+        """Additively migrate an existing table: add any missing columns."""
+        existing = {row[1] for row in conn.execute(f"PRAGMA table_info({table})")}
+        if not existing:
+            return  # table doesn't exist yet — CREATE TABLE below handles it
+        for col, decl in required.items():
+            if col not in existing:
+                conn.execute(f"ALTER TABLE {table} ADD COLUMN {col} {decl}")
+                logger.info(f"[MemoryLayer] Migration: added {table}.{col}")
+
     def _init_schema(self):
         with self._connect() as conn:
             cur = conn.execute("PRAGMA user_version")
             current_version = cur.fetchone()[0]
 
             if current_version < SCHEMA_VERSION:
-                # Drop the v1 memory tables (companies_master is preserved)
-                conn.executescript(
-                    """
-                    DROP TABLE IF EXISTS narrative_inconsistencies;
-                    DROP TABLE IF EXISTS investigation_patterns;
-                    DROP TABLE IF EXISTS data_gaps;
-                    DROP TABLE IF EXISTS agent_mistakes;
-                    """
-                )
                 logger.info(
-                    f"[MemoryLayer] Schema upgrade: {current_version} -> {SCHEMA_VERSION}. "
-                    "Dropped v1 memory tables."
+                    f"[MemoryLayer] Schema upgrade: {current_version} -> {SCHEMA_VERSION} "
+                    "(additive — existing rows preserved)."
                 )
+                for table, required in self._REQUIRED_COLUMNS.items():
+                    self._ensure_columns(conn, table, required)
 
             conn.executescript(
                 """

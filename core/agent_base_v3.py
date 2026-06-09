@@ -347,8 +347,9 @@ class AgentV3(ABC):
         if dynamic_mandate:
             system_prompt += f"\n\n## DYNAMIC MANDATE (from Lead Analyst)\n{dynamic_mandate}"
 
-        # ── 2. Build tools ──
-        tools = build_shared_tools(document_text, financial_tables, ticker=ticker)
+        # ── 2. Build tools (fiscal_period keeps RAG retrieval on the same
+        #       fiscal clock as prompts and memory — temporal bleed guard) ──
+        tools = build_shared_tools(document_text, financial_tables, ticker=ticker, fiscal_period=fiscal_period)
         for extra_tool in self.build_agent_tools(document_text, financial_tables, ticker=ticker):
             tools.register(extra_tool)
 

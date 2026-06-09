@@ -135,10 +135,31 @@ def resilient_request(session: requests.Session, method: str, url: str, **kwargs
 
 # ─── HELPERS ─────────────────────────────────────────────────────────────────
 
-COOKIES = {
-    "sessionid": "0uxi341l67sng74iio3ur0b0mpi15nja",
-    "csrftoken": "QNnMwmLuD5dPlPbhHN6F25ZVRR08lrev"
-}
+def _load_cookies() -> dict:
+    """Screener.in session cookies from env (never hardcode credentials).
+
+    Set SCREENER_SESSIONID and SCREENER_CSRFTOKEN in .env — grab them from
+    your browser's cookie store after logging in to screener.in.
+    """
+    import os
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
+    sessionid = os.getenv("SCREENER_SESSIONID", "")
+    csrftoken = os.getenv("SCREENER_CSRFTOKEN", "")
+    if not sessionid:
+        log.warning(
+            "SCREENER_SESSIONID not set — scraping unauthenticated. "
+            "Document lists may be incomplete. Set SCREENER_SESSIONID / "
+            "SCREENER_CSRFTOKEN in .env for full access."
+        )
+        return {}
+    return {"sessionid": sessionid, "csrftoken": csrftoken}
+
+
+COOKIES = _load_cookies()
 
 def make_session() -> requests.Session:
     s = requests.Session()

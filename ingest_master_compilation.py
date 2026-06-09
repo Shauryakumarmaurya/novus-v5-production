@@ -250,6 +250,21 @@ def ingest(
         logger.info(f"✅ Ingested {total_chunks} chunks into ChromaDB.")
 
 
+def _filter_failed_embeddings(ids, texts, metas, embeddings):
+    """Drop entries whose embedding failed (None) — never upsert zero/None vectors."""
+    kept = [
+        (i, t, m, e) for i, t, m, e in zip(ids, texts, metas, embeddings)
+        if e is not None
+    ]
+    skipped = len(ids) - len(kept)
+    if skipped:
+        logger.error(f"  SKIPPED {skipped} chunks due to embedding failures.")
+    if not kept:
+        return [], [], [], []
+    out_ids, out_texts, out_metas, out_embs = zip(*kept)
+    return list(out_ids), list(out_texts), list(out_metas), list(out_embs)
+
+
 def _flush_batch(label, ids, texts, metas):
     """Embed a batch and upsert into ChromaDB."""
     from rag_engine import embed_texts
@@ -277,13 +292,17 @@ def _flush_batch(label, ids, texts, metas):
         
         try:
             embeddings = embed_texts(group["texts"])
-            collection.upsert(
-                ids=group["ids"],
-                embeddings=embeddings,
-                documents=group["texts"],
-                metadatas=group["metas"],
+            u_ids, u_texts, u_metas, u_embs = _filter_failed_embeddings(
+                group["ids"], group["texts"], group["metas"], embeddings
             )
-            logger.info(f"  [{ticker}] Upserted {len(group['ids'])} chunks to {collection_name}")
+            if u_ids:
+                collection.upsert(
+                    ids=u_ids,
+                    embeddings=u_embs,
+                    documents=u_texts,
+                    metadatas=u_metas,
+                )
+            logger.info(f"  [{ticker}] Upserted {len(u_ids)} chunks to {collection_name}")
         except Exception as e:
             logger.error(f"  [{ticker}] Embedding/upsert failed: {e}")
             # Try smaller sub-batches on failure
@@ -294,12 +313,16 @@ def _flush_batch(label, ids, texts, metas):
                     sub_ids = group["ids"][j:j+sub_batch]
                     sub_metas = group["metas"][j:j+sub_batch]
                     sub_embeddings = embed_texts(sub_texts)
-                    collection.upsert(
-                        ids=sub_ids,
-                        embeddings=sub_embeddings,
-                        documents=sub_texts,
-                        metadatas=sub_metas,
+                    s_ids, s_texts, s_metas, s_embs = _filter_failed_embeddings(
+                        sub_ids, sub_texts, sub_metas, sub_embeddings
                     )
+                    if s_ids:
+                        collection.upsert(
+                            ids=s_ids,
+                            embeddings=s_embs,
+                            documents=s_texts,
+                            metadatas=s_metas,
+                        )
                     logger.info(f"  [{ticker}] Sub-batch {j//sub_batch + 1} OK")
                     time.sleep(0.5)
                 except Exception as e2:

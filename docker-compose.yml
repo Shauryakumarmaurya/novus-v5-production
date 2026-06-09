@@ -12,9 +12,14 @@ services:
   web:
     build: .
     restart: always
+    # .env is no longer baked into the image (.dockerignore) — inject at runtime
+    env_file:
+      - .env
     environment:
       - REDIS_HOST=redis
       - FLASK_ENV=production
+      - NOVUS_API_KEY=${NOVUS_API_KEY:?NOVUS_API_KEY must be set for production}
+      - CORS_ORIGINS=${CORS_ORIGINS:-https://novus-analytics.centralindia.cloudapp.azure.com}
     expose:
       - "5001"
     volumes:
@@ -29,6 +34,8 @@ services:
     restart: always
     deploy:
       replicas: 10
+    env_file:
+      - .env
     environment:
       - REDIS_HOST=redis
     volumes:

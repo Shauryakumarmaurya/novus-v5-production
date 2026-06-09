@@ -1,0 +1,37 @@
+# Secrets — never bake into images
+.env
+*.env
+*.pem
+*.key
+
+# Local data stores
+chroma_db/
+qdrant_db/
+data/
+company_docs/
+.vision_cache/
+
+# Python / tooling
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.git/
+.github/
+.vscode/
+.idea/
+.vercel/
+
+# Logs and artifacts
+*.log
+out.json
+test.pdf
+gemini_input_debug.txt
+novus_master_compilation.md
+scrapper/downloaded_docs/
+
+# Frontends / archives not used in the container
+frontend/
+_archive/
+_docs/
+tests/

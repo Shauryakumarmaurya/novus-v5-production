@@ -182,6 +182,21 @@ class CriticAgentV3(AgentV3):
                 steps=[{"action": "temporal_verification", "observation": hallucination_err}],
             )
 
+        # ── Load previously detected cross-period inconsistencies from memory ──
+        # These are injected into the prompt so the critic can echo them as
+        # first-class findings (the prompt promises this; keep the promise).
+        known_inconsistencies = []
+        try:
+            from core.memory import get_memory
+            known_inconsistencies = get_memory().get_management_inconsistencies(ticker) or []
+        except Exception as e:
+            print(f"> [CRITIC] ⚠️ Could not load narrative inconsistencies from memory: {e}")
+        inconsistencies_block = (
+            json.dumps(known_inconsistencies, indent=2, default=str)
+            if known_inconsistencies
+            else "None detected so far — output an empty narrative_inconsistencies[] list."
+        )
+
         # ── Build the verification task prompt ──
         peer_summary = json.dumps(peer_findings, indent=2, default=str)
 
@@ -232,12 +247,16 @@ output under the top-level `narrative_inconsistencies[]` key so PM Synthesis see
 first-class findings. Do NOT invent new inconsistencies and do NOT silently drop the ones already
 flagged.
 
+```json
+{inconsistencies_block}
+```
+
 {f"ADDITIONAL MANDATE: {dynamic_mandate}" if dynamic_mandate else ""}
 
 Output your findings as JSON matching the schema in your instructions."""
 
         # ── Build tools ──
-        tools = build_shared_tools(document_text, financial_tables, ticker=ticker)
+        tools = build_shared_tools(document_text, financial_tables, ticker=ticker, fiscal_period=fiscal_period)
         for extra_tool in self.build_agent_tools(document_text, financial_tables, ticker=ticker):
             tools.register(extra_tool)
 

@@ -17,7 +17,7 @@ from rq import get_current_job
 _runner = asyncio.Runner()
 
 from agents.extraction import run_extraction_pipeline
-from rag_engine import ingest_documents, get_collection_stats, get_context_for_agent
+from rag_engine import ingest_documents, get_collection_stats
 from structured_data_fetcher import get_structured_data_fetcher
 from cio_orchestrator import analyze, OrchestratorState
 
@@ -202,6 +202,21 @@ def generate_financial_report_from_rag(ticker):
         logger.info(f"[RAG-Only] Found {stats['total_chunks']} chunks for {ticker}")
 
         # ═══════════════════════════════════════════════════════════════
+        # FETCH FINANCIAL DATA (first — needed to infer the active fiscal
+        # period so the transcript build stays on the same fiscal clock)
+        # ═══════════════════════════════════════════════════════════════
+        _update_progress('fetch_financials')
+        fetcher = get_structured_data_fetcher()
+        structured_data = fetcher.fetch(ticker)
+        financial_tables = structured_data.get("tables", {})
+
+        from cio_orchestrator import _infer_fiscal_period
+        from core.tools import fiscal_year_window
+        inferred_period = _infer_fiscal_period(financial_tables or {})
+        fiscal_window = fiscal_year_window(inferred_period)
+        logger.info(f"[RAG-Only] Inferred fiscal period {inferred_period} | retrieval window {fiscal_window}")
+
+        # ═══════════════════════════════════════════════════════════════
         # BUILD SYNTHETIC TRANSCRIPT FROM RAG STORE
         # ═══════════════════════════════════════════════════════════════
         _update_progress('extract_pdfs')
@@ -218,33 +233,38 @@ def generate_financial_report_from_rag(ticker):
             "industry trends market opportunity",
         ]
 
-        transcript_parts = []
-        seen_ids = set()
-        for q in key_queries:
-            results = rag_query(ticker, q, top_k=5)
-            for r in results:
-                chunk_hash = hashlib.md5(r['text'].encode()).hexdigest()
-                if chunk_hash not in seen_ids:
-                    seen_ids.add(chunk_hash)
-                    meta = r.get('metadata', {})
-                    transcript_parts.append(
-                        f"[Source: {meta.get('filename', '?')} | {meta.get('doc_type', '?')}]\n"
-                        f"{r['text']}"
-                    )
+        def _build_transcript(target_years):
+            parts, seen = [], set()
+            for q in key_queries:
+                results = rag_query(ticker, q, top_k=5, target_fiscal_year=target_years)
+                for r in results:
+                    if not r.get('chunk_id'):
+                        continue  # synthetic "Data Unavailable" hit — skip
+                    chunk_hash = hashlib.md5(r['text'].encode()).hexdigest()
+                    if chunk_hash not in seen:
+                        seen.add(chunk_hash)
+                        meta = r.get('metadata', {})
+                        parts.append(
+                            f"[Source: {meta.get('filename', '?')} | {meta.get('doc_type', '?')}]\n"
+                            f"{r['text']}"
+                        )
+            return parts
+
+        transcript_parts = _build_transcript(fiscal_window)
+        if not transcript_parts and fiscal_window:
+            # Explicit, logged widening — chunks ingested before the fiscal
+            # metadata refactor may lack fiscal_year tags entirely.
+            logger.warning(
+                f"[RAG-Only] No chunks matched fiscal window {fiscal_window} for {ticker}. "
+                "Rebuilding transcript WITHOUT the temporal window (legacy chunks?)."
+            )
+            transcript_parts = _build_transcript(None)
 
         combined_text = "\n\n---\n\n".join(transcript_parts)
         logger.info(f"[RAG-Only] Built transcript: {len(combined_text)} chars from {len(transcript_parts)} chunks")
 
         if not combined_text:
             raise ValueError("Could not build transcript from RAG store — documents may be empty.")
-
-        # ═══════════════════════════════════════════════════════════════
-        # FETCH FINANCIAL DATA
-        # ═══════════════════════════════════════════════════════════════
-        _update_progress('fetch_financials')
-        fetcher = get_structured_data_fetcher()
-        structured_data = fetcher.fetch(ticker)
-        financial_tables = structured_data.get("tables", {})
 
         # ═══════════════════════════════════════════════════════════════
         # V3 ORCHESTRATION
@@ -331,13 +351,34 @@ def generate_financial_report(ticker, files_data):
         _update_progress('ingest_rag')
         logger.info("[RAG Engine] Ingesting documents into vector store...")
 
+        rag_warning = None
         try:
             rag_files = [(f"doc_{i+1}.pdf", fb) for i, fb in enumerate(files_data)]
             rag_stats = ingest_documents(ticker, rag_files)
             logger.info(f"[RAG Engine] ✅ Ingested {rag_stats['total_chunks']} chunks, types={rag_stats['doc_types']}")
+            if rag_stats.get("failed_chunks"):
+                rag_warning = (
+                    f"{rag_stats['failed_chunks']} document chunks could not be embedded "
+                    "and were skipped; document search coverage is incomplete."
+                )
+            if rag_stats.get("total_chunks", 0) == 0:
+                # Uploaded PDFs produced zero searchable chunks: agents would run
+                # blind on documents. Fail the job rather than silently produce
+                # a report with no document grounding.
+                raise ValueError(
+                    "RAG ingestion produced 0 chunks from the uploaded files — "
+                    "documents may be scanned images or unsupported formats."
+                )
+        except ValueError:
+            raise
         except Exception as e:
-            logger.info(f"[RAG Engine] ⚠️ RAG ingestion failed (non-fatal): {e}")
+            logger.error(f"[RAG Engine] 🚨 RAG ingestion failed: {e}")
             rag_stats = {"total_chunks": 0, "doc_types": [], "error": str(e)}
+            rag_warning = f"RAG ingestion failed ({e}); the report is based on extracted text and financial tables only."
+
+        if rag_warning:
+            # Surface the degradation in job meta so the UI can show it.
+            _update_progress('ingest_rag', {"warning": rag_warning})
 
         # ═══════════════════════════════════════════════════════════════
         # FETCH FINANCIAL DATA

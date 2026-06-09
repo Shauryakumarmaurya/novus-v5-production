@@ -11,6 +11,8 @@ venv/
 # Environment and secrets
 .env
 *.env
+*.pem
+*.key
 
 # Logs and debug artifacts
 gemini_input_debug.txt
@@ -26,8 +28,10 @@ Thumbs.db
 
 # Large data directories
 chroma_db/
+qdrant_db/
 company_docs/
 .vision_cache/
+data/raw/
 
 # Local testing scripts
 get_financial_data_output_testing.py
@@ -39,4 +43,8 @@ novus_master_compilation.md
 scrapper/downloaded_docs/
 data/*.db*
 easr_data.csv
+
+# Generated artifacts
+out.json
+test.pdf
 

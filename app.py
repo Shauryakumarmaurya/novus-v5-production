@@ -83,38 +83,92 @@ api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 # --- Security: CORS restricted to allowed origins ---
 ALLOWED_ORIGINS = os.getenv(
     "CORS_ORIGINS",
-    "http://localhost:3000,http://localhost:5000,http://127.0.0.1:3000,http://127.0.0.1:5000"
+    "http://localhost:3000,http://localhost:5001,http://127.0.0.1:3000,http://127.0.0.1:5001"
 ).split(",")
 CORS(app, origins=ALLOWED_ORIGINS)
 
-# --- Security: Rate Limiting ---
+# --- Security: Rate Limiting (Redis-backed so limits survive restarts/multi-worker) ---
+def _limiter_storage_uri() -> str:
+    explicit = os.getenv("RATELIMIT_STORAGE_URI")
+    if explicit:
+        return explicit
+    redis_url = os.getenv("REDIS_URL")
+    if redis_url:
+        return redis_url
+    host = os.getenv("REDIS_HOST")
+    if host:
+        port = os.getenv("REDIS_PORT", "6379")
+        db = os.getenv("REDIS_DB", "0")
+        return f"redis://{host}:{port}/{db}"
+    return "memory://"
+
 limiter = Limiter(
     get_remote_address,
     app=app,
     default_limits=["200 per hour"],
-    storage_uri="memory://",
+    storage_uri=_limiter_storage_uri(),
 )
 
-# --- Security: API Key Middleware ---
-API_KEY = os.getenv("NOVUS_API_KEY")  # Set in .env; if unset, auth is disabled (dev mode)
+# --- Security: Upload limits ---
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv("MAX_UPLOAD_MB", "100")) * 1024 * 1024
+MAX_UPLOAD_FILES = int(os.getenv("MAX_UPLOAD_FILES", "10"))
+
+# --- Security: API Key Middleware (fails closed in production) ---
+import hmac
+
+API_KEY = os.getenv("NOVUS_API_KEY")
+_ENV = (os.getenv("NOVUS_ENV") or os.getenv("FLASK_ENV") or "development").lower()
+IS_PRODUCTION = _ENV == "production"
+
+if IS_PRODUCTION and not API_KEY:
+    raise RuntimeError(
+        "NOVUS_API_KEY must be set when running in production "
+        "(NOVUS_ENV/FLASK_ENV=production). Auth fails closed."
+    )
+if not API_KEY:
+    logger.warning("NOVUS_API_KEY not set — API auth is DISABLED (dev mode only).")
 
 def require_api_key(f):
     """Decorator to enforce X-API-Key header on protected endpoints."""
     @functools.wraps(f)
     def decorated(*args, **kwargs):
-        if API_KEY:  # Only enforce if NOVUS_API_KEY is set
+        if API_KEY:
             provided = request.headers.get("X-API-Key", "")
-            if provided != API_KEY:
+            if not hmac.compare_digest(provided, API_KEY):
                 return jsonify({"error": "Unauthorized — invalid or missing X-API-Key header"}), 401
+        elif IS_PRODUCTION:
+            return jsonify({"error": "Server auth misconfigured — API key required"}), 503
         return f(*args, **kwargs)
     return decorated
 
 # --- Security: Path Traversal Protection ---
 ALLOWED_INGEST_PREFIXES = [
     p.strip() for p in
-    os.getenv("ALLOWED_INGEST_PATHS", os.path.expanduser("~/Desktop")).split(",")
+    os.getenv(
+        "ALLOWED_INGEST_PATHS",
+        os.path.expanduser("~/Desktop") + ",/data/uploads",
+    ).split(",")
     if p.strip()
 ]
+
+def resolve_allowed_folder(folder_path: str):
+    """Resolve a user-supplied folder path against the ingest allowlist.
+
+    Uses realpath() so `..` segments and symlinks cannot escape allowed roots.
+    Returns the resolved absolute path, or None if not permitted.
+    """
+    try:
+        resolved = os.path.realpath(os.path.expanduser(folder_path))
+    except (TypeError, ValueError):
+        return None
+    for root in ALLOWED_INGEST_PREFIXES:
+        root_resolved = os.path.realpath(os.path.expanduser(root))
+        try:
+            if os.path.commonpath([resolved, root_resolved]) == root_resolved:
+                return resolved
+        except ValueError:
+            continue  # different drives / mixed abs-rel
+    return None
 @api_v1.route('/generate_report', methods=['POST'])
 @require_api_key
 @limiter.limit("10 per hour")
@@ -128,6 +182,9 @@ def generate_report():
 
     if not files or files[0].filename == '':
         return jsonify({"error": "No files selected"}), 400
+
+    if len(files) > MAX_UPLOAD_FILES:
+        return jsonify({"error": f"Too many files (max {MAX_UPLOAD_FILES} per request)"}), 413
 
     # Convert files to bytes for background processing
     files_data = []
@@ -189,6 +246,7 @@ def analyze_rag():
     })
 
 @api_v1.route('/job_status/<job_id>')
+@require_api_key
 @limiter.exempt
 def job_status(job_id):
     """Check the status of a background job"""
@@ -219,7 +277,9 @@ def job_status(job_id):
     if status == "finished":
         payload["result"] = job.result
     if status == "failed":
-        payload["error"] = job.exc_info
+        # Log the full traceback server-side; never leak stack traces to clients.
+        logger.error(f"[JobStatus] job {job_id} failed:\n{job.exc_info}")
+        payload["error"] = "Job failed. Check server logs for details."
     return jsonify(payload)
 
 @app.route('/')
@@ -241,6 +301,8 @@ def health():
         return {"status": "error", "error": str(e)}, 500
 
 @api_v1.route('/screener_data', methods=['GET'])
+@require_api_key
+@limiter.limit("60 per hour")
 def get_screener_data():
     """Fetch synchronous numerical table data from Screener.in"""
     ticker = request.args.get('ticker')
@@ -440,9 +502,17 @@ def _stream_agent_answer(ticker: str, question: str, history: list) -> "__import
     t = threading.Thread(target=run_agent, name="CopilotAgentV3", daemon=True)
     t.start()
 
-    # Heartbeat / progress pump
+    # Heartbeat / progress pump (hard wall-clock cap so a hung agent can't
+    # hold the SSE connection / thread forever)
+    CHAT_TIMEOUT_S = int(os.getenv("CHAT_TIMEOUT_S", "600"))
+    deadline = _time.monotonic() + CHAT_TIMEOUT_S
+    timed_out = False
     yield f"data: {json.dumps({'type': 'content', 'text': f'> [Copilot] Researching {ticker} with tools…\n\n'})}\n\n"
     while True:
+        if _time.monotonic() > deadline:
+            timed_out = True
+            logger.error(f"[Chat] Copilot agent exceeded {CHAT_TIMEOUT_S}s for {ticker}; abandoning thread.")
+            break
         try:
             item = progress_q.get(timeout=30)
         except queue.Empty:
@@ -452,6 +522,11 @@ def _stream_agent_answer(ticker: str, question: str, history: list) -> "__import
         if item is SENTINEL:
             break
         yield f"data: {json.dumps({'type': 'content', 'text': item})}\n\n"
+
+    if timed_out:
+        yield f"data: {json.dumps({'type': 'error', 'text': f'Copilot timed out after {CHAT_TIMEOUT_S}s. Please try a narrower question.'})}\n\n"
+        yield "data: [DONE]\n\n"
+        return
 
     t.join(timeout=5)
 
@@ -525,9 +600,9 @@ def ingest_local():
     ticker = data['ticker']
     folder_path = data.get('folder_path', os.path.expanduser('~/Desktop/Fin k10 copy'))
 
-    # --- Security: Path traversal protection ---
-    ALLOWED_INGEST_ROOTS = [os.path.expanduser("~/Desktop"), "/data/uploads"]
-    if not any(os.path.commonpath([folder_path, root]) == root for root in ALLOWED_INGEST_ROOTS):
+    # --- Security: Path traversal protection (realpath-based) ---
+    folder_path = resolve_allowed_folder(folder_path)
+    if folder_path is None:
         return jsonify({"error": "Folder path not permitted"}), 403
 
     if not os.path.isdir(folder_path):
@@ -569,7 +644,20 @@ def ingest_local():
         return jsonify({"error": f"Ingestion failed: {str(e)}"}), 500
 
 
+@api_v1.route('/tickers')
+@require_api_key
+def list_tickers():
+    """List tickers available in the RAG store (drives the UI ticker dropdown)."""
+    try:
+        from rag_engine import list_ingested_tickers
+        return jsonify({"tickers": list_ingested_tickers()})
+    except Exception as e:
+        logger.error(f"[Tickers] listing failed: {e}")
+        return jsonify({"error": "Could not list tickers"}), 500
+
+
 @app.route('/rag_stats/<ticker>')
+@require_api_key
 def rag_stats(ticker):
     """Get RAG store stats for a ticker."""
     try:
@@ -580,11 +668,18 @@ def rag_stats(ticker):
 
 
 @app.route('/list_local_pdfs', methods=['POST'])
+@require_api_key
+@limiter.limit("30 per minute")
 def list_local_pdfs():
     """List PDFs in a local folder (preview before ingesting)."""
 
-    data = request.get_json()
+    data = request.get_json() or {}
     folder_path = data.get('folder_path', os.path.expanduser('~/Desktop/Fin k10 copy'))
+
+    # Same allowlist policy as /ingest_local
+    folder_path = resolve_allowed_folder(folder_path)
+    if folder_path is None:
+        return jsonify({"error": "Folder path not permitted"}), 403
 
     if not os.path.isdir(folder_path):
         return jsonify({"error": f"Folder not found: {folder_path}"}), 404
@@ -608,6 +703,8 @@ def list_local_pdfs():
     })
 
 @app.route('/export_pdf', methods=['POST'])
+@require_api_key
+@limiter.limit("20 per hour")
 def export_pdf():
     """Generate a professional, print-ready PDF using WeasyPrint."""
     data = request.get_json()
@@ -1084,7 +1181,8 @@ def export_pdf():
             'printBackground': True
         }
         import requests
-        response = requests.post("http://gotenberg:3000/forms/chromium/convert/html", files=files, data=data, timeout=30)
+        gotenberg_url = os.getenv("GOTENBERG_URL", "http://gotenberg:3000")
+        response = requests.post(f"{gotenberg_url}/forms/chromium/convert/html", files=files, data=data, timeout=30)
         response.raise_for_status()
         pdf_bytes = response.content
         

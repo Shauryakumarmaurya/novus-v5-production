@@ -1,34 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
-            const TICKER_DATA = {
-                "📊 Pharma Portfolio": [
-                    { value: "ALEMBICLTD", name: "Alembic Limited" },
-                    { value: "AUROPHARMA", name: "Aurobindo Pharma" },
-                    { value: "CIPLA", name: "Cipla" },
-                    { value: "DIVISLAB", name: "Divi's Laboratories" },
-                    { value: "DRREDDY", name: "Dr. Reddy's Laboratories" },
-                    { value: "GRANULES", name: "Granules India" },
-                    { value: "LAURUSLABS", name: "Laurus Labs" },
-                    { value: "LUPIN", name: "Lupin" },
-                    { value: "SUNPHARMA", name: "Sun Pharmaceuticals" },
-                    { value: "ZYDUSLIFE", name: "Zydus Lifesciences" }
-                ],
-                "🛒 FMCG": [
-                    { value: "HINDUNILVR", name: "Hindustan Unilever" }
-                ]
+            // Display names for known tickers; anything else falls back to the symbol.
+            const TICKER_NAMES = {
+                "ALEMBICLTD": "Alembic Limited",
+                "AUROPHARMA": "Aurobindo Pharma",
+                "CIPLA": "Cipla",
+                "DIVISLAB": "Divi's Laboratories",
+                "DRREDDY": "Dr. Reddy's Laboratories",
+                "GRANULES": "Granules India",
+                "LAURUSLABS": "Laurus Labs",
+                "LUPIN": "Lupin",
+                "SUNPHARMA": "Sun Pharmaceuticals",
+                "ZYDUSLIFE": "Zydus Lifesciences",
+                "HINDUNILVR": "Hindustan Unilever"
             };
 
             const tickerSelect = document.getElementById('ticker');
-            Object.keys(TICKER_DATA).forEach(groupLabel => {
+
+            function populateTickers(tickers) {
+                tickerSelect.innerHTML = '';
                 const optgroup = document.createElement('optgroup');
-                optgroup.label = groupLabel;
-                TICKER_DATA[groupLabel].forEach(ticker => {
+                optgroup.label = "📊 Coverage Universe";
+                tickers.forEach(t => {
                     const option = document.createElement('option');
-                    option.value = ticker.value;
-                    option.textContent = ticker.name;
+                    option.value = t;
+                    option.textContent = TICKER_NAMES[t] || t;
                     optgroup.appendChild(option);
                 });
                 tickerSelect.appendChild(optgroup);
-            });
+            }
+
+            // Drive the universe from what's actually ingested in the RAG store;
+            // fall back to the known list if the endpoint is unreachable.
+            populateTickers(Object.keys(TICKER_NAMES));
+            fetch('/api/v1/tickers')
+                .then(r => r.ok ? r.json() : Promise.reject(new Error('Status ' + r.status)))
+                .then(data => {
+                    const ingested = (data.tickers || []).map(t => t.ticker);
+                    if (ingested.length) populateTickers(ingested);
+                })
+                .catch(err => console.warn('[Novus] Ticker list fallback (static):', err.message));
             const form = document.getElementById('report-form');
             const tickerInput = document.getElementById('ticker');
             const fileInput = document.getElementById('files');
