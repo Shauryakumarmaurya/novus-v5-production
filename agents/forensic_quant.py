@@ -159,6 +159,7 @@ class ForensicQuantV3:
             cogs = _fget(latest_pl, "Cost of Materials", "Cost of Goods Sold", "COGS",
                           "Material Cost", "Raw Material Cost", default=0)
 
+            dio = dso = dpo = ccc = None
             if cogs and cogs > 0 and revenue and revenue > 0:
                 dio = round((inventory / cogs) * 365, 1) if inventory else None
                 dso = round((receivables / revenue) * 365, 1) if receivables is not None else None
@@ -169,10 +170,24 @@ class ForensicQuantV3:
                 if dso is not None and (dso > 3650 or dso < -3650): dso = None
                 if dpo is not None and (dpo > 3650 or dpo < -3650): dpo = None
 
-                ccc = None
                 if dio is not None and dso is not None and dpo is not None:
                     ccc = round(dio + dso - dpo, 1)
+
+            # Screener's consolidated statements omit inventory/receivables/payables
+            # line items, but its Ratios table ships the day-counts pre-computed.
+            if dio is None and dso is None and dpo is None:
+                latest_ratios = financial_tables.get("ratios", {}).get(latest, {})
+                dio = _fget(latest_ratios, "Inventory Days")
+                dso = _fget(latest_ratios, "Debtor Days")
+                dpo = _fget(latest_ratios, "Days Payable")
+                ccc = _fget(latest_ratios, "Cash Conversion Cycle")
+                if ccc is None and None not in (dio, dso, dpo):
+                    ccc = round(dio + dso - dpo, 1)
+
+            if any(v is not None for v in (dio, dso, dpo, ccc)):
                 findings["working_capital"] = {"dio": dio, "dso": dso, "dpo": dpo, "ccc_days": ccc}
+            else:
+                data_gaps.append({"metric": "Working Capital/CCC", "reason": "No WC line items in BS and no Ratios table day-counts", "year": latest, "action": "SKIP"})
         except Exception as e:
             data_gaps.append({"metric": "Working Capital/CCC", "reason": f"Computation failed: {e}", "year": latest, "action": "SKIP"})
 

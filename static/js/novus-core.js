@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tickerSelect = document.getElementById('ticker');
 
             function populateTickers(tickers) {
+                const prev = tickerSelect.value; // repopulation must not silently reset the user's choice
                 tickerSelect.innerHTML = '';
                 const optgroup = document.createElement('optgroup');
                 optgroup.label = "📊 Coverage Universe";
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     optgroup.appendChild(option);
                 });
                 tickerSelect.appendChild(optgroup);
+                if (prev && tickers.includes(prev)) tickerSelect.value = prev;
             }
 
             // Drive the universe from what's actually ingested in the RAG store;
