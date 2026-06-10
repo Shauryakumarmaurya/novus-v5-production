@@ -39,6 +39,50 @@ def _is_empty_or_none(val) -> bool:
             return True
     return False
 
+
+def _format_cell_value(val) -> str:
+    """Render a table-cell value as human-readable text.
+
+    Nested dicts/lists (e.g. the critic's structured `citations` list) must
+    NOT be emitted via str()/repr — that leaks Python syntax (single quotes,
+    `None`) straight into the UI. Citation-like dicts are summarised as
+    «"snippet" — doc_id, p.N»; generic dicts as «key: value» pairs.
+    """
+    if _is_empty_or_none(val):
+        return ""
+
+    if isinstance(val, dict):
+        # Citation-shaped dict → readable provenance string.
+        if any(key in val for key in ("snippet", "doc_id", "chunk_id", "page")):
+            snippet = str(val.get("snippet") or "").strip()
+            doc_id = str(val.get("doc_id") or "").strip()
+            page = val.get("page")
+            parts = []
+            if snippet:
+                parts.append(f'"{snippet}"')
+            locus = []
+            if doc_id:
+                locus.append(doc_id)
+            if page not in (None, "", "None"):
+                locus.append(f"p.{page}")
+            if locus:
+                parts.append("— " + ", ".join(locus))
+            return " ".join(parts) if parts else ""
+        # Generic dict → "key: value" pairs, suppressing empties.
+        pairs = [
+            f"{_clean_human_key(str(k))}: {_format_cell_value(v)}"
+            for k, v in val.items()
+            if not _is_empty_or_none(v)
+        ]
+        return "; ".join(pairs)
+
+    if isinstance(val, list):
+        rendered = [_format_cell_value(item) for item in val if not _is_empty_or_none(item)]
+        rendered = [r for r in rendered if r]
+        return " • ".join(rendered)
+
+    return str(val)
+
 def format_dict_as_markdown(d, indent=0):
     lines = []
     spacer = "  " * indent
@@ -97,10 +141,9 @@ def format_dict_as_markdown(d, indent=0):
                     row = []
                     for k in keys:
                         val = item.get(k, "")
-                        # Convert dicts/lists to string representation for table cells
-                        if isinstance(val, (dict, list)):
-                            val = str(val)
-                        row.append(str(val).replace("|", "\\|").replace("\n", " "))
+                        # Render nested dicts/lists as readable text, never repr().
+                        cell = _format_cell_value(val) if isinstance(val, (dict, list)) else str(val)
+                        row.append(cell.replace("|", "\\|").replace("\n", " "))
                     lines.append(f"{spacer}| " + " | ".join(row) + " |")
                 return lines
                 
