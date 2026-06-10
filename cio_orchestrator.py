@@ -136,6 +136,7 @@ class OrchestratorState:
     final_thesis: Optional[AuditTrail] = None
     final_report: str = ""
     signal_payload: Optional[SignalPayload] = None
+    price_story: Optional[dict] = None  # Price Action Dossier (series + episodes) for UI + PM
 
 
 EXECUTION_PHASES = [
@@ -198,6 +199,88 @@ def _load_memory_with_validation(agent_name: str, ticker: str, fiscal_period: st
     
     state.data_ingestion_completeness = max(0.0, state.data_ingestion_completeness - 0.2)
     return ""
+
+def _fy_label_to_column(fy_label: str) -> str:
+    """Map 'FY24' -> 'Mar 2024' (Screener annual column convention)."""
+    try:
+        yy = int(fy_label.replace("FY", ""))
+        return f"Mar 20{yy:02d}"
+    except (ValueError, AttributeError):
+        return ""
+
+
+def _episode_fundamental_backdrop(episode: dict, financial_tables: dict) -> str:
+    """One-line revenue/PAT delta across the fiscal years an episode spans."""
+    pl = (financial_tables or {}).get("profit_loss") or {}
+    fys = episode.get("fiscal_years") or []
+    if not isinstance(pl, dict) or len(fys) < 2:
+        return ""
+
+    def _metric(fy: str, names: tuple[str, ...]) -> Optional[float]:
+        col = pl.get(_fy_label_to_column(fy)) or {}
+        for n in names:
+            v = col.get(n)
+            if isinstance(v, (int, float)):
+                return float(v)
+        return None
+
+    parts = []
+    for label, names in (("Revenue", ("Sales", "Revenue", "Sales\u00a0")), ("PAT", ("Net Profit", "Profit after tax"))):
+        start_v = _metric(fys[0], names)
+        end_v = _metric(fys[-1], names)
+        if start_v and end_v:
+            chg = (end_v - start_v) / abs(start_v) * 100
+            parts.append(f"{label} \u20b9{start_v:,.0f}Cr \u2192 \u20b9{end_v:,.0f}Cr ({'+' if chg >= 0 else ''}{chg:.0f}%)")
+    if not parts:
+        return ""
+    return f"   Fundamental backdrop {fys[0]}\u2192{fys[-1]}: " + ", ".join(parts)
+
+
+def _build_price_dossier_injection(ticker: str, price_story: dict, financial_tables: dict) -> str:
+    """Assemble the PM mandate block: dossier + per-episode fundamentals + filing context."""
+    blocks = ["\n\n" + price_story["dossier"]]
+
+    episodes = price_story.get("episodes") or []
+    context_lines = []
+    for ep in episodes:
+        backdrop = _episode_fundamental_backdrop(ep, financial_tables)
+        if backdrop:
+            context_lines.append(f"- {ep['type'].upper()} {ep['start']} \u2192 {ep['end']}:\n{backdrop}")
+
+    # Filing context for the 3 largest episodes — fiscal-year-filtered RAG so the
+    # PM gets period-correct narrative evidence (no temporal bleed).
+    try:
+        from rag_engine import query as _rag_query
+        biggest = sorted(episodes, key=lambda e: abs(e.get("change_pct", 0)), reverse=True)[:3]
+        for ep in biggest:
+            try:
+                hits = _rag_query(
+                    ticker=ticker,
+                    question=f"{ticker} major developments, guidance changes, regulatory actions, demand environment",
+                    top_k=2,
+                    doc_type_filter=["concall_transcript", "annual_report"],
+                    target_fiscal_year=ep.get("fiscal_years") or None,
+                )
+                snippets = [
+                    h["text"][:400].replace("\n", " ").strip()
+                    for h in (hits or []) if h.get("chunk_id")
+                ]
+                if snippets:
+                    context_lines.append(
+                        f"- Filing context for {ep['type'].upper()} {ep['start']} \u2192 {ep['end']} "
+                        f"({', '.join(ep.get('fiscal_years', []))}):\n   " + "\n   ".join(snippets)
+                    )
+            except Exception as e:
+                print(f"> [CIO] \u26a0\ufe0f Price-episode RAG context failed: {e}")
+    except Exception as e:
+        print(f"> [CIO] \u26a0\ufe0f RAG unavailable for price dossier context: {e}")
+
+    if context_lines:
+        blocks.append("\nEPISODE CONTEXT (verified fundamentals + period-matched filing excerpts):")
+        blocks.extend(context_lines)
+
+    return "\n".join(blocks)
+
 
 async def _generate_dynamic_frameworks(state: OrchestratorState, llm: LLMClient) -> dict:
     prompt = f"""You are the Director of Research for an Indian Equity Fund.
@@ -284,6 +367,10 @@ async def run_pipeline(
     financial_context = f"Revenue: {financial_tables.get('profit_loss', {}).get('Sales', 'N/A')}\n" \
                         f"Target Period: {inferred_period}"
     signal_task = asyncio.create_task(run_signal_pipeline(ticker, financial_context))
+
+    # ── PRICE ACTION DOSSIER: fetch in parallel with the agents (fail-soft) ──
+    from core.price_story import fetch_price_story
+    price_story_task = asyncio.create_task(asyncio.to_thread(fetch_price_story, ticker))
 
     if progress_callback:
         progress_callback("lead_analyst_planning", [], [])
@@ -523,6 +610,27 @@ async def run_pipeline(
 
     if timeline_rejection_note:
         pm_mandate += timeline_rejection_note
+
+    # ── PRICE ACTION DOSSIER: ground the "stock story" in real market data ──
+    try:
+        state.price_story = await price_story_task
+    except Exception as e:
+        print(f"> [CIO] ⚠️ Price story fetch failed: {e}")
+        state.price_story = None
+
+    if state.price_story:
+        dossier_block = await asyncio.to_thread(
+            _build_price_dossier_injection, ticker, state.price_story, financial_tables
+        )
+        pm_mandate += dossier_block
+        print(f"> [CIO] 📈 Price Action Dossier injected ({len(state.price_story.get('episodes', []))} episodes).")
+    else:
+        pm_mandate += (
+            "\n\n## PRICE ACTION DOSSIER: UNAVAILABLE\n"
+            "Market price history could not be retrieved for this run. "
+            "OMIT the stock_story section entirely and note it as a data gap — "
+            "do NOT narrate price moves from memory."
+        )
 
     if critic_corrections:
         corrections_text = json.dumps(critic_corrections, indent=2, default=str)

@@ -1062,7 +1062,7 @@ def export_pdf():
         
         # Color code rating chip
         chip_class = "pass"
-        if "BUY" in recommendation or "CONSTRUCTIVE" in recommendation: chip_class = "buy"
+        if "ADD" in recommendation or "BUY" in recommendation or "CONSTRUCTIVE" in recommendation: chip_class = "buy"
         elif "SELL" in recommendation or "SHORT" in recommendation: chip_class = "sell"
         elif "HOLD" in recommendation or "NEUTRAL" in recommendation: chip_class = "hold"
         

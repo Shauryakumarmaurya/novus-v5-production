@@ -353,8 +353,114 @@ window.NovusCharts = (() => {
                 document.getElementById('quant-charts-row')?.classList.remove('hidden');
             }
 
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // CHART 9: Price History with Episode Bands (Executive Summary)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            function renderPriceHistory(priceHistory) {
+                const series = priceHistory?.series;
+                if (!series || !series.dates || !series.dates.length) return;
+
+                const dates = series.dates;
+                const closes = series.closes;
+                const episodes = priceHistory.episodes || [];
+
+                const fmtLabel = (iso) => {
+                    const d = new Date(iso);
+                    return d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }).replace(' ', " '");
+                };
+
+                // Pre-compute episode index ranges for the band plugin + tooltips
+                const bands = episodes.map(ep => ({
+                    startIdx: dates.indexOf(ep.start),
+                    endIdx: dates.indexOf(ep.end),
+                    type: ep.type,
+                    changePct: ep.change_pct,
+                    ongoing: ep.ongoing,
+                })).filter(b => b.startIdx >= 0 && b.endIdx > b.startIdx);
+
+                const episodeBandsPlugin = {
+                    id: 'episodeBands',
+                    beforeDatasetsDraw(chart) {
+                        const { ctx, chartArea, scales } = chart;
+                        if (!chartArea) return;
+                        ctx.save();
+                        bands.forEach(b => {
+                            const x1 = scales.x.getPixelForValue(b.startIdx);
+                            const x2 = scales.x.getPixelForValue(b.endIdx);
+                            ctx.fillStyle = b.type === 'rally' ? 'rgba(61,217,164,0.07)' : 'rgba(242,109,126,0.07)';
+                            ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top);
+                            // Band label at the top
+                            const cx = (x1 + x2) / 2;
+                            if (x2 - x1 > 50) {
+                                ctx.fillStyle = b.type === 'rally' ? T.green : T.red;
+                                ctx.font = `600 10px ${T.mono}`;
+                                ctx.textAlign = 'center';
+                                ctx.fillText(`${b.changePct >= 0 ? '+' : ''}${b.changePct}%${b.ongoing ? ' →' : ''}`, cx, chartArea.top + 12);
+                            }
+                        });
+                        ctx.restore();
+                    },
+                };
+
+                _create('chart-price-history', {
+                    type: 'line',
+                    data: {
+                        labels: dates.map(fmtLabel),
+                        datasets: [{
+                            label: 'Close',
+                            data: closes,
+                            borderColor: T.blue,
+                            backgroundColor: T.blueDim,
+                            fill: true,
+                            tension: 0.25,
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            pointHoverBackgroundColor: T.blueLight,
+                            borderWidth: 2,
+                        }],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: {
+                                    color: T.tick, font: { family: T.mono, size: 10 },
+                                    maxRotation: 0, autoSkip: true, maxTicksLimit: 10,
+                                },
+                                border: { display: false },
+                            },
+                            y: {
+                                grid: { color: T.grid, drawBorder: false },
+                                ticks: { color: T.tick, font: { family: T.mono, size: 10 }, callback: v => '\u20b9' + (v >= 1000 ? (v / 1000).toFixed(1) + 'K' : v) },
+                                border: { display: false },
+                            },
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    title: items => dates[items[0].dataIndex],
+                                    label: ctx => ' \u20b9' + Number(ctx.raw).toLocaleString('en-IN'),
+                                    afterLabel: (ctx) => {
+                                        const i = ctx.dataIndex;
+                                        const b = bands.find(b => i >= b.startIdx && i <= b.endIdx);
+                                        if (!b) return '';
+                                        const kind = b.type === 'rally' ? 'Rally' : 'Decline';
+                                        return `${kind} episode: ${b.changePct >= 0 ? '+' : ''}${b.changePct}%${b.ongoing ? ' (ongoing)' : ''}`;
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    plugins: [episodeBandsPlugin],
+                });
+            }
+
             // ── Public API ──
             return {
+                renderPriceHistory,
                 renderFromScreener(screenerData) {
                     if (!screenerData || !screenerData.tables) return;
                     renderRevenuePAT(screenerData);

@@ -439,6 +439,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 liveTerminal.classList.remove('hidden');
                 const vb = document.getElementById('verdict-banner');
                 if (vb) { vb.classList.add('hidden'); vb.innerHTML = ''; }
+                const vbk = document.getElementById('verdict-buckets');
+                if (vbk) { vbk.classList.add('hidden'); vbk.innerHTML = ''; }
+                const phc = document.getElementById('price-history-card');
+                if (phc) phc.classList.add('hidden');
                 setHeaderContext((tickerInput.value || '').trim().toUpperCase(), 'Analyzing\u2026');
                 liveAgentFeed.innerHTML = '';
                 populatedCards.clear();
@@ -957,7 +961,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? data.evasion_data.score
                     : (typeof scorecard.evasion_score === 'number' ? scorecard.evasion_score : null);
 
-                if (!rating && !riskHtml && healthScore == null) { banner.classList.add('hidden'); return; }
+                // ── ADD / HOLD / SELL action chip + one-line rationale ──
+                const pmFindings = (data.agent_trails && data.agent_trails.pm_synthesis && data.agent_trails.pm_synthesis.findings) || {};
+                const recommendation = (data.recommendation || pmFindings.recommendation || '').toString().toUpperCase().trim();
+                const rationale = data.recommendation_rationale || pmFindings.recommendation_rationale || '';
+                let actionHtml = '';
+                if (recommendation) {
+                    let actionClass = 'action-hold';
+                    if (/(ADD|BUY|CONSTRUCTIVE)/.test(recommendation)) actionClass = 'action-add';
+                    else if (/(SELL|SHORT|AVOID|EXIT)/.test(recommendation)) actionClass = 'action-sell';
+                    actionHtml = `<span class="action-chip ${actionClass}">${recommendation}</span>`;
+                }
+
+                if (!rating && !riskHtml && healthScore == null && !recommendation) { banner.classList.add('hidden'); return; }
 
                 const metric = (label, value, colorClass) => value == null ? '' : `
                     <div class="min-w-[88px]">
@@ -973,13 +989,109 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${riskHtml}
                         </div>
                         <div class="verdict-meta-label">Novus Verdict</div>
-                        <div class="verdict-rating ${ratingColor}">${rating || '—'}</div>
+                        <div class="flex items-center gap-4 flex-wrap">
+                            <div class="verdict-rating ${ratingColor}">${rating || '—'}</div>
+                            ${actionHtml}
+                        </div>
                     </div>
                     <div class="flex items-center gap-7 flex-wrap ml-auto lg:pl-8 lg:border-l lg:border-white/[0.06]">
                         ${metric('Forensic Health', healthScore != null ? healthScore + '<span class="text-txt-dim text-sm">/100</span>' : null, healthScore != null ? (healthScore >= 70 ? 'text-semantic-green' : healthScore >= 40 ? 'text-semantic-amber' : 'text-semantic-red') : null)}
                         ${metric('Mgmt Evasion', evasionScore != null ? evasionScore + '<span class="text-txt-dim text-sm">/100</span>' : null, evasionScore != null ? (evasionScore <= 30 ? 'text-semantic-green' : evasionScore <= 60 ? 'text-semantic-amber' : 'text-semantic-red') : null)}
                         ${metric('Cash Quality', scorecard.ocf_ebitda_ratio != null ? Math.round(scorecard.ocf_ebitda_ratio * 100) + '%' : null, null)}
+                    </div>
+                    ${rationale ? `<div class="verdict-rationale w-full">${rationale}</div>` : ''}`;
+            }
+
+            // ── Positives / Negatives bucket panel ──
+            function renderVerdictBuckets(data) {
+                const panel = document.getElementById('verdict-buckets');
+                if (!panel) return;
+
+                const pmFindings = (data.agent_trails && data.agent_trails.pm_synthesis && data.agent_trails.pm_synthesis.findings) || {};
+                const positives = data.positives || pmFindings.bull_case || [];
+                const negatives = data.negatives || pmFindings.bear_case || [];
+
+                if ((!positives || !positives.length) && (!negatives || !negatives.length)) {
+                    panel.classList.add('hidden');
+                    panel.innerHTML = '';
+                    return;
+                }
+
+                const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                const positiveItems = (positives || []).map(p => {
+                    const text = typeof p === 'string' ? p : (p.point || p.pillar || JSON.stringify(p));
+                    return `<div class="bucket-item">${esc(text)}</div>`;
+                }).join('');
+
+                const negativeItems = (negatives || []).map(n => {
+                    if (typeof n === 'string') return `<div class="bucket-item">${esc(n)}</div>`;
+                    const risk = n.risk || n.point || '';
+                    const impact = n.impact ? ` <span class="text-txt-muted">— ${esc(n.impact)}</span>` : '';
+                    let probChip = '';
+                    if (n.probability) {
+                        const pl = String(n.probability).toUpperCase();
+                        const pc = pl.includes('HIGH') ? 'prob-high' : pl.includes('MED') ? 'prob-medium' : 'prob-low';
+                        probChip = `<span class="bucket-prob ${pc}">${pl}</span>`;
+                    }
+                    return `<div class="bucket-item">${esc(risk)}${probChip}${impact}</div>`;
+                }).join('');
+
+                panel.innerHTML = `
+                    <div class="bucket-card bucket-positive animate-fadeUp">
+                        <div class="bucket-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                            What's Working
+                        </div>
+                        ${positiveItems || '<div class="bucket-item text-txt-dim italic">No verified positives identified.</div>'}
+                    </div>
+                    <div class="bucket-card bucket-negative animate-fadeUp">
+                        <div class="bucket-title">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                            What's Concerning
+                        </div>
+                        ${negativeItems || '<div class="bucket-item text-txt-dim italic">No verified negatives identified.</div>'}
                     </div>`;
+                panel.classList.remove('hidden');
+            }
+
+            // ── Price history chart card (closes + decline/rally episode bands) ──
+            function renderPriceHistoryCard(priceHistory) {
+                const card = document.getElementById('price-history-card');
+                if (!card) return;
+
+                const series = priceHistory && priceHistory.series;
+                if (!series || !series.dates || !series.dates.length) {
+                    card.classList.add('hidden');
+                    return;
+                }
+
+                // Meta line: current price, distance from 52w high, returns
+                const meta = document.getElementById('price-history-meta');
+                if (meta) {
+                    const bits = [];
+                    if (priceHistory.current_price != null) bits.push(`₹${Number(priceHistory.current_price).toLocaleString('en-IN')}`);
+                    if (priceHistory.pct_off_52w_high != null) bits.push(`${Math.abs(priceHistory.pct_off_52w_high)}% off 52w high`);
+                    const r = priceHistory.returns || {};
+                    ['1y', '3y', '5y'].forEach(k => {
+                        if (r[k] != null) bits.push(`${k.toUpperCase()} ${r[k] >= 0 ? '+' : ''}${r[k]}%`);
+                    });
+                    meta.textContent = bits.join('  ·  ');
+                }
+
+                // Legend
+                const legend = document.getElementById('price-history-legend');
+                if (legend) {
+                    legend.innerHTML = `
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-3 h-[3px] rounded-full" style="background: var(--accent, #5B9DFF);"></span>Weekly close</span>
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-3 h-3 rounded-sm" style="background: rgba(61,217,164,0.15); border: 1px solid rgba(61,217,164,0.4);"></span>Rally episode</span>
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-3 h-3 rounded-sm" style="background: rgba(242,109,126,0.15); border: 1px solid rgba(242,109,126,0.4);"></span>Decline episode</span>`;
+                }
+
+                card.classList.remove('hidden');
+                if (window.NovusCharts && window.NovusCharts.renderPriceHistory) {
+                    window.NovusCharts.renderPriceHistory(priceHistory);
+                }
             }
 
             function setHeaderContext(ticker, status) {
@@ -996,6 +1108,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 reportLoader.classList.add('hidden');
                 renderPartialReport(data);
                 renderVerdictBanner(data);
+                renderVerdictBuckets(data);
+                renderPriceHistoryCard(data.price_history);
                 setHeaderContext((tickerInput.value || '').trim().toUpperCase(), 'Analysis complete');
                 if (!document.getElementById('report-disclaimer')) {
                     const disc = document.createElement('div');

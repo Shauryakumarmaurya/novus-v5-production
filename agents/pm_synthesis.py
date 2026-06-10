@@ -18,7 +18,18 @@ class PMSynthesisV3(AgentV3):
             "market-moving information, hidden correlations, and micro-trends that human analysts physically cannot process in time. "
             "Look for contradictions between agents (e.g., strong narrative but weak forensic cash flow). "
             "Identify the 'Variant Perception' — what is the market currently pricing in, and why is the market wrong based on our data? "
-            "Your thesis must be a high-conviction, revenue-generating insight: BUY, WATCH, or PASS with measurable kill criteria.\n\n"
+            "Your thesis must be a high-conviction, revenue-generating insight: an explicit ADD, HOLD, or SELL with measurable kill criteria.\n\n"
+            "STORYTELLER MANDATE:\n"
+            "Your report must read as a coherent narrative an analyst can retell to a client in two minutes: "
+            "what happened to this stock and why (the past), what is driving it now (the present), and what must "
+            "stay true for the move to continue (the future). When a PRICE ACTION DOSSIER is provided in your mandate, "
+            "you MUST populate the 'stock_story' object — explaining each decline and rally episode using only "
+            "evidence from the dossier, the specialist findings, and the filings. If no dossier is provided, omit "
+            "'stock_story' entirely and list it as a data gap.\n\n"
+            "BUCKET DISCIPLINE:\n"
+            "'bull_case' is a STRICT positives bucket and 'bear_case' is a STRICT negatives bucket. "
+            "Never mix a caveat into a positive or a silver lining into a negative — each item lives in exactly "
+            "one bucket and must cite specific evidence (a number, a quote, or a filing fact).\n\n"
             "MANDATORY DATA GAP PROTOCOL:\n"
             "If ANY upstream agent reported data_gaps in their findings, you MUST:\n"
             "1. State: '[METRIC] could not be calculated due to missing [FIELD].'\n"
@@ -36,13 +47,24 @@ class PMSynthesisV3(AgentV3):
   "executive_summary": "High-conviction 1-paragraph summary of the investment case and the core variant perception.",
   "alpha_synthesis": "Deep cross-referencing of agent findings. E.g., 'While Moat Architect sees strong pricing power, Forensic Quant flags deteriorating cash conversion, and Narrative Decoder caught management dodging margin questions — indicating the moat is actually breaking.'",
   "variant_perception": "What the market is NOT pricing in — your edge. Why is the consensus wrong?",
+  "stock_story": {
+    "past_declines": [
+      {"period": "Oct 2021 - Jun 2022 (FY22-FY23)", "magnitude": "-38%", "causes": "Margin compression from API cost inflation (gross margin -420bps) and US price erosion, per FY22 commentary."}
+    ],
+    "past_rallies": [
+      {"period": "Jun 2022 - Sep 2024 (FY23-FY25)", "magnitude": "+95%", "causes": "US generics launch cycle drove PAT from X to Y Cr; margin guidance raised twice."}
+    ],
+    "current_driver": "What is driving the CURRENT (ongoing) move, with evidence.",
+    "continuation_verdict": "LIKELY|MIXED|UNLIKELY",
+    "what_must_stay_true": ["Condition 1 for the move to continue", "Condition 2"]
+  },
   "fundamental_analysis": "Deep paragraph on business model, moat, and competitive position.",
   "forensic_audit": "Deep paragraph on accounting quality, earnings quality, and red flags.",
   "capital_allocation": "Deep paragraph on management's capital stewardship, M&A, and returns policy.",
   "management_quality": "Deep paragraph on governance, promoter integrity, and KMP stability.",
-  "bull_case": ["Pillar 1 with evidence", "Pillar 2 with evidence", "Pillar 3"],
+  "bull_case": ["STRICT positives bucket. Pillar 1 with evidence", "Pillar 2 with evidence", "Pillar 3"],
   "bear_case": [
-    {"risk": "Description with evidence", "probability": "LOW|MEDIUM|HIGH", "impact": "Description"}
+    {"risk": "STRICT negatives bucket. Description with evidence", "probability": "LOW|MEDIUM|HIGH", "impact": "Description"}
   ],
   "scoreboard": {
     "forensic_quality": "A|B|C|D",
@@ -51,7 +73,8 @@ class PMSynthesisV3(AgentV3):
     "pricing_verdict": "CHEAP|FAIR|EXPENSIVE",
     "reverse_dcf_implied_growth": null
   },
-  "recommendation": "BUY|WATCH|PASS",
+  "recommendation": "ADD|HOLD|SELL",
+  "recommendation_rationale": "One sentence: the single decisive reason, distinguishing new money vs existing holders if they differ (e.g. 'Existing holders keep positions for the FY27 capacity ramp, but new money should wait for entry below 24x given unresolved cash conversion').",
   "kill_criteria": [
     "ROIC drops below 12% for 2 consecutive quarters",
     "Promoter pledge exceeds 10% of holding"

@@ -189,6 +189,57 @@
             text-transform: uppercase; color: var(--t4); margin-bottom: 4px;
         }
 
+        /* ── Action chip (ADD / HOLD / SELL) ── */
+        .action-chip {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 6px 14px; border-radius: 999px;
+            font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+            border: 1px solid transparent;
+        }
+        .action-chip::before { content: ''; width: 7px; height: 7px; border-radius: 999px; background: currentColor; }
+        .action-add  { background: rgba(61,217,164,0.12); color: var(--green); border-color: rgba(61,217,164,0.35); }
+        .action-hold { background: rgba(242,185,75,0.12); color: var(--amber); border-color: rgba(242,185,75,0.35); }
+        .action-sell { background: rgba(242,109,126,0.12); color: var(--red); border-color: rgba(242,109,126,0.35); }
+        .verdict-rationale { font-size: 12.5px; line-height: 1.55; color: var(--t2); max-width: 560px; margin-top: 10px; }
+
+        /* ── Positives / Negatives bucket cards ── */
+        .bucket-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow-card);
+            padding: 20px 22px;
+            border-top: 2px solid transparent;
+        }
+        .bucket-positive { border-top-color: rgba(61,217,164,0.55); }
+        .bucket-negative { border-top-color: rgba(242,109,126,0.55); }
+        .bucket-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .bucket-positive .bucket-title { color: var(--green); }
+        .bucket-negative .bucket-title { color: var(--red); }
+        .bucket-item {
+            position: relative; padding-left: 18px; margin-bottom: 11px;
+            font-size: 12.5px; line-height: 1.6; color: var(--t2);
+        }
+        .bucket-item:last-child { margin-bottom: 0; }
+        .bucket-item::before {
+            content: ''; position: absolute; left: 2px; top: 8px;
+            width: 6px; height: 6px; border-radius: 999px;
+        }
+        .bucket-positive .bucket-item::before { background: rgba(61,217,164,0.7); }
+        .bucket-negative .bucket-item::before { background: rgba(242,109,126,0.7); }
+        .bucket-item .bucket-prob {
+            display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px;
+            font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em;
+            vertical-align: 1px;
+        }
+        .prob-high   { background: rgba(242,109,126,0.14); color: var(--red); }
+        .prob-medium { background: rgba(242,185,75,0.14); color: var(--amber); }
+        .prob-low    { background: rgba(255,255,255,0.06); color: var(--t3); }
+
         /* ── Insight metric cards ── */
         .insight-card {
             background: var(--card);
@@ -530,6 +581,19 @@
                                 <div id="insight-dashboard" class="hidden">
                                     <!-- Verdict banner (hero) — populated by JS -->
                                     <div id="verdict-banner" class="hidden"></div>
+
+                                    <!-- Positives / Negatives buckets — populated by JS -->
+                                    <div id="verdict-buckets" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 mb-5"></div>
+
+                                    <!-- Price history with decline/rally episodes — populated by JS -->
+                                    <div id="price-history-card" class="hidden ws-card p-5 mb-5">
+                                        <div class="flex items-baseline justify-between flex-wrap gap-2">
+                                            <h3 class="card-title">Price History &amp; Episodes</h3>
+                                            <div id="price-history-meta" class="text-[11px] font-mono text-txt-muted"></div>
+                                        </div>
+                                        <div style="height:280px;"><canvas id="chart-price-history"></canvas></div>
+                                        <div id="price-history-legend" class="flex items-center gap-5 mt-3 text-[11px] text-txt-muted"></div>
+                                    </div>
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-5" id="insight-cards"></div>
                                     <!-- Financial Snapshot Charts -->

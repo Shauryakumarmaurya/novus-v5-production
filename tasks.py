@@ -76,6 +76,27 @@ def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None, d
     return a_outs, t_res, f_score, evasion_data, agent_trails_summary
 
 
+def build_verdict_payload(st: OrchestratorState) -> dict:
+    """Top-level verdict block for the UI: action, story, +/- buckets, price history."""
+    pm = st.agent_trails.get("pm_synthesis")
+    findings = pm.findings if (pm and isinstance(pm.findings, dict)) else {}
+
+    price_history = None
+    price_story = getattr(st, "price_story", None)
+    if isinstance(price_story, dict):
+        # Everything except the dossier prose (PM-mandate-only)
+        price_history = {k: v for k, v in price_story.items() if k != "dossier"}
+
+    return {
+        "recommendation": findings.get("recommendation"),
+        "recommendation_rationale": findings.get("recommendation_rationale"),
+        "stock_story": findings.get("stock_story"),
+        "positives": findings.get("bull_case") or [],
+        "negatives": findings.get("bear_case") or [],
+        "price_history": price_history,
+    }
+
+
 def _compute_evasion_score(st: OrchestratorState) -> dict | None:
     """
     Compute a real 0-100 evasion score from the Narrative Decoder's structured findings.
@@ -299,6 +320,7 @@ def generate_financial_report_from_rag(ticker):
         logger.info("[Pipeline] Assembling final Novus report...")
 
         agent_outputs, triage_result, forensic_scorecard, evasion_data, agent_trails_summary = build_ui_payloads(state)
+        verdict_payload = build_verdict_payload(state)
 
         _update_progress('assemble', {
             "final_report": state.final_report,
@@ -307,6 +329,7 @@ def generate_financial_report_from_rag(ticker):
             "forensic_scorecard": forensic_scorecard,
             "evasion_data": evasion_data,
             "agent_trails": agent_trails_summary,
+            **verdict_payload,
             "active_agents": [],
             "completed_agents": ["planning", "forensic_quant", "forensic_investigator", "narrative_decoder", "moat_architect", "capital_allocator", "management_quality", "synthesis"]
         })
@@ -318,6 +341,7 @@ def generate_financial_report_from_rag(ticker):
             "forensic_scorecard": forensic_scorecard,
             "evasion_data": evasion_data,
             "agent_trails": agent_trails_summary,
+            **verdict_payload,
             "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
             "data_ingestion_completeness": getattr(state, "data_ingestion_completeness", 1.0),
             "status": "completed"
@@ -419,6 +443,7 @@ def generate_financial_report(ticker, files_data):
         logger.info("[Pipeline] Assembling final Novus report...")
 
         agent_outputs, triage_result, forensic_scorecard, evasion_data, agent_trails_summary = build_ui_payloads(state)
+        verdict_payload = build_verdict_payload(state)
 
         _update_progress('assemble', {
             "final_report": state.final_report,
@@ -427,6 +452,7 @@ def generate_financial_report(ticker, files_data):
             "forensic_scorecard": forensic_scorecard,
             "evasion_data": evasion_data,
             "agent_trails": agent_trails_summary,
+            **verdict_payload,
             "active_agents": [],
             "completed_agents": ["planning", "forensic_quant", "forensic_investigator", "narrative_decoder", "moat_architect", "capital_allocator", "management_quality", "synthesis"]
         })
@@ -438,6 +464,7 @@ def generate_financial_report(ticker, files_data):
             "forensic_scorecard": forensic_scorecard,
             "evasion_data": evasion_data,
             "agent_trails": agent_trails_summary,
+            **verdict_payload,
             "rag_stats": rag_stats,
             "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
             "data_ingestion_completeness": getattr(state, "data_ingestion_completeness", 1.0),

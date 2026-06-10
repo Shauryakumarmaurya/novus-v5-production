@@ -118,8 +118,15 @@ class AuditTrail:
         # ── Section ordering and professional titles ──
         # Maps the PM Synthesis JSON keys to proper report section headings.
         # Order matters — this defines the structure of the report.
+        # Narrative arc: verdict first, then the story, then the +/- buckets,
+        # then the deep dives. An analyst should be able to retell the report
+        # top-to-bottom as a coherent story.
         _SECTION_ORDER = [
             ("executive_summary",     "Executive Summary"),
+            ("recommendation",        "Recommendation"),
+            ("stock_story",           "The Stock Story"),
+            ("bull_case",             "What's Working (Positives)"),
+            ("bear_case",             "What's Concerning (Negatives)"),
             ("fundamental_analysis",  "Fundamental Analysis"),
             ("forensic_audit",        "Forensic & Accounting Quality"),
             ("capital_allocation",    "Capital Allocation"),
@@ -127,11 +134,8 @@ class AuditTrail:
             ("valuation",             "Valuation & Scenario Analysis"),
             ("forward_estimates",     "Forward Estimates"),
             ("catalyst_calendar",     "Catalyst Calendar"),
-            ("bull_case",             "Bull Case"),
-            ("bear_case",             "Bear Case"),
             ("variant_perception",    "Variant Perception"),
             ("scoreboard",            "Scoreboard"),
-            ("recommendation",        "Recommendation"),
             ("kill_criteria",         "Kill Criteria"),
             ("upside_triggers",       "Upside Triggers"),
             ("evidence_citations",    "Evidence & Citations"),
@@ -150,6 +154,15 @@ class AuditTrail:
                 lines.append("")
             elif key == "recommendation":
                 lines.append(f"## {title}: {val}")
+                lines.append("")
+                rationale = findings.get("recommendation_rationale")
+                if not _is_empty_or_none(rationale):
+                    lines.append(str(rationale))
+                    lines.append("")
+            elif key == "stock_story" and isinstance(val, dict):
+                lines.append(f"## {title}")
+                lines.append("")
+                self._render_stock_story(val, lines)
                 lines.append("")
             elif key == "evidence_citations" and isinstance(val, list):
                 lines.append(f"## {title}")
@@ -195,6 +208,7 @@ class AuditTrail:
 
         # ── Render any keys NOT in the section order (future-proofing) ──
         rendered_keys = {k for k, _ in _SECTION_ORDER}
+        rendered_keys.add("recommendation_rationale")  # rendered inline with recommendation
         for key, val in findings.items():
             if key in rendered_keys or _is_empty_or_none(val):
                 continue
@@ -208,6 +222,55 @@ class AuditTrail:
             lines.append("")
 
         return "\n".join(lines)
+
+    @staticmethod
+    def _render_stock_story(story: dict, lines: list):
+        """Render the stock_story dict as Why-it-fell / Why-it-rose /
+        Will-it-continue sub-blocks for the client-facing report."""
+        from utils.formatters import _is_empty_or_none
+
+        def _episode_lines(episodes, heading):
+            if _is_empty_or_none(episodes):
+                return
+            lines.append(f"### {heading}")
+            lines.append("")
+            for ep in episodes:
+                if _is_empty_or_none(ep):
+                    continue
+                if isinstance(ep, dict):
+                    period = ep.get("period", "")
+                    magnitude = ep.get("magnitude", "")
+                    causes = ep.get("causes", "")
+                    head = " ".join(p for p in [f"**{period}**" if period else "", f"({magnitude})" if magnitude else ""] if p)
+                    lines.append(f"- {head}: {causes}" if head else f"- {causes}")
+                else:
+                    lines.append(f"- {ep}")
+            lines.append("")
+
+        _episode_lines(story.get("past_declines"), "Why the Stock Fell")
+        _episode_lines(story.get("past_rallies"), "Why the Stock Rose")
+
+        current = story.get("current_driver")
+        if not _is_empty_or_none(current):
+            lines.append("### What's Driving It Now")
+            lines.append("")
+            lines.append(str(current))
+            lines.append("")
+
+        verdict = story.get("continuation_verdict")
+        conditions = story.get("what_must_stay_true")
+        if not _is_empty_or_none(verdict) or not _is_empty_or_none(conditions):
+            lines.append("### Will It Continue?")
+            lines.append("")
+            if not _is_empty_or_none(verdict):
+                lines.append(f"**Continuation verdict: {verdict}**")
+                lines.append("")
+            if not _is_empty_or_none(conditions):
+                lines.append("For the move to continue, the following must stay true:")
+                for c in conditions:
+                    if not _is_empty_or_none(c):
+                        lines.append(f"- {c}")
+                lines.append("")
 
     @staticmethod
     def _render_scoreboard(scoreboard: dict, lines: list):
