@@ -70,6 +70,7 @@ def react_loop(
     max_tool_result_chars: int = 3000,
     llm: LLMClient = None,
     on_step: Optional[Callable[[ReasoningStep], None]] = None,
+    max_tokens: Optional[int] = None,
 ) -> ReActResult:
     """
     Multi-turn ReAct loop.
@@ -90,6 +91,10 @@ def react_loop(
                           to SSE clients in real time. Any exception inside the
                           callback is swallowed so progress reporting cannot
                           break the loop itself.
+        max_tokens:       Output-token budget per LLM call. None uses the
+                          client default (4096 for V3). Agents with large
+                          JSON outputs (e.g. the critic) must raise this or
+                          their final answer truncates mid-string.
     """
     if llm is None:
         llm = get_llm_client()
@@ -139,7 +144,7 @@ def react_loop(
                     "Do not include any conversational text before or after the JSON."
                 ),
             })
-            resp = llm.call(messages=messages, tools=None, max_tokens=None)
+            resp = llm.call(messages=messages, tools=None, max_tokens=max_tokens)
             total_in += resp.input_tokens
             total_out += resp.output_tokens
             print(f"  [ReAct] FORCED FINAL (no tools) | content_len={len(resp.content)}")
@@ -168,7 +173,7 @@ def react_loop(
             )
 
         # Call the LLM
-        resp = llm.call(messages=messages, tools=tool_defs)
+        resp = llm.call(messages=messages, tools=tool_defs, max_tokens=max_tokens)
         total_in += resp.input_tokens
         total_out += resp.output_tokens
 
@@ -336,9 +341,72 @@ def _extract_json(text: str) -> Optional[dict]:
         m = re.search(r"\{[\s\S]*\}", text)
         if m:
             text = m.group(0)
+    text = text.strip()
     try:
-        return json.loads(text.strip())
+        return json.loads(text)
     except json.JSONDecodeError as e:
         print(f"  [ReAct] ❌ JSON Parse Error: {e}")
-        print(f"  [ReAct] ❌ Raw text snippet: {text.strip()[:500]} ... {text.strip()[-500:]}")
+        print(f"  [ReAct] ❌ Raw text snippet: {text[:500]} ... {text[-500:]}")
+        salvaged = _repair_truncated_json(text)
+        if salvaged is not None:
+            print(f"  [ReAct] ♻️ Salvaged truncated JSON ({len(salvaged)} top-level keys).")
+        return salvaged
+
+
+def _repair_truncated_json(text: str) -> Optional[dict]:
+    """Best-effort recovery of JSON cut off mid-stream by an output-token cap.
+
+    Strategy: walk the text tracking string/escape state and the open-bracket
+    stack, snapshotting the state at every comma (a comma at bracket depth
+    means everything before it is structurally complete). At EOF, cut back to
+    the last comma and close every bracket open at that point. Recovers the
+    findings produced before the cut instead of discarding everything.
+    """
+    if not text or not text.lstrip().startswith("{"):
         return None
+
+    stack: list[str] = []
+    in_string = False
+    escaped = False
+    last_clean = 0                      # index of the last structural comma
+    stack_at_clean: list[str] = []      # open brackets at that comma
+
+    for i, ch in enumerate(text):
+        if in_string:
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == '"':
+                in_string = False
+            continue
+        if ch == '"':
+            in_string = True
+        elif ch in "{[":
+            stack.append("}" if ch == "{" else "]")
+        elif ch in "}]":
+            if stack:
+                stack.pop()
+        elif ch == ",":
+            last_clean = i
+            stack_at_clean = stack.copy()
+
+    if not stack and not in_string:
+        return None  # structurally complete; the failure was something else
+
+    candidates = []
+    # Preferred: drop the unterminated trailing fragment back to the last comma.
+    if last_clean > 0:
+        candidates.append(text[:last_clean] + "".join(reversed(stack_at_clean)))
+    # Fallback: keep everything, terminate a dangling string, close all brackets.
+    tail = text + ('"' if in_string else "")
+    candidates.append(tail + "".join(reversed(stack)))
+
+    for candidate in candidates:
+        try:
+            result = json.loads(candidate)
+            if isinstance(result, dict) and result:
+                return result
+        except json.JSONDecodeError:
+            continue
+    return None

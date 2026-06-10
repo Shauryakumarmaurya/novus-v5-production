@@ -323,6 +323,10 @@ class AgentV3(ABC):
 
     MAX_ITERATIONS = 8
     VERIFY = True
+    # Output-token budget per LLM call. None = client default (4096 for V3).
+    # Agents whose final JSON is large (critic) must raise this or the answer
+    # truncates mid-string and parses to nothing.
+    MAX_OUTPUT_TOKENS: Optional[int] = None
 
     @property
     @abstractmethod
@@ -430,6 +434,7 @@ class AgentV3(ABC):
             max_iterations=self.MAX_ITERATIONS,
             llm=llm,
             on_step=on_step,
+            max_tokens=self.MAX_OUTPUT_TOKENS,
         )
 
         # ── 5. Verification ──
