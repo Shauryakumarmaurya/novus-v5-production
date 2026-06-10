@@ -374,9 +374,32 @@ async def run_pipeline(
 
     if progress_callback:
         progress_callback("lead_analyst_planning", [], [])
-        
-    state.agent_frameworks = await _generate_dynamic_frameworks(state, v3_llm)
-    
+
+    # ── Deterministic agent mandates ──
+    # The Lead Analyst frameworks are LLM-generated; without caching, repeat
+    # runs of the same ticker get different focus instructions and the whole
+    # analysis drifts. Cache per (ticker, fiscal_period, mandate-context hash).
+    import hashlib as _hashlib
+    profile_hash = _hashlib.md5(
+        f"{client_profile}|{macro_context}|{query}".encode()
+    ).hexdigest()[:16]
+    cached_frameworks = None
+    try:
+        cached_frameworks = get_memory().get_cached_frameworks(ticker, inferred_period, profile_hash)
+    except Exception as e:
+        print(f"> [CIO] ⚠️ Framework cache read failed: {e}")
+
+    if cached_frameworks:
+        state.agent_frameworks = cached_frameworks
+        print(f"> [CIO] ♻️ Reusing cached Lead Analyst frameworks for {ticker} {inferred_period}.")
+    else:
+        state.agent_frameworks = await _generate_dynamic_frameworks(state, v3_llm)
+        if state.agent_frameworks:
+            try:
+                get_memory().store_frameworks(ticker, inferred_period, profile_hash, state.agent_frameworks)
+            except Exception as e:
+                print(f"> [CIO] ⚠️ Framework cache write failed: {e}")
+
     from core.sector_archetypes import get_guardrails
     try:
         archetype_guardrails = get_guardrails(sector, fuzzy=True)

@@ -42,7 +42,7 @@ logger = get_logger(__name__)
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_DB_PATH = os.path.join(_REPO_ROOT, "data", "novus_master.db")
 
-SCHEMA_VERSION = 2                # bump when schema changes; migrations are ADDITIVE (no drops)
+SCHEMA_VERSION = 3                # bump when schema changes; migrations are ADDITIVE (no drops)
 CRITIC_CONFIDENCE_FLOOR = 0.8     # only inject high-conviction facts into prompts
 ADJUDICATOR_TIMEOUT_S = 10.0      # per-pair hard cap for Tier 2 V3 call
 ADJUDICATOR_WORKERS = 5           # bounded LLM fan-out width
@@ -370,9 +370,113 @@ class MemoryLayer:
                 );
                 CREATE INDEX IF NOT EXISTS idx_incon_ticker
                     ON narrative_inconsistencies(ticker, metric_category);
+
+                CREATE TABLE IF NOT EXISTS agent_frameworks_cache (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ticker TEXT NOT NULL,
+                    fiscal_period TEXT NOT NULL,
+                    profile_hash TEXT NOT NULL,
+                    frameworks_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    UNIQUE(ticker, fiscal_period, profile_hash)
+                );
+
+                CREATE TABLE IF NOT EXISTS reports (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ticker TEXT NOT NULL,
+                    fiscal_period TEXT NOT NULL,
+                    mode TEXT NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    UNIQUE(ticker, fiscal_period, mode)
+                );
+                CREATE INDEX IF NOT EXISTS idx_reports_lookup
+                    ON reports(ticker, fiscal_period, mode);
                 """
             )
             conn.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # DETERMINISM CACHES — dynamic frameworks + completed reports
+    # ═══════════════════════════════════════════════════════════════════════
+    # Repeat runs of the same (ticker, fiscal_period) should converge, not
+    # drift: agent mandates are LLM-generated once and reused, and a completed
+    # report is served from here unless the user forces a re-run.
+
+    def get_cached_frameworks(self, ticker: str, fiscal_period: str, profile_hash: str) -> Optional[dict]:
+        try:
+            with self._connect() as conn:
+                row = conn.execute(
+                    """SELECT frameworks_json FROM agent_frameworks_cache
+                       WHERE ticker=? AND fiscal_period=? AND profile_hash=?""",
+                    (ticker.upper().strip(), fiscal_period, profile_hash),
+                ).fetchone()
+            if row:
+                return json.loads(row["frameworks_json"])
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] get_cached_frameworks failed: {e}")
+        return None
+
+    def store_frameworks(self, ticker: str, fiscal_period: str, profile_hash: str, frameworks: dict) -> None:
+        if not frameworks:
+            return
+        try:
+            with self._connect() as conn:
+                conn.execute(
+                    """INSERT INTO agent_frameworks_cache
+                       (ticker, fiscal_period, profile_hash, frameworks_json, created_at)
+                       VALUES (?, ?, ?, ?, ?)
+                       ON CONFLICT(ticker, fiscal_period, profile_hash)
+                       DO UPDATE SET frameworks_json = excluded.frameworks_json,
+                                     created_at = excluded.created_at""",
+                    (
+                        ticker.upper().strip(), fiscal_period, profile_hash,
+                        json.dumps(frameworks, ensure_ascii=False),
+                        datetime.utcnow().isoformat(),
+                    ),
+                )
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] store_frameworks failed: {e}")
+
+    def get_cached_report(self, ticker: str, fiscal_period: str, mode: str = "rag") -> Optional[dict]:
+        """Return the persisted report payload for (ticker, fiscal_period, mode), or None."""
+        try:
+            with self._connect() as conn:
+                row = conn.execute(
+                    """SELECT payload_json, created_at FROM reports
+                       WHERE ticker=? AND fiscal_period=? AND mode=?""",
+                    (ticker.upper().strip(), fiscal_period, mode),
+                ).fetchone()
+            if row:
+                payload = json.loads(row["payload_json"])
+                payload["cached_at"] = row["created_at"]
+                return payload
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] get_cached_report failed: {e}")
+        return None
+
+    def store_report(self, ticker: str, fiscal_period: str, mode: str, payload: dict) -> None:
+        """Upsert a completed report payload for (ticker, fiscal_period, mode)."""
+        if not payload:
+            return
+        try:
+            with self._connect() as conn:
+                conn.execute(
+                    """INSERT INTO reports
+                       (ticker, fiscal_period, mode, payload_json, created_at)
+                       VALUES (?, ?, ?, ?, ?)
+                       ON CONFLICT(ticker, fiscal_period, mode)
+                       DO UPDATE SET payload_json = excluded.payload_json,
+                                     created_at = excluded.created_at""",
+                    (
+                        ticker.upper().strip(), fiscal_period, mode,
+                        json.dumps(payload, default=str, ensure_ascii=False),
+                        datetime.utcnow().isoformat(),
+                    ),
+                )
+            logger.info(f"[MemoryLayer] Report cached for {ticker} {fiscal_period} ({mode}).")
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] store_report failed: {e}")
 
     # ═══════════════════════════════════════════════════════════════════════
     # WRITE PATH
@@ -414,6 +518,18 @@ class MemoryLayer:
 
         new_mistake_ids: list[int] = []
 
+        def _mistake_exists(conn, agent_name: str, period: str, original: str) -> bool:
+            """Dedupe gate: re-running the same period must not re-append an
+            identical correction — otherwise the memory block injected into
+            the next run's prompts grows/shifts on every re-run (prompt drift)."""
+            row = conn.execute(
+                """SELECT 1 FROM agent_mistakes
+                   WHERE ticker=? AND agent_name=? AND fiscal_period=? AND original_claim=?
+                   LIMIT 1""",
+                (ticker, agent_name, period, original[:1500]),
+            ).fetchone()
+            return row is not None
+
         try:
             with self._connect() as conn:
                 conn.execute("BEGIN")
@@ -425,6 +541,9 @@ class MemoryLayer:
                     original = str(c.get("original_claim") or "").strip()
                     verified = str(c.get("verified_fact") or "").strip()
                     if not agent_name or not original or not verified:
+                        continue
+                    if _mistake_exists(conn, agent_name, (c.get("fiscal_period") or fiscal_period).strip(), original):
+                        result["duplicates_skipped"] = result.get("duplicates_skipped", 0) + 1
                         continue
                     category = (c.get("metric_category") or "").strip() \
                         or classify_to_category(f"{original} {verified}")
@@ -461,6 +580,11 @@ class MemoryLayer:
                     claim = str(u.get("claim") or "").strip()
                     reason = str(u.get("reason") or "")
                     if not agent_name or not claim:
+                        continue
+                    if _mistake_exists(conn, agent_name, (u.get("fiscal_period") or fiscal_period).strip(), claim):
+                        # Identical re-observation in the same period: skip both the
+                        # mistake row and the gap occurrence bump (no snowballing).
+                        result["duplicates_skipped"] = result.get("duplicates_skipped", 0) + 1
                         continue
                     category = (u.get("metric_category") or "").strip() \
                         or classify_to_category(claim)

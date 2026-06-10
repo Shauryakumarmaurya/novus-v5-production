@@ -107,9 +107,17 @@ window.NovusCharts = (() => {
                     narrative_decoder: 'Narrative', moat_architect: 'Moat',
                     capital_allocator: 'Capital', management_quality: 'Mgmt Quality',
                 };
+                // Canonical axis order — payload dict order historically followed agent
+                // completion order, which reshuffled the radar shape between runs.
+                const AGENT_ORDER = ['forensic_quant', 'forensic_investigator', 'narrative_decoder', 'moat_architect', 'capital_allocator', 'management_quality'];
+                const entries = Object.entries(agentTrails)
+                    .filter(([name]) => name !== 'pm_synthesis' && name !== 'critic_agent')
+                    .sort(([a], [b]) => {
+                        const ra = AGENT_ORDER.indexOf(a); const rb = AGENT_ORDER.indexOf(b);
+                        return (ra === -1 ? AGENT_ORDER.length : ra) - (rb === -1 ? AGENT_ORDER.length : rb);
+                    });
                 const labels = []; const values = [];
-                for (const [name, trail] of Object.entries(agentTrails)) {
-                    if (name === 'pm_synthesis' || name === 'critic_agent') continue;
+                for (const [name, trail] of entries) {
                     labels.push(nameMap[name] || name);
                     values.push(typeof trail.confidence === 'number' ? Math.round(trail.confidence * 100) : 50);
                 }

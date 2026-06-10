@@ -24,10 +24,31 @@ from cio_orchestrator import analyze, OrchestratorState
 
 from utils.formatters import format_dict_as_markdown
 
+# Canonical display order for agents. The orchestrator inserts trails in
+# asyncio completion order (non-deterministic across runs), which would
+# otherwise reshuffle the radar chart axes and agent cards on every run.
+AGENT_ORDER = [
+    "forensic_quant",
+    "forensic_investigator",
+    "narrative_decoder",
+    "moat_architect",
+    "capital_allocator",
+    "management_quality",
+    "critic_agent",
+    "pm_synthesis",
+]
+
+
+def _ordered_trails(agent_trails: dict) -> list[tuple[str, object]]:
+    """Yield (name, trail) pairs in canonical order; unknown agents last."""
+    rank = {name: i for i, name in enumerate(AGENT_ORDER)}
+    return sorted(agent_trails.items(), key=lambda kv: rank.get(kv[0], len(AGENT_ORDER)))
+
+
 def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None, dict | None, dict]:
     """Single source of truth for UI payload construction from OrchestratorState (V3)."""
     a_outs = {}
-    for name, trail in st.agent_trails.items():
+    for name, trail in _ordered_trails(st.agent_trails):
         if trail.findings:
             md_lines = format_dict_as_markdown(trail.findings, indent=0)
             a_outs[name] = "\n".join(md_lines)
@@ -64,9 +85,9 @@ def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None, d
     # ── Compute Real NLP Evasion Score ──
     evasion_data = _compute_evasion_score(st)
 
-    # ── Agent Trails Summary for Charts ──
+    # ── Agent Trails Summary for Charts (canonical order → stable radar) ──
     agent_trails_summary = {}
-    for name, trail in st.agent_trails.items():
+    for name, trail in _ordered_trails(st.agent_trails):
         agent_trails_summary[name] = {
             "confidence": trail.confidence,
             "findings": trail.findings if trail.findings else None,
@@ -95,6 +116,21 @@ def build_verdict_payload(st: OrchestratorState) -> dict:
         "negatives": findings.get("bear_case") or [],
         "price_history": price_history,
     }
+
+
+def _persist_report_cache(ticker: str, st: OrchestratorState, payload: dict) -> None:
+    """Upsert the completed report into the persistent cache (fail-soft).
+
+    Both task paths store under mode='rag': the cache is keyed by the analysis
+    output (what /analyze_rag serves), not the input channel — a PDF-upload run
+    simply refreshes the canonical report for that ticker + fiscal period.
+    """
+    try:
+        from core.memory import get_memory
+        fiscal_period = getattr(st, "fiscal_period", "") or "UNKNOWN"
+        get_memory().store_report(ticker, fiscal_period, "rag", payload)
+    except Exception as e:
+        logger.warning(f"[Cache] Failed to persist report for {ticker}: {e}")
 
 
 def _compute_evasion_score(st: OrchestratorState) -> dict | None:
@@ -334,7 +370,7 @@ def generate_financial_report_from_rag(ticker):
             "completed_agents": ["planning", "forensic_quant", "forensic_investigator", "narrative_decoder", "moat_architect", "capital_allocator", "management_quality", "synthesis"]
         })
 
-        return {
+        report_data = {
             "final_report": state.final_report,
             "agent_outputs": agent_outputs,
             "triage_result": triage_result,
@@ -342,10 +378,13 @@ def generate_financial_report_from_rag(ticker):
             "evasion_data": evasion_data,
             "agent_trails": agent_trails_summary,
             **verdict_payload,
+            "fiscal_period": getattr(state, "fiscal_period", None),
             "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
             "data_ingestion_completeness": getattr(state, "data_ingestion_completeness", 1.0),
             "status": "completed"
         }
+        _persist_report_cache(ticker, state, report_data)
+        return report_data
 
     except Exception as e:
         _update_progress('failed', {"error": str(e)})
@@ -466,10 +505,12 @@ def generate_financial_report(ticker, files_data):
             "agent_trails": agent_trails_summary,
             **verdict_payload,
             "rag_stats": rag_stats,
+            "fiscal_period": getattr(state, "fiscal_period", None),
             "signal_payload": state.signal_payload.model_dump() if getattr(state, "signal_payload", None) else None,
             "data_ingestion_completeness": getattr(state, "data_ingestion_completeness", 1.0),
             "status": "completed",
         }
+        _persist_report_cache(ticker, state, report_data)
 
         logger.info(f"[Pipeline] ✅ Report generation complete for {ticker}")
         return report_data

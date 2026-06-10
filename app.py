@@ -225,6 +225,32 @@ def analyze_rag():
         return jsonify({"error": "Missing 'ticker' in request body"}), 400
 
     ticker = data['ticker'].upper()
+    force_refresh = bool(data.get('force_refresh'))
+
+    # ── Report cache: serve the persisted report for this ticker + fiscal
+    # period instead of re-running the (nondeterministic) pipeline, unless
+    # the caller explicitly forces a fresh run. Fail-soft: any error here
+    # falls through to a normal enqueue.
+    if not force_refresh:
+        try:
+            from structured_data_fetcher import get_structured_data_fetcher
+            from cio_orchestrator import _infer_fiscal_period
+            from core.memory import get_memory
+
+            sdata = get_structured_data_fetcher().fetch(ticker)
+            fiscal_period = _infer_fiscal_period(sdata.get("tables") or {})
+            cached = get_memory().get_cached_report(ticker, fiscal_period, mode="rag")
+            if cached:
+                logger.info(f"[Cache] Serving cached report for {ticker} {fiscal_period}.")
+                return jsonify({
+                    "status": "cached",
+                    "ticker": ticker,
+                    "fiscal_period": fiscal_period,
+                    "result": cached,
+                    "message": f"Loaded saved report for {ticker} ({fiscal_period}). Pass force_refresh=true to re-run.",
+                })
+        except Exception as e:
+            logger.warning(f"[Cache] Report cache lookup failed for {ticker}: {e}")
 
     # Queue the background task
     queue = get_queue()

@@ -1519,7 +1519,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 else { ragBtnText.classList.remove('hidden'); ragBtnLoader.classList.add('hidden'); }
             }
 
-            ragBtn.addEventListener('click', async () => {
+            const ragRerunBtn = document.getElementById('rag-rerun-btn');
+
+            async function runRagAnalysis(forceRefresh) {
                 const ticker = tickerInput.value.trim();
                 if (!ticker) { showToast('Please enter a target ticker first.', 'error'); return; }
                 setRagLoadingState(true);
@@ -1528,15 +1530,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     const resp = await fetch('/api/v1/analyze_rag', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ ticker }),
+                        body: JSON.stringify(forceRefresh ? { ticker, force_refresh: true } : { ticker }),
                     });
                     if (!resp.ok) { let msg = `Status: ${resp.status}`; try { const e = await resp.json(); msg = e.error || msg; } catch {} throw new Error(msg); }
-                    const { job_id } = await resp.json();
-                    pollJob(job_id);
+                    const data = await resp.json();
+
+                    // Saved report served from the persistent cache — render instantly.
+                    if (data.status === 'cached' && data.result) {
+                        setLoadingState(false);
+                        setRagLoadingState(false);
+                        liveTerminal.classList.add('hidden');
+                        insightDashboard.classList.remove('hidden');
+                        renderReport(data.result);
+                        fetchAndRenderScreener(ticker.toUpperCase());
+                        if (ragRerunBtn) ragRerunBtn.classList.remove('hidden');
+                        const fp = data.fiscal_period ? ` for ${data.fiscal_period}` : '';
+                        showToast(`Loaded saved report${fp} — use "Re-run fresh analysis" for a new run.`, 'success');
+                        return;
+                    }
+
+                    if (ragRerunBtn) ragRerunBtn.classList.add('hidden');
+                    pollJob(data.job_id);
                 } catch (err) {
                     displayError(err.message || 'RAG Exception.');
                     setLoadingState(false);
                     setRagLoadingState(false);
                 }
-            });
+            }
+
+            ragBtn.addEventListener('click', () => runRagAnalysis(false));
+            ragRerunBtn?.addEventListener('click', () => runRagAnalysis(true));
         });

@@ -111,7 +111,7 @@ class LLMClient:
         self,
         messages: list[dict],
         tools: list[dict] = None,
-        temperature: float = 0.1,
+        temperature: float = 0.0,
         max_tokens: Optional[int] = None,   # defaults to 16k for R1, 4k for V3
     ) -> LLMResponse:
         """
