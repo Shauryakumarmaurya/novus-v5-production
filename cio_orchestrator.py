@@ -72,14 +72,55 @@ def _indian_fiscal_period_from_month_year(month: int, year: int, annual: bool = 
     return f"Q{quarter}_FY{fy_yy:02d}"
 
 
+def _calendar_period_from_month_year(month: int, year: int, annual: bool = False) -> str:
+    """Calendar-year labeling for Dec-ending filers (Nestle/Sanofi-type MNC
+    subsidiaries). CY25 = Jan-Dec 2025; quarters are plain calendar quarters."""
+    yy = year % 100
+    if annual:
+        return f"CY{yy:02d}"
+    quarter = (month - 1) // 3 + 1
+    return f"Q{quarter}_CY{yy:02d}"
+
+
+def _is_calendar_year_filer(financial_tables: dict) -> bool:
+    """True when the company's ANNUAL reporting columns end in December.
+
+    Most Indian filers report Apr-Mar (annual columns are 'Mar 20XX'); MNC
+    subsidiaries report on the calendar year ('Dec 20XX'). Forcing the Indian
+    FY mapping onto them shifts every label one year forward and breaks cache
+    keys + RAG temporal windows.
+    """
+    months = []
+    for tbl_name in ("profit_loss", "balance_sheet", "cash_flow"):
+        tbl = financial_tables.get(tbl_name) or {}
+        if not isinstance(tbl, dict):
+            continue
+        for k in tbl.keys():
+            my = _parse_month_year(k)
+            if my:
+                months.append(my[0])
+    if not months:
+        return False
+    return sum(1 for m in months if m == 12) / len(months) > 0.5
+
+
 def _infer_fiscal_period(financial_tables: dict) -> str:
     """Derive a fiscal_period string from the most recent column across tables.
 
     Priority:
-      1. Latest quarterly_results column -> 'Q{n}_FY{yy}'
-      2. Latest annual column (profit_loss / balance_sheet) -> 'FY{yy}'
+      1. Latest quarterly_results column -> 'Q{n}_FY{yy}' (or 'Q{n}_CY{yy}')
+      2. Latest annual column (profit_loss / balance_sheet) -> 'FY{yy}' / 'CY{yy}'
       3. Fallback to current calendar-derived annual period.
+
+    Dec-ending filers are detected from their annual columns and labeled on
+    the calendar year instead of the Apr-Mar Indian fiscal year.
     """
+    labeler = (
+        _calendar_period_from_month_year
+        if _is_calendar_year_filer(financial_tables)
+        else _indian_fiscal_period_from_month_year
+    )
+
     quarterly = financial_tables.get("quarterly_results") or {}
     if isinstance(quarterly, dict) and quarterly:
         parsed = [(_parse_month_year(k), k) for k in quarterly.keys()]
@@ -87,7 +128,7 @@ def _infer_fiscal_period(financial_tables: dict) -> str:
         if parsed:
             parsed.sort(key=lambda p: (p[0][1], p[0][0]))
             month, year = parsed[-1][0]
-            return _indian_fiscal_period_from_month_year(month, year, annual=False)
+            return labeler(month, year, annual=False)
 
     for tbl_name in ("profit_loss", "balance_sheet", "cash_flow"):
         tbl = financial_tables.get(tbl_name) or {}
@@ -98,7 +139,7 @@ def _infer_fiscal_period(financial_tables: dict) -> str:
         if parsed:
             parsed.sort(key=lambda p: (p[0][1], p[0][0]))
             month, year = parsed[-1][0]
-            return _indian_fiscal_period_from_month_year(month, year, annual=True)
+            return labeler(month, year, annual=True)
 
     from datetime import datetime as _dt
     today = _dt.utcnow()
@@ -234,6 +275,45 @@ def _episode_fundamental_backdrop(episode: dict, financial_tables: dict) -> str:
     if not parts:
         return ""
     return f"   Fundamental backdrop {fys[0]}\u2192{fys[-1]}: " + ", ".join(parts)
+
+
+def _build_guidance_digest(ticker: str, current_period: str) -> str:
+    """Format the accumulated management guidance-vs-delivery record from
+    prior quarters into a mandate block. Repeated misses must mathematically
+    discount today's optimism — but transparently, in the prompt, not via an
+    opaque numeric weight."""
+    try:
+        records = get_memory().get_guidance_track_record(ticker)
+    except Exception:
+        return ""
+
+    # Strictly historical: drop rows from the period being analyzed right now.
+    records = [r for r in records if r.get("fiscal_period") != current_period]
+    if not records:
+        return ""
+
+    lines = [
+        "\n\n## MANAGEMENT GUIDANCE TRACK RECORD (accumulated from prior runs)",
+        "Promise vs delivery in earlier quarters — judge current optimism against this history:",
+    ]
+    low_credibility = 0
+    for r in records[:10]:
+        cred = (r.get("credibility") or "").strip()
+        if cred.upper().startswith("LOW"):
+            low_credibility += 1
+        lines.append(
+            f"- [{r.get('fiscal_period')}] {r.get('topic')}: "
+            f"guided \u201c{(r.get('prior_guidance') or 'n/a')[:160]}\u201d \u2192 "
+            f"delivered \u201c{(r.get('actual_outcome') or 'n/a')[:160]}\u201d"
+            + (f" — credibility: {cred}" if cred else "")
+        )
+    if low_credibility >= 2:
+        lines.append(
+            f"\nRULE: Management has {low_credibility} LOW-credibility guidance outcomes on record. "
+            "DISCOUNT the optimistic tone in the current transcript accordingly: treat unverified "
+            "forward-looking claims as low-confidence and say so explicitly in your findings."
+        )
+    return "\n".join(lines)
 
 
 def _build_price_dossier_injection(ticker: str, price_story: dict, financial_tables: dict) -> str:
@@ -481,6 +561,21 @@ async def run_pipeline(
     except Exception as e:
         print(f"> [CIO] ⚠️ Memory injection failed for critic_agent: {e}")
 
+    # ── Thesis track record: how past verdicts on this name actually played out ──
+    try:
+        past_verdicts = get_memory().get_thesis_track_record(ticker)
+        scored = [v for v in past_verdicts if v.get("eval_t90") or v.get("eval_t180")]
+        if scored:
+            critic_mandate += (
+                "\n\n## PAST VERDICT TRACK RECORD (scored against realized price action)\n"
+                + json.dumps(scored, indent=2, default=str)
+                + "\nUse this to calibrate skepticism: if prior verdicts on this name "
+                "systematically missed, scrutinize the same failure mode in today's findings."
+            )
+            print(f"> [CIO] 🎯 Thesis track record injected into critic ({len(scored)} scored verdicts).")
+    except Exception as e:
+        print(f"> [CIO] ⚠️ Thesis track record injection failed: {e}")
+
     critic = CriticAgentV3()
     critic_trail = await asyncio.to_thread(
         critic.execute,
@@ -631,6 +726,15 @@ async def run_pipeline(
     except Exception as e:
         print(f"> [CIO] ⚠️ Memory injection failed for pm_synthesis: {e}")
 
+    # Management's promise-vs-delivery history tempers the verdict
+    try:
+        guidance_digest = _build_guidance_digest(ticker, state.fiscal_period)
+        if guidance_digest:
+            pm_mandate += guidance_digest
+            print("> [CIO] 📋 Guidance track record injected into PM mandate.")
+    except Exception as e:
+        print(f"> [CIO] ⚠️ Guidance digest failed for pm_synthesis: {e}")
+
     if timeline_rejection_note:
         pm_mandate += timeline_rejection_note
 
@@ -744,6 +848,16 @@ async def _run_agents_parallel(
                 print(f"> [CIO] 🧠 Memory injected into {name} mandate ({len(memory_block)} chars)")
         except Exception as e:
             print(f"> [CIO] ⚠️ Memory injection failed for {name}: {e}")
+
+        # ── Guidance track record: management promise-vs-delivery history ──
+        if name == "narrative_decoder":
+            try:
+                digest = _build_guidance_digest(state.ticker, state.fiscal_period)
+                if digest:
+                    custom_mandate = (custom_mandate or "") + digest
+                    print(f"> [CIO] 📋 Guidance track record injected into {name}.")
+            except Exception as e:
+                print(f"> [CIO] ⚠️ Guidance digest failed for {name}: {e}")
 
         try:
             if name == "forensic_quant":

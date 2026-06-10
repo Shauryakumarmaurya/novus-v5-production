@@ -364,6 +364,7 @@ class AgentV3(ABC):
             "has_rpt_disclosures":     "⚠️ Significant RPT disclosures detected.",
             "has_contingent_liabilities": "⚠️ Contingent liabilities found.",
             "auditor_changed":         "⚠️ Auditor change detected.",
+            "has_audit_red_flags":     "⚠️ Audit red-flag language found (emphasis of matter / qualification / going concern).",
             "promoter_shares_pledged": "⚠️ Promoter shares pledged.",
             "high_other_income":       "⚠️ Other income appears elevated.",
         }

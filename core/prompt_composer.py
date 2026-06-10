@@ -250,6 +250,22 @@ _reg(PromptModule(
 ))
 
 _reg(PromptModule(
+    name="signal_audit_red_flags",
+    priority=10,
+    signal_key="has_audit_red_flags",
+    content=(
+        "⚠️ AUDIT RED FLAGS: The deterministic sweep found auditor-level warning "
+        "language (emphasis of matter / qualified opinion / going concern / "
+        "auditor resignation) in the document corpus.\n"
+        "  1. Locate the exact paragraph and quote it verbatim with citation\n"
+        "  2. Classify severity: routine emphasis vs qualification vs going-concern doubt\n"
+        "  3. Check whether the matter recurs across periods or is new this year\n"
+        "  4. This finding is NON-NEGOTIABLE: it must appear in your output even\n"
+        "     if other evidence looks clean."
+    ),
+))
+
+_reg(PromptModule(
     name="signal_contingent_liabilities",
     priority=8,
     signal_key="has_contingent_liabilities",

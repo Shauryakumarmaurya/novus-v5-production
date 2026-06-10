@@ -125,13 +125,47 @@ def _persist_report_cache(ticker: str, st: OrchestratorState, payload: dict) -> 
     Both task paths store under mode='rag': the cache is keyed by the analysis
     output (what /analyze_rag serves), not the input channel — a PDF-upload run
     simply refreshes the canonical report for that ticker + fiscal period.
+
+    Also persists run artifacts that accumulate across quarters:
+      - guidance_track: management promise-vs-delivery from narrative_decoder
+      - thesis_ledger: the verdict + price at publication, scored later
     """
+    from core.memory import get_memory
+    fiscal_period = getattr(st, "fiscal_period", "") or "UNKNOWN"
+
     try:
-        from core.memory import get_memory
-        fiscal_period = getattr(st, "fiscal_period", "") or "UNKNOWN"
         get_memory().store_report(ticker, fiscal_period, "rag", payload)
     except Exception as e:
         logger.warning(f"[Cache] Failed to persist report for {ticker}: {e}")
+
+    # ── Guidance track record (sentiment-discounting memory) ──
+    try:
+        nd_trail = (st.agent_trails or {}).get("narrative_decoder")
+        nd_findings = getattr(nd_trail, "findings", None) or {}
+        tracker = nd_findings.get("guidance_tracker")
+        if isinstance(tracker, list) and tracker:
+            get_memory().store_guidance_records(ticker, fiscal_period, tracker)
+            logger.info(f"[Memory] Stored {len(tracker)} guidance records for {ticker} {fiscal_period}.")
+    except Exception as e:
+        logger.warning(f"[Memory] Failed to persist guidance records for {ticker}: {e}")
+
+    # ── Thesis ledger (verdict outcome tracking) ──
+    try:
+        pm_trail = (st.agent_trails or {}).get("pm_synthesis")
+        pm_findings = getattr(pm_trail, "findings", None) or {}
+        recommendation = pm_findings.get("recommendation")
+        story = pm_findings.get("stock_story") or {}
+        continuation = story.get("continuation_verdict") if isinstance(story, dict) else None
+        price = (getattr(st, "price_story", None) or {}).get("current_price")
+        if recommendation:
+            get_memory().record_thesis(
+                ticker, fiscal_period, "rag",
+                recommendation=str(recommendation),
+                continuation_verdict=str(continuation or ""),
+                price_at_publication=price,
+            )
+    except Exception as e:
+        logger.warning(f"[Memory] Failed to record thesis for {ticker}: {e}")
 
 
 def _compute_evasion_score(st: OrchestratorState) -> dict | None:
@@ -268,6 +302,22 @@ def generate_financial_report_from_rag(ticker):
         structured_data = fetcher.fetch(ticker)
         financial_tables = structured_data.get("tables", {})
 
+        # Fail loudly rather than produce (and cache) a data-starved report:
+        # without tables the fiscal period falls back to a calendar guess and
+        # every quant agent runs blind.
+        if not financial_tables:
+            raise ValueError(
+                f"Structured financial data unavailable for {ticker} — live Screener "
+                f"fetch failed and no last-known-good snapshot exists "
+                f"({structured_data.get('error', 'unknown error')}). "
+                "Refusing to run a data-starved analysis; retry once connectivity is restored."
+            )
+        if structured_data.get("from_snapshot"):
+            logger.warning(
+                f"[RAG-Only] {ticker}: using Screener snapshot from "
+                f"{structured_data.get('snapshot_at')} — live fetch failed."
+            )
+
         from cio_orchestrator import _infer_fiscal_period
         from core.tools import fiscal_year_window
         inferred_period = _infer_fiscal_period(financial_tables or {})
@@ -324,6 +374,15 @@ def generate_financial_report_from_rag(ticker):
         if not combined_text:
             raise ValueError("Could not build transcript from RAG store — documents may be empty.")
 
+        # ── Deterministic risk sweeps (regex, pre-LLM) ──
+        # High-risk disclosures (RPT, contingent liabilities, audit red flags,
+        # pledges) are swept with hard patterns so they can't be missed by
+        # embedding distance. Signals activate conditional prompt modules.
+        from agents.extraction import build_extraction_signals
+        extraction_signals = build_extraction_signals(combined_text)
+        if extraction_signals.get("_counts"):
+            logger.info(f"[RAG-Only] Risk sweep: {extraction_signals['_counts']}")
+
         # ═══════════════════════════════════════════════════════════════
         # V3 ORCHESTRATION
         # ═══════════════════════════════════════════════════════════════
@@ -346,6 +405,7 @@ def generate_financial_report_from_rag(ticker):
             document_text=combined_text,
             financial_tables=financial_tables,
             sector=detected_sector,
+            extraction_signals=extraction_signals,
             query=user_query,
             progress_callback=progress_cb
         ))
@@ -452,6 +512,23 @@ def generate_financial_report(ticker, files_data):
         structured_data = fetcher.fetch(ticker)
         financial_tables = structured_data.get("tables", {})
 
+        # PDF path tolerates missing tables (document text is the primary
+        # source and the ticker may not be Screener-listed), but the
+        # degradation is surfaced rather than silent.
+        if not financial_tables:
+            logger.warning(
+                f"[Pipeline] {ticker}: no structured financial tables available "
+                f"({structured_data.get('error', 'unknown')}). Quant agents will run degraded."
+            )
+            _update_progress('fetch_financials', {
+                "warning": "Structured financial data unavailable — quant metrics will be limited."
+            })
+        elif structured_data.get("from_snapshot"):
+            logger.warning(
+                f"[Pipeline] {ticker}: using Screener snapshot from "
+                f"{structured_data.get('snapshot_at')} — live fetch failed."
+            )
+
         # ═══════════════════════════════════════════════════════════════
         # V3 ORCHESTRATION
         # ═══════════════════════════════════════════════════════════════
@@ -465,13 +542,20 @@ def generate_financial_report(ticker, files_data):
             _update_progress(stage, extra)
 
         user_query = f"Analyze {ticker} focusing on forensics, competitive moat, narrative shifts, and capital allocation."
-        
+
+        # ── Deterministic risk sweeps over the extracted PDF text ──
+        from agents.extraction import build_extraction_signals
+        extraction_signals = build_extraction_signals(combined_text)
+        if extraction_signals.get("_counts"):
+            logger.info(f"[Pipeline] Risk sweep: {extraction_signals['_counts']}")
+
         logger.info(f"[Pipeline] Starting V3 Orchestrator for {ticker}")
         state = _runner.run(analyze(
             ticker=ticker,
             document_text=combined_text,
             financial_tables=financial_tables,
             sector="General / Diversified",
+            extraction_signals=extraction_signals,
             query=user_query,
             progress_callback=progress_cb
         ))

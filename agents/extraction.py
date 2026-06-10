@@ -167,6 +167,85 @@ def extract_related_party_info(text: str) -> list[str]:
     return findings
 
 
+def extract_audit_red_flags(text: str) -> list[str]:
+    """
+    Sweep for auditor-level red flags buried in dense legal text where
+    semantic search reliably under-retrieves: emphasis of matter paragraphs,
+    qualified/adverse opinions, auditor resignations, going-concern doubts.
+    """
+    findings = []
+    patterns = [
+        r"(?i)emphasis\s*of\s*matter",
+        r"(?i)qualified\s*opinion",
+        r"(?i)adverse\s*opinion",
+        r"(?i)disclaimer\s*of\s*opinion",
+        r"(?i)material\s*uncertainty.{0,60}going\s*concern",
+        r"(?i)going\s*concern\s*(?:assumption|doubt|uncertainty)",
+        r"(?i)(?:resignation|removal)\s*of\s*(?:the\s*)?(?:statutory\s*)?auditor",
+        r"(?i)auditor[s]?\s*(?:has|have|had)?\s*resigned",
+        r"(?i)change\s*(?:of|in)\s*(?:the\s*)?statutory\s*auditor",
+    ]
+    for pattern in patterns:
+        for match in re.finditer(pattern, text):
+            start = max(0, match.start() - 200)
+            end = min(len(text), match.end() + 300)
+            findings.append(text[start:end].strip())
+    return findings
+
+
+def extract_pledge_mentions(text: str) -> list[str]:
+    """Sweep for promoter share pledging / encumbrance language."""
+    findings = []
+    patterns = [
+        r"(?i)promoter[s']*\s*(?:share[s]?\s*)?(?:pledge|pledged|encumber)",
+        r"(?i)(?:pledge|encumbrance)\s*(?:of|on)\s*(?:promoter|shares)",
+        r"(?i)shares?\s*pledged\s*(?:by|with)",
+    ]
+    for pattern in patterns:
+        for match in re.finditer(pattern, text):
+            start = max(0, match.start() - 150)
+            end = min(len(text), match.end() + 250)
+            findings.append(text[start:end].strip())
+    return findings
+
+
+def build_extraction_signals(text: str) -> dict:
+    """
+    Run all deterministic risk sweeps over a document corpus and return the
+    boolean signal dict consumed by prompt_composer's conditional signal
+    modules (signal_high_rpt, signal_auditor_change, etc.).
+
+    This is the heuristic pre-pass that runs BEFORE any LLM sees the text —
+    regex doesn't hallucinate and doesn't miss because of embedding distance.
+    """
+    if not text:
+        return {}
+
+    contingent = extract_contingent_liabilities(text)
+    rpt = extract_related_party_info(text)
+    audit_flags = extract_audit_red_flags(text)
+    pledges = extract_pledge_mentions(text)
+
+    auditor_changed = any(
+        re.search(r"(?i)resign|removal|change", f) for f in audit_flags
+    )
+
+    return {
+        "has_contingent_liabilities": len(contingent) > 0,
+        "has_rpt_disclosures": len(rpt) > 0,
+        "auditor_changed": auditor_changed,
+        "has_audit_red_flags": len(audit_flags) > 0,
+        "promoter_shares_pledged": len(pledges) > 0,
+        # Counts for logging/UI — prompt composer only reads the booleans.
+        "_counts": {
+            "contingent_liabilities": len(contingent),
+            "rpt_disclosures": len(rpt),
+            "audit_red_flags": len(audit_flags),
+            "pledge_mentions": len(pledges),
+        },
+    }
+
+
 # ── Vision-based Table Extraction (Gemini Flash) ─────────────────────────────
 
 EXTRACTION_PROMPT = """You are a financial document parser. Extract ALL financial tables 

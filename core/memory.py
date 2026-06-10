@@ -42,7 +42,7 @@ logger = get_logger(__name__)
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_DB_PATH = os.path.join(_REPO_ROOT, "data", "novus_master.db")
 
-SCHEMA_VERSION = 3                # bump when schema changes; migrations are ADDITIVE (no drops)
+SCHEMA_VERSION = 4                # bump when schema changes; migrations are ADDITIVE (no drops)
 CRITIC_CONFIDENCE_FLOOR = 0.8     # only inject high-conviction facts into prompts
 ADJUDICATOR_TIMEOUT_S = 10.0      # per-pair hard cap for Tier 2 V3 call
 ADJUDICATOR_WORKERS = 5           # bounded LLM fan-out width
@@ -392,6 +392,50 @@ class MemoryLayer:
                 );
                 CREATE INDEX IF NOT EXISTS idx_reports_lookup
                     ON reports(ticker, fiscal_period, mode);
+
+                -- Last-known-good structured data per ticker. Served when the
+                -- live Screener fetch fails (IP block, outage) so the pipeline
+                -- never runs data-starved.
+                CREATE TABLE IF NOT EXISTS screener_snapshots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ticker TEXT NOT NULL UNIQUE,
+                    payload_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
+
+                -- Management guidance vs delivery, accumulated across quarters.
+                -- Feeds the sentiment-discounting digest in agent mandates.
+                CREATE TABLE IF NOT EXISTS guidance_track (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ticker TEXT NOT NULL,
+                    fiscal_period TEXT NOT NULL,
+                    topic TEXT NOT NULL,
+                    prior_guidance TEXT,
+                    actual_outcome TEXT,
+                    credibility TEXT,
+                    created_at TEXT NOT NULL,
+                    UNIQUE(ticker, fiscal_period, topic)
+                );
+                CREATE INDEX IF NOT EXISTS idx_guidance_ticker
+                    ON guidance_track(ticker, fiscal_period);
+
+                -- Verdict outcome tracking: price at publication, scored later
+                -- against actual price action (T+90 / T+180).
+                CREATE TABLE IF NOT EXISTS thesis_ledger (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ticker TEXT NOT NULL,
+                    fiscal_period TEXT NOT NULL,
+                    mode TEXT NOT NULL,
+                    recommendation TEXT,
+                    continuation_verdict TEXT,
+                    price_at_publication REAL,
+                    published_at TEXT NOT NULL,
+                    eval_t90_json TEXT,
+                    eval_t180_json TEXT,
+                    UNIQUE(ticker, fiscal_period, mode)
+                );
+                CREATE INDEX IF NOT EXISTS idx_thesis_ticker
+                    ON thesis_ledger(ticker);
                 """
             )
             conn.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
@@ -477,6 +521,195 @@ class MemoryLayer:
             logger.info(f"[MemoryLayer] Report cached for {ticker} {fiscal_period} ({mode}).")
         except Exception as e:
             logger.warning(f"[MemoryLayer] store_report failed: {e}")
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # SCREENER SNAPSHOTS — last-known-good structured data per ticker
+    # ═══════════════════════════════════════════════════════════════════════
+
+    def get_screener_snapshot(self, ticker: str) -> Optional[dict]:
+        """Return the last-known-good structured payload for a ticker, or None.
+        The returned dict carries a 'snapshot_at' ISO timestamp for staleness."""
+        try:
+            with self._connect() as conn:
+                row = conn.execute(
+                    "SELECT payload_json, created_at FROM screener_snapshots WHERE ticker=?",
+                    (ticker.upper().strip(),),
+                ).fetchone()
+            if row:
+                payload = json.loads(row["payload_json"])
+                payload["snapshot_at"] = row["created_at"]
+                return payload
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] get_screener_snapshot failed: {e}")
+        return None
+
+    def store_screener_snapshot(self, ticker: str, payload: dict) -> None:
+        """Upsert the last-known-good structured payload for a ticker."""
+        if not payload or not payload.get("tables"):
+            return
+        try:
+            with self._connect() as conn:
+                conn.execute(
+                    """INSERT INTO screener_snapshots (ticker, payload_json, created_at)
+                       VALUES (?, ?, ?)
+                       ON CONFLICT(ticker)
+                       DO UPDATE SET payload_json = excluded.payload_json,
+                                     created_at = excluded.created_at""",
+                    (
+                        ticker.upper().strip(),
+                        json.dumps(payload, default=str, ensure_ascii=False),
+                        datetime.utcnow().isoformat(),
+                    ),
+                )
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] store_screener_snapshot failed: {e}")
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # GUIDANCE TRACK RECORD — management promise vs delivery across quarters
+    # ═══════════════════════════════════════════════════════════════════════
+
+    def store_guidance_records(self, ticker: str, fiscal_period: str, records: list) -> None:
+        """Persist guidance_tracker entries from a completed narrative_decoder run.
+        Upserts on (ticker, fiscal_period, topic) so re-runs don't duplicate."""
+        if not records or not fiscal_period:
+            return
+        try:
+            now = datetime.utcnow().isoformat()
+            with self._connect() as conn:
+                for rec in records:
+                    if not isinstance(rec, dict):
+                        continue
+                    topic = str(rec.get("topic") or "").strip()
+                    if not topic:
+                        continue
+                    conn.execute(
+                        """INSERT INTO guidance_track
+                           (ticker, fiscal_period, topic, prior_guidance, actual_outcome, credibility, created_at)
+                           VALUES (?, ?, ?, ?, ?, ?, ?)
+                           ON CONFLICT(ticker, fiscal_period, topic)
+                           DO UPDATE SET prior_guidance = excluded.prior_guidance,
+                                         actual_outcome = excluded.actual_outcome,
+                                         credibility = excluded.credibility""",
+                        (
+                            ticker.upper().strip(), fiscal_period, topic[:200],
+                            str(rec.get("prior_guidance") or "")[:500],
+                            str(rec.get("actual_outcome") or "")[:500],
+                            str(rec.get("credibility") or "")[:200],
+                            now,
+                        ),
+                    )
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] store_guidance_records failed: {e}")
+
+    def get_guidance_track_record(self, ticker: str, max_rows: int = 12) -> list:
+        """Return historical guidance records for a ticker, most recent first."""
+        try:
+            with self._connect() as conn:
+                rows = conn.execute(
+                    """SELECT fiscal_period, topic, prior_guidance, actual_outcome, credibility
+                       FROM guidance_track WHERE ticker=?
+                       ORDER BY created_at DESC, id DESC LIMIT ?""",
+                    (ticker.upper().strip(), max_rows),
+                ).fetchall()
+            return [dict(r) for r in rows]
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] get_guidance_track_record failed: {e}")
+            return []
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # THESIS LEDGER — verdicts scored against subsequent price action
+    # ═══════════════════════════════════════════════════════════════════════
+
+    def record_thesis(self, ticker: str, fiscal_period: str, mode: str,
+                      recommendation: str, continuation_verdict: str,
+                      price_at_publication: Optional[float]) -> None:
+        """Log a published verdict with the price at publication time."""
+        if not fiscal_period:
+            return
+        try:
+            with self._connect() as conn:
+                conn.execute(
+                    """INSERT INTO thesis_ledger
+                       (ticker, fiscal_period, mode, recommendation, continuation_verdict,
+                        price_at_publication, published_at)
+                       VALUES (?, ?, ?, ?, ?, ?, ?)
+                       ON CONFLICT(ticker, fiscal_period, mode)
+                       DO UPDATE SET recommendation = excluded.recommendation,
+                                     continuation_verdict = excluded.continuation_verdict,
+                                     price_at_publication = excluded.price_at_publication,
+                                     published_at = excluded.published_at,
+                                     eval_t90_json = NULL,
+                                     eval_t180_json = NULL""",
+                    (
+                        ticker.upper().strip(), fiscal_period, mode,
+                        str(recommendation or "")[:50],
+                        str(continuation_verdict or "")[:50],
+                        price_at_publication,
+                        datetime.utcnow().isoformat(),
+                    ),
+                )
+            logger.info(f"[MemoryLayer] Thesis recorded for {ticker} {fiscal_period}: {recommendation}")
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] record_thesis failed: {e}")
+
+    def get_pending_thesis_evaluations(self, horizon_days: int) -> list:
+        """Return ledger rows old enough for the given horizon and not yet scored."""
+        col = "eval_t90_json" if horizon_days <= 90 else "eval_t180_json"
+        try:
+            cutoff = (datetime.utcnow() - timedelta(days=horizon_days)).isoformat()
+            with self._connect() as conn:
+                rows = conn.execute(
+                    f"""SELECT id, ticker, fiscal_period, mode, recommendation,
+                               continuation_verdict, price_at_publication, published_at
+                        FROM thesis_ledger
+                        WHERE {col} IS NULL AND published_at <= ?
+                          AND price_at_publication IS NOT NULL""",
+                    (cutoff,),
+                ).fetchall()
+            return [dict(r) for r in rows]
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] get_pending_thesis_evaluations failed: {e}")
+            return []
+
+    def store_thesis_evaluation(self, ledger_id: int, horizon_days: int, evaluation: dict) -> None:
+        """Attach a scored outcome (price move, hit/miss) to a ledger row."""
+        col = "eval_t90_json" if horizon_days <= 90 else "eval_t180_json"
+        try:
+            with self._connect() as conn:
+                conn.execute(
+                    f"UPDATE thesis_ledger SET {col}=? WHERE id=?",
+                    (json.dumps(evaluation, default=str, ensure_ascii=False), ledger_id),
+                )
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] store_thesis_evaluation failed: {e}")
+
+    def get_thesis_track_record(self, ticker: str, max_rows: int = 6) -> list:
+        """Return scored past verdicts for a ticker (for critic context)."""
+        try:
+            with self._connect() as conn:
+                rows = conn.execute(
+                    """SELECT fiscal_period, recommendation, continuation_verdict,
+                              price_at_publication, published_at, eval_t90_json, eval_t180_json
+                       FROM thesis_ledger WHERE ticker=?
+                       ORDER BY published_at DESC LIMIT ?""",
+                    (ticker.upper().strip(), max_rows),
+                ).fetchall()
+            out = []
+            for r in rows:
+                d = dict(r)
+                for k in ("eval_t90_json", "eval_t180_json"):
+                    if d.get(k):
+                        try:
+                            d[k.replace("_json", "")] = json.loads(d.pop(k))
+                        except Exception:
+                            d.pop(k, None)
+                    else:
+                        d.pop(k, None)
+                out.append(d)
+            return out
+        except Exception as e:
+            logger.warning(f"[MemoryLayer] get_thesis_track_record failed: {e}")
+            return []
 
     # ═══════════════════════════════════════════════════════════════════════
     # WRITE PATH

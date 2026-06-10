@@ -13,7 +13,7 @@ import time
 import json
 from core.agent_base_v3 import AuditTrail, AgentV3
 from core.llm_client import LLMClient
-from core.tools import build_shared_tools
+from core.tools import build_shared_tools, Tool
 
 
 class CriticAgentV3(AgentV3):
@@ -109,6 +109,48 @@ class CriticAgentV3(AgentV3):
     # Allow more iterations — accuracy > speed
     MAX_ITERATIONS = 15
     VERIFY = False  # The critic IS the verifier; no need to self-verify
+
+    def build_agent_tools(self, doc: str, tables: dict, ticker: str = "") -> list:
+        """Critic-specific tools: peer comparison for sector-grounded review."""
+        peers = tables.get("peers") if isinstance(tables, dict) else None
+
+        def _compare_to_peers(metric: str = "", **_ignored) -> dict:
+            if not peers:
+                return {
+                    "peer_comparison": "DATA NOT AVAILABLE",
+                    "note": "Peer table missing from structured feed — do not invent sector benchmarks.",
+                }
+            return {
+                "peer_comparison": peers,
+                "note": (
+                    "Row-per-company metrics (CMP, P/E, Market Cap, Div Yield, quarterly "
+                    "profit/sales growth, ROCE). The 'Median:' row is the sector median. "
+                    "USE: if a flagged anomaly is sector-wide (company roughly in line with "
+                    "the median), REFRAME it with that context — e.g. 'elevated but "
+                    "sector-aligned'. NEVER silently veto a red flag: sector-wide "
+                    "deterioration is still deterioration and must stay visible."
+                ),
+            }
+
+        return [
+            Tool(
+                name="compare_to_peers",
+                description=(
+                    "Return the live peer-comparison table for this company's sector "
+                    "(P/E, market cap, quarterly growth, ROCE per peer + sector median). "
+                    "Use this to judge whether a flagged anomaly is company-specific or "
+                    "sector-wide before correcting a specialist's claim."
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "metric": {"type": "string", "description": "Optional metric of interest, e.g. 'ROCE'"},
+                    },
+                    "required": [],
+                },
+                handler=_compare_to_peers,
+            ),
+        ]
 
     def execute(
         self,
@@ -221,6 +263,10 @@ use your tools to verify it against the structured financial tables or the docum
 4. If the number CANNOT be found in any source, mark as FLAGGED_AS_DATA_GAP.
 5. Do NOT invent corrections. Only correct what you can prove is wrong.
 6. Focus on the MOST MATERIAL claims first: ROIC, revenue growth, distribution reach, margins, debt levels.
+7. SECTOR CONTEXT: before correcting a specialist's red flag on valuation, growth or
+   returns, call `compare_to_peers`. If the anomaly is sector-wide (company roughly in
+   line with the peer median), REFRAME the finding with that context — do NOT delete it.
+   Sector-wide deterioration is still deterioration; a reframe adds context, a veto hides risk.
 
 ## REQUIRED FIELDS PER CORRECTION / UNVERIFIABLE CLAIM
 Every item in `corrections[]` and `unverifiable_claims[]` MUST include:

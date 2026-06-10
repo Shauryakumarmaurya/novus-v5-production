@@ -87,11 +87,74 @@ def ingest_new_documents(ticker: str) -> int:
     return result["total_chunks"]
 
 
+def _fetch_close(ticker: str):
+    """Latest adjusted close via yfinance (NSE first, BSE fallback)."""
+    import yfinance as yf
+    for suffix in (".NS", ".BO"):
+        try:
+            hist = yf.Ticker(f"{ticker}{suffix}").history(period="5d", auto_adjust=True)
+            if hist is not None and len(hist) and "Close" in hist.columns:
+                return float(hist["Close"].iloc[-1])
+        except Exception:
+            continue
+    return None
+
+
+def evaluate_thesis_ledger() -> int:
+    """Score past verdicts against actual price action at T+90 and T+180.
+
+    A verdict 'hits' when the direction implied by the recommendation matches
+    the realized move (ADD -> price up, SELL -> price down, HOLD -> within a
+    +/-10% band). Outcomes are stored in the memory layer where the critic can
+    read them as track-record context for future runs.
+    """
+    from core.memory import get_memory
+
+    mem = get_memory()
+    scored = 0
+    for horizon in (90, 180):
+        for row in mem.get_pending_thesis_evaluations(horizon):
+            ticker = row["ticker"]
+            current = _fetch_close(ticker)
+            if current is None:
+                log.warning(f"[{ticker}] thesis eval skipped — no price available")
+                continue
+            base = row["price_at_publication"]
+            move_pct = round((current - base) / base * 100, 2) if base else None
+            rec = (row.get("recommendation") or "").upper()
+            if move_pct is None:
+                hit = None
+            elif "ADD" in rec or "BUY" in rec:
+                hit = move_pct > 0
+            elif "SELL" in rec or "SHORT" in rec:
+                hit = move_pct < 0
+            else:  # HOLD / NEUTRAL
+                hit = abs(move_pct) <= 10.0
+            evaluation = {
+                "horizon_days": horizon,
+                "price_then": base,
+                "price_now": current,
+                "move_pct": move_pct,
+                "recommendation": rec,
+                "hit": hit,
+            }
+            mem.store_thesis_evaluation(row["id"], horizon, evaluation)
+            scored += 1
+            log.info(
+                f"[{ticker}] thesis T+{horizon}: {rec} | move {move_pct}% | "
+                f"{'HIT' if hit else 'MISS' if hit is not None else 'N/A'}"
+            )
+    if not scored:
+        log.info("Thesis ledger: nothing due for evaluation.")
+    return scored
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Scheduled Novus data refresh")
     parser.add_argument("--ticker", help="Refresh a single ticker (default: all ingested)")
     parser.add_argument("--skip-financials", action="store_true")
     parser.add_argument("--skip-documents", action="store_true")
+    parser.add_argument("--skip-thesis-eval", action="store_true")
     args = parser.parse_args()
 
     from rag_engine import list_ingested_tickers
@@ -117,6 +180,13 @@ def main() -> int:
             except Exception as e:
                 log.error(f"[{ticker}] document ingest FAILED: {e}")
                 failures += 1
+
+    if not args.skip_thesis_eval:
+        try:
+            evaluate_thesis_ledger()
+        except Exception as e:
+            log.error(f"Thesis ledger evaluation FAILED: {e}")
+            failures += 1
 
     log.info(f"Refresh complete — {failures} failure(s).")
     return 1 if failures else 0

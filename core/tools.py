@@ -78,14 +78,29 @@ def fiscal_year_window(fiscal_period: str, lookback_years: int = 1) -> Optional[
     'Q3_FY26' / 'FY26' -> ['FY26', 'FY25'] (current + lookback). This is the
     default retrieval window enforcing stale-alpha decay: old quarters are
     background, not fresh edge.
+
+    Calendar-year filers ('Q4_CY25' / 'CY25') are mapped onto the OVERLAPPING
+    Indian fiscal years, because document chunks in the RAG store are always
+    tagged with FY labels: CY25 spans FY25 (Jan-Mar 2025) and FY26 (Apr-Dec).
     """
     if not fiscal_period:
         return None
+
     m = re.search(r"FY(\d{2})", fiscal_period)
-    if not m:
-        return None
-    yy = int(m.group(1))
-    return [f"FY{yy - i:02d}" for i in range(lookback_years + 1)]
+    if m:
+        yy = int(m.group(1))
+        return [f"FY{yy - i:02d}" for i in range(lookback_years + 1)]
+
+    m = re.search(r"CY(\d{2})", fiscal_period)
+    if m:
+        yy = int(m.group(1))
+        fy_years: set[int] = set()
+        for i in range(lookback_years + 1):
+            cy = yy - i
+            fy_years.update((cy, cy + 1))  # CY spans two Indian FYs
+        return [f"FY{y:02d}" for y in sorted(fy_years, reverse=True)]
+
+    return None
 
 
 def build_shared_tools(

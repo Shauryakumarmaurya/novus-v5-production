@@ -1,3 +1,4 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -51,6 +52,34 @@ def _extract_sector(soup: BeautifulSoup) -> str:
     return "General"
 
 
+def _fetch_peer_comparison(session: requests.Session, company_id: str, headers: dict, referer: str) -> list:
+    """Fetch the peer-comparison table (CMP, P/E, Mkt Cap, ROCE, quarterly
+    growth + sector median row) from Screener's peers API. Fail-soft.
+
+    The endpoint is an XHR fragment: it 429s unless the call rides the SAME
+    keep-alive session as the company-page request, with browser AJAX headers.
+    """
+    try:
+        import time as _time
+        _time.sleep(1.5)  # politeness gap between page load and XHR, like a browser
+        url = f"https://www.screener.in/api/company/{company_id}/peers/"
+        xhr_headers = {
+            **headers,
+            "Referer": referer,
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html, */*; q=0.01",
+        }
+        res = session.get(url, headers=xhr_headers, timeout=10)
+        res.raise_for_status()
+        df_list = pd.read_html(StringIO(res.text))
+        if not df_list:
+            return []
+        return clean_dataframe(df_list[0])
+    except Exception as e:
+        logger.warning(f"Could not fetch peer comparison: {e}")
+        return []
+
+
 def fetch_screener_tables(ticker: str) -> Dict[str, Any]:
     """
     Fetches the main financial tables from screener.in for a given ticker.
@@ -65,14 +94,17 @@ def fetch_screener_tables(ticker: str) -> Dict[str, Any]:
         "Accept-Language": "en-US,en;q=0.5"
     }
     
+    # A Session keeps cookies + the keep-alive connection: required for the
+    # peers XHR endpoint, and closer to real browser behavior overall.
+    session = requests.Session()
     try:
-        response = requests.get(url, headers=headers, timeout=15)
-        
+        response = session.get(url, headers=headers, timeout=15)
+
         # Fallback to standalone if consolidated doesn't exist (returns 404 sometimes)
         if response.status_code == 404:
             url = f"https://www.screener.in/company/{ticker}/"
-            response = requests.get(url, headers=headers, timeout=15)
-            
+            response = session.get(url, headers=headers, timeout=15)
+
         response.raise_for_status()
     except requests.RequestException as e:
         logger.error(f"Failed to fetch screener data for {ticker}: {e}")
@@ -156,7 +188,16 @@ def fetch_screener_tables(ticker: str) -> Dict[str, Any]:
                     results[title] = records
         except Exception as e:
             logger.warning(f"Could not parse table {title} for {ticker}: {e}")
-            
+
+    # ── Peer comparison (valuation + profitability vs sector, incl. median) ──
+    # NOTE: the peers endpoint keys on data-warehouse-id, NOT data-company-id
+    # (the latter returns an unrelated default peer set).
+    warehouse_match = re.search(r'data-warehouse-id="(\d+)"', response.text)
+    if warehouse_match:
+        peer_rows = _fetch_peer_comparison(session, warehouse_match.group(1), headers, referer=url)
+        if peer_rows:
+            results["Peer Comparison"] = peer_rows
+
     return {
         "ticker": ticker,
         "source": url,

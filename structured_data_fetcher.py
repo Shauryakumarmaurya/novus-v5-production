@@ -41,6 +41,7 @@ _KEY_MAP = {
     "Quarterly Results": "quarterly_results",
     "Ratios": "ratios",
     "Shareholding Pattern": "shareholding",
+    "Peer Comparison": "peers",
 }
 
 # Strict fiscal year column filter — rejects TTM, junk, merged cells
@@ -120,17 +121,46 @@ def _transpose_table(rows: list) -> dict:
     return out
 
 
+def _clean_peer_rows(rows: list) -> list:
+    """Normalize the peer-comparison table: company-per-row with metric
+    columns (CMP, P/E, Mkt Cap, ROCE, ...). Numerics coerced, labels kept.
+    The 'Median: N Co.' row Screener appends IS the sector median."""
+    if not isinstance(rows, list):
+        return []
+    cleaned = []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        out: Dict[str, Any] = {}
+        for k, v in row.items():
+            key = str(k).replace('\xa0', ' ').strip()
+            if key.lower() in ("s.no.", "s.no"):
+                continue
+            text = str(v).replace('\xa0', ' ').strip() if v is not None else ""
+            num = _to_float(text)
+            # Name/label columns stay strings; metric columns become floats.
+            out[key] = num if (num is not None and key.lower() != "name") else text
+        if out.get("Name"):
+            cleaned.append(out)
+    return cleaned
+
+
 def _normalize_tables(raw_tables: dict) -> dict:
     """Normalize Screener's raw output into our internal data contract.
 
     1. Renames keys: "Profit & Loss" → "profit_loss"
     2. Transposes rows: list-of-dicts → year-keyed dicts
     3. Filters columns: TTM and non-fiscal-year columns are rejected
+    4. Peer comparison is row-per-company, not year-keyed — passed through
+       with numeric coercion instead of transposition
     """
     normalized = {}
     for screener_key, rows in raw_tables.items():
         internal_key = _KEY_MAP.get(screener_key, screener_key.lower().replace(" ", "_").replace("&", "and"))
-        normalized[internal_key] = _transpose_table(rows)
+        if internal_key == "peers":
+            normalized[internal_key] = _clean_peer_rows(rows)
+        else:
+            normalized[internal_key] = _transpose_table(rows)
     return normalized
 
 
@@ -155,6 +185,11 @@ class StructuredDataFetcher:
         Fetch structured financial data for a given ticker.
         Returns normalized tables with canonical keys + auto-detected sector.
         Results are cached per-session to avoid redundant HTTP requests.
+
+        Resilience: every successful fetch is persisted as a last-known-good
+        snapshot. If the live fetch fails or returns nothing (Screener outage,
+        datacenter IP block), the snapshot is served instead — flagged with
+        'from_snapshot' / 'snapshot_at' so downstream can log staleness.
         """
         ticker = ticker.upper().strip()
 
@@ -164,35 +199,68 @@ class StructuredDataFetcher:
 
         logger.info(f"[StructuredDataFetcher] Fetching structured data for {ticker}")
 
+        error: str = ""
         try:
             raw = fetch_screener_tables(ticker)
             raw_tables = raw.get("tables", {})
 
-            if not raw_tables:
-                logger.warning(f"[StructuredDataFetcher] No tables found for {ticker}")
-                return {"ticker": ticker, "sector": raw.get("sector", "General"), "tables": {}, "error": "No structured data available"}
+            if raw_tables:
+                # ── Normalize at the boundary ──
+                tables = _normalize_tables(raw_tables)
 
-            # ── Normalize at the boundary ──
-            tables = _normalize_tables(raw_tables)
+                structured = {
+                    "ticker": ticker,
+                    "source": raw.get("source", "screener.in"),
+                    "sector": raw.get("sector", "General"),
+                    "tables": tables,
+                }
 
-            structured = {
-                "ticker": ticker,
-                "source": raw.get("source", "screener.in"),
-                "sector": raw.get("sector", "General"),
-                "tables": tables,
-            }
+                self._cache[ticker] = structured
+                self._persist_snapshot(ticker, structured)
+                logger.info(
+                    f"[StructuredDataFetcher] ✅ {ticker} ({structured['sector']}): "
+                    f"{len(tables)} tables, "
+                    f"sections={list(tables.keys())}"
+                )
+                return structured
 
-            self._cache[ticker] = structured
-            logger.info(
-                f"[StructuredDataFetcher] ✅ {ticker} ({structured['sector']}): "
-                f"{len(tables)} tables, "
-                f"sections={list(tables.keys())}"
-            )
-            return structured
+            error = "No structured data available"
+            logger.warning(f"[StructuredDataFetcher] No tables found for {ticker}")
 
         except Exception as e:
+            error = str(e)
             logger.error(f"[StructuredDataFetcher] Failed for {ticker}: {e}")
-            return {"ticker": ticker, "sector": "General", "tables": {}, "error": str(e)}
+
+        # ── Live fetch failed → last-known-good snapshot ──
+        snapshot = self._load_snapshot(ticker)
+        if snapshot and snapshot.get("tables"):
+            snapshot["from_snapshot"] = True
+            snapshot["error"] = f"Live fetch failed ({error}); serving snapshot from {snapshot.get('snapshot_at')}"
+            logger.warning(
+                f"[StructuredDataFetcher] ⚠️ {ticker}: live fetch failed — serving "
+                f"last-known-good snapshot from {snapshot.get('snapshot_at')}"
+            )
+            self._cache[ticker] = snapshot
+            return snapshot
+
+        return {"ticker": ticker, "sector": "General", "tables": {}, "error": error}
+
+    @staticmethod
+    def _persist_snapshot(ticker: str, structured: Dict[str, Any]) -> None:
+        try:
+            from core.memory import get_memory
+            get_memory().store_screener_snapshot(ticker, structured)
+        except Exception as e:
+            logger.warning(f"[StructuredDataFetcher] Snapshot persist failed for {ticker}: {e}")
+
+    @staticmethod
+    def _load_snapshot(ticker: str) -> Optional[Dict[str, Any]]:
+        try:
+            from core.memory import get_memory
+            return get_memory().get_screener_snapshot(ticker)
+        except Exception as e:
+            logger.warning(f"[StructuredDataFetcher] Snapshot load failed for {ticker}: {e}")
+            return None
 
 
     @staticmethod
