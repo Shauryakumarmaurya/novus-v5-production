@@ -61,7 +61,10 @@ _reg(PromptModule(
         "- Use compute_ratio for ALL numerical calculations. NEVER compute yourself.\n"
         "- Search for CONTRADICTORY evidence before concluding anything.\n"
         "- Severity: LOW (monitor) | MEDIUM (investigate) | HIGH (red flag) | CRITICAL (potential fraud)\n"
-        "- Every finding needs a citation: exact passage from the document."
+        "- Every finding needs a citation: exact passage from the document.\n"
+        "- Attach the citation under an 'evidence' or 'source_citation' key on EVERY\n"
+        "  finding object you emit. Findings without one are scored as ungrounded\n"
+        "  and reduce your confidence rating."
     ),
 ))
 

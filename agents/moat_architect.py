@@ -3,6 +3,9 @@ from core.tools import Tool
 from .agent_utils import _search_competitive, _safe_handler
 
 class MoatArchitectV3(AgentV3):
+    # Confidence completeness term: needs filings/transcripts to assess the moat.
+    REQUIRED_INPUTS = ["document_text"]
+
     @property
     def agent_name(self) -> str:
         return "moat_architect"

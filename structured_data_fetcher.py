@@ -40,6 +40,7 @@ _KEY_MAP = {
     "Cash Flows": "cash_flow",
     "Quarterly Results": "quarterly_results",
     "Ratios": "ratios",
+    "Shareholding Pattern": "shareholding",
 }
 
 # Strict fiscal year column filter — rejects TTM, junk, merged cells

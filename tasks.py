@@ -90,6 +90,7 @@ def build_ui_payloads(st: OrchestratorState) -> tuple[dict, dict, dict | None, d
     for name, trail in _ordered_trails(st.agent_trails):
         agent_trails_summary[name] = {
             "confidence": trail.confidence,
+            "confidence_reasons": trail.confidence_reasons or [],
             "findings": trail.findings if trail.findings else None,
             "execution_time_s": trail.execution_time_s,
         }

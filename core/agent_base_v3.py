@@ -492,18 +492,33 @@ class AgentV3(ABC):
 
         return trail
 
+    # Keys (or key prefixes) that mark a finding block as evidence-backed.
+    # Qualitative agents cite under quote/citation/basis variants, not just
+    # "evidence" — missing those undercounted grounding and tanked confidence.
+    _EVIDENCE_KEYS = {
+        "evidence", "source", "source_citation", "citation",
+        "quote", "basis", "reference", "ref",
+    }
+
     def _compute_confidence(self, react: ReActResult, verif: Optional[dict], doc_text: str, tables: dict) -> tuple[float, list[str]]:
         if react.final_output is None:
             return 0.0, ["Agent failed to produce output"]
         
         reasons = []
         
-        # 1. Data Completeness
+        # 1. Data Completeness — REQUIRED_INPUTS declared per agent class.
+        #    "document_text" is a special requirement meaning the agent needs a
+        #    meaningful document corpus (transcripts/filings), not a table key.
         reqs = getattr(self, "REQUIRED_INPUTS", [])
         present = 0
         total = len(reqs) if reqs else 1
         for req in reqs:
-            if tables and req in tables and tables[req]:
+            if req == "document_text":
+                if doc_text and len(doc_text.strip()) >= 500:
+                    present += 1
+                else:
+                    reasons.append("Missing required input: document corpus is empty or too thin")
+            elif tables and req in tables and tables[req]:
                 present += 1
             elif req.replace('_', ' ') in doc_text.lower():
                 present += 1
@@ -513,10 +528,17 @@ class AgentV3(ABC):
         completeness = present / total if reqs else 1.0
 
         # 2. Evidence Grounding
+        def _has_evidence_key(d: dict) -> bool:
+            for k in d.keys():
+                ks = str(k).lower()
+                if ks in self._EVIDENCE_KEYS or ks.startswith("evidence") or ks.endswith("_citation"):
+                    return True
+            return False
+
         def _count_evidence(obj) -> tuple[int, int]:
             if isinstance(obj, dict):
                 e, t = 0, 0
-                if "evidence" in obj or "source" in obj or "source_citation" in obj:
+                if _has_evidence_key(obj):
                     e += 1
                     t += 1
                 else:
@@ -539,13 +561,15 @@ class AgentV3(ABC):
         if ev_count < total_findings:
             reasons.append(f"Missing evidence for {total_findings - ev_count} finding(s)")
 
-        # 3. Consistency Penalty
+        # 3. Consistency Penalty — capped: ungrounded findings already lose
+        #    grounding points, so uncapped critic errors double-punished them.
         errors = 0
         if verif:
             errors = len(verif.get("critical_errors", []))
             for err in verif.get("critical_errors", []):
                 reasons.append(f"Critical error: {err}")
-        
-        confidence = (0.6 * completeness) + (0.4 * grounding) - (0.1 * errors)
-        
+        error_penalty = min(0.1 * errors, 0.2)
+
+        confidence = (0.6 * completeness) + (0.4 * grounding) - error_penalty
+
         return round(max(0.0, min(1.0, confidence)), 2), reasons

@@ -3,6 +3,9 @@ from core.tools import Tool
 from .agent_utils import _search_guidance, _detect_hedging, _safe_handler
 
 class NarrativeDecoderV3(AgentV3):
+    # Confidence completeness term: needs concall/filing text to decode.
+    REQUIRED_INPUTS = ["document_text"]
+
     @property
     def agent_name(self) -> str:
         return "narrative_decoder"
@@ -36,13 +39,15 @@ class NarrativeDecoderV3(AgentV3):
      "prior_tone": "Q3: 'Very optimistic about rural recovery'",
      "current_tone": "Q4: 'Rural remains challenging, we are cautiously navigating'",
      "shift_type": "Optimistic → Cautious",
-     "significance": "HIGH — suggests rural thesis has broken"}
+     "significance": "HIGH — suggests rural thesis has broken",
+     "source_citation": "[Q3 Call p.6 / Q4 Call p.3]"}
   ],
   "analyst_dodges": [
     {"question": "Analyst asked about margin guidance for H2",
      "management_response": "Management pivoted to discussing brand investments without giving margin guidance",
      "evasion_type": "Deflection — answered a different question",
-     "significance": "MEDIUM"}
+     "significance": "MEDIUM",
+     "source_citation": "[Q4 Call Q&A]"}
   ],
    "key_phrases_flagged": [
     {"phrase": "'One-time impact'", "context": "Pattern suggests recurring costs being positioned as temporary", "source_citation": "[Q3 Call]"}

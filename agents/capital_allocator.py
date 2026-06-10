@@ -3,6 +3,9 @@ from core.tools import Tool
 from .agent_utils import _search_capital, _safe_handler
 
 class CapitalAllocatorV3(AgentV3):
+    # Confidence completeness term: structured statements this agent needs.
+    REQUIRED_INPUTS = ["profit_loss", "balance_sheet", "cash_flow"]
+
     @property
     def agent_name(self) -> str:
         return "capital_allocator"

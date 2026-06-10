@@ -116,12 +116,24 @@ window.NovusCharts = (() => {
                         const ra = AGENT_ORDER.indexOf(a); const rb = AGENT_ORDER.indexOf(b);
                         return (ra === -1 ? AGENT_ORDER.length : ra) - (rb === -1 ? AGENT_ORDER.length : rb);
                     });
-                const labels = []; const values = [];
+                const labels = []; const values = []; const reasons = [];
                 for (const [name, trail] of entries) {
                     labels.push(nameMap[name] || name);
                     values.push(typeof trail.confidence === 'number' ? Math.round(trail.confidence * 100) : 50);
+                    reasons.push(Array.isArray(trail.confidence_reasons) ? trail.confidence_reasons : []);
                 }
                 if (labels.length < 3) return;
+
+                const wrapReason = (text) => {
+                    // Chart.js tooltips don't wrap — chunk long reasons manually.
+                    const words = String(text).split(' '); const lines = []; let cur = '\u2022 ';
+                    for (const w of words) {
+                        if ((cur + w).length > 46) { lines.push(cur); cur = '   ' + w + ' '; }
+                        else cur += w + ' ';
+                    }
+                    lines.push(cur.trimEnd());
+                    return lines;
+                };
 
                 _create('chart-agent-radar', {
                     type: 'radar',
@@ -148,7 +160,19 @@ window.NovusCharts = (() => {
                                 pointLabels: { color: T.label, font: { family: T.font, size: 11, weight: '500' } },
                             },
                         },
-                        plugins: { legend: { display: false } },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: (ctx) => ` Confidence: ${ctx.parsed.r}%`,
+                                    afterLabel: (ctx) => {
+                                        const rs = reasons[ctx.dataIndex] || [];
+                                        if (!rs.length) return '';
+                                        return rs.slice(0, 4).flatMap(wrapReason).join('\n');
+                                    },
+                                },
+                            },
+                        },
                     },
                 });
                 document.getElementById('exec-charts-row')?.classList.remove('hidden');

@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     reportLoader.classList.add('hidden');
                     insightDashboard.classList.remove('hidden');
                     reportContent.innerHTML = markdownConverter.makeHtml(meta.final_report);
-                    populateForensicTab(meta.agent_outputs, meta.evasion_data);
+                    populateForensicTab(meta.agent_outputs, meta.evasion_data, meta.agent_trails);
                     return;
                 }
 
@@ -705,8 +705,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 liveCounter.textContent = `${agentsDone} / ${total} Agents Completed`;
             }
 
-            function populateForensicTab(agentOutputs, evasionData) {
+            function populateForensicTab(agentOutputs, evasionData, agentTrails) {
                 if (!agentOutputs) return;
+
+                // Small confidence chip with hoverable "why" reasons per agent card.
+                const confidenceChip = (name) => {
+                    const trail = agentTrails && agentTrails[name];
+                    if (!trail || typeof trail.confidence !== 'number') return '';
+                    const pct = Math.round(trail.confidence * 100);
+                    const tone = pct >= 70 ? 'text-semantic-green border-semantic-green/30 bg-semantic-green/10'
+                        : pct >= 45 ? 'text-semantic-amber border-semantic-amber/30 bg-semantic-amber/10'
+                        : 'text-semantic-red border-semantic-red/30 bg-semantic-red/10';
+                    const reasons = (trail.confidence_reasons || []).slice(0, 5).join('\n');
+                    const title = reasons ? ` title="${reasons.replace(/"/g, '&quot;')}"` : '';
+                    return `<span class="text-[10px] font-mono px-2 py-0.5 border rounded ${tone}"${title}>CONF ${pct}%</span>`;
+                };
                 const container = document.getElementById('forensic-tab-content');
                 if (container) container.innerHTML = '';
                 
@@ -755,7 +768,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.className = 'ws-card overflow-hidden animate-fadeUp p-5';
                     const fullHtml = markdownConverter.makeHtml(output);
                     div.innerHTML = `
-                        <h3 class="card-title clickable-section-heading" data-modal-title="${info.name}" data-modal-agent="${name}">${info.name}</h3>
+                        <div class="flex items-center justify-between gap-2">
+                            <h3 class="card-title clickable-section-heading" data-modal-title="${info.name}" data-modal-agent="${name}">${info.name}</h3>
+                            ${confidenceChip(name)}
+                        </div>
                         <div class="text-sm text-txt-secondary leading-relaxed max-h-[300px] overflow-y-auto report-prose pr-2">
                             ${fullHtml}
                         </div>

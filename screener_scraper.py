@@ -88,7 +88,10 @@ def fetch_screener_tables(ticker: str) -> Dict[str, Any]:
         "Profit & Loss": "profit-loss",
         "Balance Sheet": "balance-sheet",
         "Cash Flows": "cash-flow",
-        "Ratios": "ratios"
+        "Ratios": "ratios",
+        # Promoter/FII/DII/public holdings per quarter — governance agents use
+        # this for promoter holding trend analysis.
+        "Shareholding Pattern": "shareholding",
     }
     
     results = {}

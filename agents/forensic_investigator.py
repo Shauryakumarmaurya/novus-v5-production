@@ -3,6 +3,9 @@ from core.tools import Tool
 from .agent_utils import _cross_ref, _safe_handler
 
 class ForensicInvestigatorV3(AgentV3):
+    # Confidence completeness term: needs a document corpus to investigate.
+    REQUIRED_INPUTS = ["document_text"]
+
     @property
     def agent_name(self) -> str:
         return "forensic_investigator"

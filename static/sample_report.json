@@ -80,22 +80,35 @@
           "equity_multiplier": 1.21,
           "primary_driver": "margin"
         }
-      }
+      },
+      "confidence_reasons": []
     },
     "forensic_investigator": {
-      "confidence": 0.84
+      "confidence": 0.84,
+      "confidence_reasons": [
+        "Missing evidence for 2 finding(s)"
+      ]
     },
     "narrative_decoder": {
-      "confidence": 0.79
+      "confidence": 0.79,
+      "confidence_reasons": [
+        "Missing evidence for 3 finding(s)"
+      ]
     },
     "moat_architect": {
-      "confidence": 0.82
+      "confidence": 0.82,
+      "confidence_reasons": []
     },
     "capital_allocator": {
-      "confidence": 0.86
+      "confidence": 0.86,
+      "confidence_reasons": []
     },
     "management_quality": {
-      "confidence": 0.81
+      "confidence": 0.81,
+      "confidence_reasons": [
+        "Missing evidence for 2 finding(s)",
+        "Missing required input: shareholding"
+      ]
     }
   },
   "signal_payload": {
