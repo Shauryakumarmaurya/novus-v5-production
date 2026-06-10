@@ -210,6 +210,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
                     let html = '<div class="space-y-6">';
+                    // Last-known-good snapshot served because the live source was
+                    // unreachable — be honest about staleness rather than implying live data.
+                    if (data.stale) {
+                        const asOf = data.snapshot_at ? new Date(data.snapshot_at).toLocaleDateString() : 'a prior fetch';
+                        html += `<div class="text-[11px] font-mono text-semantic-amber border border-semantic-amber/30 bg-semantic-amber/10 rounded-md px-3 py-2">>_ CACHED SNAPSHOT — live datafeed unreachable; showing last-known-good data from ${asOf}.</div>`;
+                    }
                     for (const [title, rows] of Object.entries(data.tables)) {
                         html += `<div><h3 class="text-sm font-semibold font-sans text-txt-primary mb-3">${title}</h3>`;
                         html += '<div class="overflow-x-auto rounded-md border border-base-border"><table class="data-table">';

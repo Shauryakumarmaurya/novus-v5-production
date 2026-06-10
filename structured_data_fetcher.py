@@ -213,6 +213,10 @@ class StructuredDataFetcher:
                     "source": raw.get("source", "screener.in"),
                     "sector": raw.get("sector", "General"),
                     "tables": tables,
+                    # Keep the original Screener shape (UI titles + row dicts) so
+                    # the display endpoint / charts can be served from a snapshot
+                    # too — those consume raw_tables, not the normalized contract.
+                    "raw_tables": raw_tables,
                 }
 
                 self._cache[ticker] = structured

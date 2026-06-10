@@ -52,7 +52,6 @@ from llm_clients import client, deepseek_model_name
 from rag_engine import get_collection_stats
 from rag_engine import ingest_documents
 from rag_engine import query as rag_query, get_collection_stats
-from screener_scraper import fetch_screener_tables
 try:
     pass
     WEASYPRINT_AVAILABLE = True
@@ -330,17 +329,45 @@ def health():
 @require_api_key
 @limiter.limit("60 per hour")
 def get_screener_data():
-    """Fetch synchronous numerical table data from Screener.in"""
+    """Fetch synchronous numerical table data for the Quant Canvas.
+
+    Routed through the resilient StructuredDataFetcher so a live Screener
+    failure (datacenter IP block, outage) is served from the last-known-good
+    snapshot instead of erroring the whole tab. The frontend consumes the raw
+    Screener shape, so we return raw_tables (preserved in the snapshot).
+    """
     ticker = request.args.get('ticker')
     if not ticker:
         return jsonify({"error": "Missing ticker parameter"}), 400
-        
+
     try:
-        data = fetch_screener_tables(ticker)
-        if "error" in data:
-            return jsonify(data), 500
-        return jsonify(data)
+        from structured_data_fetcher import get_structured_data_fetcher
+        sdata = get_structured_data_fetcher().fetch(ticker)
+
+        # Prefer the raw Screener shape the charts/table renderer expect.
+        raw_tables = sdata.get("raw_tables") or {}
+
+        if not raw_tables:
+            # No live data and no usable snapshot — report honestly (200 with
+            # empty tables so the UI shows "no datasets" rather than a hard error).
+            return jsonify({
+                "ticker": ticker.upper(),
+                "sector": sdata.get("sector", "General"),
+                "tables": {},
+                "stale": False,
+                "error": sdata.get("error", "No structured data available"),
+            }), 200
+
+        return jsonify({
+            "ticker": ticker.upper(),
+            "source": sdata.get("source", "screener.in"),
+            "sector": sdata.get("sector", "General"),
+            "tables": raw_tables,
+            "stale": bool(sdata.get("from_snapshot")),
+            "snapshot_at": sdata.get("snapshot_at"),
+        })
     except Exception as e:
+        logger.error(f"[screener_data] {ticker}: {e}")
         return jsonify({"error": str(e)}), 500
 
 # ── RAG Chat Endpoint ────────────────────────────────────────────────────────
