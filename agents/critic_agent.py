@@ -90,6 +90,7 @@ class CriticAgentV3(AgentV3):
                 "action": "FLAGGED_AS_DATA_GAP"
             }
         ],
+        "verified_count": 23,
         "verification_status": "CLEARED WITH CORRECTIONS",
         "data_gaps": None
     }, indent=2)
@@ -251,7 +252,8 @@ use your tools to verify it against the structured financial tables or the docum
 
 ## VERIFICATION RULES (NON-NEGOTIABLE)
 1. For every hard metric, call `get_metric` or `search_document` to find the source.
-2. If the number EXACTLY matches a table value or document passage, mark as VERIFIED.
+2. If the number EXACTLY matches a table value or document passage, it is VERIFIED.
+   Do NOT output verified claims — just increment the top-level `verified_count` integer.
 3. If the number is WRONG (e.g., agent says 13M stores but source says 9M), mark as CORRECTED with the correct value and source citation.
 4. If the number CANNOT be found in any source, mark as FLAGGED_AS_DATA_GAP.
 5. Do NOT invent corrections. Only correct what you can prove is wrong.
@@ -281,6 +283,9 @@ Every item in `corrections[]` and `unverifiable_claims[]` MUST include:
 
 ## OUTPUT SIZE DISCIPLINE (NON-NEGOTIABLE)
 Your response has a hard output-token budget. To stay within it:
+- `corrections[]` must contain ONLY claims you PROVED WRONG. NEVER list a
+  verified-correct claim as a "correction" — verified claims are reported
+  solely via the `verified_count` integer.
 - Report only MATERIAL corrections and claims — skip trivial rounding differences.
 - Keep every `snippet` <= 120 characters and every free-text field to 1-2 sentences.
 - Do NOT include a `narrative_inconsistencies` key in your output — known
